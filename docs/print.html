@@ -37,7 +37,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-cae08bf5.js";
+            window.path_to_searchindex_js = "searchindex-438be00c.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-6f28b252.js"></script>
@@ -1004,44 +1004,424 @@ $C_0$을 시계방향으로 1회전시켰을 때 $C_1, \ldots, C_{n-1}$의 회�
 재구성함.</em></p>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="stable-matching-i"><a class="header" href="#stable-matching-i">Stable Matching I</a></h1>
-<h2 id="topics-covered"><a class="header" href="#topics-covered">Topics Covered</a></h2>
-<ol>
-<li>Motivation — 안정적이지 않은 매칭의 예시 (elope 문제)</li>
-<li>Stable Matching Problem — 문제 정의</li>
-<li>Python Implementation</li>
-</ol>
-<p><em>위 목차는 원 강의안의 목차만 정리한 것이며, 슬라이드 전체 내용은 싣지 않는다.</em></p>
+<h2 id="key-concepts-7"><a class="header" href="#key-concepts-7">Key Concepts</a></h2>
+<ul>
+<li><code>Person</code> 객체: <code>gender</code>, <code>name</code>, <code>prefList</code>(선호도 리스트), <code>partner</code>(현재
+파트너, 없으면 <code>None</code>)</li>
+<li><code>engage(self, p)</code> / <code>breakUp(self)</code> (modifier) — 파트너 관계를 맺거나 끊기</li>
+<li><code>prefer(self, p)</code> (pure function) — <code>self</code>가 현재 파트너보다 <code>p</code>를 더
+선호하는지 (<code>.index(·)</code>로 선호도 리스트에서의 순위 비교)</li>
+<li>Stable matching: unstable pair(서로 바람나고 싶어하는 쌍)가 하나도 없는 매칭</li>
+</ul>
+<h2 id="problem-set-7"><a class="header" href="#problem-set-7">Problem Set</a></h2>
+<p>이미 정의된 <code>Person</code> 클래스:</p>
+<pre><code class="language-python">class Person(object):
+    def __init__(self, name, gender):
+        self.gender = gender      # "male" or "female"
+        self.name = name
+        self.prefList = None      # preference list (of Person objects)
+        self.partner = None       # Person object. None if free
+
+    def isFree(self):             # pure function
+        return self.partner == None
+
+    def engage(self, p):          # modifier
+        assert type(p) == Person
+        assert self.isFree() and p.isFree()
+        # ADD ADDITIONAL CODE HERE!
+
+    def breakUp(self):            # modifier
+        assert not self.isFree()
+        assert self.partner.partner == self
+        # ADD ADDITIONAL CODE HERE!
+
+    def prefer(self, p):          # pure function -- self가 현재 partner보다 p를 선호?
+        assert type(p) == Person
+        assert not self.isFree()
+        # ADD ADDITIONAL CODE HERE!
+</code></pre>
+<h3 id="필수-문제-7"><a class="header" href="#필수-문제-7">필수 문제</a></h3>
+<p><strong>1. <code>Person.engage(self, p)</code> / <code>Person.breakUp(self)</code> / <code>Person.prefer(self, p)</code></strong>
+위 세 메서드를 완성.</p>
+<blockquote>
+<p><code>engage</code>: <code>self.partner</code>와 <code>p.partner</code>를 서로로 설정. <code>breakUp</code>: <code>self</code>와
+<code>self.partner</code>의 관계를 서로 끊어 둘 다 <code>None</code>으로. <code>prefer</code>: 선호도 리스트의
+<code>.index(·)</code>를 이용해 <code>p</code>의 순위가 현재 파트너보다 앞서는지 비교.</p>
+</blockquote>
+<p><strong>2. <code>isPerfectMatch(men, women)</code></strong> — <code>men</code>, <code>women</code>(둘 다 <code>Person</code> 리스트)의 모든
+사람이 정확히 한 명의 파트너를 가지고 있으면 <code>True</code>.</p>
+<pre><code class="language-python">def isPerfectMatch(men, women):  # for all pattern
+    assert len(men) == len(women)
+    n = len(men)
+    # ADD ADDITIONAL CODE HERE!
+</code></pre>
+<p><strong>3. <code>isUnstablePair(man, woman)</code> / <code>isStableMatch(men, women)</code></strong> —
+<code>isUnstablePair</code>는 <code>(man, woman)</code>이 unstable pair인지 판정(서로 각자의 현재
+파트너보다 상대를 선호하면 unstable). <code>isStableMatch</code>는 전체 매칭에 unstable
+pair가 하나도 없으면 <code>True</code>.</p>
+<pre><code class="language-python">def isUnstablePair(man, woman):
+    assert type(man) == Person and type(woman) == Person
+    assert man.gender == "male" and woman.gender == "female"
+    # ADD ADDITIONAL CODE HERE!
+
+def isStableMatch(men, women):  # for all pattern
+    assert len(men) == len(women)
+    n = len(men)
+    # ADD ADDITIONAL CODE HERE!
+</code></pre>
+<h3 id="optional-problems-7"><a class="header" href="#optional-problems-7">Optional Problems</a></h3>
+<p><em>필수 문제와 달리 제출/검사 대상은 아니지만 도움이 되므로 시간이 남으면
+시도해볼 것을 권장 (대부분 기출문제).</em></p>
+<p><strong>4. <code>nUnstablePair(men, women)</code></strong> — 매칭 정보가 채워진 <code>men</code>, <code>women</code>에서
+unstable pair의 개수를 반환.</p>
+<p><strong>5~8.</strong> (10주차 과제의 일대다(one-to-many) stable matching 확장 — 교사
+<code>Teacher</code>(<code>apprentice</code> 리스트, <code>quota</code>)와 학생 <code>Student</code>(<code>advisor</code>)를 이용)</p>
+<ul>
+<li><code>isPerfect(teachers, students)</code> — 주어진 매칭이 “perfect”(모든 학생이 배정되고,
+교사-학생 상호 참조가 일관되고, 각 교사가 정확히 자기 정원만큼 배정됨) 조건을
+만족하면 <code>1</code>, 아니면 <code>0</code>.</li>
+<li><code>isStable(teachers, students)</code> — perfect한 매칭이 stability 조건까지 만족하면
+<code>1</code>, 아니면 <code>0</code>. (두 교사가 서로의 학생을 교환하고 싶어하는 상황이 없어야 함)</li>
+<li><code>nUnstablePair(teachers, students)</code> — 위 stable 조건을 위배하는 (교사,교사,학생,학생)
+쌍의 개수, 단 교사 쌍 <code>(Ti, Tj)</code> 기준으로 중복 없이 카운트.</li>
+<li>teacher-unstable pair 변형: 학생 쌍이 아니라 “교환하고 싶어하는 교사 쌍”
+자체의 개수를 세는 변형(<code>(Ti,Tj)</code>와 <code>(Tj,Ti)</code>는 같은 쌍으로 취급).</li>
+</ul>
+<hr>
+<p><em>원본: <code>CS2(2026-2)_all/CS2/CS2/problem_set/P09.pdf</code>. 표현/코드는 정리하며 일부
+재구성함(4~8번은 이전 과제 맥락에 의존하는 문제라 핵심만 요약).</em></p>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="stable-matching-ii"><a class="header" href="#stable-matching-ii">Stable Matching II</a></h1>
-<h2 id="topics-covered-1"><a class="header" href="#topics-covered-1">Topics Covered</a></h2>
-<ol>
-<li>Propose-Reject Algorithm (Gale-Shapley 알고리즘)</li>
-<li>Python Implementation</li>
-<li>Additional Properties</li>
-<li>Appendix: Proofs</li>
-</ol>
-<p><em>지난주(L09)에 다룬 stable matching 정의·자료구조에 이어, propose-reject 알고리즘의
-정확성과 구현을 다룸.</em></p>
-<p><em>위 목차는 원 강의안의 목차만 정리한 것이며, 슬라이드 전체 내용은 싣지 않는다.</em></p>
+<h2 id="key-concepts-8"><a class="header" href="#key-concepts-8">Key Concepts</a></h2>
+<ul>
+<li>Propose-Reject 알고리즘(Gale-Shapley): 자유로운 남자가 자기 선호도 순으로
+여자에게 프로포즈하고, 여자는 더 마음에 드는 상대가 나타나면 갈아탄다 —
+이 과정을 반복하면 항상 stable matching으로 수렴함</li>
+<li><code>numProposal</code>로 “다음에 누구에게 프로포즈할지” 진행 상황을 추적</li>
+</ul>
+<h2 id="problem-set-8"><a class="header" href="#problem-set-8">Problem Set</a></h2>
+<h3 id="필수-문제-8"><a class="header" href="#필수-문제-8">필수 문제</a></h3>
+<p><strong>1. <code>Person.womanToPropose(self)</code></strong> — (<code>self</code>가 남자일 때만 사용) <code>prefList</code>
+순서대로 다음 차례에 프로포즈할 여자를 반환하고, <code>numProposal</code>을 갱신.</p>
+<pre><code class="language-python">class Person(object):
+    def __init__(self, name, gender):
+        ...
+        self.prefList = None    # preference list (of Person objects)
+        self.numProposal = 0    # used only if self is man
+        ...
+
+    def womanToPropose(self):   # used only if self is man
+        assert self.gender == "male"
+        assert self.numProposal &lt; len(self.prefList)
+        # ADD ADDITIONAL CODE HERE!
+</code></pre>
+<p><strong>2. <code>findMatch(men, women)</code></strong> — 파트너 정보가 전혀 채워지지 않은 <code>men</code>, <code>women</code>
+에 대해, propose-reject 알고리즘으로 stable matching이 되도록 파트너 정보를
+채우는 modifier (반환값 없음).</p>
+<pre><code class="language-python">def findMatch(men, women):
+    assert len(men) == len(women)
+    n = len(men)
+    numFreeMen = n  # initially, every man has no partner
+    while numFreeMen &gt; 0:
+        # 자유로운 남자를 하나 찾는다
+        # (자유로운 남자를 고르는 순서는 알고리즘의 정확성/결과에 영향을 주지
+        #  않음이 이미 증명되어 있음)
+        # womanToPropose()로 이 남자가 이번에 프로포즈할 여자를 찾는다
+        # 그 여자가 free하면 -&gt; engage하고 numFreeMen 감소
+        # 그 여자가 free하지 않지만 현재 파트너보다 이 남자를 선호하면
+        #   -&gt; 기존 커플 breakUp 후 이 남자와 engage
+        # 그 외의 경우 -&gt; 여자가 거절 (코드에서 딱히 할 일 없음)
+</code></pre>
+<h3 id="optional-problems-8"><a class="header" href="#optional-problems-8">Optional Problems</a></h3>
+<p><em>필수 문제와 달리 제출/검사 대상은 아니지만 도움이 되므로 시간이 남으면
+시도해볼 것을 권장 (대부분 기출문제).</em></p>
+<p><strong>3. <code>compute_schedule(schedule)</code></strong> — $n$척의 배 $S_0, \ldots, S_{n-1}$과 $n$개의
+항구 $P_0, \ldots, P_{n-1}$가 있고, 각 배는 $m$일($m&gt;n$) 동안의 스케줄(각 날짜에
+어느 항구에 있는지, 또는 바다 위에 있는지)을 가진다. 각 배는 기간 중 각 항구를
+정확히 하루씩 방문하며, 어떤 두 배도 같은 날 같은 항구에 있지 않는다는 조건(†)을
+만족한다.</p>
+<p>이제 회사는 각 배가 “어느 날짜부터 도착한 항구에 계속 머무르며(수리를 위해)
+남은 스케줄을 취소“하도록 스케줄을 단축하려 한다 — 단, 단축된 스케줄에서도
+조건(†)이 계속 성립해야 한다.</p>
+<pre><code class="language-python"># 입력: 원본 스케줄을 나타내는 2차원 n×m 리스트
+# (None = 바다 위, 정수 = 항구 번호)
+schedule = [[0, None, 1, None], [None, 0, None, 1]]
+
+# 반환: 각 배가 "멈추는" 항구를 나타내는 리스트(조건(†)을 만족하는 것 아무거나),
+# 그런 스케줄이 없으면 None
+print(compute_schedule(schedule))  # [1, 0]
+</code></pre>
+<blockquote>
+<p>힌트: 이 문제와 stable matching 문제 사이의 연결고리를 찾아, stable matching
+코드를 그대로 활용할 것. <code>L.reverse()</code>로 리스트를 뒤집을 수 있음. 답뿐 아니라
+알고리즘의 정당성 증명도 필요.</p>
+</blockquote>
+<hr>
+<p><em>원본: <code>CS2(2026-2)_all/CS2/CS2/problem_set/P10.pdf</code>. 표현/코드는 정리하며 일부
+재구성함.</em></p>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="poker-hands"><a class="header" href="#poker-hands">Poker Hands</a></h1>
-<h2 id="topics-covered-2"><a class="header" href="#topics-covered-2">Topics Covered</a></h2>
-<ol>
-<li>Poker Primer — 포커 기본 규칙</li>
-<li>Card/Hand Objects — straight flush, flush, straight, quadruple, triple,
-pair, full house, two pair 판별</li>
-<li>In-Class Problems — 포커 핸드 간 포함관계, Monte Carlo 시뮬레이션으로 확률 추정</li>
-</ol>
-<p><em>위 목차는 원 강의안의 목차만 정리한 것이며, 슬라이드 전체 내용은 싣지 않는다.</em></p>
+<h2 id="key-concepts-9"><a class="header" href="#key-concepts-9">Key Concepts</a></h2>
+<ul>
+<li><code>Card(suit, rank)</code>, <code>Hand(cards)</code>(카드 5장) 클래스</li>
+<li><code>getNumCardsByRank()</code> / <code>getNumCardsBySuit()</code> — rank(1~13)별/suit(0~3)별 카드
+개수를 세어 리스트로 반환 (이후 모든 판정 함수의 기반)</li>
+<li>포커 핸드 종류 간 포함관계에 유의 — 예: full house를 판정할 땐 quadruple을
+제외해야 하고, flush를 판정할 땐 straight flush를 제외해야 함(tie-breaking rule)</li>
+<li>Monte Carlo 시뮬레이션: 무작위 핸드를 대량 생성해 각 핸드 종류의 등장 확률을
+통계적으로 추정</li>
+</ul>
+<h2 id="problem-set-9"><a class="header" href="#problem-set-9">Problem Set</a></h2>
+<p>이미 주어진 클래스와 헬퍼 함수:</p>
+<pre><code class="language-python">class Card:
+    def __init__(self, suit, rank):
+        self.suit = suit
+        self.rank = rank
+
+class Hand:
+    def __init__(self, cards):
+        self.cards = cards
+        assert len(cards) == 5
+
+    def getNumCardsByRank(self):
+        numCardsByRank = [0] * 13
+        for i in range(len(self.cards)):
+            j = self.cards[i].rank
+            assert 1 &lt;= j &lt;= 13
+            numCardsByRank[j - 1] += 1
+        return numCardsByRank
+
+    def getNumCardsBySuit(self):
+        numCardsBySuit = [0] * 4
+        # ADD ADDITIONAL CODE HERE!
+
+# atLeastStraight에서 사용할 헬퍼: L을 원형으로 봤을 때 k개 연속으로 1 이상인
+# 구간이 있는지
+def hasConsecutivePositive(L, k):
+    n = len(L)
+    assert k &lt;= n
+    counter = 0
+    for i in range(n + 1):  # +1: wrap-around 처리
+        if L[i % n] &gt;= 1:
+            counter += 1
+            if counter == k:
+                return True
+        else:
+            counter = 0
+    return False
+</code></pre>
+<h3 id="필수-문제-9"><a class="header" href="#필수-문제-9">필수 문제</a></h3>
+<p><strong>1. <code>Hand.getNumCardsBySuit(self)</code></strong> — 5장 카드의 suit별(0~3) 개수를 리스트로
+반환.</p>
+<p><strong>2. <code>atLeastStraight</code> / <code>atLeastFlush</code> / <code>straightFlush</code> / <code>flush</code> / <code>straight</code></strong>
+— straight/flush 계열 판정.</p>
+<pre><code class="language-python">def atLeastStraight(hand):   # straight 또는 straight flush
+    L = hand.getNumCardsByRank()
+    # ADD ADDITIONAL CODE HERE! (hasConsecutivePositive(L, 5) 활용)
+
+def atLeastFlush(hand):      # flush 또는 straight flush, "for some" 패턴
+    L = hand.getNumCardsBySuit()
+    # ADD ADDITIONAL CODE HERE!
+
+def straightFlush(hand):
+    # atLeastStraight and atLeastFlush
+
+def flush(hand):
+    # atLeastFlush and not straightFlush
+
+def straight(hand):
+    # atLeastStraight and not straightFlush
+</code></pre>
+<blockquote>
+<p><code>atLeastStraight</code>는 rank 정보(<code>getNumCardsByRank</code>)만, <code>atLeastFlush</code>는 suit
+정보만 보면 된다. <code>flush</code>/<code>straight</code>는 tie-breaking rule에 따라 straight flush
+인 경우를 제외해야 한다.</p>
+</blockquote>
+<p><strong>3. <code>hasMultipleCardsWithSameRank</code> / <code>quadruple</code> / <code>fullHouse</code> / <code>triple</code> /
+<code>twoPair</code> / <code>pair</code></strong></p>
+<pre><code class="language-python">def hasMultipleCardsWithSameRank(hand, num):  # "for some" 패턴
+    L = hand.getNumCardsByRank()
+    # ADD ADDITIONAL CODE HERE! (어떤 rank의 카드가 정확히 num장 있는가)
+
+def quadruple(hand):
+    return hasMultipleCardsWithSameRank(hand, 4)
+
+def fullHouse(hand):
+    # hasMultipleCardsWithSameRank(hand,3) and hasMultipleCardsWithSameRank(hand,2)
+
+def triple(hand):
+    # hasMultipleCardsWithSameRank(hand,3), 단 fullHouse/quadruple 제외
+
+def twoPair(hand):   # counter 패턴으로 변형
+    L = hand.getNumCardsByRank()
+    # ADD ADDITIONAL CODE HERE! (rank 2장짜리가 두 개인가), fullHouse 제외
+
+def pair(hand):
+    # hasMultipleCardsWithSameRank(hand,2), 단 fullHouse/twoPair/quadruple/triple 제외
+</code></pre>
+<p><strong>4. <code>countPokerHands(hands)</code></strong> — <code>Hand</code> 객체 리스트(무작위로 생성된 대량의
+핸드)를 straight flush/quadruple/full house/flush/straight/triple/two pair/pair
+순서로 분류해 각 개수를 담은 리스트를 반환 (counter 패턴).</p>
+<pre><code class="language-python">def countPokerHands(hands):
+    nStraightFlush = nQuadruple = nFullHouse = nFlush = 0
+    nStraight = nTriple = nTwoPair = nPair = 0
+    for i in range(len(hands)):
+        hand = hands[i]
+        # ADD ADDITIONAL CODE HERE!
+    return [nStraightFlush, nQuadruple, nFullHouse, nFlush,
+            nStraight, nTriple, nTwoPair, nPair]
+
+def randomHand(numCards):
+    cards = []
+    for suit in range(4):
+        for rank in range(1, 14):
+            cards.append(Card(suit, rank))
+    random.shuffle(cards)
+    return Hand(cards[:numCards])
+
+def test():
+    hands = [randomHand(5) for _ in range(100000)]
+    L = countPokerHands(hands)
+    labels = ["Straight Flush", "Quadruple", "Full House", "Flush",
+              "Straight", "Triple", "TwoPair", "Pair"]
+    for label, count in zip(labels, L):
+        print(label + ":" + str(1.0 * count / len(hands) * 100))
+test()
+</code></pre>
+<blockquote>
+<p>“straight flush“처럼 확률이 매우 낮은 경우는 시행 횟수를 늘려야 추정치가
+안정된다(단, 실행 시간도 늘어남).</p>
+</blockquote>
+<h3 id="optional-problems-9"><a class="header" href="#optional-problems-9">Optional Problems</a></h3>
+<p><em>필수 문제와 달리 제출/검사 대상은 아니지만 도움이 되므로 시간이 남으면
+시도해볼 것을 권장 (대부분 기출문제).</em></p>
+<p><strong>5. <code>nDistinct(hand)</code></strong> — 카드 개수가 5가 아닐 수도 있는 <code>hand</code>에서, (suit,rank)
+가 서로 다른 카드의 개수를 반환.</p>
+<p><strong>6. <code>k_flush(k, hand)</code></strong> — 중복 카드가 없는 <code>hand</code>에 카드를 몇 장 추가해야
+“k-flush”(같은 suit가 k장 이상)를 만들 수 있는지, 최소 추가 장수를 반환.</p>
+<p><strong>7. <code>k_straight(k, hand)</code></strong> — 마찬가지로, 카드를 몇 장 추가해야 “k-straight”
+(연속된 rank가 k개 이상, wrap-around 허용)를 만들 수 있는지 최소 추가 장수를
+반환. 예: Jack-Queen-King-Ace, Queen-King-Ace-2, King-Ace-2-3 모두 4-straight로
+인정(수업에서 다룬 straight보다 넓은 정의).</p>
+<p><strong>8. <code>k_straight_flush(k, hand)</code></strong> — 6, 7번을 결합한 일반화. 같은 suit이면서
+k-straight인 부분집합을 만들기 위한 최소 추가 장수(단순히 6, 7번 조건의 AND가
+아님에 유의).</p>
+<p><strong>9. <code>full_house(hand)</code>(변형 규칙)</strong> — rank 2인 카드를 임의의 suit/rank로
+자유롭게 바꿀 수 있다는 규칙 하에서, 5장 핸드가 (그렇게 바꿔서) full house가
+될 수 있으면 <code>True</code>.</p>
+<p><strong>10. <code>flush(hand)</code>(카드 개수 3~12장으로 일반화)</strong> — straight/flush/straight
+flush를 카드 개수가 5장이 아닌 경우로 재정의(모든 카드의 rank가 연속이면
+straight, 모든 카드가 같은 suit면 flush, 둘 다면 straight flush로만 분류).
+straight flush가 아니면서 flush인 경우에만 <code>1</code>, 아니면 <code>0</code>을 반환.</p>
+<p><strong>11. <code>k_score(hand, k)</code></strong> — <code>hand</code>에서 카드 3장을 골라 rank 합이 <code>k</code> 이하이면서
+최대가 되는 값(“k-점수”)을 반환(불가능하면 0).</p>
+<hr>
+<p><em>원본: <code>CS2(2026-2)_all/CS2/CS2/problem_set/P11.pdf</code>. 표현/코드는 정리하며 일부
+재구성함.</em></p>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="art-gallery-problem"><a class="header" href="#art-gallery-problem">Art Gallery Problem</a></h1>
-<h2 id="topics-covered-3"><a class="header" href="#topics-covered-3">Topics Covered</a></h2>
-<ol>
-<li>Orientations of Rectilinear Polygons — 직교 다각형의 방향(시계/반시계) 판별</li>
-<li>Surveillability of Rectilinear Polygons</li>
-<li>The Art Gallery Problem</li>
-</ol>
-<p><em>위 목차는 원 강의안의 목차만 정리한 것이며, 슬라이드 전체 내용은 싣지 않는다.</em></p>
+<h2 id="key-concepts-10"><a class="header" href="#key-concepts-10">Key Concepts</a></h2>
+<ul>
+<li>Rectilinear polygon(수직선/수평선으로만 이루어진 다각형)의 방향(시계/
+반시계) 판별</li>
+<li>하나의 CCTV(감시 카메라)로 다각형 내부 전체를 감시할 수 있는 “설치 가능
+영역“을 leftMax/rightMin/bottomMax/topMin 네 값으로 좁혀나가며 계산</li>
+<li>인접한 두 점의 방향(상/하/좌/우)을 판별하는 <code>direction(fr, to)</code> 헬퍼</li>
+</ul>
+<h2 id="problem-set-10"><a class="header" href="#problem-set-10">Problem Set</a></h2>
+<h3 id="필수-문제-10"><a class="header" href="#필수-문제-10">필수 문제</a></h3>
+<p><strong>1. <code>orientation(polygon)</code></strong> — 다각형을 이루는 <code>Point</code> 리스트가 시계방향이면
+<code>"CW"</code>, 반시계방향이면 <code>"CCW"</code>를 반환.</p>
+<pre><code class="language-python">class Point:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+def orientation(polygon):
+    n = len(polygon)
+    top = polygon[0].y
+    # ADD ADDITIONAL CODE HERE!
+
+polygon1 = [Point(30,10), Point(30,20), Point(50,20), Point(50,40),
+            Point(40,40), Point(40,30), Point(30,30), Point(30,40),
+            Point(20,40), Point(20,20), Point(10,20), Point(10,10)]
+polygon2 = [Point(30,10), Point(30,30), Point(10,30), Point(10,10)]
+polygon3 = [Point(10,30), Point(10,10), Point(30,10), Point(30,30)]
+polygon4 = [Point(30,30), Point(30,10), Point(10,10), Point(10,30)]
+print(orientation(polygon1))  # CCW
+print(orientation(polygon2))  # CCW
+print(orientation(polygon3))  # CCW
+print(orientation(polygon4))  # CW
+</code></pre>
+<p><strong>2. <code>Rectangle.__str__</code> / <code>surveillableRegion(polygon)</code></strong> — 반시계방향으로
+주어진 rectilinear polygon에 대해, CCTV 1대로 내부 전체를 감시할 수 있는
+설치 가능 영역을 <code>Rectangle</code>로 반환(불가능하면 <code>None</code>).</p>
+<pre><code class="language-python">class Rectangle:
+    def __init__(self, left, right, bottom, top):
+        self.left = left
+        self.right = right
+        self.bottom = bottom
+        self.top = top
+
+    def __str__(self):
+        # "(x1,y1)-(x2,y2)" 형태, 예: "(2,2)-(3,3)"
+        # ADD ADDITIONAL CODE HERE!
+
+def direction(fr, to):
+    if fr.x == to.x:
+        if fr.y &lt; to.y: return "UP"
+        elif fr.y &gt; to.y: return "DOWN"
+    elif fr.y == to.y:
+        if fr.x &lt; to.x: return "RIGHT"
+        elif fr.x &gt; to.x: return "LEFT"
+    print("Input polygon is not rectilinear!")
+    assert False
+
+def surveillableRegion(polygon):
+    # 반시계방향이라고 가정
+    leftMax = -sys.maxint
+    rightMin = sys.maxint
+    bottomMax = -sys.maxint
+    topMin = sys.maxint
+    n = len(polygon)
+    # ADD ADDITIONAL CODE HERE!
+
+polygon1 = [Point(0,1), Point(2,1), Point(2,0), Point(4,0),
+            Point(4,2), Point(5,2), Point(5,4), Point(3,4),
+            Point(3,5), Point(1,5), Point(1,3), Point(0,3)]
+polygon2 = [Point(0,0), Point(2,0), Point(2,3), Point(0,3),
+            Point(0,2), Point(1,2), Point(1,1), Point(0,1)]
+print(surveillableRegion(polygon1))  # (2,2)-(3,3)
+print(surveillableRegion(polygon2))  # None
+</code></pre>
+<blockquote>
+<p>반시계방향으로 다각형을 순회하면서, 각 변의 방향(<code>direction</code> 함수)에 따라
+<code>leftMax</code>/<code>rightMin</code>/<code>bottomMax</code>/<code>topMin</code>을 적절히 갱신해나가면 된다.</p>
+</blockquote>
+<h3 id="optional-problems-10"><a class="header" href="#optional-problems-10">Optional Problems</a></h3>
+<p><em>필수 문제와 달리 제출/검사 대상은 아니지만 도움이 되므로 시간이 남으면
+시도해볼 것을 권장 (대부분 기출문제).</em></p>
+<p><strong>3. <code>surveillableRegion(polygon)</code>(방향 무관 버전)</strong> — 2번 문제를 일반화해,
+입력 다각형이 시계/반시계 어느 방향이든 처리.</p>
+<blockquote>
+<p>1번의 <code>orientation</code>으로 방향을 먼저 판별하고, 시계방향이면 UP/DOWN과
+LEFT/RIGHT의 역할을 바꿔서 2번과 동일하게 처리.</p>
+</blockquote>
+<p><strong>4. <code>surveillableLength(polygon)</code></strong> — CCTV를 다각형의 <strong>경계선 위</strong>에만 설치할
+수 있다고 할 때, 내부 전체를 감시 가능한 설치 구간 길이의 총합을 반환.</p>
+<blockquote>
+<p>2번의 <code>surveillableRegion</code>으로 설치 가능 직사각형을 먼저 구한 뒤, 그 직사각형과
+다각형 경계선이 겹치는 구간들을 찾아 합산.</p>
+</blockquote>
+<p><strong>5. <code>surveillablePoint(polygon)</code></strong> — CCTV를 다각형의 <strong>꼭짓점</strong>에만 설치할 수
+있다고 할 때, 내부 전체를 감시 가능한 꼭짓점의 개수를 반환.</p>
+<blockquote>
+<p>두 <code>Point</code>가 같은 위치인지 비교할 때 <code>==</code> 대신 <code>p1.equal(p2)</code>를 사용해야
+의도대로 동작함.</p>
+</blockquote>
+<hr>
+<p><em>원본: <code>CS2(2026-2)_all/CS2/CS2/problem_set/P12.pdf</code>. 표현/코드는 정리하며 일부
+재구성함.</em></p>
 
                     </main>
 
