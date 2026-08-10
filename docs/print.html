@@ -36,10 +36,10 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-f1892ed5.js";
+            window.path_to_searchindex_js = "searchindex-8a82e89e.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-9f4cd81c.js"></script>
+        <script src="toc-a66997ae.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -186,16 +186,16 @@ pretest·답안지처럼 배포 금지 표시가 있는 자료는 싣지 않는�
 <p>국제반(영어) 자료는 별도 저장소 <a href="https://github.com/SuminHan/book-cs2-intl">book-cs2-intl</a>에서 관리한다.</p>
 <p><em>아직 준비 중입니다 — 학기가 진행되면서 챕터가 채워질 예정입니다.</em></p>
 <div style="break-before: page; page-break-before: always;"></div>
-<h1 id="week-1-motivation"><a class="header" href="#week-1-motivation">Week 1: Motivation</a></h1>
+<h1 id="motivation"><a class="header" href="#motivation">Motivation</a></h1>
 <p><em>프로그래밍은 왜 여전히 중요한가 — Computer Science 2</em></p>
 <p><a href="kor/assets/week01-motivation.pdf">슬라이드 전체 다운로드 (PDF)</a></p>
-<h2 id="1-질문"><a class="header" href="#1-질문">1. 질문</a></h2>
+<h2 id="1-the-question"><a class="header" href="#1-the-question">1. The Question</a></h2>
 <p>“이제 AI가 코드를 짜준다. 나보다 빠르고, 솔직히 나보다 더 잘 짠다. 그런데 내가 왜
 프로그래밍 수업에 앉아 있어야 하지?”</p>
 <p>정당한 질문이다. 그리고 “AI는 코딩을 잘 못한다“는 식으로 답할 생각은 없다. 못하지
 않는다. 아주 잘하고, 매달 더 좋아지고 있다. 대신 다른 방식으로 답하려 한다 —
 그래서 어떤 일이 새로 생겼는지 보여주는 방식으로.</p>
-<h2 id="2-무엇이-바뀌었나"><a class="header" href="#2-무엇이-바뀌었나">2. 무엇이 바뀌었나</a></h2>
+<h2 id="2-what-changed"><a class="header" href="#2-what-changed">2. What Changed</a></h2>
 <p>이진 탐색을 짜달라고 하면 즉시 나온다. 그리고 맞다. 10년 전엔 한 주치 수업
 분량이었다. 지금은 4초. 그럼 무엇이 비싸졌는가?</p>
 <p><strong>병목이 옮겨갔다.</strong></p>
@@ -220,7 +220,7 @@ pretest·답안지처럼 배포 금지 표시가 있는 자료는 싣지 않는�
 <p>들어갈 때는 한국어든 영어든 사람의 언어를 쓸 수 있다. 하지만 돌아올 때는 답이
 항상 코드다 — 출력에는 한국어 버전이 없다. 오직 코드가 있을 뿐이고, 그걸 읽을 수
 있느냐만 남는다. 돌아온 것을 읽지 못한다면, 지시를 한 게 아니라 소원을 빈 것이다.</p>
-<h2 id="3-간극"><a class="header" href="#3-간극">3. 간극</a></h2>
+<h2 id="3-the-gap"><a class="header" href="#3-the-gap">3. The Gap</a></h2>
 <p>“성적 계산기를 만들어줘“라고 시켜봤다. 이렇게 나왔다 — 깔끔하고, 읽기 쉽고, 잘
 돌아간다:</p>
 <pre><code class="language-python">def final_grade(scores, attendance_rate):
@@ -244,7 +244,7 @@ pretest·답안지처럼 배포 금지 표시가 있는 자료는 싣지 않는�
 <p>“그럼 규정을 프롬프트에 넣으면 되잖아요!” — 맞다. 그런데 그렇게 하려면 뭐가
 빠졌는지를 이미 알아챘어야 한다. 코드는 알려주지 않았다. 구멍을 보려면 읽는
 수밖에 없었다.</p>
-<h2 id="4-함정"><a class="header" href="#4-함정">4. 함정</a></h2>
+<h2 id="4-the-trap"><a class="header" href="#4-the-trap">4. The Trap</a></h2>
 <p><strong>과제:</strong> 어떤 연도가 윤년이면 <code>True</code>를 반환.</p>
 <pre><code class="language-python">def is_leap_year(year):
     if year % 4 == 0:
@@ -266,7 +266,7 @@ pretest·답안지처럼 배포 금지 표시가 있는 자료는 싣지 않는�
 그걸 뉴턴(N)으로 읽었다. 1 lbf = 4.45 N이라 모든 궤도 수정이 4.45배씩 어긋난 채로
 10개월이 지났다. 손실 1억 2500만 달러. 그 코드는 한 줄도 빠짐없이 완벽하게
 돌아갔다. 그 숫자가 무슨 뜻인지 아무도 확인하지 않았을 뿐이다.</p>
-<h2 id="5-우리의-일"><a class="header" href="#5-우리의-일">5. 우리의 일</a></h2>
+<h2 id="5-your-job"><a class="header" href="#5-your-job">5. Your Job</a></h2>
 <p>1950년 튜링은 “기계가 생각할 수 있는가?“라고 물었고 — 답하기를 거부했다. 대신
 시험으로 바꿨다: 사람 심판이 양쪽에 질문을 던지고 그 답이 말이 되는지 판단한다.
 컴퓨터의 맨 처음 설계에 이미 질문을 던지는 사람이 의자에 앉아 있었다. 그 의자는
@@ -288,46 +288,8 @@ pretest·답안지처럼 배포 금지 표시가 있는 자료는 싣지 않는�
 것이 되지 않기 때문이다.</p>
 <p>평생 계산기를 쓸 것이다. 그래도 산수는 손으로 배웠다.</p>
 <div style="break-before: page; page-break-before: always;"></div>
-<h1 id="l01-cs1-review"><a class="header" href="#l01-cs1-review">L01: CS1 Review</a></h1>
-<h2 id="이번-주-주제"><a class="header" href="#이번-주-주제">이번 주 주제</a></h2>
-<ul>
-<li><strong>함수 (Functions)</strong>
-<ul>
-<li>parameters/arguments</li>
-<li>return statements</li>
-</ul>
-</li>
-<li><strong>조건문 (Conditionals)</strong>
-<ul>
-<li>boolean expressions</li>
-<li>if-else statements</li>
-<li>nested/chained conditionals</li>
-</ul>
-</li>
-<li><strong>반복문 (Loops)</strong>
-<ul>
-<li><code>for</code> loops with <code>range(·)</code></li>
-<li><code>while</code> loops</li>
-</ul>
-</li>
-<li><strong>리스트 (Lists)</strong>
-<ul>
-<li>creating a list</li>
-<li>accessing a list element</li>
-</ul>
-</li>
-<li><strong>반복 패턴 (Loop Patterns)</strong>
-<ul>
-<li>min/max, counter, quantifier (“for all”/“for some”)</li>
-</ul>
-</li>
-</ul>
-<p><em>강의 원본: 윤상현 선생님. 위 목차는 강의안 목차만 정리한 것이며, 슬라이드 전체
-내용은 싣지 않는다. 이 주차의 진단용 pretest·답안지는 별도로 관리되며 여기에
-싣지 않는다.</em></p>
-<div style="break-before: page; page-break-before: always;"></div>
-<h1 id="l02-lists--strings"><a class="header" href="#l02-lists--strings">L02: Lists / Strings</a></h1>
-<h2 id="이번-주-주제-1"><a class="header" href="#이번-주-주제-1">이번 주 주제</a></h2>
+<h1 id="lists--strings"><a class="header" href="#lists--strings">Lists / Strings</a></h1>
+<h2 id="topics-covered"><a class="header" href="#topics-covered">Topics Covered</a></h2>
 <ul>
 <li>List를 생성하는 또 다른 방법: <code>.append(·)</code></li>
 <li>Slicing 연산자: <code>[ : ]</code></li>
@@ -339,8 +301,8 @@ pretest·답안지처럼 배포 금지 표시가 있는 자료는 싣지 않는�
 </ul>
 <p><em>위 목차는 원 강의안의 목차만 정리한 것이며, 슬라이드 전체 내용은 싣지 않는다.</em></p>
 <div style="break-before: page; page-break-before: always;"></div>
-<h1 id="l03-file-io"><a class="header" href="#l03-file-io">L03: File I/O</a></h1>
-<h2 id="이번-주-주제-2"><a class="header" href="#이번-주-주제-2">이번 주 주제</a></h2>
+<h1 id="file-io"><a class="header" href="#file-io">File I/O</a></h1>
+<h2 id="topics-covered-1"><a class="header" href="#topics-covered-1">Topics Covered</a></h2>
 <ul>
 <li><code>range(·)</code> as a list</li>
 <li>Loop traversal — index-based vs. direct access</li>
@@ -350,16 +312,16 @@ pretest·답안지처럼 배포 금지 표시가 있는 자료는 싣지 않는�
 </ul>
 <p><em>위 목차는 원 강의안의 목차만 정리한 것이며, 슬라이드 전체 내용은 싣지 않는다.</em></p>
 <div style="break-before: page; page-break-before: always;"></div>
-<h1 id="l04-multi-dimensional-lists"><a class="header" href="#l04-multi-dimensional-lists">L04: Multi-Dimensional Lists</a></h1>
-<h2 id="이번-주-주제-3"><a class="header" href="#이번-주-주제-3">이번 주 주제</a></h2>
+<h1 id="multi-dimensional-lists"><a class="header" href="#multi-dimensional-lists">Multi-Dimensional Lists</a></h1>
+<h2 id="topics-covered-2"><a class="header" href="#topics-covered-2">Topics Covered</a></h2>
 <ul>
 <li>2-Dimensional Array as a List</li>
 <li>3-Dimensional Array as a List</li>
 </ul>
 <p><em>위 목차는 원 강의안의 목차만 정리한 것이며, 슬라이드 전체 내용은 싣지 않는다.</em></p>
 <div style="break-before: page; page-break-before: always;"></div>
-<h1 id="l05-pile-of-cubes"><a class="header" href="#l05-pile-of-cubes">L05: Pile of Cubes</a></h1>
-<h2 id="이번-주-주제-4"><a class="header" href="#이번-주-주제-4">이번 주 주제</a></h2>
+<h1 id="pile-of-cubes"><a class="header" href="#pile-of-cubes">Pile of Cubes</a></h1>
+<h2 id="topics-covered-3"><a class="header" href="#topics-covered-3">Topics Covered</a></h2>
 <ol>
 <li>Problems — 3D 물체를 2D 투영도로 매핑하는 문제</li>
 <li>Observations</li>
@@ -367,24 +329,24 @@ pretest·답안지처럼 배포 금지 표시가 있는 자료는 싣지 않는�
 </ol>
 <p><em>위 목차는 원 강의안의 목차만 정리한 것이며, 슬라이드 전체 내용은 싣지 않는다.</em></p>
 <div style="break-before: page; page-break-before: always;"></div>
-<h1 id="l06-gaussian-elimination"><a class="header" href="#l06-gaussian-elimination">L06: Gaussian Elimination</a></h1>
-<h2 id="이번-주-주제-5"><a class="header" href="#이번-주-주제-5">이번 주 주제</a></h2>
+<h1 id="gaussian-elimination"><a class="header" href="#gaussian-elimination">Gaussian Elimination</a></h1>
+<h2 id="topics-covered-4"><a class="header" href="#topics-covered-4">Topics Covered</a></h2>
 <ul>
 <li>System of Linear Equations (연립일차방정식)</li>
 <li>Upper Triangular Form (상삼각형태)과 back substitution을 이용한 풀이</li>
 </ul>
 <p><em>위 목차는 원 강의안의 목차만 정리한 것이며, 슬라이드 전체 내용은 싣지 않는다.</em></p>
 <div style="break-before: page; page-break-before: always;"></div>
-<h1 id="l07-spring-equilibrium-optional"><a class="header" href="#l07-spring-equilibrium-optional">L07: Spring Equilibrium (optional)</a></h1>
-<h2 id="이번-주-주제-6"><a class="header" href="#이번-주-주제-6">이번 주 주제</a></h2>
+<h1 id="spring-equilibrium-optional"><a class="header" href="#spring-equilibrium-optional">Spring Equilibrium (optional)</a></h1>
+<h2 id="topics-covered-5"><a class="header" href="#topics-covered-5">Topics Covered</a></h2>
 <ul>
 <li>Problem — 자유 물체, 고정 물체, 스프링(탄성계수)로 이루어진 시스템의 평형점 찾기</li>
 <li>Simplifying Assumption — 스프링의 초기 길이를 0으로 가정했을 때의 힘 표현</li>
 </ul>
 <p><em>위 목차는 원 강의안의 목차만 정리한 것이며, 슬라이드 전체 내용은 싣지 않는다.</em></p>
 <div style="break-before: page; page-break-before: always;"></div>
-<h1 id="l08-classes--objects"><a class="header" href="#l08-classes--objects">L08: Classes &amp; Objects</a></h1>
-<h2 id="이번-주-주제-7"><a class="header" href="#이번-주-주제-7">이번 주 주제</a></h2>
+<h1 id="classes--objects"><a class="header" href="#classes--objects">Classes &amp; Objects</a></h1>
+<h2 id="topics-covered-6"><a class="header" href="#topics-covered-6">Topics Covered</a></h2>
 <ol>
 <li>Robot Class</li>
 <li>Point Class</li>
@@ -392,8 +354,8 @@ pretest·답안지처럼 배포 금지 표시가 있는 자료는 싣지 않는�
 </ol>
 <p><em>위 목차는 원 강의안의 목차만 정리한 것이며, 슬라이드 전체 내용은 싣지 않는다.</em></p>
 <div style="break-before: page; page-break-before: always;"></div>
-<h1 id="l09-stable-matching-i"><a class="header" href="#l09-stable-matching-i">L09: Stable Matching I</a></h1>
-<h2 id="이번-주-주제-8"><a class="header" href="#이번-주-주제-8">이번 주 주제</a></h2>
+<h1 id="stable-matching-i"><a class="header" href="#stable-matching-i">Stable Matching I</a></h1>
+<h2 id="topics-covered-7"><a class="header" href="#topics-covered-7">Topics Covered</a></h2>
 <ol>
 <li>Motivation — 안정적이지 않은 매칭의 예시 (elope 문제)</li>
 <li>Stable Matching Problem — 문제 정의</li>
@@ -401,8 +363,8 @@ pretest·답안지처럼 배포 금지 표시가 있는 자료는 싣지 않는�
 </ol>
 <p><em>위 목차는 원 강의안의 목차만 정리한 것이며, 슬라이드 전체 내용은 싣지 않는다.</em></p>
 <div style="break-before: page; page-break-before: always;"></div>
-<h1 id="l10-stable-matching-ii"><a class="header" href="#l10-stable-matching-ii">L10: Stable Matching II</a></h1>
-<h2 id="이번-주-주제-9"><a class="header" href="#이번-주-주제-9">이번 주 주제</a></h2>
+<h1 id="stable-matching-ii"><a class="header" href="#stable-matching-ii">Stable Matching II</a></h1>
+<h2 id="topics-covered-8"><a class="header" href="#topics-covered-8">Topics Covered</a></h2>
 <ol>
 <li>Propose-Reject Algorithm (Gale-Shapley 알고리즘)</li>
 <li>Python Implementation</li>
@@ -413,8 +375,8 @@ pretest·답안지처럼 배포 금지 표시가 있는 자료는 싣지 않는�
 정확성과 구현을 다룸.</em></p>
 <p><em>위 목차는 원 강의안의 목차만 정리한 것이며, 슬라이드 전체 내용은 싣지 않는다.</em></p>
 <div style="break-before: page; page-break-before: always;"></div>
-<h1 id="l11-poker-hands"><a class="header" href="#l11-poker-hands">L11: Poker Hands</a></h1>
-<h2 id="이번-주-주제-10"><a class="header" href="#이번-주-주제-10">이번 주 주제</a></h2>
+<h1 id="poker-hands"><a class="header" href="#poker-hands">Poker Hands</a></h1>
+<h2 id="topics-covered-9"><a class="header" href="#topics-covered-9">Topics Covered</a></h2>
 <ol>
 <li>Poker Primer — 포커 기본 규칙</li>
 <li>Card/Hand Objects — straight flush, flush, straight, quadruple, triple,
@@ -423,8 +385,8 @@ pair, full house, two pair 판별</li>
 </ol>
 <p><em>위 목차는 원 강의안의 목차만 정리한 것이며, 슬라이드 전체 내용은 싣지 않는다.</em></p>
 <div style="break-before: page; page-break-before: always;"></div>
-<h1 id="l12-art-gallery-problem"><a class="header" href="#l12-art-gallery-problem">L12: Art Gallery Problem</a></h1>
-<h2 id="이번-주-주제-11"><a class="header" href="#이번-주-주제-11">이번 주 주제</a></h2>
+<h1 id="art-gallery-problem"><a class="header" href="#art-gallery-problem">Art Gallery Problem</a></h1>
+<h2 id="topics-covered-10"><a class="header" href="#topics-covered-10">Topics Covered</a></h2>
 <ol>
 <li>Orientations of Rectilinear Polygons — 직교 다각형의 방향(시계/반시계) 판별</li>
 <li>Surveillability of Rectilinear Polygons</li>
