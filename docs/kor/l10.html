@@ -28,7 +28,6 @@
         <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="../ayu-highlight-3fdfc3ac.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="../theme/numbering-c6f330cb.css">
 
 
         <!-- Provide site root and default themes to javascript -->
@@ -36,7 +35,7 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-438be00c.js";
+            window.path_to_searchindex_js = "../searchindex-bcc30a53.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../toc-6f28b252.js"></script>
@@ -179,14 +178,14 @@
                 <div id="mdbook-content" class="content">
                     <main>
                         <h1 id="stable-matching-ii"><a class="header" href="#stable-matching-ii">Stable Matching II</a></h1>
-<h2 id="key-concepts"><a class="header" href="#key-concepts">Key Concepts</a></h2>
+<h2 id="91-key-concepts"><a class="header" href="#91-key-concepts">9.1. Key Concepts</a></h2>
 <ul>
 <li>Propose-Reject 알고리즘(Gale-Shapley): 자유로운 남자가 자기 선호도 순으로
 여자에게 프로포즈하고, 여자는 더 마음에 드는 상대가 나타나면 갈아탄다 —
 이 과정을 반복하면 항상 stable matching으로 수렴함</li>
 <li><code>numProposal</code>로 “다음에 누구에게 프로포즈할지” 진행 상황을 추적</li>
 </ul>
-<h2 id="problem-set"><a class="header" href="#problem-set">Problem Set</a></h2>
+<h2 id="92-problem-set"><a class="header" href="#92-problem-set">9.2. Problem Set</a></h2>
 <h3 id="필수-문제"><a class="header" href="#필수-문제">필수 문제</a></h3>
 <p><strong>1. <code>Person.womanToPropose(self)</code></strong> — (<code>self</code>가 남자일 때만 사용) <code>prefList</code>
 순서대로 다음 차례에 프로포즈할 여자를 반환하고, <code>numProposal</code>을 갱신.</p>
