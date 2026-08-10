@@ -4,7 +4,6 @@
 
 # 국내반
 
-- [Motivation](kor/week01-motivation.md)
 - [Lists / Strings](kor/l02.md)
 - [File I/O](kor/l03.md)
 - [Multi-Dimensional Lists](kor/l04.md)

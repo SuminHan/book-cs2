@@ -36,10 +36,10 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-87b4a3ba.js";
+            window.path_to_searchindex_js = "searchindex-a55c3f67.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-9feb7861.js"></script>
+        <script src="toc-6f28b252.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -179,21 +179,19 @@
                 <div id="mdbook-content" class="content">
                     <main>
                         <h1 id="cs2-국내반-보충자료"><a class="header" href="#cs2-국내반-보충자료">CS2 국내반 보충자료</a></h1>
-<p>KSA 정보과학2(CS2) 국내반 보충 노트.</p>
-<p>수업을 대체하지 않는 보충 노트다. 원 강의자료의 원저작자는 각각 다르며
-(원작자 별도), 여기서는 정리·보완만 담당한다. 진단용
-pretest·답안지처럼 배포 금지 표시가 있는 자료는 싣지 않는다.</p>
-<p><em>아직 준비 중입니다 — 학기가 진행되면서 챕터가 채워질 예정입니다.</em></p>
-<div style="break-before: page; page-break-before: always;"></div>
-<h1 id="motivation"><a class="header" href="#motivation">Motivation</a></h1>
-<p><em>프로그래밍은 왜 여전히 중요한가 — Computer Science 2</em></p>
-<h2 id="11-the-question"><a class="header" href="#11-the-question">1.1. The Question</a></h2>
+<p>KSA 정보과학2(CS2) 국내반 보충 노트. 수업을 대체하지 않는 보충 노트다. 원
+강의자료의 원저작자는 각각 다르며(원작자 별도), 여기서는 정리·보완만
+담당한다. 진단용 pretest·답안지처럼 배포 금지 표시가 있는 자료는 싣지 않는다.</p>
+<hr>
+<h2 id="프로그래밍은-왜-여전히-중요한가"><a class="header" href="#프로그래밍은-왜-여전히-중요한가">프로그래밍은 왜 여전히 중요한가</a></h2>
+<p><em>Computer Science 2</em></p>
+<h3 id="1-the-question"><a class="header" href="#1-the-question">1. The Question</a></h3>
 <p>“이제 AI가 코드를 짜준다. 나보다 빠르고, 솔직히 나보다 더 잘 짠다. 그런데 내가 왜
 프로그래밍 수업에 앉아 있어야 하지?”</p>
 <p>정당한 질문이다. 그리고 “AI는 코딩을 잘 못한다“는 식으로 답할 생각은 없다.
 <strong>못하지 않는다. 아주 잘하고, 매달 더 좋아지고 있다.</strong> 대신 다른 방식으로
 답하려 한다 — 그래서 어떤 일이 새로 생겼는지 보여주는 방식으로.</p>
-<h2 id="12-what-changed"><a class="header" href="#12-what-changed">1.2. What Changed</a></h2>
+<h3 id="2-what-changed"><a class="header" href="#2-what-changed">2. What Changed</a></h3>
 <p>이진 탐색을 짜달라고 하면 즉시 나온다. 그리고 맞다. 10년 전엔 한 주치 수업
 분량이었다. 지금은 4초. 그럼 무엇이 비싸졌는가?</p>
 <p><strong>병목이 옮겨갔다.</strong></p>
@@ -220,7 +218,7 @@ pretest·답안지처럼 배포 금지 표시가 있는 자료는 싣지 않는�
 항상 코드다 — 출력에는 한국어 버전이 없다. 오직 코드가 있을 뿐이고, 그걸 읽을 수
 있느냐만 남는다. <strong>돌아온 것을 읽지 못한다면, 지시를 한 게 아니라 소원을 빈
 것이다.</strong></p>
-<h2 id="13-the-gap"><a class="header" href="#13-the-gap">1.3. The Gap</a></h2>
+<h3 id="3-the-gap"><a class="header" href="#3-the-gap">3. The Gap</a></h3>
 <p>“성적 계산기를 만들어줘“라고 시켜봤다. 이렇게 나왔다 — 깔끔하고, 읽기 쉽고, 잘
 돌아간다:</p>
 <pre><code class="language-python">def final_grade(scores, attendance_rate):
@@ -244,7 +242,7 @@ pretest·답안지처럼 배포 금지 표시가 있는 자료는 싣지 않는�
 <p>“그럼 규정을 프롬프트에 넣으면 되잖아요!” — 맞다. 그런데 그렇게 하려면 뭐가
 빠졌는지를 이미 알아챘어야 한다. 코드는 알려주지 않았다. <strong>구멍을 보려면
 읽는 수밖에 없었다.</strong></p>
-<h2 id="14-the-trap"><a class="header" href="#14-the-trap">1.4. The Trap</a></h2>
+<h3 id="4-the-trap"><a class="header" href="#4-the-trap">4. The Trap</a></h3>
 <p><strong>과제:</strong> 어떤 연도가 윤년이면 <code>True</code>를 반환.</p>
 <pre><code class="language-python">def is_leap_year(year):
     if year % 4 == 0:
@@ -266,7 +264,7 @@ pretest·답안지처럼 배포 금지 표시가 있는 자료는 싣지 않는�
 그걸 뉴턴(N)으로 읽었다. 1 lbf = 4.45 N이라 모든 궤도 수정이 4.45배씩 어긋난 채로
 10개월이 지났다. 손실 1억 2500만 달러. <strong>그 코드는 한 줄도 빠짐없이 완벽하게
 돌아갔다. 그 숫자가 무슨 뜻인지 아무도 확인하지 않았을 뿐이다.</strong></p>
-<h2 id="15-your-job"><a class="header" href="#15-your-job">1.5. Your Job</a></h2>
+<h3 id="5-your-job"><a class="header" href="#5-your-job">5. Your Job</a></h3>
 <p>1950년 튜링은 “기계가 생각할 수 있는가?“라고 물었고 — 답하기를 거부했다. 대신
 시험으로 바꿨다: 사람 심판이 양쪽에 질문을 던지고 그 답이 말이 되는지 판단한다.
 컴퓨터의 맨 처음 설계에 이미 질문을 던지는 사람이 의자에 앉아 있었다. 그 의자는
@@ -288,6 +286,8 @@ pretest·답안지처럼 배포 금지 표시가 있는 자료는 싣지 않는�
 것이 되지 않기 때문이다.</p>
 <p>평생 계산기를 쓸 것이다. 그래도 산수는 손으로 배웠다.</p>
 <hr>
+<p><em>아직 준비 중입니다 — 학기가 진행되면서 챕터가 채워질 예정입니다.</em></p>
+<hr>
 <ol class="footnote-definition">
 <li id="footnote-job-market">
 <p>The Pragmatic Engineer, <a href="https://newsletter.pragmaticengineer.com/p/state-of-the-job-market-2026"><em>State of the Software Engineering
@@ -297,39 +297,370 @@ and <a href="http://newsletter.pragmaticengineer.com/p/the-job-market-in-2026-pa
 </ol>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="lists--strings"><a class="header" href="#lists--strings">Lists / Strings</a></h1>
-<h2 id="21-topics-covered"><a class="header" href="#21-topics-covered">2.1. Topics Covered</a></h2>
+<h2 id="11-key-concepts"><a class="header" href="#11-key-concepts">1.1. Key Concepts</a></h2>
 <ul>
-<li>List를 생성하는 또 다른 방법: <code>.append(·)</code></li>
-<li>Slicing 연산자: <code>[ : ]</code></li>
-<li>List 비교 연산자: <code>==</code></li>
-<li>List 연결 연산자: <code>+</code></li>
-<li>List 포함관계 연산자: <code>in</code>, <code>not in</code></li>
-<li>List of int/float를 위한 built-in 함수들 — <code>sum()</code>, <code>max()</code></li>
-<li>List를 위한 기타 built-in 함수들 — <code>sort()</code> 등</li>
+<li>List를 생성하는 또 다른 방법: <code>.append(·)</code>로 빈 리스트 <code>[]</code>에 하나씩 추가하기</li>
+<li>Slicing 연산자: <code>[ : ]</code>, <code>[::2]</code>(건너뛰기), <code>[::-1]</code>(뒤집기)</li>
+<li>List 비교(<code>==</code>) / 연결(<code>+</code>) / 포함관계(<code>in</code>, <code>not in</code>) 연산자</li>
+<li>List용 built-in 함수: <code>sum()</code>, <code>max()</code>, <code>min()</code>, <code>sort()</code></li>
+<li>String: <code>s[i] == c</code>로 문자 비교, <code>+</code>로 새 문자열 이어붙이기(string은 immutable이라
+직접 수정 불가 — 항상 새 문자열을 만들어야 함), 사전순 비교 연산자 <code>&lt;</code></li>
 </ul>
-<p><em>위 목차는 원 강의안의 목차만 정리한 것이며, 슬라이드 전체 내용은 싣지 않는다.</em></p>
+<h2 id="12-problem-set"><a class="header" href="#12-problem-set">1.2. Problem Set</a></h2>
+<h3 id="필수-문제"><a class="header" href="#필수-문제">필수 문제</a></h3>
+<p><strong>1. <code>deleteThree(L)</code></strong> — 리스트 <code>L</code>에서 3을 모두 제거한 리스트를 반환.</p>
+<pre><code class="language-python">def deleteThree(L):
+    M = []
+    for i in range(len(L)):
+        if L[i] != 3:
+            M.append(L[i])
+    return M
+
+print(deleteThree([2,5,7,3,2,8,3,3]))  # [2,5,7,2,8]
+print(deleteThree([2,3,7,3,2,8,3,3]))  # [2,7,2,8]
+print(deleteThree([3,3,7,3,2,8,3,3]))  # [7,2,8]
+</code></pre>
+<blockquote>
+<p>새 리스트를 만들 땐 <code>[]</code>로 초기화한 후 <code>M.append(·)</code>로 하나씩 붙여나가면 된다.</p>
+</blockquote>
+<p><strong>2. <code>delete(L, e)</code></strong> — 리스트 <code>L</code>에서 정수 <code>e</code>를 모두 제거한 리스트를 반환. (1번과
+같은 패턴, 조건만 <code>e</code>로 일반화)</p>
+<p><strong>3. <code>kthSmallest(L, k)</code></strong> — 정수 리스트 <code>L</code>에서 <code>k</code>번째로 작은 값을 반환
+(<code>1 ≤ k ≤ len(L)</code>).</p>
+<blockquote>
+<p><code>L.sort()</code>를 쓰면 <code>L</code> 자체가 정렬되고 반환값은 <code>None</code>이라는 점에 유의.
+<code>k</code>번째로 작은 원소는 정렬 후 <code>L[k]</code>가 아니라 <code>L[k-1]</code>.</p>
+</blockquote>
+<p><strong>4. <code>same(L1, L2)</code></strong> — 두 리스트가 (순서 상관없이) 같은 원소를 같은 개수만큼
+가지면 <code>True</code>.</p>
+<blockquote>
+<p><code>L1 == L2</code>는 순서까지 완전히 같아야 <code>True</code>. 정렬 후 비교하면 순서를 무시할 수
+있다.</p>
+</blockquote>
+<p><strong>5. <code>makeSet(L)</code></strong> — 리스트 <code>L</code>의 원소를 중복 없이 정확히 하나씩만 포함한, 정렬된
+리스트를 반환.</p>
+<blockquote>
+<p>1, 2번과 유사한 형태 — 지금까지 만든 <code>M</code>에 아직 없는 원소일 때만 <code>append</code>.
+<code>x in L</code> / <code>x not in L</code>로 포함 여부 확인.</p>
+</blockquote>
+<p><strong>6. <code>sortId(L)</code></strong> — <code>ID</code>와 이름이 번갈아 나오는 문자열 리스트 <code>L</code>을, 학생 ID
+기준으로 정렬해서 반환.</p>
+<blockquote>
+<p><code>ID = L[::2]</code>로 짝수 인덱스만 뽑아낼 수 있다.
+<code>y = L.index(x)</code>는 <code>L</code>에서 <code>x</code>가 처음 등장하는 인덱스(없으면 에러).</p>
+</blockquote>
+<p><strong>7. <code>countA(s)</code></strong> — 문자열 <code>s</code>에서 <code>"A"</code>의 개수를 반환.</p>
+<pre><code class="language-python">def countA(s):
+    counter = 0
+    for i in range(len(s)):
+        if s[i] == "A":
+            counter += 1
+    return counter
+
+print(countA("AbAA"))          # 3
+print(countA("bcdAAAdfAA"))    # 5
+print(countA("abc"))           # 0
+</code></pre>
+<p><strong>8. <code>countChar(s, c)</code></strong> — 문자열 <code>s</code>에서 문자 <code>c</code>(길이 1인 문자열)의 개수를 반환.
+(7번의 일반화)</p>
+<p><strong>9. <code>reverse(s)</code></strong> — 문자열 <code>s</code>를 뒤집은 문자열을 반환.</p>
+<blockquote>
+<p><code>""</code>로 초기화한 뒤 <code>+</code>로 한 글자씩 이어붙이는 패턴: <code>r = r + ??</code>. <code>s</code>의 뒤쪽
+문자부터 <code>r</code>에 붙여나가면 된다.</p>
+</blockquote>
+<p><strong>10. <code>delete(s, c)</code></strong> — 문자열 <code>s</code>에서 문자 <code>c</code>를 모두 제거한 문자열을 반환.</p>
+<blockquote>
+<p>9번과 비슷한 형태로, 앞에서부터 <code>r</code>에 붙이되 <code>s[i] != c</code>일 때만 붙이면 된다.</p>
+</blockquote>
+<p><strong>11. <code>replace(s, c, to)</code></strong> — 문자열 <code>s</code>에서 문자 <code>c</code>를 전부 <code>to</code>로 교체한 문자열을
+반환.</p>
+<blockquote>
+<p><code>s[i] == c</code>일 때는 <code>s[i]</code> 대신 <code>to</code>를, 아니면 <code>s[i]</code>를 그대로 붙인다.</p>
+</blockquote>
+<p><strong>12. <code>firstStr(s1, s2, s3)</code></strong> — 세 문자열 중 사전순으로 가장 앞서는 문자열을
+반환.</p>
+<blockquote>
+<p>문자열 비교 연산자 <code>&lt;</code>는 사전순 비교. 예: <code>"abcde" &lt; "acbde"</code>는 <code>True</code>.</p>
+</blockquote>
+<h3 id="optional-problems"><a class="header" href="#optional-problems">Optional Problems</a></h3>
+<p><em>필수 문제와 달리 제출/검사 대상은 아니지만 도움이 되므로 시간이 남으면
+시도해볼 것을 권장 (대부분 기출문제).</em></p>
+<p><strong>13. <code>factorize(n)</code></strong> — 2 이상의 정수 <code>n</code>의 소인수를 오름차순으로 정렬한 리스트를
+반환. 예: <code>factorize(504)</code> → <code>[2, 3, 7]</code> (504 = 2³·3²·7).</p>
+<p><strong>14. <code>fraction(numer, denom)</code></strong> — 두 양의 정수 <code>numer</code>, <code>denom</code>이 주어질 때, 유리수
+<code>numer/denom</code>의 연분수(continued fraction) 표현 <code>[a1, a2, ..., an]</code>을 반환.
+예를 들어 <code>numer=415, denom=93</code>이면 <code>[4, 2, 6, 7]</code>을 반환한다.</p>
+<p><strong>15.</strong> 함수 f(n)을 “n의 각 자릿수를 제곱해서 더한 값“으로 정의할 때, 주어진 정수
+<code>n</code> (2 ≤ n ≤ 10억)에 대해 f를 k번 반복 적용한 값이 1이 되는 최소의 양의 정수
+<code>k</code>를 반환하는 함수 <code>composition(n)</code>을 작성 (그런 <code>k</code>가 없으면 <code>None</code>). 예:
+<code>n=19</code>이면 <code>f(19)=82, f(82)=68, f(68)=100, f(100)=1</code>이므로 <code>k=4</code>.</p>
+<p><strong>16.</strong> 키가 정렬된 n명의 학생을 인접한 k개 조로 나눌 때, 각 조의 비용(키의 합 +
+그 조 내 키의 최댓값−최솟값)의 총합을 최소화하는 <code>minCost(heights, k)</code>를 작성.
+예: <code>heights=[1,3,5,6,10], k=3</code>이면 최소 비용은 28.</p>
+<hr>
+<p><em>원본: <code>CS2(2026-2)_all/CS2/CS2/problem_set/P02.pdf</code>. 표현/코드는 정리하며 일부
+재구성함.</em></p>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="file-io"><a class="header" href="#file-io">File I/O</a></h1>
-<h2 id="31-topics-covered"><a class="header" href="#31-topics-covered">3.1. Topics Covered</a></h2>
+<h2 id="21-key-concepts"><a class="header" href="#21-key-concepts">2.1. Key Concepts</a></h2>
 <ul>
-<li><code>range(·)</code> as a list</li>
-<li>Loop traversal — index-based vs. direct access</li>
-<li><code>break</code> / <code>continue</code></li>
-<li>Loop patterns — min/max, counter, quantifier (“for all”/“for some”)</li>
-<li>Example: File I/O</li>
+<li><code>open(filename, "r").read().split()</code> — 파일 내용을 전부 읽어서 단어 단위로 쪼갠
+리스트로 변환</li>
+<li>“for all” 패턴: 조건을 만족하지 않는 원소가 하나라도 있으면 <code>False</code></li>
+<li>Counter 패턴: 조건을 만족하는 원소의 개수 세기</li>
+<li>Max/min 패턴: 조건을 만족하는 것 중 최댓값/최솟값(+ 그 대상) 유지</li>
+<li>문자열 슬라이싱으로 부분 문자열 검사(<code>s[i:i+5:2]</code> 등)</li>
 </ul>
-<p><em>위 목차는 원 강의안의 목차만 정리한 것이며, 슬라이드 전체 내용은 싣지 않는다.</em></p>
+<h2 id="22-problem-set"><a class="header" href="#22-problem-set">2.2. Problem Set</a></h2>
+<h3 id="필수-문제-1"><a class="header" href="#필수-문제-1">필수 문제</a></h3>
+<p><strong>1. <code>inOrder(filename)</code></strong> — 파일의 모든 단어가 사전순으로 정렬되어 있는지 여부.</p>
+<pre><code class="language-python">def inOrder(filename):
+    words = open(filename, "r").read().split()
+    n = len(words)
+    for i in range(n - 1):
+        if words[i] &gt; words[i + 1]:
+            return False
+    return True
+
+print(inOrder("dictionary.txt"))   # True
+print(inOrder("dictionary2.txt"))  # False
+</code></pre>
+<blockquote>
+<p>“for all” 패턴. <code>range(n)</code>이 아니라 <code>range(n-1)</code>을 써야 마지막 인덱스에서
+<code>words[i+1]</code>이 범위를 벗어나지 않는다.</p>
+</blockquote>
+<p><strong>2. <code>isPalindrome(s)</code> / <code>maxPalindrome(filename)</code></strong> — <code>isPalindrome</code>은 문자열이
+회문(앞뒤로 읽어도 같음, 예: <code>"deified"</code>)인지 판정. <code>maxPalindrome</code>은 파일에서
+가장 긴 회문을 반환(동점이면 먼저 나온 것).</p>
+<blockquote>
+<p><code>isPalindrome</code>은 “for all” 패턴(<code>s[i]</code>와 <code>s[n-1-i]</code> 비교). <code>maxPalindrome</code>은
+max 패턴이되 “가장 긴 길이“가 아니라 “가장 긴 회문 단어” 자체를 유지해야 하므로
+<code>maxlen</code>뿐 아니라 <code>maxword</code>도 같이 갱신.</p>
+</blockquote>
+<p><strong>3. <code>isAbecedarian(s)</code> / <code>countAbecedarian(filename)</code></strong> — abecedarian은 모든
+글자가 알파벳 순서로 나타나는 단어(예: <code>"aaabb"</code>, <code>"acorsy"</code>). <code>isAbecedarian</code>은
+판정 함수, <code>countAbecedarian</code>은 파일에서 그 개수를 센다.</p>
+<blockquote>
+<p><code>isAbecedarian</code>은 “for all” 패턴, <code>countAbecedarian</code>은 counter 패턴.</p>
+</blockquote>
+<p><strong>4. <code>disjoint(s1, s2)</code></strong> — 두 문자열이 겹치는 글자가 하나도 없으면 <code>True</code>.</p>
+<pre><code class="language-python">print(disjoint("ace", "a"))          # False
+print(disjoint("aurora", "steel"))   # True
+print(disjoint("elephant", "long"))  # False
+</code></pre>
+<blockquote>
+<p>“for all” 패턴. <code>s1[i] in s2</code>로 각 글자의 포함 여부를 확인.</p>
+</blockquote>
+<p><strong>5. <code>countWordWithE(filename)</code></strong> — 파일에서 알파벳 <code>"e"</code>를 포함한 단어의 개수.
+Counter 패턴.</p>
+<p><strong>6. <code>countPrime(filename)</code></strong> — 파일에서 길이가 소수인 단어의 개수. <code>isPrime</code>을
+활용한 counter 패턴.</p>
+<p><strong>7. <code>istcdl(s)</code> / <code>tcdl(filename)</code></strong> — “3연속 이중 글자”(예: <code>"bookkeeper"</code>)를
+가졌는지 판정하고, 파일에서 그런 단어를 모두 모아 리스트로 반환.</p>
+<blockquote>
+<p><code>istcdl</code>은 “for all” 패턴 — <code>s[i:i+5:2]</code>, <code>s[i+1:i+6:2]</code>가 뭘 뜻하는지 먼저
+생각해볼 것. <code>tcdl</code>은 조건을 만족하는 단어만 골라 새 리스트에 담는 패턴:</p>
+<pre><code class="language-python">L = []
+for i in range(n):
+    if some_condition(words[i]):
+        L.append(words[i])
+return L
+</code></pre>
+</blockquote>
+<p><strong>8. <code>meter()</code></strong> — 인자 없이, 100000 ≤ i ≤ 999996 범위에서 아래 네 조건을 모두
+만족하는 정수 <code>i</code>를 전부 찾아 리스트로 반환:</p>
+<ul>
+<li><code>i</code>의 마지막 네 자리가 회문</li>
+<li><code>i+1</code>의 마지막 다섯 자리가 회문</li>
+<li><code>i+2</code>의 중간 네 자리가 회문</li>
+<li><code>i+3</code>의 여섯 자리 전체가 회문</li>
+</ul>
+<pre><code class="language-python">def isPalindrome(s):
+    n = len(s)
+    for i in range(n // 2):
+        if s[i] != s[n - 1 - i]:
+            return False
+    return True
+
+def check(i):
+    # ADD ADDITIONAL CODE HERE!
+    ...
+
+def meter():
+    L = []
+    for i in range(100000, 999997):
+        if check(i):
+            L.append(i)
+    return L
+
+print(meter())  # [198888, 199999]
+</code></pre>
+<blockquote>
+<p>정수를 문자열로 바꾸려면 <code>str(i)</code>. <code>str(i+1)[1:]</code>처럼 슬라이싱으로 원하는
+자릿수만 잘라내 <code>isPalindrome</code>으로 검사.</p>
+</blockquote>
+<p><strong>9. <code>triangle(n)</code></strong> — 길이가 같은 성냥개비 <code>n</code>개로, (부러뜨리지 않고 전부 사용해)
+만들 수 있는 서로 합동이 아닌 삼각형의 개수를 반환.</p>
+<pre><code class="language-python">print(triangle(9))    # 3
+print(triangle(30))   # 19
+print(triangle(70))   # 102
+print(triangle(400))  # 3333
+</code></pre>
+<h3 id="optional-problems-1"><a class="header" href="#optional-problems-1">Optional Problems</a></h3>
+<p><em>필수 문제와 달리 제출/검사 대상은 아니지만 도움이 되므로 시간이 남으면
+시도해볼 것을 권장 (대부분 기출문제).</em></p>
+<p><strong>10. <code>maxTwinPrimes(n)</code></strong> — $p_2 - p_1 = 2$인 두 소수(twin primes) 중, <code>n</code> 이하에서
+$p_1 &lt; p_2$가 가장 큰 쌍 <code>[p1, p2]</code>를 반환. 예: <code>maxTwinPrimes(5)</code> → <code>[3, 5]</code>.</p>
+<p><strong>11. <code>sym_diff(L, M)</code></strong> — 두 정수 리스트 <code>L</code>, <code>M</code>의 symmetric difference(정확히
+한쪽에만 속한 숫자들, 중복 없이 오름차순)를 반환.</p>
+<p><strong>12. <code>multiple(L1, L2)</code></strong> — <code>L1</code>의 모든 숫자가 <code>L2</code>의 어떤 숫자의 배수이면
+<code>True</code>. 예: <code>multiple([14,24,18,35,39], [6,13,7])</code> → <code>True</code>.</p>
+<hr>
+<p><em>원본: <code>CS2(2026-2)_all/CS2/CS2/problem_set/P03.pdf</code>. 표현/코드는 정리하며 일부
+재구성함.</em></p>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="multi-dimensional-lists"><a class="header" href="#multi-dimensional-lists">Multi-Dimensional Lists</a></h1>
-<h2 id="41-topics-covered"><a class="header" href="#41-topics-covered">4.1. Topics Covered</a></h2>
+<h2 id="31-key-concepts"><a class="header" href="#31-key-concepts">3.1. Key Concepts</a></h2>
 <ul>
-<li>2-Dimensional Array as a List</li>
-<li>3-Dimensional Array as a List</li>
+<li>2차원 배열: <code>table[i]</code>는 <code>i</code>행에 대응하는 리스트. <code>height = len(table)</code>,
+<code>width = len(table[0])</code></li>
+<li>3차원 배열: <code>table[i]</code>는 <code>i</code>층에 대응하는 2D 배열. <code>depth = len(table)</code>,
+<code>height = len(table[0])</code>, <code>width = len(table[0][0])</code></li>
+<li>다중 for 루프로 모든 칸 순회: counter, max/min, “for all” 패턴이 그대로 확장됨</li>
+<li>경계 체크 함수(<code>withinBoundary</code>)로 인접 칸을 안전하게 순회</li>
 </ul>
-<p><em>위 목차는 원 강의안의 목차만 정리한 것이며, 슬라이드 전체 내용은 싣지 않는다.</em></p>
+<h2 id="32-problem-set"><a class="header" href="#32-problem-set">3.2. Problem Set</a></h2>
+<h3 id="필수-문제-2"><a class="header" href="#필수-문제-2">필수 문제</a></h3>
+<p><strong>1. <code>countZero(a)</code></strong> — 2차원 배열 <code>a</code>에서 0의 개수. Counter 패턴의 2중 for 루프.</p>
+<pre><code class="language-python">def countZero(a):
+    height = len(a)
+    width = len(a[0])
+    count = 0
+    for i in range(height):
+        for j in range(width):
+            if a[i][j] == 0:
+                count += 1
+    return count
+
+print(countZero([[1,2,3],[0,0,5],[0,3,0],[0,0,0]]))  # 7
+print(countZero([[0,2,3],[0,0,5],[0,3,0]]))          # 5
+</code></pre>
+<p><strong>2. <code>countZero(a)</code>(3차원 버전)</strong> — 3차원 배열에서 0의 개수. 1번과 같은 패턴을
+3중 for 루프로 확장.</p>
+<pre><code class="language-python">print(countZero([[[1,2],[0,0]],[[0,0],[0,0]]]))                  # 6
+print(countZero([[[1,2],[0,0]],[[0,0],[0,0]],[[0,0],[0,0]]]))    # 10
+</code></pre>
+<p><strong>3. <code>maxPrime(a)</code></strong> — 3차원 배열에서 가장 큰 소수(없으면 0). Max/min 패턴, 주어진
+<code>isPrime</code> 함수 활용.</p>
+<pre><code class="language-python">print(maxPrime([[[2,3],[3,9]],[[17,3],[3,19]]]))   # 19
+print(maxPrime([[[29,3],[3,9]],[[17,3],[3,19]]]))  # 29
+</code></pre>
+<p><strong>4. <code>sorted(a)</code></strong> — 2차원 배열의 모든 행과 모든 열이 각각 비감소 순서인지 여부.</p>
+<pre><code class="language-python">test1 = [
+    [2,3,7,9,11,12],
+    [5,6,8,10,12,15],
+    [7,7,8,10,12,15],
+    [8,9,10,10,13,17],
+]
+test2 = [
+    [2,3,7,9,11,12],
+    [5,6,8,10,12,15],
+    [7,7,8,10,12,18],
+    [8,9,10,10,13,17],
+]
+print(sorted(test1))  # True
+print(sorted(test2))  # False
+</code></pre>
+<blockquote>
+<p>“for all” 패턴의 2중 for 루프를 두 번 사용 — 하나는 각 행(가로), 하나는 각
+열(세로) 방향 체크. <code>range</code>에 <code>height</code>/<code>width</code>를 그대로 넣을지 <code>-1</code>을 뺄지
+꼼꼼히 따져볼 것.</p>
+</blockquote>
+<p><strong>5. <code>countMines(mineField)</code>(1차원)</strong> — 1차원 지뢰밭(boolean 리스트)에서, 각
+칸(자기 자신 + 좌우 인접 칸)의 지뢰 개수를 리스트로 반환.</p>
+<pre><code class="language-python">def withinBoundary(size, i):
+    return i &gt;= 0 and i &lt; size
+
+def countMines(mineField):
+    size = len(mineField)
+    mines = [0] * size
+    for i in range(size):
+        for j in range(i - 1, i + 2):
+            if withinBoundary(size, j):
+                mines[i] += mineField[j]
+    return mines
+
+T, F = True, False
+mineField1 = [T, F, F, T, T, T, T, F, T, F]
+mineField2 = [T, F, T, T, T, F, F]
+print(countMines(mineField1))  # [1,1,1,2,3,3,2,2,1,1]
+print(countMines(mineField2))  # [1,2,2,3,2,1,0]
+</code></pre>
+<p><strong>6. <code>countMines(mineField)</code>(2차원)</strong> — 2차원 지뢰밭에서, 각 칸(자기 자신 + 8방향
+인접 칸)의 지뢰 개수를 2차원 리스트로 반환.</p>
+<blockquote>
+<p>2차원 리스트 초기화는 <code>None</code> 대신 <code>0</code>으로 해두고 그대로 누적하면 편하다.</p>
+</blockquote>
+<pre><code class="language-python">def withinBoundary(height, width, i, j):
+    return 0 &lt;= i &lt; height and 0 &lt;= j &lt; width
+
+def countMines(mineField):
+    height = len(mineField)
+    width = len(mineField[0])
+    # ADD ADDITIONAL CODE HERE!
+</code></pre>
+<p><strong>7. <code>maxZeroRect(M)</code></strong> — 0/1 행렬 <code>M</code>에서, 0으로만 이루어진 가장 큰 직사각형의
+넓이를 반환.</p>
+<pre><code class="language-python">def zeroRect(M, i1, i2, j1, j2):
+    # returns True iff M[i][j] == 0 for all i1&lt;=i&lt;=i2, j1&lt;=j&lt;=j2
+    ...
+
+def maxZeroRect(M):
+    ...
+
+M = [[1,1,0,1,0,0,1],
+     [0,0,0,0,0,1,1],
+     [0,0,0,0,0,1,1],
+     [0,0,0,0,0,1,1],
+     [1,0,0,0,0,0,1],
+     [1,0,0,0,0,1,0],
+     [1,0,1,0,0,1,0],
+     [1,0,1,0,0,1,0]]
+print(maxZeroRect(M))  # 20
+</code></pre>
+<blockquote>
+<p>보조 함수 <code>zeroRect(M, i1, i2, j1, j2)</code>를 먼저 만들어, <code>M[i][j]</code>가
+<code>i1≤i≤i2, j1≤j≤j2</code> 범위에서 전부 0인지 판정한 뒤 <code>maxZeroRect</code>에서 활용.</p>
+</blockquote>
+<h3 id="optional-problems-2"><a class="header" href="#optional-problems-2">Optional Problems</a></h3>
+<p><em>필수 문제와 달리 제출/검사 대상은 아니지만 도움이 되므로 시간이 남으면
+시도해볼 것을 권장 (대부분 기출문제).</em></p>
+<p><strong>8. <code>product(A, B)</code></strong> — 두 행렬(2차원 리스트) <code>A</code>(m×p), <code>B</code>(p×n)의 행렬곱을
+반환. 차원이 안 맞아 곱이 정의되지 않으면 <code>None</code>.</p>
+<p><strong>9. <code>rotate(M)</code></strong> — 2차원 리스트 <code>M</code>을 시계방향으로 90° 회전시킨 리스트를 반환.</p>
+<p><strong>10. <code>check(M)</code></strong> — 2차원 리스트 <code>M</code>의 각 행에 음수가 존재하면 <code>True</code>.</p>
+<p><strong>11. <code>findMines(C)</code></strong> — 5번 문제의 역연산. <code>C[i]</code>가 <code>M[i-1]+M[i]+M[i+1]</code>(경계
+밖은 무시)의 합일 때, 그런 <code>M</code>을 하나 찾아 반환(없으면 <code>None</code>).</p>
+<pre><code class="language-python">def countMines(M):
+    n = len(M)
+    C = [0] * n
+    for i in range(n):
+        for j in range(i - 1, i + 2):
+            if 0 &lt;= j &lt; n:
+                C[i] += M[j]
+    return C
+</code></pre>
+<blockquote>
+<p>힌트: <code>M[0]</code>의 각 후보값(0부터 <code>max(C)</code>까지)에 대해 나머지 <code>M[1..n-1]</code>이
+<code>M[i]+M[i+1]+M[i+2] = C[i]</code> 형태의 등식들로 유일하게 결정된다. 이 값들이
+모두 0 이상이고 마지막 등식(<code>M[n-2]+M[n-1]=C[n-1]</code>)까지 성립하면 답.</p>
+</blockquote>
+<hr>
+<p><em>원본: <code>CS2(2026-2)_all/CS2/CS2/problem_set/P04.pdf</code>. 표현/코드는 정리하며 일부
+재구성함.</em></p>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="pile-of-cubes"><a class="header" href="#pile-of-cubes">Pile of Cubes</a></h1>
-<h2 id="51-topics-covered"><a class="header" href="#51-topics-covered">5.1. Topics Covered</a></h2>
+<h2 id="41-topics-covered"><a class="header" href="#41-topics-covered">4.1. Topics Covered</a></h2>
 <ol>
 <li>Problems — 3D 물체를 2D 투영도로 매핑하는 문제</li>
 <li>Observations</li>
@@ -338,7 +669,7 @@ and <a href="http://newsletter.pragmaticengineer.com/p/the-job-market-in-2026-pa
 <p><em>위 목차는 원 강의안의 목차만 정리한 것이며, 슬라이드 전체 내용은 싣지 않는다.</em></p>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="gaussian-elimination"><a class="header" href="#gaussian-elimination">Gaussian Elimination</a></h1>
-<h2 id="61-topics-covered"><a class="header" href="#61-topics-covered">6.1. Topics Covered</a></h2>
+<h2 id="51-topics-covered"><a class="header" href="#51-topics-covered">5.1. Topics Covered</a></h2>
 <ul>
 <li>System of Linear Equations (연립일차방정식)</li>
 <li>Upper Triangular Form (상삼각형태)과 back substitution을 이용한 풀이</li>
@@ -346,7 +677,7 @@ and <a href="http://newsletter.pragmaticengineer.com/p/the-job-market-in-2026-pa
 <p><em>위 목차는 원 강의안의 목차만 정리한 것이며, 슬라이드 전체 내용은 싣지 않는다.</em></p>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="spring-equilibrium-optional"><a class="header" href="#spring-equilibrium-optional">Spring Equilibrium (optional)</a></h1>
-<h2 id="71-topics-covered"><a class="header" href="#71-topics-covered">7.1. Topics Covered</a></h2>
+<h2 id="61-topics-covered"><a class="header" href="#61-topics-covered">6.1. Topics Covered</a></h2>
 <ul>
 <li>Problem — 자유 물체, 고정 물체, 스프링(탄성계수)로 이루어진 시스템의 평형점 찾기</li>
 <li>Simplifying Assumption — 스프링의 초기 길이를 0으로 가정했을 때의 힘 표현</li>
@@ -354,7 +685,7 @@ and <a href="http://newsletter.pragmaticengineer.com/p/the-job-market-in-2026-pa
 <p><em>위 목차는 원 강의안의 목차만 정리한 것이며, 슬라이드 전체 내용은 싣지 않는다.</em></p>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="classes--objects"><a class="header" href="#classes--objects">Classes &amp; Objects</a></h1>
-<h2 id="81-topics-covered"><a class="header" href="#81-topics-covered">8.1. Topics Covered</a></h2>
+<h2 id="71-topics-covered"><a class="header" href="#71-topics-covered">7.1. Topics Covered</a></h2>
 <ol>
 <li>Robot Class</li>
 <li>Point Class</li>
@@ -363,7 +694,7 @@ and <a href="http://newsletter.pragmaticengineer.com/p/the-job-market-in-2026-pa
 <p><em>위 목차는 원 강의안의 목차만 정리한 것이며, 슬라이드 전체 내용은 싣지 않는다.</em></p>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="stable-matching-i"><a class="header" href="#stable-matching-i">Stable Matching I</a></h1>
-<h2 id="91-topics-covered"><a class="header" href="#91-topics-covered">9.1. Topics Covered</a></h2>
+<h2 id="81-topics-covered"><a class="header" href="#81-topics-covered">8.1. Topics Covered</a></h2>
 <ol>
 <li>Motivation — 안정적이지 않은 매칭의 예시 (elope 문제)</li>
 <li>Stable Matching Problem — 문제 정의</li>
@@ -372,7 +703,7 @@ and <a href="http://newsletter.pragmaticengineer.com/p/the-job-market-in-2026-pa
 <p><em>위 목차는 원 강의안의 목차만 정리한 것이며, 슬라이드 전체 내용은 싣지 않는다.</em></p>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="stable-matching-ii"><a class="header" href="#stable-matching-ii">Stable Matching II</a></h1>
-<h2 id="101-topics-covered"><a class="header" href="#101-topics-covered">10.1. Topics Covered</a></h2>
+<h2 id="91-topics-covered"><a class="header" href="#91-topics-covered">9.1. Topics Covered</a></h2>
 <ol>
 <li>Propose-Reject Algorithm (Gale-Shapley 알고리즘)</li>
 <li>Python Implementation</li>
@@ -384,7 +715,7 @@ and <a href="http://newsletter.pragmaticengineer.com/p/the-job-market-in-2026-pa
 <p><em>위 목차는 원 강의안의 목차만 정리한 것이며, 슬라이드 전체 내용은 싣지 않는다.</em></p>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="poker-hands"><a class="header" href="#poker-hands">Poker Hands</a></h1>
-<h2 id="111-topics-covered"><a class="header" href="#111-topics-covered">11.1. Topics Covered</a></h2>
+<h2 id="101-topics-covered"><a class="header" href="#101-topics-covered">10.1. Topics Covered</a></h2>
 <ol>
 <li>Poker Primer — 포커 기본 규칙</li>
 <li>Card/Hand Objects — straight flush, flush, straight, quadruple, triple,
@@ -394,7 +725,7 @@ pair, full house, two pair 판별</li>
 <p><em>위 목차는 원 강의안의 목차만 정리한 것이며, 슬라이드 전체 내용은 싣지 않는다.</em></p>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="art-gallery-problem"><a class="header" href="#art-gallery-problem">Art Gallery Problem</a></h1>
-<h2 id="121-topics-covered"><a class="header" href="#121-topics-covered">12.1. Topics Covered</a></h2>
+<h2 id="111-topics-covered"><a class="header" href="#111-topics-covered">11.1. Topics Covered</a></h2>
 <ol>
 <li>Orientations of Rectilinear Polygons — 직교 다각형의 방향(시계/반시계) 판별</li>
 <li>Surveillability of Rectilinear Polygons</li>
