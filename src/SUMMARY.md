@@ -5,18 +5,14 @@
 # 국내반
 
 - [Motivation](kor/week01-motivation.md)
-- [Lists / Strings](kor/l02.md)
-- [File I/O](kor/l03.md)
-- [Multi-Dimensional Lists](kor/l04.md)
-- [Pile of Cubes](kor/l05.md)
-- [Gaussian Elimination](kor/l06.md)
-- [Spring Equilibrium (optional)](kor/l07.md)
-- [Classes & Objects](kor/l08.md)
-- [Stable Matching I](kor/l09.md)
-- [Stable Matching II](kor/l10.md)
-- [Poker Hands](kor/l11.md)
-- [Art Gallery Problem](kor/l12.md)
-
-# 일반 CS 개념
-
-- [32-bit vs 64-bit](general/bit-width.md)
+    - [Lists / Strings](kor/l02.md)
+    - [File I/O](kor/l03.md)
+    - [Multi-Dimensional Lists](kor/l04.md)
+    - [Pile of Cubes](kor/l05.md)
+    - [Gaussian Elimination](kor/l06.md)
+    - [Spring Equilibrium (optional)](kor/l07.md)
+    - [Classes & Objects](kor/l08.md)
+    - [Stable Matching I](kor/l09.md)
+    - [Stable Matching II](kor/l10.md)
+    - [Poker Hands](kor/l11.md)
+    - [Art Gallery Problem](kor/l12.md)
