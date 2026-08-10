@@ -1,6 +1,5 @@
 # Problem Set
 
-
 ### 필수 문제
 
 **1. `equilibrium(n, S1, S2)`** — 자유 물체 \\(n\\)개, 자유-자유 스프링 리스트 `S1`,
@@ -10,9 +9,6 @@
 - `S1[i] = [elastic_coeff, free_idx_a, free_idx_b]` — 두 자유 물체를 잇는 스프링
 - `S2[i] = [elastic_coeff, free_idx, fixed_x, fixed_y]` — 자유 물체와 고정 물체를
   잇는 스프링
-
-예: 고정 물체 \\(F_1=(0,0)\\), \\(F_2=(7,0)\\)에 탄성계수 3, 4인 스프링으로 연결된 자유
-물체 하나의 평형 위치는, \\(-w_1 x + w_2(7-x) = 0\\)을 풀어 \\(x=4\\).
 
 ```python
 # copy the function gaussian_elimination from L06 here
@@ -28,9 +24,6 @@ S2 = [[4,0,-2,7], [3,0,-6,2], [2,1,6,-1], [5,1,2,-5]]
 print(equilibrium(2, S1, S2))
 # [[-2.95, 3.89], [2.38, -2.89]]
 ```
-> 힌트: 각 자유 물체에 대해 "그 물체에 연결된 모든 스프링의 힘의 합 = 0"이라는
-> 식을 세우면, \\(x\\)좌표들에 대한 연립방정식과 \\(y\\)좌표들에 대한 연립방정식이
-> 각각 만들어진다. 6주차의 `gaussian_elimination`을 그대로 재사용.
 
 ### Optional Problems
 
@@ -41,11 +34,11 @@ print(equilibrium(2, S1, S2))
 수만큼 동전을 오른쪽으로 옮기고(단, 화살표 `A`를 만나면 도착점으로 순간이동)
 \\(n\\)번 칸에 도달하면 끝나는 게임에서, 게임이 끝날 때까지 주사위를 굴리는
 횟수의 기댓값을 정확히(오차 \\(10^{-10}\\) 이내) 계산.
-> Monte Carlo 시뮬레이션(랜덤 추정)은 허용되지 않음 — 기댓값을 연립일차방정식
-> 으로 세운 뒤 Gaussian elimination으로 정확히 풀어야 한다. 화살표가 없는 단순
-> 경우는 점화식 \\(a_n = 1 + \frac{1}{6}\sum_{i=\max\{1,n-6\}}^{n-1} a_i\\)로 풀 수
-> 있고, 화살표가 있는 일반적인 경우는 각 칸 \\(i\\)에서의 기댓값 \\(x_i\\)에 대한
-> 연립방정식 \\(x_i = 1 + \frac{1}{m}\sum_{k=1}^{m} x_{f(i+k)}\\)를 세워서 푼다.
+
+```python
+def dice(n, m, A):
+    # ADD ADDITIONAL CODE HERE!
+```
 
 **3. `secret(n, t, T, x, s)`** — 다항함수를 이용한 비밀 분산(secret sharing) 문제.
 딜러가 정수 비밀 \\(S\\)를, \\(\ell\\)개의 그룹으로 나뉜 \\(N\\)명에게 각각 정보 조각을
@@ -53,12 +46,8 @@ print(equilibrium(2, S1, S2))
 모이면 다항식 값들로부터 \\(S\\)를 유일하게 복구할 수 있고, 조건을 만족하지 못하면
 복구할 수 없다. 모인 사람들의 정보 `s`(모이지 않은 사람은 `None`)와 공개된
 좌표 `x`로부터 비밀 `S`를 복구하는 함수를 작성.
-> Shamir's Secret Sharing의 일반화 버전. 각 그룹 \\(i\\)에 대해 다항함수
-> \\(f_i(x) = g(i) + \sum a_{i,j}x^j + \sum b_j x^{t_i+j-1}\\)을 구성해 정보를
-> 나눠주며, 충분한 정보가 모이면 이 다항함수들을 Gaussian elimination으로
-> 복원해 \\(S = g(0)\\)을 얻는다. (부동소수점 오차를 피하려면 8주차에서 다룰
-> 유리수 기반 Gaussian elimination을 사용.)
 
----
-*원본: `CS2(2026-2)_all/CS2/CS2/problem_set/P07.pdf`. 표현/코드는 정리하며 일부
-재구성함(2, 3번은 매우 긴 문제라 핵심만 요약).*
+```python
+def secret(n, t, T, x, s):
+    # ADD ADDITIONAL CODE HERE!
+```

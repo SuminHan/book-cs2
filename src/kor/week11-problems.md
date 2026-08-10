@@ -60,17 +60,14 @@ def atLeastFlush(hand):      # flush 또는 straight flush, "for some" 패턴
     # ADD ADDITIONAL CODE HERE!
 
 def straightFlush(hand):
-    # atLeastStraight and atLeastFlush
+    # ADD ADDITIONAL CODE HERE!
 
 def flush(hand):
-    # atLeastFlush and not straightFlush
+    # ADD ADDITIONAL CODE HERE!
 
 def straight(hand):
-    # atLeastStraight and not straightFlush
+    # ADD ADDITIONAL CODE HERE!
 ```
-> `atLeastStraight`는 rank 정보(`getNumCardsByRank`)만, `atLeastFlush`는 suit
-> 정보만 보면 된다. `flush`/`straight`는 tie-breaking rule에 따라 straight flush
-> 인 경우를 제외해야 한다.
 
 **3. `hasMultipleCardsWithSameRank` / `quadruple` / `fullHouse` / `triple` /
 `twoPair` / `pair`**
@@ -84,17 +81,17 @@ def quadruple(hand):
     return hasMultipleCardsWithSameRank(hand, 4)
 
 def fullHouse(hand):
-    # hasMultipleCardsWithSameRank(hand,3) and hasMultipleCardsWithSameRank(hand,2)
+    # ADD ADDITIONAL CODE HERE!
 
 def triple(hand):
-    # hasMultipleCardsWithSameRank(hand,3), 단 fullHouse/quadruple 제외
+    # ADD ADDITIONAL CODE HERE!
 
 def twoPair(hand):   # counter 패턴으로 변형
     L = hand.getNumCardsByRank()
-    # ADD ADDITIONAL CODE HERE! (rank 2장짜리가 두 개인가), fullHouse 제외
+    # ADD ADDITIONAL CODE HERE!
 
 def pair(hand):
-    # hasMultipleCardsWithSameRank(hand,2), 단 fullHouse/twoPair/quadruple/triple 제외
+    # ADD ADDITIONAL CODE HERE!
 ```
 
 **4. `countPokerHands(hands)`** — `Hand` 객체 리스트(무작위로 생성된 대량의
@@ -128,8 +125,6 @@ def test():
         print(label + ":" + str(1.0 * count / len(hands) * 100))
 test()
 ```
-> "straight flush"처럼 확률이 매우 낮은 경우는 시행 횟수를 늘려야 추정치가
-> 안정된다(단, 실행 시간도 늘어남).
 
 ### Optional Problems
 
@@ -162,7 +157,3 @@ straight flush가 아니면서 flush인 경우에만 `1`, 아니면 `0`을 반�
 
 **11. `k_score(hand, k)`** — `hand`에서 카드 3장을 골라 rank 합이 `k` 이하이면서
 최대가 되는 값("k-점수")을 반환(불가능하면 0).
-
----
-*원본: `CS2(2026-2)_all/CS2/CS2/problem_set/P11.pdf`. 표현/코드는 정리하며 일부
-재구성함.*

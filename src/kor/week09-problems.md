@@ -34,9 +34,6 @@ class Person(object):
 
 **1. `Person.engage(self, p)` / `Person.breakUp(self)` / `Person.prefer(self, p)`**
 위 세 메서드를 완성.
-> `engage`: `self.partner`와 `p.partner`를 서로로 설정. `breakUp`: `self`와
-> `self.partner`의 관계를 서로 끊어 둘 다 `None`으로. `prefer`: 선호도 리스트의
-> `.index(·)`를 이용해 `p`의 순위가 현재 파트너보다 앞서는지 비교.
 
 **2. `isPerfectMatch(men, women)`** — `men`, `women`(둘 다 `Person` 리스트)의 모든
 사람이 정확히 한 명의 파트너를 가지고 있으면 `True`.
@@ -84,7 +81,3 @@ unstable pair의 개수를 반환.
   쌍의 개수, 단 교사 쌍 `(Ti, Tj)` 기준으로 중복 없이 카운트.
 - teacher-unstable pair 변형: 학생 쌍이 아니라 "교환하고 싶어하는 교사 쌍"
   자체의 개수를 세는 변형(`(Ti,Tj)`와 `(Tj,Ti)`는 같은 쌍으로 취급).
-
----
-*원본: `CS2(2026-2)_all/CS2/CS2/problem_set/P09.pdf`. 표현/코드는 정리하며 일부
-재구성함(4~8번은 이전 과제 맥락에 의존하는 문제라 핵심만 요약).*

@@ -72,8 +72,6 @@ polygon2 = [Point(0,0), Point(2,0), Point(2,3), Point(0,3),
 print(surveillableRegion(polygon1))  # (2,2)-(3,3)
 print(surveillableRegion(polygon2))  # None
 ```
-> 반시계방향으로 다각형을 순회하면서, 각 변의 방향(`direction` 함수)에 따라
-> `leftMax`/`rightMin`/`bottomMax`/`topMin`을 적절히 갱신해나가면 된다.
 
 ### Optional Problems
 
@@ -82,19 +80,9 @@ print(surveillableRegion(polygon2))  # None
 
 **3. `surveillableRegion(polygon)`(방향 무관 버전)** — 2번 문제를 일반화해,
 입력 다각형이 시계/반시계 어느 방향이든 처리.
-> 1번의 `orientation`으로 방향을 먼저 판별하고, 시계방향이면 UP/DOWN과
-> LEFT/RIGHT의 역할을 바꿔서 2번과 동일하게 처리.
 
 **4. `surveillableLength(polygon)`** — CCTV를 다각형의 **경계선 위**에만 설치할
 수 있다고 할 때, 내부 전체를 감시 가능한 설치 구간 길이의 총합을 반환.
-> 2번의 `surveillableRegion`으로 설치 가능 직사각형을 먼저 구한 뒤, 그 직사각형과
-> 다각형 경계선이 겹치는 구간들을 찾아 합산.
 
 **5. `surveillablePoint(polygon)`** — CCTV를 다각형의 **꼭짓점**에만 설치할 수
 있다고 할 때, 내부 전체를 감시 가능한 꼭짓점의 개수를 반환.
-> 두 `Point`가 같은 위치인지 비교할 때 `==` 대신 `p1.equal(p2)`를 사용해야
-> 의도대로 동작함.
-
----
-*원본: `CS2(2026-2)_all/CS2/CS2/problem_set/P12.pdf`. 표현/코드는 정리하며 일부
-재구성함.*

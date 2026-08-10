@@ -1,8 +1,6 @@
 # Problem Set
 
-
-*이 문제집은 그림(3D 큐브 더미 시각화)이 포함되어 있었으나, 텍스트로만 옮기는
-과정에서 그림은 생략했다. 원본 PDF를 함께 참고할 것.*
+*큐브 더미와 투영도의 좌표 규칙은 [Topics Covered](week05-topics.md) 참고.*
 
 ### 필수 문제
 
@@ -11,6 +9,15 @@
 0/1 투영도를 반환.
 
 ```python
+def topView(P):
+    # ADD ADDITIONAL CODE HERE!
+
+def frontView(P):
+    # ADD ADDITIONAL CODE HERE!
+
+def rightView(P):
+    # ADD ADDITIONAL CODE HERE!
+
 P1 = [[[0,0,0],[0,0,0],[1,0,0]],
       [[1,0,1],[0,0,0],[1,0,1]],
       [[1,0,1],[1,1,1],[1,1,1]]]
@@ -19,8 +26,6 @@ print(topView(P1))    # [[1,0,1],[1,1,1],[1,1,1]]
 print(frontView(P1))  # [[1,0,0],[1,0,1],[1,1,1]]
 print(rightView(P1))  # [[0,0,1],[1,0,1],[1,1,1]]
 ```
-> `j`좌표의 방향에 주의 — `rightView`의 결과는 `[[1,0,0],[1,0,1],[1,1,1]]`이
-> *아니라* 위 예시처럼 나온다 (이 규약이 프로그래밍을 더 쉽게 만들어준다).
 
 **2. `countCubes(top, front, right)`** — 세 투영도가 주어졌을 때, 그 투영도를
 만족하는(존재한다면 여러 개일 수 있는) 큐브 더미 중 **최대** 큐브 개수를 반환.
@@ -29,12 +34,8 @@ print(rightView(P1))  # [[0,0,1],[1,0,1],[1,1,1]]
 ```python
 def countCubes(top, front, right):
     n = len(top)
-    count = 0
-    P = [[[None] * n for i in range(n)] for j in range(n)]
-    # 각 (i,j,k)에 대해 P[i][j][k]를 채워보고 큐브 수를 센 뒤,
-    # 세 투영도를 모두 만족하는지(feasibility) 확인
+    # ADD ADDITIONAL CODE HERE!
 ```
-> `==`는 다차원 리스트에 대해서도 (깊은) 동등 비교로 동작한다.
 
 ### Optional Problems
 
@@ -67,17 +68,13 @@ def check(P, top, front, right):
 **5. `floating(P)`** — 중력 조건을 만족하지 않을 때, 허공에 떠 있는 큐브의 개수를
 반환.
 
-**6. `countCubes(top, front, right)`(일반화 버전)** — 2번 문제를 $D \times H
-\times W$(세 축의 길이가 다를 수 있는) 형태로 일반화. 세 투영도가 주어졌을 때
+**6. `countCubes(top, front, right)`(일반화 버전)** — 2번 문제를 \\(D \times H
+\times W\\)(세 축의 길이가 다를 수 있는) 형태로 일반화. 세 투영도가 주어졌을 때
 그것을 만족하는 최대 큐브 개수를 반환(없으면 `None`).
 
 ```python
 top = [[0,0,0,0],[0,0,0,1],[1,1,0,0]]
 front = [[1,1,0,1],[1,1,0,0]]
 right = [[0,1,1],[0,0,1]]
-# 이 경우 최대 큐브 개수는 5
+print(countCubes(top, front, right))  # 5
 ```
-
----
-*원본: `CS2(2026-2)_all/CS2/CS2/problem_set/P05.pdf`. 표현/코드는 정리하며 일부
-재구성함.*

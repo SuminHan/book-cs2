@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Problem Set - CS2 국내반 보충자료</title>
+        <title>Topics Covered - CS2 국내반 보충자료</title>
 
 
         <!-- Custom HTML head -->
@@ -180,165 +180,88 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h1 id="problem-set"><a class="header" href="#problem-set">Problem Set</a></h1>
-<p>이미 완성된 <code>Point</code> 클래스를 참고해서 작성:</p>
-<pre><code class="language-python">class Point:
-    def __init__(self, px, py):        # modifier
-        self.x = px
-        self.y = py
-    def __str__(self):                 # pure function
-        return "(" + str(self.x) + ',' + str(self.y) + ")"
-    def getX(self):                    # pure function
-        return self.x
-    def getY(self):                    # pure function
-        return self.y
-    def setX(self, v):                 # modifier
-        self.x = v
-    def setY(self, v):                 # modifier
-        self.y = v
-    def distance(self, p):             # pure function
-        dx = self.x - p.x
-        dy = self.y - p.y
-        return (dx*dx + dy*dy) ** 0.5
-    def add(self, p):                  # pure function
-        return Point(self.x + p.x, self.y + p.y)
+                        <h1 id="topics-covered"><a class="header" href="#topics-covered">Topics Covered</a></h1>
+<h2 id="선형-연립방정식"><a class="header" href="#선형-연립방정식">선형 연립방정식</a></h2>
+<p>많은 과학/공학 문제가 \(a \cdot x = b\) 형태의 선형 연립방정식으로
+귀결된다. 행렬 역원(determinant/cofactor 기반)으로 직접 풀면 시간이
+\(n!\)에 비례해 순식간에 감당 못 할 정도로 커진다. <strong>Gaussian
+elimination</strong>은 같은 문제를 \(n^3\)에 비례하는 시간에 푼다(부수적으로
+행렬의 determinant, rank, basis, inverse 계산에도 쓸 수 있다).</p>
+<h2 id="upper-triangular-form과-back-substitution"><a class="header" href="#upper-triangular-form과-back-substitution">Upper Triangular Form과 Back Substitution</a></h2>
+<p><code>i &gt; j</code>인 모든 자리에서 <code>a[i][j] == 0</code>인 형태를 <strong>upper triangular
+form</strong>(row echelon form)이라 한다. 이 형태는 아래 행부터 위로 하나씩
+<strong>대입</strong>해서 쉽게 풀 수 있다(뒤에서부터 풀어나간다는 뜻에서 back
+substitution):</p>
+<pre><code class="language-python">for i in range(n-1, -1, -1):
+    total = 0
+    for j in range(i+1, n):
+        total += a[i][j] * x[j]
+    x[i] = (b[i] - total) / a[i][i]
 </code></pre>
-<h3 id="필수-문제"><a class="header" href="#필수-문제">필수 문제</a></h3>
-<p><strong>1. <code>Circle</code> 클래스</strong> — 중심(<code>Point</code>)과 반지름을 갖는 원.</p>
+<h2 id="forward-elimination-두-가지-row-operation"><a class="header" href="#forward-elimination-두-가지-row-operation">Forward Elimination: 두 가지 Row Operation</a></h2>
+<p>Gaussian elimination은 두 단계로 이루어진다: <strong>① forward elimination</strong> —
+row operation을 반복 적용해 시스템을 upper triangular 형태로 만들고,
+<strong>② back substitution</strong> — 그 형태를 위 방식대로 푼다.</p>
+<p>row operation은 두 종류뿐이다:</p>
 <ul>
-<li><code>__init__(self, c, r)</code> (modifier) — <code>center</code>, <code>radius</code> 상태 변수 초기화</li>
-<li><code>__str__(self)</code> (pure) — <code>"(center,radius)"</code> 형태, 예: <code>"((0,1) , 5)"</code></li>
-<li><code>area(self)</code> (pure) — 넓이 (<code>math.pi</code> 사용)</li>
-<li><code>getRadius(self)</code> / <code>getCenter(self)</code> (pure)</li>
-<li><code>setRadius(self, r)</code> (modifier)</li>
-<li><code>moveTo(self, x, y)</code> (modifier) — 중심을 <code>Point(x,y)</code>로 이동</li>
-<li><code>move(self, dx, dy)</code> (modifier) — 중심을 <code>(dx,dy)</code>만큼 이동</li>
+<li>행 <code>p</code>와 <code>q</code>를 통째로 교환</li>
+<li>행 <code>p</code>의 배수를 행 <code>q</code>에 더하기</li>
 </ul>
-<pre><code class="language-python">class Circle:
-    def __init__(self, c, r):
-        # ADD ADDITIONAL CODE HERE!
-    def __str__(self):
-        # ADD ADDITIONAL CODE HERE!
-    def area(self):
-        # ADD ADDITIONAL CODE HERE!
-    def getRadius(self):
-        # ADD ADDITIONAL CODE HERE!
-    def getCenter(self):
-        # ADD ADDITIONAL CODE HERE!
-    def setRadius(self, v):
-        # ADD ADDITIONAL CODE HERE!
-    def moveTo(self, x, y):
-        # ADD ADDITIONAL CODE HERE!
-    def move(self, dx, dy):
-        # ADD ADDITIONAL CODE HERE!
-
-def test():
-    p0 = Point(0, 0)
-    c1 = Circle(p0, 3)
-    print(c1)              # ((0,0) , 3)
-    print(c1.area())       # 28.274333882308138
-    print(c1.getRadius())  # 3
-    print(c1.getCenter())  # (0,0)
-    c1.setRadius(5)
-    print(c1)              # ((0,0) , 5)
-    print(c1.area())       # 78.53981633974483
-    c1.moveTo(3, 4)
-    print(c1)              # ((3,4) , 5)
-    c1.move(1, 1)
-    print(c1)              # ((4,5) , 5)
-test()
+<p>두 연산 모두 <strong>해를 바꾸지 않는다</strong>(방정식의 성질을 그대로 보존). 그리고
+어떤 연립방정식이든 이 두 연산만으로 upper triangular 형태로 만들 수
+있다는 것이 증명되어 있다.</p>
+<p>forward elimination은, 각 pivot <code>a[p][p]</code>에 대해 그 <strong>아래</strong>에 있는
+모든 행의 <code>p</code>번째 항을 0으로 지운다:</p>
+<pre><code class="language-python">for p in range(n):
+    for i in range(p+1, n):
+        c = a[i][p] / a[p][p]
+        for j in range(p, n):
+            a[i][j] -= c * a[p][j]
+        b[i] -= c * b[p]
 </code></pre>
-<p><strong>2. <code>Rational</code> 클래스</strong> — 분자/분모로 표현되는 유리수.</p>
-<ul>
-<li><code>__init__(self, n, d)</code> (modifier) — <code>numerator</code>, <code>denominator</code> 초기화</li>
-<li><code>__str__(self)</code> (pure) — <code>"7/24"</code> 형태</li>
-<li><code>toFloat(self)</code> (pure) — float 값 반환</li>
-<li><code>negate(self)</code> (modifier) — 부호 반전(분자 부호만 바꾸면 됨)</li>
-<li><code>invert(self)</code> (modifier) — 역수로 변경(분자·분모 교환)</li>
-<li><code>reduce(self)</code> (modifier) — 기약분수로 변환(주어진 <code>gcd</code> 함수 활용)</li>
-<li><code>add(self, r)</code> (pure) — 덧셈 결과(기약분수)를 새 <code>Rational</code>로 반환</li>
-<li><code>mul(self, r)</code> (pure) — 곱셈 결과(기약분수)를 새 <code>Rational</code>로 반환</li>
-</ul>
-<pre><code class="language-python">def gcd(a, b):
-    if b &gt; a:
-        a, b = b, a
-    while b &gt; 0:
-        a, b = b, a % b
-    return a
+<p>행 <code>i</code>에서 “행 <code>p</code>의 <code>c</code>배를 빼기“만 하면 <code>a[i][p]</code>가 정확히 0이 된다
+(<code>c = a[i][p] / a[p][p]</code>이므로).</p>
+<h2 id="partial-pivoting"><a class="header" href="#partial-pivoting">Partial Pivoting</a></h2>
+<p>위 코드는 <code>a[p][p] == 0</code>이면(0으로 나누게 되어) 작동하지 않는다. <strong>Partial
+pivoting</strong>: 행 <code>p</code>를, <code>p</code> 아래 행 중 <code>p</code>번째 값의 절댓값이 가장 큰 행
+<code>q</code>와 미리 교환해둔다(수치적으로도 더 안정적).</p>
+<pre><code class="language-python">q = p
+for i in range(p+1, n):
+    if abs(a[i][p]) &gt; abs(a[q][p]):
+        q = i
+a[p], a[q] = a[q], a[p]
+b[p], b[q] = b[q], b[p]
 
-class Rational:
-    def __init__(self, n, d):
-        # ADD ADDITIONAL CODE HERE!
-    def __str__(self):
-        # ADD ADDITIONAL CODE HERE!
-    def toFloat(self):
-        # ADD ADDITIONAL CODE HERE!
-    def negate(self):
-        # ADD ADDITIONAL CODE HERE!
-    def invert(self):
-        # ADD ADDITIONAL CODE HERE!
-    def reduce(self):
-        # ADD ADDITIONAL CODE HERE!
-    def add(self, r):
-        # ADD ADDITIONAL CODE HERE!
-    def mul(self, r):
-        # ADD ADDITIONAL CODE HERE!
+if a[p][p] == 0:
+    return None   # 해가 없거나 무수히 많음
+</code></pre>
+<p>pivoting까지 마친 뒤에도 <code>a[p][p] == 0</code>이라면 — 즉 <code>p</code> 아래 모든 행의
+<code>p</code>번째 값이 전부 0이라면 — 그 시스템은 해가 없거나 무수히 많다(증명은
+선형대수 교재 참고).</p>
+<h2 id="전체-구조"><a class="header" href="#전체-구조">전체 구조</a></h2>
+<pre><code class="language-python">def gaussian_elimination(a, b):
+    n = len(a)
+    # forward elimination
+    for p in range(n):
+        # partial pivoting: a[p][p]가 0이 아니도록 가장 큰 절댓값의 행과 교환
+        # a[p] 아래 모든 행의 p번째 항을 0으로 소거
+        ...
+    # 이제 a는 upper triangular
 
-def test():
-    r1 = Rational(12, 16)
-    r2 = Rational(9, 6)
-    print(r1, r2)   # 12/16 9/6
-    r1.reduce(); r2.reduce()
-    print(r1, r2)   # 3/4 3/2
-    r1.negate()
-    print(r1)       # -3/4
-    r1.negate()
-    print(r1)       # 3/4
-    r1.invert()
-    print(r1)       # 4/3
-    r3 = r1.add(r2)
-    r4 = r1.mul(r2)
-    print(r3)             # 17/6
-    print(r4)             # 2/1
-    print(r3.toFloat())   # 2.8333333333333335
-    print(r4.toFloat())   # 2.0
-test()
-</code></pre>
-<h3 id="optional-problems"><a class="header" href="#optional-problems">Optional Problems</a></h3>
-<p><em>필수 문제와 달리 제출/검사 대상은 아니지만 도움이 되므로 시간이 남으면
-시도해볼 것을 권장 (대부분 기출문제).</em></p>
-<p><strong>3. <code>Rectangle</code> 클래스</strong> — 두 <code>Point</code>(대각 꼭짓점)로 정의되는, 축에 평행한
-직사각형.</p>
-<ul>
-<li><code>get_min_x/y</code>, <code>get_max_x/y</code> (pure)</li>
-<li><code>contains(self, point3)</code> (pure) — 경계 포함, 내부에 있으면 <code>True</code></li>
-<li><code>area(self)</code> (pure)</li>
-<li><code>isEqual(self, other)</code> (pure) — 같은 위치의 직사각형이면 <code>True</code>(꼭짓점 순서
-달라도 무관)</li>
-</ul>
-<p><strong>4. <code>belt(L, M)</code></strong> — 반지름 리스트 <code>L</code>(원기둥 \(C_0, \ldots, C_{n-1}\))과 연결 형태
-리스트 <code>M</code>(벨트 \(B_0, \ldots, B_{n-2}\); <code>1</code>=안 꼬임, <code>-1</code>=8자로 꼬임)이 주어질 때,
-\(C_0\)을 시계방향으로 1회전시켰을 때 \(C_1, \ldots, C_{n-1}\)의 회전수(부호 있음,
-시계방향이 양수) 총합을 <code>Rational</code> 객체로 반환.</p>
-<pre><code class="language-python">print(belt([10,5,1,2], [1,-1,1]))  # Rational(-13,1)
-</code></pre>
-<p><strong>5. <code>gaussian_rational(a, b)</code></strong> — 6주차의 <code>gaussian_elimination</code>을 실수(float)
-대신 <code>Rational</code> 객체로 수행하여, 부동소수점 오차 없이 정확한 해를 구함. 입력은
-6주차 1번 문제와 같은 형태(정수), 반환값은 <code>Rational</code> 객체로 이루어진 리스트
-(해가 없거나 무한히 많으면 <code>None</code>).</p>
-<pre><code class="language-python">def gaussian_rational(a, b):
-    # ADD ADDITIONAL CODE HERE!
+    # back substitution으로 x 계산
+    ...
+    return x
 </code></pre>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../kor/week08-topics.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../kor/week06.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                             </a>
 
-                            <a rel="next prefetch" href="../kor/week09.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../kor/week06-problems.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                             </a>
 
@@ -348,11 +271,11 @@ test()
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../kor/week08-topics.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../kor/week06.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                     </a>
 
-                    <a rel="next prefetch" href="../kor/week09.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../kor/week06-problems.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                     </a>
             </nav>

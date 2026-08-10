@@ -38,10 +38,10 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-565e9d62.js";
+            window.path_to_searchindex_js = "../searchindex-e4e025c4.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../toc-dc4e3852.js"></script>
+        <script src="../toc-516cd8df.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -233,19 +233,14 @@ def atLeastFlush(hand):      # flush 또는 straight flush, "for some" 패턴
     # ADD ADDITIONAL CODE HERE!
 
 def straightFlush(hand):
-    # atLeastStraight and atLeastFlush
+    # ADD ADDITIONAL CODE HERE!
 
 def flush(hand):
-    # atLeastFlush and not straightFlush
+    # ADD ADDITIONAL CODE HERE!
 
 def straight(hand):
-    # atLeastStraight and not straightFlush
+    # ADD ADDITIONAL CODE HERE!
 </code></pre>
-<blockquote>
-<p><code>atLeastStraight</code>는 rank 정보(<code>getNumCardsByRank</code>)만, <code>atLeastFlush</code>는 suit
-정보만 보면 된다. <code>flush</code>/<code>straight</code>는 tie-breaking rule에 따라 straight flush
-인 경우를 제외해야 한다.</p>
-</blockquote>
 <p><strong>3. <code>hasMultipleCardsWithSameRank</code> / <code>quadruple</code> / <code>fullHouse</code> / <code>triple</code> /
 <code>twoPair</code> / <code>pair</code></strong></p>
 <pre><code class="language-python">def hasMultipleCardsWithSameRank(hand, num):  # "for some" 패턴
@@ -256,17 +251,17 @@ def quadruple(hand):
     return hasMultipleCardsWithSameRank(hand, 4)
 
 def fullHouse(hand):
-    # hasMultipleCardsWithSameRank(hand,3) and hasMultipleCardsWithSameRank(hand,2)
+    # ADD ADDITIONAL CODE HERE!
 
 def triple(hand):
-    # hasMultipleCardsWithSameRank(hand,3), 단 fullHouse/quadruple 제외
+    # ADD ADDITIONAL CODE HERE!
 
 def twoPair(hand):   # counter 패턴으로 변형
     L = hand.getNumCardsByRank()
-    # ADD ADDITIONAL CODE HERE! (rank 2장짜리가 두 개인가), fullHouse 제외
+    # ADD ADDITIONAL CODE HERE!
 
 def pair(hand):
-    # hasMultipleCardsWithSameRank(hand,2), 단 fullHouse/twoPair/quadruple/triple 제외
+    # ADD ADDITIONAL CODE HERE!
 </code></pre>
 <p><strong>4. <code>countPokerHands(hands)</code></strong> — <code>Hand</code> 객체 리스트(무작위로 생성된 대량의
 핸드)를 straight flush/quadruple/full house/flush/straight/triple/two pair/pair
@@ -297,10 +292,6 @@ def test():
         print(label + ":" + str(1.0 * count / len(hands) * 100))
 test()
 </code></pre>
-<blockquote>
-<p>“straight flush“처럼 확률이 매우 낮은 경우는 시행 횟수를 늘려야 추정치가
-안정된다(단, 실행 시간도 늘어남).</p>
-</blockquote>
 <h3 id="optional-problems"><a class="header" href="#optional-problems">Optional Problems</a></h3>
 <p><em>필수 문제와 달리 제출/검사 대상은 아니지만 도움이 되므로 시간이 남으면
 시도해볼 것을 권장 (대부분 기출문제).</em></p>
@@ -324,15 +315,12 @@ straight, 모든 카드가 같은 suit면 flush, 둘 다면 straight flush로만
 straight flush가 아니면서 flush인 경우에만 <code>1</code>, 아니면 <code>0</code>을 반환.</p>
 <p><strong>11. <code>k_score(hand, k)</code></strong> — <code>hand</code>에서 카드 3장을 골라 rank 합이 <code>k</code> 이하이면서
 최대가 되는 값(“k-점수”)을 반환(불가능하면 0).</p>
-<hr>
-<p><em>원본: <code>CS2(2026-2)_all/CS2/CS2/problem_set/P11.pdf</code>. 표현/코드는 정리하며 일부
-재구성함.</em></p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../kor/week11.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../kor/week11-topics.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                             </a>
 
@@ -346,7 +334,7 @@ straight flush가 아니면서 flush인 경우에만 <code>1</code>, 아니면 <
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../kor/week11.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../kor/week11-topics.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                     </a>
 

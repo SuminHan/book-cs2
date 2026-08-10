@@ -1,6 +1,5 @@
 # Problem Set
 
-
 이미 완성된 `Point` 클래스를 참고해서 작성:
 
 ```python
@@ -39,6 +38,24 @@ class Point:
 - `move(self, dx, dy)` (modifier) — 중심을 `(dx,dy)`만큼 이동
 
 ```python
+class Circle:
+    def __init__(self, c, r):
+        # ADD ADDITIONAL CODE HERE!
+    def __str__(self):
+        # ADD ADDITIONAL CODE HERE!
+    def area(self):
+        # ADD ADDITIONAL CODE HERE!
+    def getRadius(self):
+        # ADD ADDITIONAL CODE HERE!
+    def getCenter(self):
+        # ADD ADDITIONAL CODE HERE!
+    def setRadius(self, v):
+        # ADD ADDITIONAL CODE HERE!
+    def moveTo(self, x, y):
+        # ADD ADDITIONAL CODE HERE!
+    def move(self, dx, dy):
+        # ADD ADDITIONAL CODE HERE!
+
 def test():
     p0 = Point(0, 0)
     c1 = Circle(p0, 3)
@@ -75,6 +92,24 @@ def gcd(a, b):
         a, b = b, a % b
     return a
 
+class Rational:
+    def __init__(self, n, d):
+        # ADD ADDITIONAL CODE HERE!
+    def __str__(self):
+        # ADD ADDITIONAL CODE HERE!
+    def toFloat(self):
+        # ADD ADDITIONAL CODE HERE!
+    def negate(self):
+        # ADD ADDITIONAL CODE HERE!
+    def invert(self):
+        # ADD ADDITIONAL CODE HERE!
+    def reduce(self):
+        # ADD ADDITIONAL CODE HERE!
+    def add(self, r):
+        # ADD ADDITIONAL CODE HERE!
+    def mul(self, r):
+        # ADD ADDITIONAL CODE HERE!
+
 def test():
     r1 = Rational(12, 16)
     r2 = Rational(9, 6)
@@ -95,8 +130,6 @@ def test():
     print(r4.toFloat())   # 2.0
 test()
 ```
-> `add`/`mul`은 pure function이므로 `self`와 `r`을 변경하면 안 되고, 결과는
-> 반드시 `reduce`로 약분한 새 `Rational` 객체여야 한다.
 
 ### Optional Problems
 
@@ -115,18 +148,17 @@ test()
 리스트 `M`(벨트 \\(B_0, \ldots, B_{n-2}\\); `1`=안 꼬임, `-1`=8자로 꼬임)이 주어질 때,
 \\(C_0\\)을 시계방향으로 1회전시켰을 때 \\(C_1, \ldots, C_{n-1}\\)의 회전수(부호 있음,
 시계방향이 양수) 총합을 `Rational` 객체로 반환.
-> 예: `L=[10,5,1,2], M=[1,-1,1]`이면 \\(C_1,C_2,C_3\\)의 회전수는 각각 \\(2, -10, -5\\)이고
-> 합은 `Rational(-13,1)`. 8주차에 만든 `Rational` 클래스를 그대로 사용해야 하며,
-> `float`나 임의의 다른 타입을 반환하면 안 됨.
+
+```python
+print(belt([10,5,1,2], [1,-1,1]))  # Rational(-13,1)
+```
 
 **5. `gaussian_rational(a, b)`** — 6주차의 `gaussian_elimination`을 실수(float)
 대신 `Rational` 객체로 수행하여, 부동소수점 오차 없이 정확한 해를 구함. 입력은
 6주차 1번 문제와 같은 형태(정수), 반환값은 `Rational` 객체로 이루어진 리스트
 (해가 없거나 무한히 많으면 `None`).
-> `c = a[i][p] / a[p][p]` 같은 나눗셈은 `a[i][p].div(a[p][p])`로, `a[p][p] == 0`
-> 비교는 `a[p][p].equal(Rational(0,1))`로 바꿔서 `Rational` 클래스의 메서드를
-> 통해 연산해야 함(`==` 비교는 의도대로 동작하지 않음 — `equal()` 사용).
 
----
-*원본: `CS2(2026-2)_all/CS2/CS2/problem_set/P08.pdf`. 표현/코드는 정리하며 일부
-재구성함.*
+```python
+def gaussian_rational(a, b):
+    # ADD ADDITIONAL CODE HERE!
+```

@@ -38,10 +38,10 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-565e9d62.js";
+            window.path_to_searchindex_js = "../searchindex-e4e025c4.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../toc-dc4e3852.js"></script>
+        <script src="../toc-516cd8df.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -224,7 +224,10 @@
 <p>이제 회사는 각 배가 “어느 날짜부터 도착한 항구에 계속 머무르며(수리를 위해)
 남은 스케줄을 취소“하도록 스케줄을 단축하려 한다 — 단, 단축된 스케줄에서도
 조건(†)이 계속 성립해야 한다.</p>
-<pre><code class="language-python"># 입력: 원본 스케줄을 나타내는 2차원 n×m 리스트
+<pre><code class="language-python">def compute_schedule(schedule):
+    # ADD ADDITIONAL CODE HERE!
+
+# 입력: 원본 스케줄을 나타내는 2차원 n×m 리스트
 # (None = 바다 위, 정수 = 항구 번호)
 schedule = [[0, None, 1, None], [None, 0, None, 1]]
 
@@ -232,20 +235,12 @@ schedule = [[0, None, 1, None], [None, 0, None, 1]]
 # 그런 스케줄이 없으면 None
 print(compute_schedule(schedule))  # [1, 0]
 </code></pre>
-<blockquote>
-<p>힌트: 이 문제와 stable matching 문제 사이의 연결고리를 찾아, stable matching
-코드를 그대로 활용할 것. <code>L.reverse()</code>로 리스트를 뒤집을 수 있음. 답뿐 아니라
-알고리즘의 정당성 증명도 필요.</p>
-</blockquote>
-<hr>
-<p><em>원본: <code>CS2(2026-2)_all/CS2/CS2/problem_set/P10.pdf</code>. 표현/코드는 정리하며 일부
-재구성함.</em></p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../kor/week10.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../kor/week10-topics.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                             </a>
 
@@ -259,7 +254,7 @@ print(compute_schedule(schedule))  # [1, 0]
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../kor/week10.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../kor/week10-topics.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                     </a>
 

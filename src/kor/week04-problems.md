@@ -1,37 +1,38 @@
 # Problem Set
 
-
 ### 필수 문제
 
-**1. `countZero(a)`** — 2차원 배열 `a`에서 0의 개수. Counter 패턴의 2중 for 루프.
+**1. `countZero(a)`** — 2차원 배열 `a`에서 0의 개수.
 
 ```python
 def countZero(a):
     height = len(a)
     width = len(a[0])
-    count = 0
-    for i in range(height):
-        for j in range(width):
-            if a[i][j] == 0:
-                count += 1
-    return count
+    # ADD ADDITIONAL CODE HERE!
 
 print(countZero([[1,2,3],[0,0,5],[0,3,0],[0,0,0]]))  # 7
 print(countZero([[0,2,3],[0,0,5],[0,3,0]]))          # 5
 ```
 
-**2. `countZero(a)`(3차원 버전)** — 3차원 배열에서 0의 개수. 1번과 같은 패턴을
-3중 for 루프로 확장.
+**2. `countZero(a)`(3차원 버전)** — 3차원 배열에서 0의 개수.
 
 ```python
+def countZero(a):
+    depth = len(a)
+    height = len(a[0])
+    width = len(a[0][0])
+    # ADD ADDITIONAL CODE HERE!
+
 print(countZero([[[1,2],[0,0]],[[0,0],[0,0]]]))                  # 6
 print(countZero([[[1,2],[0,0]],[[0,0],[0,0]],[[0,0],[0,0]]]))    # 10
 ```
 
-**3. `maxPrime(a)`** — 3차원 배열에서 가장 큰 소수(없으면 0). Max/min 패턴, 주어진
-`isPrime` 함수 활용.
+**3. `maxPrime(a)`** — 3차원 배열에서 가장 큰 소수(없으면 0).
 
 ```python
+def maxPrime(a):
+    # ADD ADDITIONAL CODE HERE!
+
 print(maxPrime([[[2,3],[3,9]],[[17,3],[3,19]]]))   # 19
 print(maxPrime([[[29,3],[3,9]],[[17,3],[3,19]]]))  # 29
 ```
@@ -39,6 +40,9 @@ print(maxPrime([[[29,3],[3,9]],[[17,3],[3,19]]]))  # 29
 **4. `sorted(a)`** — 2차원 배열의 모든 행과 모든 열이 각각 비감소 순서인지 여부.
 
 ```python
+def sorted(a):
+    # ADD ADDITIONAL CODE HERE!
+
 test1 = [
     [2,3,7,9,11,12],
     [5,6,8,10,12,15],
@@ -54,9 +58,6 @@ test2 = [
 print(sorted(test1))  # True
 print(sorted(test2))  # False
 ```
-> "for all" 패턴의 2중 for 루프를 두 번 사용 — 하나는 각 행(가로), 하나는 각
-> 열(세로) 방향 체크. `range`에 `height`/`width`를 그대로 넣을지 `-1`을 뺄지
-> 꼼꼼히 따져볼 것.
 
 **5. `countMines(mineField)`(1차원)** — 1차원 지뢰밭(boolean 리스트)에서, 각
 칸(자기 자신 + 좌우 인접 칸)의 지뢰 개수를 리스트로 반환.
@@ -68,11 +69,7 @@ def withinBoundary(size, i):
 def countMines(mineField):
     size = len(mineField)
     mines = [0] * size
-    for i in range(size):
-        for j in range(i - 1, i + 2):
-            if withinBoundary(size, j):
-                mines[i] += mineField[j]
-    return mines
+    # ADD ADDITIONAL CODE HERE!
 
 T, F = True, False
 mineField1 = [T, F, F, T, T, T, T, F, T, F]
@@ -83,7 +80,6 @@ print(countMines(mineField2))  # [1,2,2,3,2,1,0]
 
 **6. `countMines(mineField)`(2차원)** — 2차원 지뢰밭에서, 각 칸(자기 자신 + 8방향
 인접 칸)의 지뢰 개수를 2차원 리스트로 반환.
-> 2차원 리스트 초기화는 `None` 대신 `0`으로 해두고 그대로 누적하면 편하다.
 
 ```python
 def withinBoundary(height, width, i, j):
@@ -101,10 +97,10 @@ def countMines(mineField):
 ```python
 def zeroRect(M, i1, i2, j1, j2):
     # returns True iff M[i][j] == 0 for all i1<=i<=i2, j1<=j<=j2
-    ...
+    # ADD ADDITIONAL CODE HERE!
 
 def maxZeroRect(M):
-    ...
+    # ADD ADDITIONAL CODE HERE!
 
 M = [[1,1,0,1,0,0,1],
      [0,0,0,0,0,1,1],
@@ -116,8 +112,6 @@ M = [[1,1,0,1,0,0,1],
      [1,0,1,0,0,1,0]]
 print(maxZeroRect(M))  # 20
 ```
-> 보조 함수 `zeroRect(M, i1, i2, j1, j2)`를 먼저 만들어, `M[i][j]`가
-> `i1≤i≤i2, j1≤j≤j2` 범위에서 전부 0인지 판정한 뒤 `maxZeroRect`에서 활용.
 
 ### Optional Problems
 
@@ -133,6 +127,7 @@ print(maxZeroRect(M))  # 20
 
 **11. `findMines(C)`** — 5번 문제의 역연산. `C[i]`가 `M[i-1]+M[i]+M[i+1]`(경계
 밖은 무시)의 합일 때, 그런 `M`을 하나 찾아 반환(없으면 `None`).
+
 ```python
 def countMines(M):
     n = len(M)
@@ -142,11 +137,7 @@ def countMines(M):
             if 0 <= j < n:
                 C[i] += M[j]
     return C
-```
-> 힌트: `M[0]`의 각 후보값(0부터 `max(C)`까지)에 대해 나머지 `M[1..n-1]`이
-> `M[i]+M[i+1]+M[i+2] = C[i]` 형태의 등식들로 유일하게 결정된다. 이 값들이
-> 모두 0 이상이고 마지막 등식(`M[n-2]+M[n-1]=C[n-1]`)까지 성립하면 답.
 
----
-*원본: `CS2(2026-2)_all/CS2/CS2/problem_set/P04.pdf`. 표현/코드는 정리하며 일부
-재구성함.*
+def findMines(C):
+    # ADD ADDITIONAL CODE HERE!
+```

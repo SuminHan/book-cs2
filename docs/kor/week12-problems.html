@@ -38,10 +38,10 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-565e9d62.js";
+            window.path_to_searchindex_js = "../searchindex-e4e025c4.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../toc-dc4e3852.js"></script>
+        <script src="../toc-516cd8df.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -246,40 +246,21 @@ polygon2 = [Point(0,0), Point(2,0), Point(2,3), Point(0,3),
 print(surveillableRegion(polygon1))  # (2,2)-(3,3)
 print(surveillableRegion(polygon2))  # None
 </code></pre>
-<blockquote>
-<p>반시계방향으로 다각형을 순회하면서, 각 변의 방향(<code>direction</code> 함수)에 따라
-<code>leftMax</code>/<code>rightMin</code>/<code>bottomMax</code>/<code>topMin</code>을 적절히 갱신해나가면 된다.</p>
-</blockquote>
 <h3 id="optional-problems"><a class="header" href="#optional-problems">Optional Problems</a></h3>
 <p><em>필수 문제와 달리 제출/검사 대상은 아니지만 도움이 되므로 시간이 남으면
 시도해볼 것을 권장 (대부분 기출문제).</em></p>
 <p><strong>3. <code>surveillableRegion(polygon)</code>(방향 무관 버전)</strong> — 2번 문제를 일반화해,
 입력 다각형이 시계/반시계 어느 방향이든 처리.</p>
-<blockquote>
-<p>1번의 <code>orientation</code>으로 방향을 먼저 판별하고, 시계방향이면 UP/DOWN과
-LEFT/RIGHT의 역할을 바꿔서 2번과 동일하게 처리.</p>
-</blockquote>
 <p><strong>4. <code>surveillableLength(polygon)</code></strong> — CCTV를 다각형의 <strong>경계선 위</strong>에만 설치할
 수 있다고 할 때, 내부 전체를 감시 가능한 설치 구간 길이의 총합을 반환.</p>
-<blockquote>
-<p>2번의 <code>surveillableRegion</code>으로 설치 가능 직사각형을 먼저 구한 뒤, 그 직사각형과
-다각형 경계선이 겹치는 구간들을 찾아 합산.</p>
-</blockquote>
 <p><strong>5. <code>surveillablePoint(polygon)</code></strong> — CCTV를 다각형의 <strong>꼭짓점</strong>에만 설치할 수
 있다고 할 때, 내부 전체를 감시 가능한 꼭짓점의 개수를 반환.</p>
-<blockquote>
-<p>두 <code>Point</code>가 같은 위치인지 비교할 때 <code>==</code> 대신 <code>p1.equal(p2)</code>를 사용해야
-의도대로 동작함.</p>
-</blockquote>
-<hr>
-<p><em>원본: <code>CS2(2026-2)_all/CS2/CS2/problem_set/P12.pdf</code>. 표현/코드는 정리하며 일부
-재구성함.</em></p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../kor/week12.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../kor/week12-topics.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                             </a>
 
@@ -290,7 +271,7 @@ LEFT/RIGHT의 역할을 바꿔서 2번과 동일하게 처리.</p>
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../kor/week12.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../kor/week12-topics.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                     </a>
 

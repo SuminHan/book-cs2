@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Problem Set - CS2 국내반 보충자료</title>
+        <title>Topics Covered - CS2 국내반 보충자료</title>
 
 
         <!-- Custom HTML head -->
@@ -180,165 +180,105 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h1 id="problem-set"><a class="header" href="#problem-set">Problem Set</a></h1>
-<p>이미 완성된 <code>Point</code> 클래스를 참고해서 작성:</p>
+                        <h1 id="topics-covered"><a class="header" href="#topics-covered">Topics Covered</a></h1>
+<h2 id="object와-class"><a class="header" href="#object와-class">Object와 Class</a></h2>
+<p><strong>Object</strong>는 데이터(state 변수)와 함수(메소드)의 묶음이고, <strong>class</strong>는
+그 object의 “틀”(type)이다. 이미 Week 8 이전에 써온 Toy Robot의
+<code>Robot</code> class가 좋은 예다 — <code>hubo</code>, <code>amy</code> 같은 각 로봇이 object이고,
+<code>Robot</code>이 그 class다.</p>
+<pre><code class="language-python">class Robot(object):
+    def __init__(self, beepers, ...):
+        self._beeper_bag = beepers
+        self._x = avenue
+        self._y = street
+        ...
+
+    def move(self):            # state 변수를 수정 — return 값 없음
+        xx, yy = _directions[self._dir]
+        self._x += xx
+        self._y += yy
+        ...
+
+    def carries_beepers(self):  # state 변수를 읽기만 — return 값 있음
+        return self._beeper_bag &gt; 0
+</code></pre>
+<p><code>hubo = Robot(beepers=6)</code>은 <code>__init__(hubo, 6)</code>이 호출되는 것으로 이해하면
+된다 — <strong>모든 메소드의 첫 번째 파라미터는 자기 자신을 가리키는
+<code>self</code>이고, 호출할 때는 명시하지 않아도 자동으로 넘어간다.</strong></p>
+<h2 id="직접-class-만들기-point"><a class="header" href="#직접-class-만들기-point">직접 Class 만들기: <code>Point</code></a></h2>
+<p>2차원 평면의 점을 나타내는 <code>Point</code> class를 만들어보자.</p>
 <pre><code class="language-python">class Point:
-    def __init__(self, px, py):        # modifier
+    def __init__(self, px, py):   # 생성자 — 항상 modifier
         self.x = px
         self.y = py
-    def __str__(self):                 # pure function
-        return "(" + str(self.x) + ',' + str(self.y) + ")"
-    def getX(self):                    # pure function
-        return self.x
-    def getY(self):                    # pure function
-        return self.y
-    def setX(self, v):                 # modifier
-        self.x = v
-    def setY(self, v):                 # modifier
-        self.y = v
-    def distance(self, p):             # pure function
-        dx = self.x - p.x
-        dy = self.y - p.y
-        return (dx*dx + dy*dy) ** 0.5
-    def add(self, p):                  # pure function
-        return Point(self.x + p.x, self.y + p.y)
 </code></pre>
-<h3 id="필수-문제"><a class="header" href="#필수-문제">필수 문제</a></h3>
-<p><strong>1. <code>Circle</code> 클래스</strong> — 중심(<code>Point</code>)과 반지름을 갖는 원.</p>
+<p><code>p1 = Point(1, 2)</code>는 <code>__init__(p1, 1, 2)</code>를 호출하는 것과 같다. state
+변수는 항상 <code>self.x</code>처럼 <code>self.</code>을 붙여 나타낸다.</p>
+<h2 id="__str__-프린트되는-모양-정의"><a class="header" href="#__str__-프린트되는-모양-정의"><code>__str__</code>: 프린트되는 모양 정의</a></h2>
+<p><code>__str__</code>을 정의하지 않으면 <code>print(p1)</code>은 <code>(1,2)</code>가 아니라
+<code>0xb69b5a0c</code> 같은 메모리 주소가 찍힌다. 원하는 형태의 string을 만들어
+<code>return</code>하면 해결된다(<strong><code>__str__</code>은 항상 pure function</strong>):</p>
+<pre><code class="language-python">def __str__(self):
+    return "(" + str(self.x) + "," + str(self.y) + ")"
+</code></pre>
+<h2 id="pure-function-vs-modifier"><a class="header" href="#pure-function-vs-modifier">Pure Function vs. Modifier</a></h2>
 <ul>
-<li><code>__init__(self, c, r)</code> (modifier) — <code>center</code>, <code>radius</code> 상태 변수 초기화</li>
-<li><code>__str__(self)</code> (pure) — <code>"(center,radius)"</code> 형태, 예: <code>"((0,1) , 5)"</code></li>
-<li><code>area(self)</code> (pure) — 넓이 (<code>math.pi</code> 사용)</li>
-<li><code>getRadius(self)</code> / <code>getCenter(self)</code> (pure)</li>
-<li><code>setRadius(self, r)</code> (modifier)</li>
-<li><code>moveTo(self, x, y)</code> (modifier) — 중심을 <code>Point(x,y)</code>로 이동</li>
-<li><code>move(self, dx, dy)</code> (modifier) — 중심을 <code>(dx,dy)</code>만큼 이동</li>
+<li><strong>Pure function</strong>: state 변수를 수정하지 않고, 계산 결과만 <code>return</code>한다.</li>
+<li><strong>Modifier</strong>: state 변수를 직접 수정하고, 보통 <code>return</code> 값이 없다
+(<code>None</code>).</li>
 </ul>
-<pre><code class="language-python">class Circle:
-    def __init__(self, c, r):
-        # ADD ADDITIONAL CODE HERE!
-    def __str__(self):
-        # ADD ADDITIONAL CODE HERE!
-    def area(self):
-        # ADD ADDITIONAL CODE HERE!
-    def getRadius(self):
-        # ADD ADDITIONAL CODE HERE!
-    def getCenter(self):
-        # ADD ADDITIONAL CODE HERE!
-    def setRadius(self, v):
-        # ADD ADDITIONAL CODE HERE!
-    def moveTo(self, x, y):
-        # ADD ADDITIONAL CODE HERE!
-    def move(self, dx, dy):
-        # ADD ADDITIONAL CODE HERE!
+<pre><code class="language-python">def setX(self, v):     # modifier — x를 수정, return 없음
+    self.x = v
 
-def test():
-    p0 = Point(0, 0)
-    c1 = Circle(p0, 3)
-    print(c1)              # ((0,0) , 3)
-    print(c1.area())       # 28.274333882308138
-    print(c1.getRadius())  # 3
-    print(c1.getCenter())  # (0,0)
-    c1.setRadius(5)
-    print(c1)              # ((0,0) , 5)
-    print(c1.area())       # 78.53981633974483
-    c1.moveTo(3, 4)
-    print(c1)              # ((3,4) , 5)
-    c1.move(1, 1)
-    print(c1)              # ((4,5) , 5)
-test()
-</code></pre>
-<p><strong>2. <code>Rational</code> 클래스</strong> — 분자/분모로 표현되는 유리수.</p>
-<ul>
-<li><code>__init__(self, n, d)</code> (modifier) — <code>numerator</code>, <code>denominator</code> 초기화</li>
-<li><code>__str__(self)</code> (pure) — <code>"7/24"</code> 형태</li>
-<li><code>toFloat(self)</code> (pure) — float 값 반환</li>
-<li><code>negate(self)</code> (modifier) — 부호 반전(분자 부호만 바꾸면 됨)</li>
-<li><code>invert(self)</code> (modifier) — 역수로 변경(분자·분모 교환)</li>
-<li><code>reduce(self)</code> (modifier) — 기약분수로 변환(주어진 <code>gcd</code> 함수 활용)</li>
-<li><code>add(self, r)</code> (pure) — 덧셈 결과(기약분수)를 새 <code>Rational</code>로 반환</li>
-<li><code>mul(self, r)</code> (pure) — 곱셈 결과(기약분수)를 새 <code>Rational</code>로 반환</li>
-</ul>
-<pre><code class="language-python">def gcd(a, b):
-    if b &gt; a:
-        a, b = b, a
-    while b &gt; 0:
-        a, b = b, a % b
-    return a
+def getX(self):         # pure function — 읽기만, x는 self.x
+    return self.x
 
-class Rational:
-    def __init__(self, n, d):
-        # ADD ADDITIONAL CODE HERE!
-    def __str__(self):
-        # ADD ADDITIONAL CODE HERE!
-    def toFloat(self):
-        # ADD ADDITIONAL CODE HERE!
-    def negate(self):
-        # ADD ADDITIONAL CODE HERE!
-    def invert(self):
-        # ADD ADDITIONAL CODE HERE!
-    def reduce(self):
-        # ADD ADDITIONAL CODE HERE!
-    def add(self, r):
-        # ADD ADDITIONAL CODE HERE!
-    def mul(self, r):
-        # ADD ADDITIONAL CODE HERE!
+def distance(self, p):  # pure function — 다른 object를 입력받아 계산만
+    dx = self.x - p.x
+    dy = self.y - p.y
+    return (dx**2 + dy**2)**0.5
+</code></pre>
+<p><strong><code>__init__</code>은 항상 modifier, <code>__str__</code>은 항상 pure function</strong> — 이
+둘은 예외 없이 고정이다. <code>dx</code>, <code>dy</code>처럼 계산 도중에만 쓰이는 임시
+변수에는 <code>self.</code>를 붙이지 않는다(state 변수가 아니므로).</p>
+<h2 id="object를-반환하는-함수-같은-연산-두-가지-스타일"><a class="header" href="#object를-반환하는-함수-같은-연산-두-가지-스타일">Object를 반환하는 함수: 같은 연산, 두 가지 스타일</a></h2>
+<p><code>add</code>처럼 다른 object와 결합해 <strong>새로운</strong> object를 만드는 함수는, pure
+function으로도 modifier로도 만들 수 있다 — 어느 쪽인지에 따라 호출
+결과가 완전히 달라진다:</p>
+<pre><code class="language-python"># pure function 버전: 새 Point를 만들어 반환, p1/p2는 그대로
+def add(self, p):
+    x = self.x + p.x
+    y = self.y + p.y
+    return Point(x, y)
 
-def test():
-    r1 = Rational(12, 16)
-    r2 = Rational(9, 6)
-    print(r1, r2)   # 12/16 9/6
-    r1.reduce(); r2.reduce()
-    print(r1, r2)   # 3/4 3/2
-    r1.negate()
-    print(r1)       # -3/4
-    r1.negate()
-    print(r1)       # 3/4
-    r1.invert()
-    print(r1)       # 4/3
-    r3 = r1.add(r2)
-    r4 = r1.mul(r2)
-    print(r3)             # 17/6
-    print(r4)             # 2/1
-    print(r3.toFloat())   # 2.8333333333333335
-    print(r4.toFloat())   # 2.0
-test()
+p3 = p1.add(p2)
+print(p3)   # (5,8) — 새로 만들어진 object
+print(p1)   # (1,2) — 변경 없음
+
+# modifier 버전: self 자신을 직접 수정, return 없음
+def add_as_modifier(self, p):
+    self.x += p.x
+    self.y += p.y
+
+p3 = p1.add_as_modifier(p2)
+print(p3)   # None — modifier는 return 값이 없음
+print(p1)   # (5,8) — p1 자신이 바뀜
 </code></pre>
-<h3 id="optional-problems"><a class="header" href="#optional-problems">Optional Problems</a></h3>
-<p><em>필수 문제와 달리 제출/검사 대상은 아니지만 도움이 되므로 시간이 남으면
-시도해볼 것을 권장 (대부분 기출문제).</em></p>
-<p><strong>3. <code>Rectangle</code> 클래스</strong> — 두 <code>Point</code>(대각 꼭짓점)로 정의되는, 축에 평행한
-직사각형.</p>
-<ul>
-<li><code>get_min_x/y</code>, <code>get_max_x/y</code> (pure)</li>
-<li><code>contains(self, point3)</code> (pure) — 경계 포함, 내부에 있으면 <code>True</code></li>
-<li><code>area(self)</code> (pure)</li>
-<li><code>isEqual(self, other)</code> (pure) — 같은 위치의 직사각형이면 <code>True</code>(꼭짓점 순서
-달라도 무관)</li>
-</ul>
-<p><strong>4. <code>belt(L, M)</code></strong> — 반지름 리스트 <code>L</code>(원기둥 \(C_0, \ldots, C_{n-1}\))과 연결 형태
-리스트 <code>M</code>(벨트 \(B_0, \ldots, B_{n-2}\); <code>1</code>=안 꼬임, <code>-1</code>=8자로 꼬임)이 주어질 때,
-\(C_0\)을 시계방향으로 1회전시켰을 때 \(C_1, \ldots, C_{n-1}\)의 회전수(부호 있음,
-시계방향이 양수) 총합을 <code>Rational</code> 객체로 반환.</p>
-<pre><code class="language-python">print(belt([10,5,1,2], [1,-1,1]))  # Rational(-13,1)
-</code></pre>
-<p><strong>5. <code>gaussian_rational(a, b)</code></strong> — 6주차의 <code>gaussian_elimination</code>을 실수(float)
-대신 <code>Rational</code> 객체로 수행하여, 부동소수점 오차 없이 정확한 해를 구함. 입력은
-6주차 1번 문제와 같은 형태(정수), 반환값은 <code>Rational</code> 객체로 이루어진 리스트
-(해가 없거나 무한히 많으면 <code>None</code>).</p>
-<pre><code class="language-python">def gaussian_rational(a, b):
-    # ADD ADDITIONAL CODE HERE!
-</code></pre>
+<p><code>List</code>의 <code>.sort()</code>, <code>.append()</code>도 전형적인 modifier다(Week 2). <strong>연습
+문제를 풀 때 그 함수가 pure function인지 modifier인지부터 구분하고
+시작할 것</strong> — 문제(예: <code>Circle</code>의 <code>getRadius</code>/<code>getCenter</code>/<code>area</code>는 pure
+function, <code>setRadius</code>/<code>move</code>/<code>moveTo</code>는 modifier)마다 명시적으로
+요구하는 형태가 다르다.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../kor/week08-topics.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../kor/week08.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                             </a>
 
-                            <a rel="next prefetch" href="../kor/week09.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../kor/week08-problems.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                             </a>
 
@@ -348,11 +288,11 @@ test()
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../kor/week08-topics.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../kor/week08.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                     </a>
 
-                    <a rel="next prefetch" href="../kor/week09.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../kor/week08-problems.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                     </a>
             </nav>

@@ -56,6 +56,9 @@ def findMatch(men, women):
 조건(†)이 계속 성립해야 한다.
 
 ```python
+def compute_schedule(schedule):
+    # ADD ADDITIONAL CODE HERE!
+
 # 입력: 원본 스케줄을 나타내는 2차원 n×m 리스트
 # (None = 바다 위, 정수 = 항구 번호)
 schedule = [[0, None, 1, None], [None, 0, None, 1]]
@@ -64,10 +67,3 @@ schedule = [[0, None, 1, None], [None, 0, None, 1]]
 # 그런 스케줄이 없으면 None
 print(compute_schedule(schedule))  # [1, 0]
 ```
-> 힌트: 이 문제와 stable matching 문제 사이의 연결고리를 찾아, stable matching
-> 코드를 그대로 활용할 것. `L.reverse()`로 리스트를 뒤집을 수 있음. 답뿐 아니라
-> 알고리즘의 정당성 증명도 필요.
-
----
-*원본: `CS2(2026-2)_all/CS2/CS2/problem_set/P10.pdf`. 표현/코드는 정리하며 일부
-재구성함.*

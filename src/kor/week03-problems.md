@@ -1,6 +1,5 @@
 # Problem Set
 
-
 ### 필수 문제
 
 **1. `inOrder(filename)`** — 파일의 모든 단어가 사전순으로 정렬되어 있는지 여부.
@@ -9,55 +8,89 @@
 def inOrder(filename):
     words = open(filename, "r").read().split()
     n = len(words)
-    for i in range(n - 1):
-        if words[i] > words[i + 1]:
-            return False
-    return True
+    # ADD ADDITIONAL CODE HERE!
 
 print(inOrder("dictionary.txt"))   # True
 print(inOrder("dictionary2.txt"))  # False
 ```
-> "for all" 패턴. `range(n)`이 아니라 `range(n-1)`을 써야 마지막 인덱스에서
-> `words[i+1]`이 범위를 벗어나지 않는다.
 
 **2. `isPalindrome(s)` / `maxPalindrome(filename)`** — `isPalindrome`은 문자열이
 회문(앞뒤로 읽어도 같음, 예: `"deified"`)인지 판정. `maxPalindrome`은 파일에서
 가장 긴 회문을 반환(동점이면 먼저 나온 것).
-> `isPalindrome`은 "for all" 패턴(`s[i]`와 `s[n-1-i]` 비교). `maxPalindrome`은
-> max 패턴이되 "가장 긴 길이"가 아니라 "가장 긴 회문 단어" 자체를 유지해야 하므로
-> `maxlen`뿐 아니라 `maxword`도 같이 갱신.
+
+```python
+def isPalindrome(s):
+    # ADD ADDITIONAL CODE HERE!
+
+def maxPalindrome(filename):
+    words = open(filename, "r").read().split()
+    n = len(words)
+    # ADD ADDITIONAL CODE HERE!
+
+print(maxPalindrome("dictionary.txt"))   # malayalam
+print(maxPalindrome("dictionary2.txt"))  # deified
+```
 
 **3. `isAbecedarian(s)` / `countAbecedarian(filename)`** — abecedarian은 모든
 글자가 알파벳 순서로 나타나는 단어(예: `"aaabb"`, `"acorsy"`). `isAbecedarian`은
 판정 함수, `countAbecedarian`은 파일에서 그 개수를 센다.
-> `isAbecedarian`은 "for all" 패턴, `countAbecedarian`은 counter 패턴.
+
+```python
+def isAbecedarian(s):
+    # ADD ADDITIONAL CODE HERE!
+
+def countAbecedarian(filename):
+    # ADD ADDITIONAL CODE HERE!
+
+print(countAbecedarian("dictionary.txt"))   # 582
+print(countAbecedarian("dictionary2.txt"))  # 10
+```
 
 **4. `disjoint(s1, s2)`** — 두 문자열이 겹치는 글자가 하나도 없으면 `True`.
 
 ```python
+def disjoint(s1, s2):
+    # ADD ADDITIONAL CODE HERE!
+
 print(disjoint("ace", "a"))          # False
 print(disjoint("aurora", "steel"))   # True
 print(disjoint("elephant", "long"))  # False
 ```
-> "for all" 패턴. `s1[i] in s2`로 각 글자의 포함 여부를 확인.
 
 **5. `countWordWithE(filename)`** — 파일에서 알파벳 `"e"`를 포함한 단어의 개수.
-Counter 패턴.
 
-**6. `countPrime(filename)`** — 파일에서 길이가 소수인 단어의 개수. `isPrime`을
-활용한 counter 패턴.
+```python
+def countWordWithE(filename):
+    # ADD ADDITIONAL CODE HERE!
+
+print(countWordWithE("dictionary.txt"))   # 75473
+print(countWordWithE("dictionary2.txt"))  # 23
+```
+
+**6. `countPrime(filename)`** — 파일에서 길이가 소수인 단어의 개수.
+
+```python
+def countPrime(filename):
+    # ADD ADDITIONAL CODE HERE!
+
+print(countPrime("dictionary.txt"))   # 37114
+print(countPrime("dictionary2.txt"))  # 72
+```
 
 **7. `istcdl(s)` / `tcdl(filename)`** — "3연속 이중 글자"(예: `"bookkeeper"`)를
 가졌는지 판정하고, 파일에서 그런 단어를 모두 모아 리스트로 반환.
-> `istcdl`은 "for all" 패턴 — `s[i:i+5:2]`, `s[i+1:i+6:2]`가 뭘 뜻하는지 먼저
-> 생각해볼 것. `tcdl`은 조건을 만족하는 단어만 골라 새 리스트에 담는 패턴:
-> ```python
-> L = []
-> for i in range(n):
->     if some_condition(words[i]):
->         L.append(words[i])
-> return L
-> ```
+
+```python
+def istcdl(s):
+    # ADD ADDITIONAL CODE HERE!
+
+def tcdl(filename):
+    words = open(filename, "r").read().split()
+    n = len(words)
+    # ADD ADDITIONAL CODE HERE!
+
+print(tcdl("dictionary.txt"))  # ['bookkeeper','bookkeepers','bookkeeping']
+```
 
 **8. `meter()`** — 인자 없이, 100000 ≤ i ≤ 999996 범위에서 아래 네 조건을 모두
 만족하는 정수 `i`를 전부 찾아 리스트로 반환:
@@ -76,24 +109,20 @@ def isPalindrome(s):
 
 def check(i):
     # ADD ADDITIONAL CODE HERE!
-    ...
 
 def meter():
-    L = []
-    for i in range(100000, 999997):
-        if check(i):
-            L.append(i)
-    return L
+    # ADD ADDITIONAL CODE HERE!
 
 print(meter())  # [198888, 199999]
 ```
-> 정수를 문자열로 바꾸려면 `str(i)`. `str(i+1)[1:]`처럼 슬라이싱으로 원하는
-> 자릿수만 잘라내 `isPalindrome`으로 검사.
 
 **9. `triangle(n)`** — 길이가 같은 성냥개비 `n`개로, (부러뜨리지 않고 전부 사용해)
 만들 수 있는 서로 합동이 아닌 삼각형의 개수를 반환.
 
 ```python
+def triangle(n):
+    # ADD ADDITIONAL CODE HERE!
+
 print(triangle(9))    # 3
 print(triangle(30))   # 19
 print(triangle(70))   # 102
@@ -105,15 +134,23 @@ print(triangle(400))  # 3333
 *필수 문제와 달리 제출/검사 대상은 아니지만 도움이 되므로 시간이 남으면
 시도해볼 것을 권장 (대부분 기출문제).*
 
-**10. `maxTwinPrimes(n)`** — \\(p_2 - p_1 = 2\\)인 두 소수(twin primes) 중, `n` 이하에서
-\\(p_1 < p_2\\)가 가장 큰 쌍 `[p1, p2]`를 반환. 예: `maxTwinPrimes(5)` → `[3, 5]`.
+**10. `maxTwinPrimes(n)`** — 두 소수 \\(p_1, p_2\\)가 \\(p_2-p_1=2\\)를 만족하면
+twin primes. `n` 이하에서 \\(p_1 < p_2\\)가 가장 큰 쌍 `[p1, p2]`를 반환.
+
+```python
+print(maxTwinPrimes(5))  # [3, 5]
+```
 
 **11. `sym_diff(L, M)`** — 두 정수 리스트 `L`, `M`의 symmetric difference(정확히
 한쪽에만 속한 숫자들, 중복 없이 오름차순)를 반환.
 
-**12. `multiple(L1, L2)`** — `L1`의 모든 숫자가 `L2`의 어떤 숫자의 배수이면
-`True`. 예: `multiple([14,24,18,35,39], [6,13,7])` → `True`.
+```python
+print(sym_diff([3,4,7,6,5,3,4], [4,7,4,7,1,2,1]))  # [1,2,3,5,6]
+```
 
----
-*원본: `CS2(2026-2)_all/CS2/CS2/problem_set/P03.pdf`. 표현/코드는 정리하며 일부
-재구성함.*
+**12. `multiple(L1, L2)`** — `L1`의 모든 숫자가 `L2`의 어떤 숫자의 배수이면
+`True`.
+
+```python
+print(multiple([14,24,18,35,39], [6,13,7]))  # True
+```
