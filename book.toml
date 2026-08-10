@@ -7,9 +7,5 @@ src = "src"
 [output.html]
 git-repository-url = "https://github.com/SuminHan/book-cs2"
 
-[output.html.fold]
-enable = true
-level = 1
-
 [build]
 build-dir = "docs"
