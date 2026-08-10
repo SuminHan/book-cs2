@@ -38,10 +38,10 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-97d8eddd.js";
+            window.path_to_searchindex_js = "../searchindex-be08fbfa.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../toc-af8f4a15.js"></script>
+        <script src="../toc-7992028c.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -181,255 +181,177 @@
                 <div id="mdbook-content" class="content">
                     <main>
                         <h1 id="problem-set"><a class="header" href="#problem-set">Problem Set</a></h1>
+<p><em>큐브 더미와 투영도의 좌표 규칙은 <a href="lecture04-topics.html">Topics Covered</a> 참고.</em></p>
 <h3 id="필수-문제"><a class="header" href="#필수-문제">필수 문제</a></h3>
-<p><strong>1.</strong> Write a function <code>countZero</code>:</p>
+<p><strong>1.</strong> Write a function <code>topView</code>:</p>
 <ul>
-<li>input parameter: a list <code>a</code> that represents a 2-dimensional array</li>
-<li>return value: the number of <code>0</code>s in the array</li>
+<li>input parameter: a 3-dimensional \(N \times N \times N\) list <code>P</code> of
+0/1 that represents a pile of cubes (<code>P[i][j][k] == 1</code>이면 위치
+<code>(i,j,k)</code>에 큐브가 있다는 뜻)</li>
+<li>return value: a 2-dimensional 0/1 list that represents the top view of
+the input</li>
 </ul>
-<p>counter 패턴의 2중 for 루프. <code>height</code>는 행의 갯수이고 <code>width</code>는 열의 갯수.</p>
-<pre><code class="language-python">def countZero(a):
-    height = len(a)
-    width = len(a[0])
+<p>Write a function <code>frontView</code>:</p>
+<ul>
+<li>input parameter: the same as in <code>topView</code></li>
+<li>return value: a 2-dimensional 0/1 list that represents the front view of
+the input</li>
+</ul>
+<p>Write a function <code>rightView</code>:</p>
+<ul>
+<li>input parameter: the same as in <code>topView</code></li>
+<li>return value: a 2-dimensional 0/1 list that represents the right view of
+the input
+<ul>
+<li><em>j-좌표의 방향에 주의: 반환값은 <code>[[1,0,0],[1,0,1],[1,1,1]]</code>이 아니다 —
+이 규칙이 프로그래밍을 더 쉽게 만들어준다.</em></li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-python">def topView(P):
     # ADD ADDITIONAL CODE HERE!
 
-print(countZero([[1,2,3],[0,0,5],[0,3,0],[0,0,0]]))  # 7
-print(countZero([[0,2,3],[0,0,5],[0,3,0]]))          # 5
+def frontView(P):
+    # ADD ADDITIONAL CODE HERE!
+
+def rightView(P):
+    # ADD ADDITIONAL CODE HERE!
+
+P1 = [[[0,0,0], [0,0,0], [1,0,0]],
+      [[1,0,1], [0,0,0], [1,0,1]],
+      [[1,0,1], [1,1,1], [1,1,1]]]
+print(topView(P1))    # [[1,0,1], [1,1,1], [1,1,1]]
+print(frontView(P1))  # [[1,0,0], [1,0,1], [1,1,1]]
+print(rightView(P1))  # [[0,0,1], [1,0,1], [1,1,1]]
+
+P2 = [[[1,0,0], [0,0,0], [1,0,0]],
+      [[0,0,1], [1,1,0], [1,0,1]],
+      [[0,1,0], [0,0,0], [1,0,0]]]
+print(topView(P2))    # [[1,1,1], [1,1,0], [1,0,1]]
+print(frontView(P2))  # [[1,0,0], [1,1,1], [1,1,0]]
+print(rightView(P2))  # [[1,0,1], [1,1,1], [1,0,1]]
 </code></pre>
-<p><strong>2.</strong> Write a function <code>countZero</code>:</p>
+<p><strong>2.</strong> Consider the problem of finding a 3D pile of cubes from its
+top/front/right views (which is roughly an “inverse” mapping of those in
+problem 1). Some input views may be realized by <em>several</em> different piles
+of cubes; other input views may not be realized by <em>any</em> pile of cubes at
+all.</p>
+<p>Write a function <code>countCubes</code>:</p>
 <ul>
-<li>input parameter: a list <code>a</code> that represents a 3-dimensional array</li>
-<li>return value: the number of <code>0</code>s in the array</li>
+<li>input parameter: three 2-dimensional 0/1 lists that represent top,
+front, right views, respectively
+<ul>
+<li>There can be several piles of cubes that realize the input views.</li>
+<li>The input views may not be realized by any pile of cubes.</li>
 </ul>
-<pre><code class="language-python">def countZero(a):
-    depth = len(a)
-    height = len(a[0])
-    width = len(a[0][0])
-    # ADD ADDITIONAL CODE HERE!
-
-print(countZero([[[1,2],[0,0]],[[0,0],[0,0]]]))                # 6
-print(countZero([[[1,2],[0,0]],[[0,0],[0,0]],[[0,0],[0,0]]]))  # 10
-</code></pre>
-<p><strong>3.</strong> Write a function <code>maxPrime</code>:</p>
+</li>
+<li>return value: the maximum possible number of cubes that realize the
+input views
 <ul>
-<li>input parameter: a list <code>a</code> that represents a 3-dimensional array</li>
-<li>return value: the largest prime number in the array; if no prime exists,
-<code>0</code> is returned</li>
-</ul>
-<p>max/min 패턴의 for 루프. 주어진 boolean 함수 <code>isPrime</code>을 이용.</p>
-<pre><code class="language-python">def isPrime(p):
-    ...
-
-def maxPrime(a):
-    best = 0
-    # ADD ADDITIONAL CODE HERE!
-
-print(maxPrime([[[2,3],[3,9]],[[17,3],[3,19]]]))   # 19
-print(maxPrime([[[29,3],[3,9]],[[17,3],[3,19]]]))  # 29
-</code></pre>
-<p><strong>4.</strong> Write a function <code>sorted</code>:</p>
-<ul>
-<li>
-<p>input parameter: a list <code>a</code> that represents a 2-dimensional array</p>
-</li>
-<li>
-<p>return value: <code>True</code> if each row/column is in non-decreasing order,
-<code>False</code> otherwise</p>
-</li>
-<li>
-<p>“for all” 패턴의 2중 for 루프를 2개 이용</p>
-</li>
-<li>
-<p>루프 하나는 각 행에 대해 가로 방향으로 체크. 다음 루프는 각 열에 대해
-세로 방향으로 체크</p>
-</li>
-<li>
-<p>range의 파라미터로 <code>height, width</code>가 그대로 들어가야 하는지, <code>-1</code>을
-해서 들어가야 하는지 꼼꼼히 따져봐야 함</p>
-</li>
-</ul>
-<pre><code class="language-python">def sorted(a):
-    # ADD ADDITIONAL CODE HERE!
-
-test1 = [
-    [2,3,7,9,11,12],
-    [5,6,8,10,12,15],
-    [7,7,8,10,12,15],
-    [8,9,10,10,13,17],
-]
-test2 = [
-    [2,3,7,9,11,12],
-    [5,6,8,10,12,15],
-    [7,7,8,10,12,18],
-    [8,9,10,10,13,17],
-]
-print(sorted(test1))  # True
-print(sorted(test2))  # False
-</code></pre>
-<p><strong>5.</strong> Write a function <code>countMines</code>:</p>
-<ul>
-<li>input parameter: a list of boolean values that represents a
-1-dimensional minefield</li>
-<li>return value: the list of integers storing the count of bombs in each
-neighborhood
-<ul>
-<li>The neighborhood for a location includes the location itself and its
-two adjacent locations</li>
+<li>returns <code>None</code> if the input is not realized by any pile of cubes</li>
+<li><em><code>==</code>도 다차원 리스트에 대해 (deep) equality로 작동한다(1차원
+리스트와 마찬가지).</em></li>
 </ul>
 </li>
 </ul>
-<p>2차원 리스트를 만드는 법은 슬라이드 그림/코드 참조. 리스트의 각 자리는
-<code>None</code> 대신 <code>0</code>으로 초기화 해놓고 카운팅하면 됨.</p>
-<pre><code class="language-python">def withinBoundary(size, i):
-    return i &gt;= 0 and i &lt; size
+<pre><code class="language-python">def countCubes(top, front, right):
+    n = len(top)
+    count = 0
+    P = [[[None]*n for i in range(n)] for j in range(n)]
+    # for each (i,j,k), try to fill in P[i][j][k] and count cubes
 
-def countMines(mineField):
-    size = len(mineField)
-    mines = [0] * size
+    # then, check feasibility for each view
+
     # ADD ADDITIONAL CODE HERE!
-
-T, F = True, False
-mineField1 = [T, F, F, T, T, T, T, F, T, F]
-mineField2 = [T, F, T, T, T, F, F]
-print(countMines(mineField1))  # [1,1,1,2,3,3,2,2,1,1]
-print(countMines(mineField2))  # [1,2,2,3,2,1,0]
-</code></pre>
-<p><strong>6.</strong> Write a function <code>countMines</code>:</p>
-<ul>
-<li>input parameter: a list that represents a 2-dimensional minefield</li>
-<li>return value: the list that represents the 2-dimensional array of
-integers storing the count of bombs in each neighborhood
-<ul>
-<li>The neighborhood for a location includes the location itself and its
-eight adjacent locations</li>
-</ul>
-</li>
-</ul>
-<pre><code class="language-python">def withinBoundary(height, width, i, j):
-    return i &gt;= 0 and i &lt; height and j &gt;= 0 and j &lt; width
-
-def countMines(mineField):
-    height = len(mineField)
-    width = len(mineField[0])
-    # ADD ADDITIONAL CODE HERE!
-
-T = True
-F = False
-mineField = [
-    [T, F, F, F, F, T],
-    [F, F, F, F, F, T],
-    [T, T, F, T, F, T],
-    [T, F, F, F, F, F],
-    [F, F, T, F, F, F],
-    [F, F, F, F, F, F]]
-mines = countMines(mineField)
-for i in range(len(mines)):
-    print(mines[i])
-# [1, 1, 0, 0, 2, 2]
-# [3, 3, 2, 1, 4, 3]
-# [3, 3, 2, 1, 3, 2]
-# [3, 4, 3, 2, 2, 1]
-# [1, 2, 1, 1, 0, 0]
-# [0, 1, 1, 1, 0, 0]
-</code></pre>
-<p><strong>7.</strong> Write a function <code>maxZeroRect</code>:</p>
-<ul>
-<li>input parameter: a 2-dimensional list <code>M</code> that represents a 0/1 matrix</li>
-<li>return value: the area of a largest rectangle with only <code>0</code>s</li>
-</ul>
-<p><em>Hint: write an auxiliary boolean function <code>zeroRect(M, i1, i2, j1, j2)</code>
-that returns <code>True</code> if and only if <code>M[i][j] == 0</code> for all <code>i1&lt;=i&lt;=i2</code> and
-<code>j1&lt;=j&lt;=j2</code>, and use it in <code>maxZeroRect</code>.</em></p>
-<pre><code class="language-python">def zeroRect(M, i1, i2, j1, j2):
-    # ADD ADDITIONAL CODE HERE!
-
-def maxZeroRect(M):
-    # ADD ADDITIONAL CODE HERE!
-
-M = [[1,1,0,1,0,0,1],
-     [0,0,0,0,0,1,1],
-     [0,0,0,0,0,1,1],
-     [0,0,0,0,0,1,1],
-     [1,0,0,0,0,0,1],
-     [1,0,0,0,0,1,0],
-     [1,0,1,0,0,1,0],
-     [1,0,1,0,0,1,0]]
-print(maxZeroRect(M))  # 20
 </code></pre>
 <h3 id="optional-problems"><a class="header" href="#optional-problems">Optional Problems</a></h3>
 <p><em>필수 문제와 달리 제출/검사 대상은 아니지만, 큰 도움이 되므로 시간이 남으면
 모두 시도해보는 것을 권합니다 (대부분 기출문제입니다).</em></p>
-<p><strong>8.</strong> Let <code>A</code>와 <code>B</code>를 각각 \(m \times p\) 행렬과 \(p \times n\) 행렬이라
-하자. <code>A</code>와 <code>B</code>의 곱 \(A \cdot B\)는 다음과 같이 정의되는 \(m \times
-n\) 행렬이다: \(c_{ij} = \sum_{k=1}^{p} a_{ik}b_{kj}\) (\(1 \le i \le
-m,\ 1 \le j \le n\)).</p>
-<p>Write a function <code>product</code>:</p>
-<ul>
-<li>input parameter: two matrices <code>A</code> and <code>B</code> that are represented by
-2-dimensional lists</li>
-<li>return value: the 2-dimensional list that represents the matrix product
-\(A \cdot B\)
-<ul>
-<li>행렬곱 \(A \cdot B\)가 well-defined하지 않으면(차원이 안 맞으면)
-<code>None</code>을 return</li>
-</ul>
-</li>
-</ul>
-<p><em>위의 행렬 표현에서의 인덱스는 1부터 시작하지만 list에서 인덱스는 0부터
-시작함에 유의.</em></p>
-<p><strong>9.</strong> 다음과 같이 정의된 함수 <code>rotate</code>를 완성하라:</p>
-<ul>
-<li>입력: 2차원 리스트 <code>M</code></li>
-<li>리턴값: <code>M</code>을 시계방향으로 90° 회전시킨 형태의 2차원 리스트 (샘플 입력
-참조)</li>
-</ul>
-<p><strong>10.</strong> 다음과 같이 정의된 함수 <code>check</code>를 완성하라:</p>
-<ul>
-<li>입력: 2차원 리스트 <code>M</code></li>
-<li>리턴값: <code>M</code>의 각 row에 음수가 존재하면 <code>True</code>, 아니면 <code>False</code></li>
-</ul>
-<p><strong>11.</strong> 5번 문제를 일반화하여 각 칸에 여러개의 지뢰가 놓일 수 있는
-상황을 고려하자. 예를 들어, 아래 왼쪽 그림의 격자의 각 칸에 표시된
-숫자만큼 지뢰가 놓여있다고 하면 이에 대응되는 counting 결과는 오른쪽
-그림과 같다: <code>M = [0,2,2,0,1,2,1]</code> → <code>C = [2,4,4,3,3,4,3]</code>.</p>
-<p>이 문제에서는 다음과 같이 <code>countMines</code>의 반대 방향의 계산을 하는 것을
-목표로 한다: <code>C = [2,4,4,3,3,4,3]</code> → <code>M = [0,2,2,0,1,2,1]</code>.</p>
-<p>다음과 같이 정의된 함수 <code>findMines</code>를 완성하라:</p>
-<ul>
-<li>입력: 리스트 <code>C</code> — <code>C</code>의 각 원소는 0 이상 30 이하인 정수(30이 작은
-크기의 값임을 이용)</li>
-<li>리턴값: 다음 조건을 만족하는 리스트 <code>M</code> — <code>M</code>의 각 원소는 0 이상의
-정수이고, <code>countMines(M) == C</code>
-<ul>
-<li>이를 만족하는 리스트 <code>M</code>이 존재하지 않으면 <code>None</code>을 리턴한다.</li>
-<li>이를 만족하는 리스트가 여러개 존재하면 그 중 아무거나 하나 리턴한다.</li>
-</ul>
-</li>
-</ul>
-<p>힌트:</p>
-<ul>
-<li><code>M[0],M[1],...,M[n-1]</code>을 변수로 두면 <code>n</code>개의 연립방정식을 얻을 수 있어
-이를 (6주차에 다룰) Gaussian elimination으로 해결할 수도 있는데, 어떤
-<code>n</code>에 대해서는 대응되는 matrix가 singular일 수 있어서 적절한 방식이
-아니다.</li>
-<li><code>M[0]</code>의 각 후보값(0부터 <code>max(C)</code>까지의 정수)에 대해
-<code>M[1],M[2],...,M[n-1]</code>는 다음과 같은 <code>n-1</code>개의 등식으로 유일하게
-결정된다: <code>M[0]+M[1]=C[0]</code>, <code>M[0]+M[1]+M[2]=C[1]</code>, …,
-<code>M[n-3]+M[n-2]+M[n-1]=C[n-2]</code></li>
-<li>이들에 대해 다음이 모두 성립되면 답(중 하나)로 리턴하면 된다:
-<code>M[n-2]+M[n-1]=C[n-1]</code>, 그리고 모든 <code>M[i]</code>가 0 이상</li>
-</ul>
-<pre><code class="language-python">def countMines(M):
-    n = len(M)
-    C = [0] * n
+<p><strong>3.</strong> The goal of this problem is to complete the correctness proof of
+the algorithm in problem 2. For notational convenience, we define
+functions <code>build</code> and <code>check</code>:</p>
+<pre><code class="language-python">def build(top, front, right):
+    n = len(top)
+    P = [[[0]*n for i in range(n)] for j in range(n)]
     for i in range(n):
-        for j in range(i - 1, i + 2):
-            if 0 &lt;= j &lt; n:
-                C[i] += M[j]
-    return C
+        for j in range(n):
+            for k in range(n):
+                if top[j][k] == front[i][k] == right[i][j] == 1:
+                    P[i][j][k] = 1
+    return P
 
-def findMines(C):
-    # ADD ADDITIONAL CODE HERE!
+def check(P, top, front, right):
+    return topView(P)==top and frontView(P)==front and rightView(P)==right
+</code></pre>
+<p>(<code>topView</code>, <code>frontView</code>, <code>rightView</code>는 앞서 구현한 함수들.) 다음 사실을
+상기하자: 주어진 top/front/right에 대해 <code>check(Q,top,front,right)==True</code>인
+<code>Q</code>가 존재 ⟺ <code>check(build(top,front,right), top,front,right)==True</code>.</p>
+<p>“if” 방향은 쉽다(그냥 <code>Q = build(top,front,right)</code>로 두면 됨). 반대로
+“only if” 방향은 다소 복잡한데, 강의 슬라이드에서는 증명의 스케치만
+주어졌다. 임의의(그러나 고정된) <code>n×n</code> 리스트 top/front/right가 아래를
+만족한다고 하자:</p>
+<blockquote>
+<p>(♣) <code>check(build(top,front,right), top,front,right) == False</code></p>
+</blockquote>
+<p>다음은 “그렇다면 <code>check(Q,top,front,right)==True</code>인 <code>Q</code>가 존재하지 않는다“는
+명제의 증명 스케치다(강의 슬라이드와 동일):</p>
+<ol>
+<li>반대로, <code>check(Q,top,front,right)==True</code>인 \(n \times n \times n\) 0/1
+리스트 <code>Q</code>가 존재한다고 가정하자.
+<ol>
+<li><code>check(Q,top,front,right) == True</code>, 이고</li>
+<li><code>check(R,top,front,right)==True</code>인 임의의 <code>R</code>에 대해 <code>Q</code>의 1의
+개수가 <code>R</code>의 1의 개수 이상이다 (즉 <code>Q</code>는 top/front/right 투영을
+만족하는 큐브 더미 중 “최대“인 것).</li>
+</ol>
+</li>
+<li><code>P = build(top,front,right)</code>라 하자.</li>
+<li>모든 <code>0&lt;=i,j,k&lt;n</code>에 대해, <code>P[i][j][k]</code>가 <code>0</code>이면 <code>Q[i][j][k]</code>도 반드시
+<code>0</code>이어야 한다 (강의 슬라이드 애니메이션의 “hole-drilling” 논증에 의해).</li>
+<li>모든 <code>0&lt;=i,j,k&lt;n</code>에 대해, <code>P[i][j][k]</code>가 <code>1</code>이면 <code>Q[i][j][k]</code>도 반드시
+<code>1</code>이어야 한다.</li>
+<li>3, 4에 의해 <code>Q</code>는 <code>P</code>와 같다. 따라서 <code>check(Q,top,front,right)</code>는
+<code>check(P,top,front,right)</code>와 같은데, 이는 가정(♣)에 의해 <code>False</code>다.</li>
+<li>따라서 <code>check(Q,top,front,right)</code>는 <code>False</code>인데, 이는 (1.1)과 모순.</li>
+</ol>
+<p><strong>Prove the proposition in the step (4)</strong> to complete the correctness
+proof.</p>
+<p><strong>4.</strong> 수업시간에 다루었던 문제에서는 중력의 영향을 받지 않는 상황을
+고려하였는데, 이 문제에서는 중력 영향을 받는 상황을 고려한다.</p>
+<p>주어진 pile of cubes가 허공에 떠다니는 cube가 없다는 조건을 만족하면
+<strong>중력조건</strong>을 만족한다고 정의하자.</p>
+<p>다음과 같이 정의된 함수 <code>gravity</code>를 완성하라:</p>
+<ul>
+<li>입력: pile of cube를 나타내는 3차원 \(n \times n \times n\) 정수 리스트</li>
+<li>리턴값: <code>True</code>(입력이 중력조건을 만족할 때), <code>False</code>(입력이 중력조건을
+만족하지 않을 때)</li>
+</ul>
+<p><strong>5.</strong> 4번 문제와 마찬가지로 중력 영향을 받는 상황을 고려하는데, 허공에
+떠있는 cube들의 개수를 계산하려고 한다.</p>
+<p>어떤 cube가 허공에 떠있다는 것은 중력이 작용하면 떨어짐을 의미한다.</p>
+<p>다음과 같이 정의된 함수 <code>floating</code>을 완성하라:</p>
+<ul>
+<li>입력: pile of cube를 나타내는 3차원 \(n \times n \times n\) 0/1 리스트</li>
+<li>리턴값: 허공에 떠있는 cube들의 개수 (하나도 없으면 <code>0</code>)</li>
+</ul>
+<p><strong>6.</strong> 이 문제에서는 (2번 문제를 일반화하여) \(D \times H \times W\)
+형태로 3개의 axis에 대응되는 길이가 동일하지 않은 일반적인 경우를
+다룬다. (2번 문제와 마찬가지로 중력의 영향은 고려하지 않는다.)</p>
+<p>다음과 같이 정의된 함수 <code>countCubes</code>를 완성하라:</p>
+<ul>
+<li>입력: 3개의 2차원 0/1-리스트 <code>top, front, right</code></li>
+<li>리턴값: <code>top, front, right</code>를 정사영으로 가지는 ’maximum pile of
+cubes’에 포함된 cube 갯수
+<ul>
+<li>주어진 정사영을 가지는 ’pile of cubes’가 존재하지 않으면(2번
+문제에서와 마찬가지로) <code>None</code>을 리턴</li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-python">top = [[0,0,0,0],[0,0,0,1],[1,1,0,0]]
+front = [[1,1,0,1],[1,1,0,0]]
+right = [[0,1,1],[0,0,1]]
+print(countCubes(top, front, right))  # 5
 </code></pre>
 
                     </main>

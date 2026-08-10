@@ -1,123 +1,160 @@
 # Topics Covered
 
-## List 생성하는 또 다른 방법: `.append(·)`
+## `range(·)`는 사실 list
 
-`[]`로 빈 리스트를 만든 뒤 `.append(x)`로 원소를 하나씩 추가할 수 있다
-(`L.append(x)`는 `L = L + [x]`와 같은 효과지만 리스트 자체를 직접 변경한다).
-결과를 담을 리스트의 길이를 미리 알 수 없을 때 특히 유용하다.
+`range(n)`은 `list(range(n))`이 곧 `[0,1,...,n-1]`인 것처럼, 사실 하나의
+list다(수학의 "for each \\(i \in \{0,1,\ldots,n-1\}\\)"와 비슷하되, Python은
+순서가 명시적으로 정해져 있다는 차이가 있음).
 
 ```python
-L = [0,10,20,30,40,50]
-n = len(L)
-M = []
-for i in range(n):
-    M.append(L[i]*2)   # 또는 M = M + [L[i]*2]
+range(n)      # [0, 1, ..., n-1]
+range(m, n)   # [m, m+1, ..., n-1]
+range(m, n, k)  # [m, m+k, m+2k, ...]  (n을 넘기 직전까지)
+
+for i in range(10, 21, 3):
+    total += i   # 10+13+16+19
 ```
 
-## Slicing: `[i:j]`, `[i:j:k]`
+루프 변수 `i`를 루프 안에서 직접 바꾸는 것은 에러는 아니지만, 매 iteration마다
+`range(·)`가 준 값으로 다시 초기화되므로 원하는 효과를 내지 못한다 — 지양할 것.
 
-`L[i:j]`는 `L[i]`부터 `L[j-1]`까지 뽑아 만든 새 sublist(`L[j]`는 포함하지
-않음). `i`가 생략되면 처음부터, `j`가 생략되면 끝까지, 둘 다 생략되면 전체의
-복사본이다. `L[i:j:k]`는 `k`만큼의 step으로 건너뛰며 뽑는다
-(`range(i,j,k)`에서 `k`의 역할과 같음).
+## List Traversal: Index 방식 vs. 직접 방식
+
+리스트를 훑는 두 가지 방법이 있다.
 
 ```python
-L = [0,10,20,30,40,50]
-print(L[1:4])     # [10,20,30]  ([10,20,30,40] 아님)
-print(L[:3])      # [0,10,20]   (L[0:3]과 같음)
-print(L[2:])      # [20,30,40,50]
-print(L[:])       # [0,10,20,30,40,50]
+S = [2, 4, 2, 9, 5]
 
-L2 = [0,10,20,30,40,50,60,70,80,90]
-print(L2[1:9:2])  # [10,30,50,70]  (2씩 건너뜀)
-print(L2[1::2])   # [10,30,50,70,90]
+# ① index로 간접적으로 훑기
+total = 0
+for i in range(len(S)):
+    total += S[i]
+
+# ② 원소를 직접 건드리며 훑기
+total = 0
+for x in S:
+    total += x
 ```
 
-## 비교 / 포함관계 / 연결 연산자
+두 방식 다 존재 이유가 있다: **순서/위치 정보가 필요 없다면(예: 합 계산)
+직접 방식(`for x in S`)이 훨씬 간결**하다. 반대로 **이웃한 원소를 비교하는
+등 인덱스가 필요하다면(예: 단조증가 판정, `S[i]`와 `S[i+1]` 비교) index
+방식**을 써야 한다.
+
+## `break` / `continue`
+
+`break`는 루프를 즉시 빠져나가고, `continue`는 현재 iteration만 건너뛰고
+루프는 계속된다. 다중 루프에서는 **가장 안쪽 루프만** 영향을 받는다.
+코드 구조가 복잡해지므로 boolean function 등으로 대체 가능하면 가능한 한
+피하는 것이 좋다.
 
 ```python
-print([1,2,3] == [1,2,3])        # True — 리스트 비교
-L = [0,1,2,3,4,5]
-print(3 in L)                     # True
-print(8 in L)                     # False
-print([1,2] in L)                 # False (string의 경우와 다름! 원소 하나가
-                                   #        [1,2] 자체여야 True)
-print([1,2] in [0,[1,2],3])       # True
+for i in range(8):
+    if i == 5:
+        break
+    print(i)
+# 0 1 2 3 4
 
-L = [0,1] + [2,3,4,5]             # [0,1,2,3,4,5]  연결
-M = [0,1] * 3                     # [0,1,0,1,0,1]  반복
+for i in range(8):
+    if i in [3, 5]:
+        continue
+    print(i)
+# 0 1 2 4 6 7
 ```
 
-`==`로 리스트 전체를 비교하는 것과, "∀-pattern" loop으로 원소를 하나씩
-비교하는 것은 결과가 같다 — 다만 `==`가 이미 그 루프를 대신 해준다:
+## `for` 루프의 3가지 기본 패턴
+
+거의 모든 `for` 루프는 아래 세 패턴의 조합으로 만들어진다.
+
+**① Maximum/Minimum** — 최솟값(또는 최댓값)뿐 아니라 그 **인덱스**가
+필요한 경우도 있다는 점에 유의:
 
 ```python
-# 같은 일을 하는 두 가지 방법
-def equal(L1, L2):
-    return L1 == L2
+def findMin(numbers):
+    m = numbers[0]
+    for i in range(len(numbers)):
+        if numbers[i] < m:
+            m = numbers[i]
+    return m
 
-def equal_manual(L1, L2):
-    if len(L1) != len(L2):
-        return False
-    for i in range(len(L1)):
-        if L1[i] != L2[i]:
+def findMinIndex(numbers):
+    minIndex = 0
+    for i in range(len(numbers)):
+        if numbers[i] < numbers[minIndex]:
+            minIndex = i
+    return minIndex
+```
+
+**② Counter** — 조건을 만족하는 원소의 개수. 조건이 복잡하면 boolean
+function으로 분리해 넣으면 코드가 그대로 재사용된다:
+
+```python
+def countPrime(numbers):
+    counter = 0
+    for i in range(len(numbers)):
+        if isPrime(numbers[i]):   # boolean function
+            counter += 1
+    return counter
+```
+
+**③ Quantifier ("for some" / "for all")** — "어떤 원소가 조건을
+만족하는가"(∃)와 "모든 원소가 조건을 만족하는가"(∀)는 사실 De Morgan's
+law로 연결된 짝이다: \\(\forall x,\, p(x) \equiv \neg\big(\exists x,\, \neg
+p(x)\big)\\).
+
+```python
+def somePositive(numbers):        # "for some" — 찾으면 즉시 True
+    for i in range(len(numbers)):
+        if numbers[i] > 0:
+            return True
+    return False
+
+def allPositive(numbers):         # "for all" — 반례를 찾으면 즉시 False
+    for i in range(len(numbers)):
+        if not (numbers[i] > 0):
             return False
     return True
 ```
 
-`in`도 마찬가지로 "∃-pattern" loop을 대신한다.
-
-## Built-in 함수
-
-숫자로만 이루어진 리스트에는 `sum(L)`, `max(L)`, `min(L)`을 바로 쓸 수
-있다(`L.sum()`처럼 메소드 형태가 아님에 유의). 반면 뒤에 나오는
-`L.append(x)`, `L.sort()`는 `L.???()` 형태의 **메소드**이고, `L` 자체를
-바꾸면서 반환값은 `None`이다:
+이번 학기 자주 쓰이는 함수인 소수 판별 `isPrime(p)`도 사실 "for all"
+패턴이다: "`p`가 소수" ≡ "모든 `i`에 대해 `p % i != 0`":
 
 ```python
-L = [1,2,3]
-M = L.append(5)
-print(M)   # None — L 자체만 바뀌고 M에는 아무 값도 안 감
-print(L)   # [1,2,3,5]
-
-L2 = [3,2,7,1,4]
-L2.sort()
-print(L2)  # [1,2,3,4,7]
+def isPrime(p):
+    if p < 2:
+        return False
+    for i in range(2, p//2 + 1):
+        if not (p % i != 0):   # p % i == 0 — 반례(약수) 발견
+            return False
+    return True
 ```
 
-## String도 List처럼
+## Example: File I/O
 
-String(`"Porori"`)은 문자들의 list(`["P","o","r","o","r","i"]`)처럼
-다룰 수 있다 — `len(·)`, `[i]`, slicing 모두 리스트와 똑같이 동작한다.
-**큰 차이점: string은 `s[i] = ...`로 직접 수정할 수 없다**(변경 불가).
+파일을 읽어 단어 리스트로 만드는 표준 패턴:
 
 ```python
-s = "Porori"
-counter = 0
-for i in range(len(s)):
-    if s[i] == "o":
-        counter += 1
-
-print(s[1:4])   # "oro"
-print(s[-1])    # "i"
+words = open("input.txt", "r").read().split()
 ```
 
-String 비교(`==`, `!=`, `<`, `>`)는 사전순(lexicographic order)을 따른다.
-연결은 `+`, 반복은 `str * int`:
+`open(filename, "r")`로 읽기 전용으로 열고, `.read()`로 전체 내용을
+하나의 string으로 읽은 뒤, `.split()`으로 공백 기준으로 쪼개 단어들의
+list를 만든다. 이 세 단계를 한 줄로 이어 쓴 것이 바로 위 코드다.
+
+이 패턴과 Maximum 패턴을 합치면, 파일에서 가장 긴 단어를 찾을 수 있다.
+**길이가 아니라 단어 자체**를 반환해야 하므로, `maxLen`뿐 아니라 그 길이를
+가진 단어 `maxWord`도 함께 유지해야 한다:
 
 ```python
-print("abc" < "abde")   # True — 사전에서 먼저 나오는 쪽이 작음
-
-s = "Po" + "rori"       # "Porori"
-r = ""
-for i in range(len(s)):
-    r = r + s[len(s)-1-i]   # s의 문자를 거꾸로 r에 붙임
-print(r)                 # "iroroP"
-
-print("Porori".find("ror"))  # 2
+def maxPalindrome(filename):
+    words = open(filename, "r").read().split()
+    n = len(words)
+    maxWord = ""
+    maxLen = 0
+    for i in range(n):
+        s = words[i]
+        if maxLen < len(s):
+            maxWord = s
+            maxLen = len(s)
+    return maxWord
 ```
-
-*int/float가 메모리에 실제로 어떤 비트로 저장되는지, 그리고 그게 왜
-`0.1 + 0.2 == 0.3`이 `False`가 되는 원인인지 궁금하다면 참고자료의
-[숫자가 메모리에 저장되는 방식](../general/number-representation.md)
-참고.*

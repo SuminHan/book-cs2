@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Art Gallery Problem - CS2 국내반 보충자료</title>
+        <title>Lists / Strings - CS2 국내반 보충자료</title>
 
 
         <!-- Custom HTML head -->
@@ -38,10 +38,10 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-97d8eddd.js";
+            window.path_to_searchindex_js = "../searchindex-be08fbfa.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../toc-af8f4a15.js"></script>
+        <script src="../toc-7992028c.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -180,43 +180,35 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h1 id="art-gallery-problem"><a class="header" href="#art-gallery-problem">Art Gallery Problem</a></h1>
-<p>1973년, 수학자 빅터 클리는 동료 바츨라프 흐바탈에게 이런 질문을
-던졌다: “n개의 벽으로 이루어진 미술관을 감시 카메라(또는 경비원)로
-전부 감시하려면, 최소 몇 대가 필요한가?” 미술관의 벽이 복잡하게
-꺾여 있을수록 사각지대가 늘어난다는 게 직관이었지만, 정확히 몇 대면
-충분한지는 아무도 몰랐다.</p>
-<p>흐바탈은 곧 답을 내놨다: <strong>어떤 모양의 미술관이든 \(\lfloor n/3
-\rfloor\)대면 항상 충분하다</strong>(그리고 빗 모양처럼 뾰족한 미술관에서는
-그만큼이 실제로 필요하기도 하다).<sup class="footnote-reference" id="fr-chvatal-1"><a href="#footnote-chvatal">1</a></sup> 몇 년 뒤 스티브 피스크는
-이 결과를 훨씬 우아한 방법으로 다시 증명했다 — 미술관을 삼각형들로
-쪼갠 뒤, 그 삼각형들의 꼭짓점을 세 가지 색으로 칠할 수 있음을 보이고,
-가장 적게 쓰인 색의 꼭짓점에만 카메라를 두면 된다는 것이었다.
-<sup class="footnote-reference" id="fr-fisk-1"><a href="#footnote-fisk">2</a></sup></p>
-<h2 id="이번-주-문제와의-관계"><a class="header" href="#이번-주-문제와의-관계">이번 주 문제와의 관계</a></h2>
-<p>이번 주 다루는 문제는 이 유명한 정리의 한 갈래다 — 다만 임의의
-다각형이 아니라 <strong>rectilinear polygon</strong>(모든 벽이 수직/수평)으로
-제한하고, 카메라도 딱 1대만 쓴다는 조건을 붙인 특수한 경우다. 조건을
-좁힌 대신, “카메라 1대로 전부 감시 가능한 위치가 어디인지“를 정확히
-계산해내는 것이 이번 주의 목표다.</p>
+                        <h1 id="lists--strings"><a class="header" href="#lists--strings">Lists / Strings</a></h1>
+<p>“서버가 요청받은 길이만큼, 확인도 없이 메모리를 그대로 잘라 돌려준다면?”</p>
+<p>2014년 4월, 암호화 라이브러리 OpenSSL에서 하트블리드(Heartbleed)라는
+취약점이 발견됐다. 원인은 단순했다: 서버는 클라이언트가 “이만큼의
+데이터를 돌려달라“고 요청하면, 실제로 받은 데이터의 길이는 확인하지
+않고 요청한 길이만큼 그대로 메모리에서 잘라 돌려줬다. 클라이언트가
+“나는 1바이트를 보냈지만, 6만 4천 바이트를 돌려달라“고 요청하면, 서버는
+그 1바이트 뒤에 있는 — 전혀 상관없는 — 메모리 6만 4천 바이트를 그대로
+잘라서 돌려줬다. 거기엔 다른 사용자의 비밀번호나 서버의 개인키가 들어
+있을 수도 있었다.</p>
+<h2 id="lij가-실제로-하는-일"><a class="header" href="#lij가-실제로-하는-일"><code>L[i:j]</code>가 실제로 하는 일</a></h2>
+<p>이번 주 배우는 slicing 연산자 <code>L[i:j]</code>는 “리스트의 실제 길이“와
+무관하게 인덱스 <code>i</code>부터 <code>j-1</code>까지를 잘라낸다. <code>L</code>이 정말 그 길이를
+갖고 있는지는 프로그래머가 확인해야 하는 몫이다. Python은 리스트
+경계를 넘어가면 에러를 내주지만, 하트블리드가 발생한 C 언어의 메모리
+조작에는 그런 보호장치가 없었다. “요청한 길이“와 “실제 있는 길이“를
+혼동하면, 있어서는 안 될 데이터까지 함께 잘려 나온다.</p>
 <h2 id="오늘-배우는-것과의-연결"><a class="header" href="#오늘-배우는-것과의-연결">오늘 배우는 것과의 연결</a></h2>
-<p>Optional 문제에서 다루는 “카메라 여러 대”, “임의의 다각형” 같은
-일반화는 모두 흐바탈의 원래 정리로 이어지는 방향이다. 오늘 배우는
-좌표 계산 하나하나가, 50년 전 나온 이 우아한 정리의 세계로 들어가는
-첫걸음이다.</p>
-<p><strong>“미술관에 카메라 몇 대가 필요한가“라는 질문 하나가, 정확히 50년
-전 우아한 수학 정리로 이어졌다 — 오늘 그 정리의 특수한 경우를 코드로
-직접 계산해본다.</strong></p>
+<p>전 세계 웹 서버의 상당수가 이 취약점에 노출되어 있었고, 복구에는
+수개월이 걸렸다.<sup class="footnote-reference" id="fr-heartbleed-1"><a href="#footnote-heartbleed">1</a></sup> <code>len(·)</code>으로 실제 길이를 확인하고 그
+범위 안에서만 인덱싱/슬라이싱하는 습관은 사소해 보이지만, 이 사고가
+벌어진 근본 원인과 정확히 같은 지점을 다룬다.</p>
+<p><strong>어떤 인덱스가 유효한지 항상 정확히 알고 있을 것 — 이번 주 배우는
+List/String 연산은 모두 그 위에 세워진다.</strong></p>
 <hr>
 <ol class="footnote-definition">
-<li id="footnote-chvatal">
-<p>Václav Chvátal, <em>A Combinatorial Theorem in Plane
-Geometry</em>, Journal of Combinatorial Theory, Series B, Vol. 18
-(1975). <a href="#fr-chvatal-1">↩</a></p>
-</li>
-<li id="footnote-fisk">
-<p>Steve Fisk, <em>A Short Proof of Chvátal’s Watchman Theorem</em>,
-Journal of Combinatorial Theory, Series B, Vol. 24 (1978). <a href="#fr-fisk-1">↩</a></p>
+<li id="footnote-heartbleed">
+<p>Codenomicon, <em>Heartbleed Bug</em> (heartbleed.com, 2014);
+CVE-2014-0160. <a href="#fr-heartbleed-1">↩</a></p>
 </li>
 </ol>
 
@@ -224,11 +216,11 @@ Journal of Combinatorial Theory, Series B, Vol. 24 (1978). <a href="#fr-fisk-1">
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../kor/lecture11-problems.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                             </a>
 
-                            <a rel="next prefetch" href="../kor/lecture12-topics.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../kor/lecture01-topics.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                             </a>
 
@@ -238,11 +230,11 @@ Journal of Combinatorial Theory, Series B, Vol. 24 (1978). <a href="#fr-fisk-1">
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../kor/lecture11-problems.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                     </a>
 
-                    <a rel="next prefetch" href="../kor/lecture12-topics.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../kor/lecture01-topics.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                     </a>
             </nav>

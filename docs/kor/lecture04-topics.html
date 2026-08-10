@@ -38,10 +38,10 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-97d8eddd.js";
+            window.path_to_searchindex_js = "../searchindex-be08fbfa.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../toc-af8f4a15.js"></script>
+        <script src="../toc-7992028c.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -181,51 +181,64 @@
                 <div id="mdbook-content" class="content">
                     <main>
                         <h1 id="topics-covered"><a class="header" href="#topics-covered">Topics Covered</a></h1>
-<h2 id="2차원-리스트"><a class="header" href="#2차원-리스트">2차원 리스트</a></h2>
-<p>행렬(matrix)을 표현할 때 유용하다(순서도 “행”/“열“로 같다고 생각하면 됨).
-<code>table[i]</code>는 <code>i</code>-행에 대응되는 리스트(길이 <code>width</code>), <code>table[i][j]</code>는 그
-행의 <code>j</code>번째 원소다. <code>len(table)</code>은 <code>height</code>(행 개수), <code>len(table[0])</code>은
-<code>width</code>(열 개수)가 된다.</p>
-<pre><code class="language-python">height = 3   # 행 개수 = 열의 크기
-width = 4    # 열 개수 = 행의 크기
-table = [[None]*width for i in range(height)]
+<h2 id="problem-1-3d--2d-투영"><a class="header" href="#problem-1-3d--2d-투영">Problem 1: 3D → 2D 투영</a></h2>
+<p>큐브 더미는 3차원 0/1 리스트 <code>P</code>로 표현한다: <code>P[i][j][k] == 1</code>이면 위치
+<code>(i,j,k)</code>에 큐브가 있다는 뜻이다(<code>i</code>: 위→아래, <code>j</code>: 뒤→앞, <code>k</code>: 왼쪽→오른쪽
+방향의 좌표라고 생각하면 됨). 이 더미를 위/앞/오른쪽에서 내려다본 그림자가
+각각 top/front/right view다 — 어느 방향에서든, 그 시선 방향으로 한 줄에
+큐브가 하나라도 있으면 그 칸은 채워진 것으로 보인다.</p>
+<p><code>(i,j,k)</code>에 큐브가 있다는 것은 곧,</p>
+<ul>
+<li><code>top[j][k] = 1</code> (위에서 봤을 때 그 자리가 채워져 보임)</li>
+<li><code>front[i][k] = 1</code> (앞에서 봤을 때 그 자리가 채워져 보임)</li>
+<li><code>right[i][j] = 1</code> (오른쪽에서 봤을 때 그 자리가 채워져 보임)</li>
+</ul>
+<p>이 세 투영도 모두에 흔적을 남긴다는 뜻이다. 각 투영도는 세 좌표축 중
+둘만으로 인덱싱되는 2차원 리스트임에 주의: top은 <code>(j,k)</code>, front는
+<code>(i,k)</code>, right는 <code>(i,j)</code>.</p>
+<h2 id="problem-2-역-문제--투영도만-주어졌을-때"><a class="header" href="#problem-2-역-문제--투영도만-주어졌을-때">Problem 2: “역” 문제 — 투영도만 주어졌을 때</a></h2>
+<p>이제 반대 방향: top/front/right 세 투영도만 주어지고, 그것을 만들어낼 수
+있는 큐브 더미 중 <strong>큐브 개수가 최대인</strong> 것을 찾아야 한다(애초에 그런
+더미가 존재하지 않을 수도 있음).</p>
+<p><strong>핵심 관찰</strong>: <code>(i,j,k)</code>에 큐브가 있으려면 세 투영도 모두에 흔적이
+남아야 한다(위 Problem 1). 즉,</p>
+<blockquote>
+<p><code>P[i][j][k] == 1</code>이 가능하려면 <code>top[j][k] == front[i][k] == right[i][j] == 1</code>이 <strong>반드시</strong> 성립해야 한다.</p>
+</blockquote>
+<p>따라서 이 조건을 만족하는 모든 <code>(i,j,k)</code>에 큐브를 채운 <code>P</code>가 — <strong>존재할
+수 있는 답들 중 가장 큰 후보</strong>다. 어떤 답 <code>Q</code>가 세 투영도를 만족한다면,
+<code>Q</code>에 있는 모든 큐브는 이 조건을 만족해야 하므로 <code>Q</code>는 <code>P</code>의 부분집합일
+수밖에 없다. 즉 <strong><code>P</code>보다 큐브가 많은 답은 있을 수 없다.</strong></p>
+<p>이제 이 <code>P</code>가 실제로 답이 되는지는 직접 확인하면 된다:</p>
+<ol>
+<li>조건을 만족하는 모든 <code>(i,j,k)</code>에 큐브를 채운 <code>P</code>를 만든다.</li>
+<li><code>P</code>의 실제 투영도(Problem 1의 함수들로 계산)가 입력으로 주어진
+top/front/right와 정확히 같은지 확인한다.</li>
+<li>같다면 <code>P</code>가 (최대 개수를 갖는) 답이다.</li>
+<li>다르다면(즉 <code>P</code>를 만들어도 투영도가 입력보다 “더 커져” 버린다면), 애초에
+그 투영도 조합을 만족하는 더미는 존재하지 않는다.</li>
+</ol>
+<pre><code class="language-python">def build(top, front, right):
+    n = len(top)
+    P = [[[0]*n for j in range(n)] for i in range(n)]
+    for i in range(n):
+        for j in range(n):
+            for k in range(n):
+                if top[j][k] == front[i][k] == right[i][j] == 1:
+                    P[i][j][k] = 1
+    return P
 
-for i in range(height):
-    for j in range(width):
-        table[i][j] = (i + 2*j + 1)
+def countCubes(top, front, right):
+    P = build(top, front, right)
+    if topView(P) == top and frontView(P) == front and rightView(P) == right:
+        return sum(sum(sum(row) for row in layer) for layer in P)
+    return None
 </code></pre>
-<p><code>[None]*width for i in range(height)</code>처럼 <strong>list comprehension</strong>으로 각
-행을 독립적으로 새로 생성해야 한다 — <code>[[None]*width] * height</code>처럼 쓰면
-모든 행이 <strong>같은 리스트를 가리키는 alias</strong>가 되어, 한 행을 고치면 다른
-모든 행도 같이 바뀌는 버그가 생긴다.</p>
-<h2 id="3차원-리스트"><a class="header" href="#3차원-리스트">3차원 리스트</a></h2>
-<p>한 단계 더 중첩하면 된다. <code>table[i]</code>는 <code>i</code>-층에 대응되는 2D array,
-<code>table[i][j]</code>는 그 층의 <code>j</code>-행에 대응되는 1D array다.</p>
-<pre><code class="language-python">height = 3   # 행 개수
-width = 4    # 열 개수
-depth = 2    # 층 개수
-table = [[[None]*width for j in range(height)] for i in range(depth)]
-
-for i in range(depth):
-    for j in range(height):
-        for k in range(width):
-            table[i][j][k] = (i + 2*j + 1 + k)
-</code></pre>
-<h2 id="boundary-체크-패턴"><a class="header" href="#boundary-체크-패턴">Boundary 체크 패턴</a></h2>
-<p>다차원 배열에서 인접 칸을 볼 때(예: 지뢰찾기), 인덱스가 배열 범위를
-벗어나지 않는지 매번 확인해야 한다. 이 체크를 별도 함수로 분리해두면
-코드가 훨씬 깔끔해진다:</p>
-<pre><code class="language-python">def withinBoundary(height, width, i, j):
-    return 0 &lt;= i &lt; height and 0 &lt;= j &lt; width
-</code></pre>
-<p>1차원의 경우:</p>
-<pre><code class="language-python">def withinBoundary(size, i):
-    return 0 &lt;= i &lt; size
-</code></pre>
-<p>이 패턴은 “자기 자신 + 인접 칸들“을 순회하며 무언가를 세거나 판정하는
-모든 문제(지뢰밭 인접 지뢰 수 세기, 0으로만 이루어진 최대 직사각형 찾기
-등)의 뼈대가 된다: 후보 인접 칸들을 나열하고, 그중 boundary 안에 있는
-것만 실제로 확인한다.</p>
+<p>이 문제의 핵심은 “가능한 모든 큐브 배치를 하나하나 시도해서 큰 것을
+고르는” 방식이 아니라, **“조건을 만족할 수 있는 유일한 후보를 논리적으로
+구성한 뒤, 그것이 실제로 조건을 만족하는지만 확인”**하는 방식이라는
+점이다 — 답이 존재한다면 그 후보가 곧 답이고, 존재하지 않는다면 그
+후보조차도 조건을 못 만족한다.</p>
 
                     </main>
 

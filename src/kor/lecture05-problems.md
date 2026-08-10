@@ -1,80 +1,33 @@
 # Problem Set
 
-*큐브 더미와 투영도의 좌표 규칙은 [Topics Covered](lecture05-topics.md) 참고.*
-
 ### 필수 문제
 
-**1.** Write a function `topView`:
-- input parameter: a 3-dimensional \\(N \times N \times N\\) list `P` of
-  0/1 that represents a pile of cubes (`P[i][j][k] == 1`이면 위치
-  `(i,j,k)`에 큐브가 있다는 뜻)
-- return value: a 2-dimensional 0/1 list that represents the top view of
-  the input
-
-Write a function `frontView`:
-- input parameter: the same as in `topView`
-- return value: a 2-dimensional 0/1 list that represents the front view of
-  the input
-
-Write a function `rightView`:
-- input parameter: the same as in `topView`
-- return value: a 2-dimensional 0/1 list that represents the right view of
-  the input
-  - *j-좌표의 방향에 주의: 반환값은 `[[1,0,0],[1,0,1],[1,1,1]]`이 아니다 —
-    이 규칙이 프로그래밍을 더 쉽게 만들어준다.*
+**1.** Write a function `gaussian_elimination`:
+- input parameter: `a`와 `b`
+  - `a`: two-dimensional list of integers that represents an `n`-by-`n`
+    matrix
+  - `b`: list of `n` integers
+- return value: a length-`n` list `x` of float numbers where `x`
+  represents the unique solution to the linear system of equations
+  \\(a \cdot x = b\\)
+  - return `None` if the system has no solution or infinitely many
+    solutions
 
 ```python
-def topView(P):
+def gaussian_elimination(a, b):
     # ADD ADDITIONAL CODE HERE!
 
-def frontView(P):
-    # ADD ADDITIONAL CODE HERE!
+a = [[0, 1, 1], [2, 4, -2], [0, 3, 15]]
+b = [4, 2, 36]
+print(gaussian_elimination(a, b))  # [-1.0, 2.0, 2.0]
 
-def rightView(P):
-    # ADD ADDITIONAL CODE HERE!
+a = [[1, 0, 1, 4], [2, -1, 1, 7], [-2, 1, 0, -6], [1, 1, 1, 9]]
+b = [1, 2, 3, 4]
+print(gaussian_elimination(a, b))  # [-8.8, -5.0, 3.4, 1.6]
 
-P1 = [[[0,0,0], [0,0,0], [1,0,0]],
-      [[1,0,1], [0,0,0], [1,0,1]],
-      [[1,0,1], [1,1,1], [1,1,1]]]
-print(topView(P1))    # [[1,0,1], [1,1,1], [1,1,1]]
-print(frontView(P1))  # [[1,0,0], [1,0,1], [1,1,1]]
-print(rightView(P1))  # [[0,0,1], [1,0,1], [1,1,1]]
-
-P2 = [[[1,0,0], [0,0,0], [1,0,0]],
-      [[0,0,1], [1,1,0], [1,0,1]],
-      [[0,1,0], [0,0,0], [1,0,0]]]
-print(topView(P2))    # [[1,1,1], [1,1,0], [1,0,1]]
-print(frontView(P2))  # [[1,0,0], [1,1,1], [1,1,0]]
-print(rightView(P2))  # [[1,0,1], [1,1,1], [1,0,1]]
-```
-
-**2.** Consider the problem of finding a 3D pile of cubes from its
-top/front/right views (which is roughly an "inverse" mapping of those in
-problem 1). Some input views may be realized by *several* different piles
-of cubes; other input views may not be realized by *any* pile of cubes at
-all.
-
-Write a function `countCubes`:
-- input parameter: three 2-dimensional 0/1 lists that represent top,
-  front, right views, respectively
-  - There can be several piles of cubes that realize the input views.
-  - The input views may not be realized by any pile of cubes.
-- return value: the maximum possible number of cubes that realize the
-  input views
-  - returns `None` if the input is not realized by any pile of cubes
-  - *`==`도 다차원 리스트에 대해 (deep) equality로 작동한다(1차원
-    리스트와 마찬가지).*
-
-```python
-def countCubes(top, front, right):
-    n = len(top)
-    count = 0
-    P = [[[None]*n for i in range(n)] for j in range(n)]
-    # for each (i,j,k), try to fill in P[i][j][k] and count cubes
-
-    # then, check feasibility for each view
-
-    # ADD ADDITIONAL CODE HERE!
+a = [[0, 1, 1], [2, 4, -2], [2, 5, -1]]
+b = [4, 2, 36]
+print(gaussian_elimination(a, b))  # None
 ```
 
 ### Optional Problems
@@ -82,91 +35,78 @@ def countCubes(top, front, right):
 *필수 문제와 달리 제출/검사 대상은 아니지만, 큰 도움이 되므로 시간이 남으면
 모두 시도해보는 것을 권합니다 (대부분 기출문제입니다).*
 
-**3.** The goal of this problem is to complete the correctness proof of
-the algorithm in problem 2. For notational convenience, we define
-functions `build` and `check`:
+**2.** (수학 수업시간에 다루었을 **matrix product**의 정의를 상기: \\(m
+\times p\\) 행렬 `A`와 \\(p \times n\\) 행렬 `B`의 곱 \\(A \cdot B\\)는
+\\(c_{ij} = \sum_{k=1}^{p} a_{ik}b_{kj}\\)로 정의되는 \\(m \times n\\)
+행렬이다.)
+
+다음과 같이 정의된 함수 `inverse`를 완성하라:
+- 입력: `n`-by-`n` 행렬을 나타내는 2차원 정수 리스트 `a`
+- 리턴값: 다음 방정식을 만족하는 2차원 `n×n` float 리스트 `b`(즉, `a`의
+  역행렬): \\(a \cdot b = I\\) (단위행렬)
+  - (이와 같은 행렬 `b`가 존재하지 않으면 `None`을 리턴)
+
+Hint:
+- `b`의 각 열을 `gaussian_elimination`을 이용해 찾는 과정을 `n`번
+  반복하면 된다.
+- `gaussian_elimination(a,b)`이 modifier(입력 리스트 자체를 변경하는
+  함수, 6주차에 자세히 다룸)임에 유의해야 한다(이 함수의 코드를 잘
+  살펴보면 2차원 리스트 `a`의 값을 변경한다). 따라서, `gaussian_
+  elimination(a,b)`를 여러번 호출할 경우 템플릿 파일에 제공된
+  `copy2DList(a)` 함수를 이용하여 2차원 리스트 `a`를 통째로 복사하여
+  새로운 2차원 리스트를 만들고 이를 `gaussian_elimination`으로 넘기는
+  방식으로 구현해야 한다.
 
 ```python
-def build(top, front, right):
-    n = len(top)
-    P = [[[0]*n for i in range(n)] for j in range(n)]
-    for i in range(n):
-        for j in range(n):
-            for k in range(n):
-                if top[j][k] == front[i][k] == right[i][j] == 1:
-                    P[i][j][k] = 1
-    return P
-
-def check(P, top, front, right):
-    return topView(P)==top and frontView(P)==front and rightView(P)==right
+def inverse(a):
+    # ADD ADDITIONAL CODE HERE!
 ```
 
-(`topView`, `frontView`, `rightView`는 앞서 구현한 함수들.) 다음 사실을
-상기하자: 주어진 top/front/right에 대해 `check(Q,top,front,right)==True`인
-`Q`가 존재 ⟺ `check(build(top,front,right), top,front,right)==True`.
+**3.** 이 문제에서는 `n-1`차 다항함수 \\(f: \mathbb{Z} \to \mathbb{Z}\\)의
+함수값 \\(f(0), f(1), \ldots, f(n-1)\\)들이 주어졌을 때, `f(n)`을 계산하는
+것을 목표로 한다.
 
-"if" 방향은 쉽다(그냥 `Q = build(top,front,right)`로 두면 됨). 반대로
-"only if" 방향은 다소 복잡한데, 강의 슬라이드에서는 증명의 스케치만
-주어졌다. 임의의(그러나 고정된) `n×n` 리스트 top/front/right가 아래를
-만족한다고 하자:
+다음과 같이 정의된 함수 `poly`를 완성하라:
+- 입력: 정수 리스트 `L`
+  - `n = len(L)`로 둘 때, 어떤 `n-1`차 다항함수 `f`가 존재하여, 각
+    `L[i]`는 `f(i)`를 나타냄. 즉, `L = [f(0), f(1), ..., f(n-1)]`
+- 리턴값: `f(n)`
+  - 입력 조건을 만족하는 `n-1`차 다항함수 `f`가 존재하지 않거나 여러개
+    존재할 경우에는 `None`을 리턴
 
-> (♣) `check(build(top,front,right), top,front,right) == False`
-
-다음은 "그렇다면 `check(Q,top,front,right)==True`인 `Q`가 존재하지 않는다"는
-명제의 증명 스케치다(강의 슬라이드와 동일):
-
-1. 반대로, `check(Q,top,front,right)==True`인 \\(n \times n \times n\\) 0/1
-   리스트 `Q`가 존재한다고 가정하자.
-   1. `check(Q,top,front,right) == True`, 이고
-   2. `check(R,top,front,right)==True`인 임의의 `R`에 대해 `Q`의 1의
-      개수가 `R`의 1의 개수 이상이다 (즉 `Q`는 top/front/right 투영을
-      만족하는 큐브 더미 중 "최대"인 것).
-2. `P = build(top,front,right)`라 하자.
-3. 모든 `0<=i,j,k<n`에 대해, `P[i][j][k]`가 `0`이면 `Q[i][j][k]`도 반드시
-   `0`이어야 한다 (강의 슬라이드 애니메이션의 "hole-drilling" 논증에 의해).
-4. 모든 `0<=i,j,k<n`에 대해, `P[i][j][k]`가 `1`이면 `Q[i][j][k]`도 반드시
-   `1`이어야 한다.
-5. 3, 4에 의해 `Q`는 `P`와 같다. 따라서 `check(Q,top,front,right)`는
-   `check(P,top,front,right)`와 같은데, 이는 가정(♣)에 의해 `False`다.
-6. 따라서 `check(Q,top,front,right)`는 `False`인데, 이는 (1.1)과 모순.
-
-**Prove the proposition in the step (4)** to complete the correctness
-proof.
-
-**4.** 수업시간에 다루었던 문제에서는 중력의 영향을 받지 않는 상황을
-고려하였는데, 이 문제에서는 중력 영향을 받는 상황을 고려한다.
-
-주어진 pile of cubes가 허공에 떠다니는 cube가 없다는 조건을 만족하면
-**중력조건**을 만족한다고 정의하자.
-
-다음과 같이 정의된 함수 `gravity`를 완성하라:
-- 입력: pile of cube를 나타내는 3차원 \\(n \times n \times n\\) 정수 리스트
-- 리턴값: `True`(입력이 중력조건을 만족할 때), `False`(입력이 중력조건을
-  만족하지 않을 때)
-
-**5.** 4번 문제와 마찬가지로 중력 영향을 받는 상황을 고려하는데, 허공에
-떠있는 cube들의 개수를 계산하려고 한다.
-
-어떤 cube가 허공에 떠있다는 것은 중력이 작용하면 떨어짐을 의미한다.
-
-다음과 같이 정의된 함수 `floating`을 완성하라:
-- 입력: pile of cube를 나타내는 3차원 \\(n \times n \times n\\) 0/1 리스트
-- 리턴값: 허공에 떠있는 cube들의 개수 (하나도 없으면 `0`)
-
-**6.** 이 문제에서는 (2번 문제를 일반화하여) \\(D \times H \times W\\)
-형태로 3개의 axis에 대응되는 길이가 동일하지 않은 일반적인 경우를
-다룬다. (2번 문제와 마찬가지로 중력의 영향은 고려하지 않는다.)
-
-다음과 같이 정의된 함수 `countCubes`를 완성하라:
-- 입력: 3개의 2차원 0/1-리스트 `top, front, right`
-- 리턴값: `top, front, right`를 정사영으로 가지는 'maximum pile of
-  cubes'에 포함된 cube 갯수
-  - 주어진 정사영을 가지는 'pile of cubes'가 존재하지 않으면(2번
-    문제에서와 마찬가지로) `None`을 리턴
+*`gaussian_elimination`을 이용하여 `f`를 찾을 수 있다.*
 
 ```python
-top = [[0,0,0,0],[0,0,0,1],[1,1,0,0]]
-front = [[1,1,0,1],[1,1,0,0]]
-right = [[0,1,1],[0,0,1]]
-print(countCubes(top, front, right))  # 5
+def poly(L):
+    # ADD ADDITIONAL CODE HERE!
+```
+
+**4.** 1번 문제에서 다음 두 경우를 구별하지 않았는데(모두 `None`을
+리턴하도록 하였음), 이 문제에서는 이 두 경우도 구별하는 것을 목표로
+한다:
+- 방정식이 해를 가지지 않는 경우(inconsistent)와
+- 무한히 많은 해를 가지는 경우(consistent dependent)
+
+다음과 같이 정의된 함수 `classify`를 완성하라:
+- 입력: 1번 문제와 동일한 형태
+- 리턴값: `0`(해가 유일한 경우 — `0` 대신 방정식의 해를 리턴하지 않도록
+  주의), `1`(해가 존재하지 않는 경우), `2`(해가 무한히 많은 경우)
+
+힌트:
+- Forward elimination을 약간만 수정하면 된다(pivot 값이 0이 되는 경우
+  row는 증가시키지 않고 column만 증가시켜 다음 pivot을 찾음).
+- 아래 형태의 연립 방정식에서 `b4 = b5 = 0`이면 무한히 많은 해를
+  가지고, `b4, b5` 중 하나 이상이 non-zero면 해가 존재하지 않음을 수학
+  수업시간에 배웠을 것이다:
+  ```
+  [1 1 1 1 1]   [x1]   [b1]
+  [0 1 1 1 1]   [x2]   [b2]
+  [0 0 0 0 1] · [x3] = [b3]
+  [0 0 0 0 0]   [x4]   [b4]
+  [0 0 0 0 0]   [x5]   [b5]
+  ```
+
+```python
+def classify(a, b):
+    # ADD ADDITIONAL CODE HERE!
 ```

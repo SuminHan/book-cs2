@@ -38,10 +38,10 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-97d8eddd.js";
+            window.path_to_searchindex_js = "../searchindex-be08fbfa.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../toc-af8f4a15.js"></script>
+        <script src="../toc-7992028c.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -181,130 +181,377 @@
                 <div id="mdbook-content" class="content">
                     <main>
                         <h1 id="problem-set"><a class="header" href="#problem-set">Problem Set</a></h1>
-<h3 id="필수-문제"><a class="header" href="#필수-문제">필수 문제</a></h3>
-<p><strong>1.</strong> Write a function <code>womanToPropose</code> that work on the class <code>Person</code>.</p>
-<ul>
-<li>input parameter: <code>self</code> (<code>self</code>가 남자일때만 사용됨)</li>
-<li>action:
-<ol>
-<li><code>self</code>는 <code>prefList</code> 순서대로 여자들에게 propose하는데 이번 차례에
-propose할 여자를 return.</li>
-<li>다음 차례에 propose할 여자를 기록해두기 위해 <code>numProposal</code>도
-적절히 수정해줘야 함</li>
-</ol>
-</li>
-</ul>
-<pre><code class="language-python">class Person(object):
-    def __init__(self, name, gender):
-        ...
-        self.prefList = None    # preference list (of Person objects)
-        self.numProposal = 0    # used only if self is man
-        ...
+<p>이미 주어진 클래스와 헬퍼 함수:</p>
+<pre><code class="language-python">class Card:
+    def __init__(self, suit, rank):
+        self.suit = suit
+        self.rank = rank
 
-    def womanToPropose(self):   # used only if self is man
-        assert self.gender == "male"
-        assert self.numProposal &lt; len(self.prefList)
-        # ADD ADDITIONAL CODE HERE!!
+class Hand:
+    def __init__(self, cards):
+        self.cards = cards
+        assert len(cards) == 5
+
+    def getNumCardsByRank(self):
+        numCardsByRank = [0] * 13
+        for i in range(len(self.cards)):
+            j = self.cards[i].rank
+            assert 1 &lt;= j &lt;= 13
+            numCardsByRank[j - 1] += 1
+        return numCardsByRank
+
+    def getNumCardsBySuit(self):
+        numCardsBySuit = [0] * 4
+        # ADD ADDITIONAL CODE HERE!
 </code></pre>
-<p><strong>2.</strong> Write a function <code>findMatch</code>:</p>
+<p><strong>1.</strong> Write a function <code>getNumCardsBySuit</code> that work on the class <code>Hand</code>:</p>
 <ul>
-<li>input parameter: Two lists <code>men</code>/<code>women</code> of <code>Person</code> objects
+<li>input parameter: <code>self</code></li>
+<li>return value: list <code>self.cards</code>에 포함된 5개의 <code>Card</code> object들의
+suit값(0,1,2,3)의 등장 횟수를 기록한 새로운 list
 <ul>
-<li><code>men</code> represents the list of <code>Person</code> objects each of which
-represents a man</li>
-<li><code>women</code> represents the list of <code>Person</code> objects each of which
-represents a woman</li>
-<li>지난주 문제에서는 <code>men</code>/<code>women</code>의 파트너 정보(즉, matching)이 이미
-주어진 상태에서 stability를 check만 하는 것이었고, 이 문제는 파트너
-정보(matching)이 전혀 채워지지 않은 상태로 <code>men</code>/<code>women</code>이 넘어옴</li>
+<li>수업 슬라이드에서 세로축으로 그려진 list <code>numCardsBySuit</code>로 ♣ 모양의
+카드의 갯수는 <code>numCardsBySuit[0]</code>, …, ♠ 모양의 카드의 갯수는
+<code>numCardsBySuit[3]</code></li>
+<li><code>numCardsBySuit</code>의 index는 각 <code>Card</code> object의 suit 값에 대응됨</li>
 </ul>
 </li>
-<li>action: stable matching이 되도록 파트너 정보를 채움</li>
-<li>return value: 없음 (<strong>modifier</strong>)</li>
 </ul>
-<pre><code class="language-python">def findMatch(men, women):
-    assert len(men) == len(women)
-    n = len(men)
+<p><strong>2.</strong> Write functions for determining “straight flush”/“straight”/“flush”:</p>
+<ol>
+<li>Write a function <code>atLeastStraight</code>:
+<ul>
+<li>input parameter: a <code>Hand</code> object <code>hand</code></li>
+<li>return value: <code>True</code>(if hand is “straight” or “straight flush”),
+<code>False</code>(otherwise)</li>
+<li><em>suit가 모두 같은지 여부는 따질 필요 없고 rank 값만 따져보면 되므로
+<code>L = hand.getNumCardsByRank()</code>로 얻은 <code>L</code> 정보만으로 충분. 주어진
+함수 <code>hasConsecutivePositive</code>를 이용하면 코드가 매우 간단해짐.</em></li>
+</ul>
+</li>
+<li>Write a function <code>atLeastFlush</code>:
+<ul>
+<li>input parameter: a <code>Hand</code> object <code>hand</code></li>
+<li>return value: <code>True</code>(if hand is “flush” or “straight flush”),
+<code>False</code>(otherwise)</li>
+<li><em>rank 정보는 필요없고 suit 값만 따져보면 되므로 <code>L = hand.getNumCardsBySuit()</code>로 얻은 <code>L</code> 정보만으로 충분</em></li>
+</ul>
+</li>
+<li>Write a function <code>straightFlush</code>:
+<ul>
+<li>input parameter: a <code>Hand</code> object <code>hand</code></li>
+<li>return value: <code>True</code>(if hand is “straight flush”), <code>False</code>(otherwise)</li>
+<li><em>함수 <code>atLeastStraight</code>와 <code>atLeastFlush</code>를 이용하면 매우 간단하게
+해결됨</em></li>
+</ul>
+</li>
+<li>Write a function <code>flush</code>:
+<ul>
+<li>input parameter: a <code>Hand</code> object <code>hand</code></li>
+<li>return value: <code>True</code>(if hand is “flush”), <code>False</code>(otherwise)</li>
+<li><em>tie-breaking rule에 의해 “straight flush” 경우는 제외해줘야 함. 위의
+함수들을 이용하면 쉽게 해결됨</em></li>
+</ul>
+</li>
+<li>Write a function <code>straight</code>:
+<ul>
+<li>input parameter: a <code>Hand</code> object <code>hand</code></li>
+<li>return value: <code>True</code>(if hand is “straight”), <code>False</code>(otherwise)</li>
+<li><em>마찬가지로 “straight flush” 경우는 제외해줘야 함</em></li>
+</ul>
+</li>
+</ol>
+<pre><code class="language-python"># use this function for atLeastStraight()
+def hasConsecutivePositive(L, k):
+    n = len(L)
+    assert k &lt;= n
+    counter = 0
+    for i in range(n + 1):  # +1: account for wrapping
+        if L[i % n] &gt;= 1:
+            counter += 1
+            if counter == k:
+                return True
+        else:
+            counter = 0  # reset
+    return False
 
-    numFreeMen = n  # initially, every man has no partner
-    while numFreeMen &gt; 0:
-        # search for a free man
-        # (it is already proved that the order of selecting free men
-        #  does not affect the correctness/output of the algorithm)
+def atLeastStraight(hand):
+    L = hand.getNumCardsByRank()
+    # ADD ADDITIONAL CODE HERE!!
 
-        # find the woman that this man is about to propose to
-        # by using womanToPropose()
+def atLeastFlush(hand):  # for some pattern
+    L = hand.getNumCardsBySuit()
+    # ADD ADDITIONAL CODE HERE!!
 
-        # if the woman is free, then engage these man/woman,
-        # and decrement numFreemen
+def straightFlush(hand):
+    # ADD ADDITIONAL CODE HERE!!
 
-        # elif the woman prefer the man to her current partner,
-        # then break up the current couple and engage these man &amp; woman
+def flush(hand):
+    # ADD ADDITIONAL CODE HERE!!
 
-        # else the woman rejects the man
-        # (is there anything to do in program?)
+def straight(hand):
+    # ADD ADDITIONAL CODE HERE!!
+</code></pre>
+<p><strong>3.</strong> Write functions for determining “quadruple”/“full house”/“triple”/
+“two pair”/“pair”:</p>
+<ol>
+<li>Write a function <code>hasMultipleCardsWithSameRank</code>:
+<ul>
+<li>input parameter: a <code>Hand</code> object <code>hand</code> and an integer <code>num</code></li>
+<li>return value: <code>True</code>(if hand contains <strong>exactly</strong> <code>num</code> cards of a
+certain rank), <code>False</code>(otherwise)</li>
+<li><em>예를 들어, <code>hasMultipleCardsWithSameRank(hand,4)</code>는 <code>hand</code>가
+“quadruple“일 때 <code>True</code>이며 그 역도 성립한다.</em></li>
+</ul>
+</li>
+<li>Write a function <code>fullHouse</code>:
+<ul>
+<li>input parameter: a <code>Hand</code> object <code>hand</code></li>
+<li>return value: <code>True</code>(if hand is “full house”), <code>False</code>(otherwise)</li>
+<li><em><code>hasMultipleCardsWithSameRank</code>를 이용하면 간단하게 해결됨</em></li>
+</ul>
+</li>
+<li>Write a function <code>triple</code>:
+<ul>
+<li>input parameter: a <code>Hand</code> object <code>hand</code></li>
+<li>return value: <code>True</code>(if hand is “triple”), <code>False</code>(otherwise)</li>
+<li><em>함수 <code>hasMultipleCardsWithSameRank</code>를 이용하면 간단하게 해결됨</em></li>
+<li><em>tie-breaking rule에 의해 “full house“와 “quadruple” 경우는
+제외해줘야 함</em></li>
+</ul>
+</li>
+<li>Write a function <code>twoPair</code>:
+<ul>
+<li>input parameter: a <code>Hand</code> object <code>hand</code></li>
+<li>return value: <code>True</code>(if hand is “two pair”), <code>False</code>(otherwise)</li>
+<li><em><code>hasMultipleCardsWithSameRank</code>는 “for some” 패턴으로 만들어졌는데,
+이와 유사하게 counter 패턴으로 변형</em></li>
+<li><em>tie-breaking rule에 의해 “full house” 경우는 제외해야</em></li>
+</ul>
+</li>
+<li>Write a function <code>pair</code>:
+<ul>
+<li>input parameter: a <code>Hand</code> object <code>hand</code></li>
+<li>return value: <code>True</code>(if hand is “pair”), <code>False</code>(otherwise)</li>
+<li><em><code>hasMultipleCardsWithSameRank</code>를 이용</em></li>
+<li><em>tie-breaking rule에 의해 “full house”, “two pair”, “quadruple”,
+“triple” 경우는 제외해야</em></li>
+</ul>
+</li>
+</ol>
+<pre><code class="language-python">def hasMultipleCardsWithSameRank(hand, num):  # for some pattern
+    L = hand.getNumCardsByRank()
+    # ADD ADDITIONAL CODE HERE!!
 
+def quadruple(hand):
+    return hasMultipleCardsWithSameRank(hand, 4)
+
+def fullHouse(hand):
+    # ADD ADDITIONAL CODE HERE!!
+
+def triple(hand):
+    # ADD ADDITIONAL CODE HERE!!
+
+def twoPair(hand):  # counter pattern
+    L = hand.getNumCardsByRank()
+    # ADD ADDITIONAL CODE HERE!!
+
+def pair(hand):
+    # ADD ADDITIONAL CODE HERE!!
+</code></pre>
+<p><strong>4.</strong> Write a function <code>countPokerHands</code>:</p>
+<ul>
+<li>input parameter: a list of <code>Hand</code> objects (함수 <code>randomHand</code>로
+랜덤하게 생성한 수십만~수천만 개의 <code>Hand</code> object들의 list)</li>
+<li>return value: <code>Hand</code> object들을 “straight flush”, “quadruple”, “full
+house”, “flush”, “straight”, “triple”, “two pair”, “pair“로
+분류했을때 각 포커패에 속하는 것들의 갯수를 세어서 이 순서대로 나열한
+list</li>
+</ul>
+<pre><code class="language-python"># counter pattern
+def countPokerHands(hands):
+    nStraightFlush = 0
+    nQuadruple = 0
+    nFullHouse = 0
+    nFlush = 0
+    nStraight = 0
+    nTriple = 0
+    nTwoPair = 0
+    nPair = 0
+
+    for i in range(len(hands)):
+        hand = hands[i]
         # ADD ADDITIONAL CODE HERE!!
+
+    return [nStraightFlush, nQuadruple, nFullHouse, nFlush,
+            nStraight, nTriple, nTwoPair, nPair]
+
+def randomHand(numCards):
+    cards = []
+    for suit in range(4):
+        for rank in range(1, 13+1):
+            cards.append(Card(suit, rank))
+    random.shuffle(cards)
+    return Hand(cards[:numCards])
+
+def test():
+    print("\nWait for your program to estimate probabilities with 5-card hand...")
+
+    hands = []
+    nTrials = 100000  # 26000000
+    for i in range(nTrials):
+        hands.append(randomHand(5))
+    L = countPokerHands(hands)
+
+    print("Straight Flush:" + str(1.0*L[0]/nTrials*100))
+    print("Quadruple:" + str(1.0*L[1]/nTrials*100))
+    print("Full House:" + str(1.0*L[2]/nTrials*100))
+    print("Flush:" + str(1.0*L[3]/nTrials*100))
+    print("Straight:" + str(1.0*L[4]/nTrials*100))
+    print("Triple:" + str(1.0*L[5]/nTrials*100))
+    print("TwoPair:" + str(1.0*L[6]/nTrials*100))
+    print("Pair:" + str(1.0*L[7]/nTrials*100))
+test()
 </code></pre>
 <h3 id="optional-problems"><a class="header" href="#optional-problems">Optional Problems</a></h3>
 <p><em>필수 문제와 달리 제출/검사 대상은 아니지만, 큰 도움이 되므로 시간이 남으면
 모두 시도해보는 것을 권합니다 (대부분 기출문제입니다).</em></p>
-<p><strong>3.</strong> Consider the following situation: a shipping company owns <code>n</code>
-ships \(S_0,\ldots,S_{n-1}\) and <code>n</code> ports \(P_0,\ldots,P_{n-1}\).
-Each ship has a <strong>schedule</strong> that says, for each day of the period, which
-of the ports it’s visiting, or whether it’s out at sea (기간은 <code>m</code>일,
-<code>m&gt;n</code>이라고 가정). Each ship visits each port for exactly one day during
-the period. For safety reasons, the following condition is imposed on
-schedules of ships:</p>
-<blockquote>
-<p>(†) No two ships can be in the same port on the same day.</p>
-</blockquote>
-<p>For example, <code>n=2, m=4</code>이고, 배 \(S_0\)의 스케줄이
-<code>[port0, sea, port1, sea]</code>, 배 \(S_1\)의 스케줄이
-<code>[sea, port0, sea, port1]</code>이면 위 조건을 만족한다.</p>
-<p>Now, the company wants to <strong>truncate</strong>(단축하다) each ship’s schedule
-(for repairing): 각 배 \(S_i\)에 대해, 예정된 항구에 도착하는 어떤
-날짜가 있어 그 날부터 기간이 끝날 때까지 그 항구에 계속 머무른다(그
-기간동안 남은 항구들은 방문하지 않음). 예를 들어, 회사는 \(S_0\)의
-단축된 스케줄을 <code>[port0, sea, port1, port1]</code>로, \(S_1\)의 단축된
-스케줄을 <code>[sea, port0, port0, port0]</code>로 정할 수 있다 (즉 \(S_0\)은 3일째
-<code>port1</code>에 멈추고, \(S_1\)은 2일째 <code>port0</code>에 멈춤). 이 단축은 조건(†)을
-위배하면 안 된다(즉, 단축된 스케줄 하에서도 어떤 두 배도 같은 날 같은
-항구에 있으면 안 된다). 위 단축 예시는 이 조건을 만족한다. 하지만 만약
-\(S_0\)의 단축된 스케줄을 <code>[port0, port0, port0, port0]</code>(1일째 멈춤)로,
-\(S_1\)의 것을 <code>[sea, port0, sea, port1]</code>(원본 그대로)로 정하면, 두 배
-모두 2일째 <code>port0</code>에 있게 되어 조건(†)을 위배한다.</p>
-<p>Write a function <code>compute_schedule</code>:</p>
+<p><strong>5.</strong> 다음과 같이 정의된 함수 <code>nDistinct</code>를 완성하라:</p>
 <ul>
-<li>input parameter: a 2D <code>n×m</code> list that represents original schedules of
-ships (위 예시의 경우 <code>[[0,None,1,None],[None,0,None,1]]</code>)
+<li>입력: <code>Hand</code> object인 <code>hand</code>
 <ul>
-<li><code>None</code> represents “at sea” and an integer represents the port index</li>
+<li><code>hand</code>에 포함된 카드의 갯수는 5가 아닐 수 있다</li>
+<li><code>hand</code>에 포함된 카드들 중 동일한 suit/rank를 가진 카드들도 있다</li>
 </ul>
 </li>
-<li>return value: any truncated schedule that satisfies the condition (†),
-represented by a list of “stopping” ports of ships
-\(S_0,S_1,\ldots,S_{n-1}\). <code>None</code> if no such one exists
+<li>리턴값: <code>hand</code>에 포함된 카드들 중 다른 것들의 갯수</li>
+</ul>
+<p><strong>6.</strong> 다음과 같이 정의된 함수 <code>k_flush</code>를 완성하라:</p>
 <ul>
-<li>위 예시의 경우 <code>[1,0]</code> (\(S_0\)는 <code>port1</code>에, \(S_1\)은 <code>port0</code>에
-멈춤)</li>
+<li>입력: 정수 <code>k &gt;= 0</code>와 <code>Hand</code> object인 <code>hand</code>
+<ul>
+<li><code>hand</code>에 포함된 카드의 갯수는 5가 아닐 수 있다</li>
+<li><code>hand</code>에 포함된 카드들 중 동일한 suit/rank를 가진 카드는 없다</li>
+</ul>
+</li>
+<li>리턴값: <code>hand</code>에 <code>ℓ</code>장의 카드를 추가해서 <code>k</code>-flush로 만들 수 있는 <code>ℓ</code>중
+최소값
+<ul>
+<li><code>k</code>개 이상의 동일한 suit를 포함한 <code>hand</code>를 <code>k</code>-flush로 부른다</li>
 </ul>
 </li>
 </ul>
-<p>Also, <strong>prove the correctness</strong> of your algorithm. (Without the
-correctness proof, you will not get a point.)</p>
-<p>Hint:</p>
+<p><strong>7.</strong> 다음과 같이 정의된 함수 <code>k_straight</code>를 완성하라:</p>
 <ul>
-<li>Find a link between this problem and the stable matching problem and
-make use of the code for stable matching.</li>
-<li>Use the modifier <code>L.reverse()</code> to reverse a list <code>L</code>.</li>
+<li>입력: 양의 정수 <code>k &lt;= 13</code>과 <code>Hand</code> object인 <code>hand</code> (<code>hand</code>의 조건은
+6번 문제와 동일)</li>
+<li>리턴값: <code>hand</code>에 <code>ℓ</code>장의 카드를 추가해서 <code>k</code>-straight로 만들 수 있는
+<code>ℓ</code>중 최소값
+<ul>
+<li><code>k</code>개 이상의 consecutive rank를 포함한 <code>hand</code>를 <code>k</code>-straight로
+부른다</li>
+<li>이 문제에서의 <code>k</code>-straight는 모든 “wrap-around“를 허용한다. 예를
+들어, Jack-Queen-King-Ace, Queen-King-Ace-2, King-Ace-2-3는 모두
+4-straight이다. (수업시간에 다루었던 straight는 마지막이 Ace인
+경우까지만 허용)</li>
 </ul>
-<pre><code class="language-python">def compute_schedule(schedule):
-    # ADD ADDITIONAL CODE HERE!
-
-schedule = [[0, None, 1, None], [None, 0, None, 1]]
-print(compute_schedule(schedule))  # [1, 0]
-</code></pre>
+</li>
+</ul>
+<p><strong>8.</strong> 다음과 같이 정의된 함수 <code>k_straight_flush</code>를 완성하라:</p>
+<ul>
+<li>입력: 양의 정수 <code>k &lt;= 13</code>과 <code>Hand</code> object인 <code>hand</code>
+<ul>
+<li><code>hand</code>에 포함된 카드의 갯수는 5가 아닐 수 있다</li>
+<li><code>hand</code>에 포함된 카드들 중 동일한 suit/rank를 가진 카드는 없다</li>
+</ul>
+</li>
+<li>리턴값: <code>hand</code>에 <code>ℓ</code>(≥0)장의 카드를 추가해서 <code>k</code>-straight-flush로 만들
+수 있는 <code>ℓ</code>중 최소값
+<ul>
+<li><code>hand</code>에 포함된 어떤 <code>k</code>개의 카드들이 존재하여, 이들이 모두 같은
+suit를 가지고 rank들이 “<code>k</code>-straight“하면 <code>hand</code>가
+<code>k</code>-straight-flush라고 부른다</li>
+<li>이 문제에서의 <code>k</code>-straight는 (7번 문제와 마찬가지로) 모든
+“wrap-around“를 허용한다.</li>
+<li><em>6, 7번 문제를 일반화시킨 것으로 <code>k</code>-straight-flush는
+<code>k</code>-straight와 <code>k</code>-flush를 단순히 and로 연결한 것이 아님에 유의.</em></li>
+</ul>
+</li>
+</ul>
+<p><strong>9.</strong> 포커 규칙을 다음과 같이 약간 변형한 상황을 고려하자: rank가 2인
+카드는 임의의 suit/rank로 변환할 수 있다(변환하지 않아도 됨). 예를 들어,
+hand <code>(♣2, ♡3, ♣3, ♠3, ♡4)</code>는 다음 중 임의로 변환해도 된다:
+<code>(◇3, ♡3, ♣3, ♠3, ♡4)</code>(quadruple), <code>(♣4, ♡3, ♣3, ♠3, ♡4)</code>(full house),
+<code>(♣2, ♡3, ♣3, ♠3, ♡4)</code>(triple, as it is without being changed).</p>
+<p>다음과 같이 정의된 함수 <code>full_house</code>를 완성하라:</p>
+<ul>
+<li>입력: 5개의 <code>Card</code>로 구성된 <code>Hand</code> object (11주차 문제와 같은 형태)</li>
+<li>리턴값: <code>True</code>(주어진 입력을 위 규칙에 따라 변환하면 full house가 될
+수 있을 때), <code>False</code>(otherwise)
+<ul>
+<li>예: 입력이 <code>(♣2, ♡3, ♣3, ♠3, ♡4)</code>면 <code>♣2</code>를 <code>♣4</code>로 변환하여 full
+house로 만들 수 있으므로 <code>True</code>를 리턴</li>
+</ul>
+</li>
+</ul>
+<p><strong>10.</strong> 이 문제에서는 “#11: Poker Hands“에서 hand에 포함된 카드의
+개수가 5가 아닌 경우를 고려한다(6개 이상의 카드들로 hand가 구성될 수도
+있고, 4개 이하의 카드들로 구성될 수도 있다). 이러한 상황에서 straight,
+flush, straight flush를 다음과 같이 재정의하자:</p>
+<ol>
+<li><strong>straight</strong>: 모든 카드들의 rank들을 연속되게 나열할 수 있을 경우
+<ul>
+<li>7, 8번 문제에서와 같이 모든 “wrap-arounds“를 허용한다.</li>
+<li>예를 들어, 6장의 카드 <code>(♣King), (♠Ace), (♡2), (◇3), (♣4), (♣5)</code>로
+구성된 hand는 straight이다</li>
+</ul>
+</li>
+<li><strong>flush</strong>: 모든 카드들이 같은 suit를 가지는 경우</li>
+<li><strong>straight flush</strong>: 위 두 조건을 모두 만족하는 경우</li>
+</ol>
+<p>위 정의에 따르면 straight flush인 hand는 straight일 수도 있고 flush일
+수도 있는데, 이러한 hand는 straight flush로만 분류하고 straight나
+flush로는 분류하지 않는다. 즉:</p>
+<ul>
+<li><strong>straight</strong>: 조건 1은 만족하되 조건 2는 만족하지 않는 경우</li>
+<li><strong>flush</strong>: 조건 2는 만족하되 조건 1은 만족하지 않는 경우</li>
+</ul>
+<p>로 분류한다.</p>
+<p>다음과 같이 정의된 함수 <code>flush</code>를 완성하라:</p>
+<ul>
+<li>입력: <code>Hand</code> object인 <code>hand</code>
+<ul>
+<li><code>hand</code>에 포함된 카드의 개수는 3 이상 12 이하</li>
+<li><code>hand</code>에 포함된 카드들 중 동일한(suit와 rank가 모두 일치하는)
+카드는 없음</li>
+</ul>
+</li>
+<li>리턴값: <code>1</code>(hand가 flush인 경우), <code>0</code>(그렇지 않은 경우)
+<ul>
+<li>상술한 바와 같이 hand가 straight flush이면 이는 flush로 분류하지
+않으므로 <code>0</code>을 리턴해야 한다.</li>
+</ul>
+</li>
+</ul>
+<p><strong>11.</strong> 주어진 hand에 포함된 카드들 중 세개를 적절히 선택하여 세개의
+rank를 더한 값을 최대화하되 주어진 자연수 <code>k</code> 값은 넘지 않도록 하려고
+한다. 즉, 세개의 rank를 더한 값들 중 <code>k</code> 이하인 것들만 골라내고 이들 중
+최대값을 hand의 “<code>k</code>-점수“로 정의하자.</p>
+<p>다음과 같이 정의된 함수 <code>k_score</code>를 완성하라:</p>
+<ul>
+<li>입력: <code>Hand</code> object인 <code>hand</code>와 정수 <code>k</code>
+<ul>
+<li><code>hand</code>에 포함된 카드의 갯수는 5가 아닐 수 있다.</li>
+<li><code>hand</code>에 포함된 카드들 중 suit와 rank 모두 동일한 카드는 없다.
+하지만 suit만 동일하거나 rank만 동일한 카드는 있을 수 있다.</li>
+</ul>
+</li>
+<li>리턴값: <code>hand</code>의 “<code>k</code>-점수”
+<ul>
+<li>세개의 카드의 rank를 더한 값이 모두 <code>k</code>보다 크면 <code>0</code>을 리턴</li>
+</ul>
+</li>
+</ul>
 
                     </main>
 

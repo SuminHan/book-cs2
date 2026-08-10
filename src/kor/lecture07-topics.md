@@ -1,80 +1,111 @@
 # Topics Covered
 
-## 문제 설정
+## Object와 Class
 
-고정된 물체 \\(F_1,\ldots,F_\ell\\)과 자유롭게 움직일 수 있는 물체
-\\(P_1,\ldots,P_n\\)이 스프링들로 연결되어 있다(각 스프링은 자유-자유
-또는 자유-고정 물체를 잇고, 각자 탄성계수 \\(w\\)를 가진다). 목표: 모든
-자유 물체가 힘의 평형을 이루는 위치 \\((x_i, y_i)\\)를 구하는 것.
-
-**단순화 가정**: 스프링의 원래 길이는 0이라고 가정한다. 그러면 스프링이
-가하는 힘은 늘어난 길이 \\(\Delta\ell\\)에 비례하고(\\(F = w \cdot
-\Delta\ell\\)), 그 힘을 \\(x\\)/\\(y\\) 성분으로 나누면 각각
-\\(\Delta x\\), \\(\Delta y\\)에 정비례하는 아주 간단한 형태가 된다:
-
-\\[F_x = w \cdot \Delta x, \qquad F_y = w \cdot \Delta y\\]
-
-## 평형 조건 → 선형방정식
-
-자유 물체 \\(P_i\\)가 평형이라는 것은, \\(P_i\\)에 연결된 모든 스프링이
-가하는 힘의 합이 \\(x\\)방향/\\(y\\)방향 각각 0이라는 뜻이다. \\(P_i\\)와
-연결된 자유 물체들의 인덱스 집합을 \\(A_i\\), 고정 물체들의 인덱스
-집합을 \\(B_i\\)라 하면:
-
-\\[\sum_{k \in A_i} w_{ik}(x_k - x_i) + \sum_{k \in B_i} w'_{ik}(x'_k - x_i) = 0\\]
-
-(\\(y\\)방향도 대칭적으로 동일한 식이 나온다.) 자유 물체가 \\(n\\)개이면
-이런 식이 \\(x\\)방향에 \\(n\\)개, \\(y\\)방향에 \\(n\\)개 — 총 \\(2n\\)개
-나오고, 미지수도 \\(x_1,\ldots,x_n,y_1,\ldots,y_n\\) 정확히 \\(2n\\)개다.
-즉 **Week 6에서 배운 Gaussian elimination으로 풀 수 있는 정확히 그
-형태**가 된다.
-
-## 계수 정리: \\(a_{ij}\\), \\(b_i\\)
-
-위 식을 표준형 \\(a_{i1}x_1 + \cdots + a_{in}x_n = b_i\\)로 정리하면
-계수들이 다음과 같은 규칙을 따른다:
-
-\\[a_{ij} = \begin{cases}
-\sum_{k \in A_i} w_{ik} + \sum_{k \in B_i} w'_{ik} & i = j \\\\
--w_{ij} & P_i, P_j \text{가 연결됨} \\\\
-0 & \text{그 외}
-\end{cases}
-\qquad
-b_i = \sum_{k \in B_i} w'_{ik} x'_k\\]
-
-(\\(P_i\\)가 고정 물체와 연결되어 있지 않으면 \\(b_i = 0\\).)
-
-## 행렬을 효율적으로 구성하기
-
-입력은 보통 "스프링 하나하나"의 목록(탄성계수 + 어느 물체들을 잇는지)으로
-주어진다. 모든 쌍 `(i,j)`를 순회하며 연결 여부를 확인하는 대신, **각
-스프링을 한 번씩만 보면서 그 스프링이 영향을 주는 자리에 바로 누적**하는
-것이 효율적이다:
-
-- 자유 물체 `Pi`-`Pj`를 잇는 스프링(탄성계수 `w`)이 있다면:
-  `a[i][i] += w`, `a[j][j] += w`, `a[i][j] -= w`, `a[j][i] -= w`
-- 자유 물체 `Pi`와 고정 물체 `Fk`(좌표 `x'`)를 잇는 스프링(탄성계수 `w'`)이
-  있다면:
-  `a[i][i] += w'`, `b[i] += w' * x'`
+**Object**는 데이터(state 변수)와 함수(메소드)의 묶음이고, **class**는
+그 object의 "틀"(type)이다. 이미 Week 8 이전에 써온 Toy Robot의
+`Robot` class가 좋은 예다 — `hubo`, `amy` 같은 각 로봇이 object이고,
+`Robot`이 그 class다.
 
 ```python
-def buildSystem(n, springs):
-    # springs: (w, i, j) 형태(자유-자유) 또는 (w, i, x') 형태(자유-고정)의 목록
-    a = [[0]*n for _ in range(n)]
-    b = [0]*n
-    for spring in springs:
-        if spring는 자유-자유:
-            w, i, j = spring
-            a[i][i] += w; a[j][j] += w
-            a[i][j] -= w; a[j][i] -= w
-        else:  # 자유-고정
-            w, i, xprime = spring
-            a[i][i] += w
-            b[i] += w * xprime
-    return a, b
+class Robot(object):
+    def __init__(self, beepers, ...):
+        self._beeper_bag = beepers
+        self._x = avenue
+        self._y = street
+        ...
+
+    def move(self):            # state 변수를 수정 — return 값 없음
+        xx, yy = _directions[self._dir]
+        self._x += xx
+        self._y += yy
+        ...
+
+    def carries_beepers(self):  # state 변수를 읽기만 — return 값 있음
+        return self._beeper_bag > 0
 ```
 
-이 과정을 \\(x\\)방향, \\(y\\)방향 각각에 대해 독립적으로 한 번씩
-수행하고(계수 행렬 `a`는 두 방향이 동일하고 `b`만 다르다), **Gaussian
-elimination을 두 번 돌리면** 모든 자유 물체의 평형 위치
-\\((x_i, y_i)\\)를 얻는다.
+`hubo = Robot(beepers=6)`은 `__init__(hubo, 6)`이 호출되는 것으로 이해하면
+된다 — **모든 메소드의 첫 번째 파라미터는 자기 자신을 가리키는
+`self`이고, 호출할 때는 명시하지 않아도 자동으로 넘어간다.**
+
+## 직접 Class 만들기: `Point`
+
+2차원 평면의 점을 나타내는 `Point` class를 만들어보자.
+
+```python
+class Point:
+    def __init__(self, px, py):   # 생성자 — 항상 modifier
+        self.x = px
+        self.y = py
+```
+
+`p1 = Point(1, 2)`는 `__init__(p1, 1, 2)`를 호출하는 것과 같다. state
+변수는 항상 `self.x`처럼 `self.`을 붙여 나타낸다.
+
+## `__str__`: 프린트되는 모양 정의
+
+`__str__`을 정의하지 않으면 `print(p1)`은 `(1,2)`가 아니라
+`0xb69b5a0c` 같은 메모리 주소가 찍힌다. 원하는 형태의 string을 만들어
+`return`하면 해결된다(**`__str__`은 항상 pure function**):
+
+```python
+def __str__(self):
+    return "(" + str(self.x) + "," + str(self.y) + ")"
+```
+
+## Pure Function vs. Modifier
+
+- **Pure function**: state 변수를 수정하지 않고, 계산 결과만 `return`한다.
+- **Modifier**: state 변수를 직접 수정하고, 보통 `return` 값이 없다
+  (`None`).
+
+```python
+def setX(self, v):     # modifier — x를 수정, return 없음
+    self.x = v
+
+def getX(self):         # pure function — 읽기만, x는 self.x
+    return self.x
+
+def distance(self, p):  # pure function — 다른 object를 입력받아 계산만
+    dx = self.x - p.x
+    dy = self.y - p.y
+    return (dx**2 + dy**2)**0.5
+```
+
+**`__init__`은 항상 modifier, `__str__`은 항상 pure function** — 이
+둘은 예외 없이 고정이다. `dx`, `dy`처럼 계산 도중에만 쓰이는 임시
+변수에는 `self.`를 붙이지 않는다(state 변수가 아니므로).
+
+## Object를 반환하는 함수: 같은 연산, 두 가지 스타일
+
+`add`처럼 다른 object와 결합해 **새로운** object를 만드는 함수는, pure
+function으로도 modifier로도 만들 수 있다 — 어느 쪽인지에 따라 호출
+결과가 완전히 달라진다:
+
+```python
+# pure function 버전: 새 Point를 만들어 반환, p1/p2는 그대로
+def add(self, p):
+    x = self.x + p.x
+    y = self.y + p.y
+    return Point(x, y)
+
+p3 = p1.add(p2)
+print(p3)   # (5,8) — 새로 만들어진 object
+print(p1)   # (1,2) — 변경 없음
+
+# modifier 버전: self 자신을 직접 수정, return 없음
+def add_as_modifier(self, p):
+    self.x += p.x
+    self.y += p.y
+
+p3 = p1.add_as_modifier(p2)
+print(p3)   # None — modifier는 return 값이 없음
+print(p1)   # (5,8) — p1 자신이 바뀜
+```
+
+`List`의 `.sort()`, `.append()`도 전형적인 modifier다(Week 2). **연습
+문제를 풀 때 그 함수가 pure function인지 modifier인지부터 구분하고
+시작할 것** — 문제(예: `Circle`의 `getRadius`/`getCenter`/`area`는 pure
+function, `setRadius`/`move`/`moveTo`는 modifier)마다 명시적으로
+요구하는 형태가 다르다.

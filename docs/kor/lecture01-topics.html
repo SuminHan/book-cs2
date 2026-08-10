@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Problem Set - CS2 국내반 보충자료</title>
+        <title>Topics Covered - CS2 국내반 보충자료</title>
 
 
         <!-- Custom HTML head -->
@@ -38,10 +38,10 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-97d8eddd.js";
+            window.path_to_searchindex_js = "../searchindex-be08fbfa.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../toc-af8f4a15.js"></script>
+        <script src="../toc-7992028c.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -180,182 +180,112 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h1 id="problem-set"><a class="header" href="#problem-set">Problem Set</a></h1>
-<h3 id="필수-문제"><a class="header" href="#필수-문제">필수 문제</a></h3>
-<p><strong>1.</strong> (Orientations of Rectilinear Polygons) Write a function
-<code>orientation</code>:</p>
-<ul>
-<li>input parameter: a list of <code>Point</code> objects that represents a
-rectilinear polygon (수직선과 수평선으로만 이루어진 다각형)</li>
-<li>return value: <code>"CW"</code>(if <code>Point</code> object들이 시계방향(clockwise)으로
-돌때), <code>"CCW"</code>(if <code>Point</code> object들이 반시계방향(counter-clockwise)으로
-돌때)</li>
-</ul>
-<pre><code class="language-python">class Point:
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
-
-def orientation(polygon):
-    n = len(polygon)
-    top = polygon[0].y
-    # ADD ADDITIONAL CODE HERE!!
-
-polygon1 = [Point(30,10), Point(30,20), Point(50,20), Point(50,40),
-            Point(40,40), Point(40,30), Point(30,30), Point(30,40),
-            Point(20,40), Point(20,20), Point(10,20), Point(10,10)]
-polygon2 = [Point(30,10), Point(30,30), Point(10,30), Point(10,10)]
-polygon3 = [Point(10,30), Point(10,10), Point(30,10), Point(30,30)]
-polygon4 = [Point(30,30), Point(30,10), Point(10,10), Point(10,30)]
-print(orientation(polygon1))  # CCW
-print(orientation(polygon2))  # CCW
-print(orientation(polygon3))  # CCW
-print(orientation(polygon4))  # CW
+                        <h1 id="topics-covered"><a class="header" href="#topics-covered">Topics Covered</a></h1>
+<h2 id="list-생성하는-또-다른-방법-append"><a class="header" href="#list-생성하는-또-다른-방법-append">List 생성하는 또 다른 방법: <code>.append(·)</code></a></h2>
+<p><code>[]</code>로 빈 리스트를 만든 뒤 <code>.append(x)</code>로 원소를 하나씩 추가할 수 있다
+(<code>L.append(x)</code>는 <code>L = L + [x]</code>와 같은 효과지만 리스트 자체를 직접 변경한다).
+결과를 담을 리스트의 길이를 미리 알 수 없을 때 특히 유용하다.</p>
+<pre><code class="language-python">L = [0,10,20,30,40,50]
+n = len(L)
+M = []
+for i in range(n):
+    M.append(L[i]*2)   # 또는 M = M + [L[i]*2]
 </code></pre>
-<p><strong>2.</strong> (Surveillability of Rectilinear Polygons)</p>
-<ol>
-<li>Write a function <code>__str__</code> for the <code>Rectangle</code> class:
-<ul>
-<li>input parameter: <code>self</code></li>
-<li>return value: the string for the <code>print</code> command in the following
-format: <code>"(x1,y1)-(x2,y2)"</code> where <code>(x1,y1)</code>은 bottom-left, <code>(x2,y2)</code>는
-top-right point of the rectangle <code>self</code>, e.g., <code>"(2,2)-(3,3)"</code></li>
-</ul>
-</li>
-<li>Write a function <code>surveillableRegion</code>:
-<ul>
-<li>input parameter: a list of <code>Point</code> objects that represents a
-rectilinear polygon (1번 문제와 같은 형태. 단, <strong>반시계방향</strong>으로
-돌아가는 입력만 주어짐)</li>
-<li>return value: 하나의 CCTV로 전체 지역이 감시가능하면 CCTV
-설치가능지역을 나타내는 <code>Rectangle</code> object, 하나의 CCTV로 전체
-지역이 감시불가능하면 <code>None</code></li>
-<li><em>반시계방향으로 polygon을 돌아가면서 CCTV 설치가능지역을 나타내는
-4개의 변수 <code>leftMax, rightMin, bottomMax, topMin</code>을 적당히
-조절해나가면 된다. 반시계방향으로 돌때 현재 선분의 방향(상/하/좌/우)을
-파악하기 위해서는 주어진 함수 <code>direction</code>을 이용하면 된다.</em></li>
-</ul>
-</li>
-</ol>
-<pre><code class="language-python">class Point:
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
+<h2 id="slicing-ij-ijk"><a class="header" href="#slicing-ij-ijk">Slicing: <code>[i:j]</code>, <code>[i:j:k]</code></a></h2>
+<p><code>L[i:j]</code>는 <code>L[i]</code>부터 <code>L[j-1]</code>까지 뽑아 만든 새 sublist(<code>L[j]</code>는 포함하지
+않음). <code>i</code>가 생략되면 처음부터, <code>j</code>가 생략되면 끝까지, 둘 다 생략되면 전체의
+복사본이다. <code>L[i:j:k]</code>는 <code>k</code>만큼의 step으로 건너뛰며 뽑는다
+(<code>range(i,j,k)</code>에서 <code>k</code>의 역할과 같음).</p>
+<pre><code class="language-python">L = [0,10,20,30,40,50]
+print(L[1:4])     # [10,20,30]  ([10,20,30,40] 아님)
+print(L[:3])      # [0,10,20]   (L[0:3]과 같음)
+print(L[2:])      # [20,30,40,50]
+print(L[:])       # [0,10,20,30,40,50]
 
-class Rectangle:
-    def __init__(self, left, right, bottom, top):
-        self.left = left
-        self.right = right
-        self.bottom = bottom
-        self.top = top
-
-    def __str__(self):
-        # ADD ADDITIONAL CODE HERE!!
-        return None  # remove it after completing your code
-
-def direction(fr, to):
-    if fr.x == to.x:
-        if fr.y &lt; to.y:
-            return "UP"
-        elif fr.y &gt; to.y:
-            return "DOWN"
-    elif fr.y == to.y:
-        if fr.x &lt; to.x:
-            return "RIGHT"
-        elif fr.x &gt; to.x:
-            return "LEFT"
-    else:
-        print("Input polygon is not rectlinear!")
-        assert False
-
-def surveillableRegion(polygon):
-    # assume the orientation of the polygon is counterclockwise
-    leftMax = -sys.maxint
-    rightMin = sys.maxint
-    bottomMax = -sys.maxint
-    topMin = sys.maxint
-    n = len(polygon)
-
-    # ADD ADDITIONAL CODE HERE!!
-    return -1  # remove it after completing your code
-
-polygon1 = [Point(0,1), Point(2,1), Point(2,0), Point(4,0),
-            Point(4,2), Point(5,2), Point(5,4), Point(3,4),
-            Point(3,5), Point(1,5), Point(1,3), Point(0,3)]
-polygon2 = [Point(0,0), Point(2,0), Point(2,3), Point(0,3),
-            Point(0,2), Point(1,2), Point(1,1), Point(0,1)]
-print(surveillableRegion(polygon1))  # (2,2)-(3,3)
-print(surveillableRegion(polygon2))  # None
+L2 = [0,10,20,30,40,50,60,70,80,90]
+print(L2[1:9:2])  # [10,30,50,70]  (2씩 건너뜀)
+print(L2[1::2])   # [10,30,50,70,90]
 </code></pre>
-<h3 id="optional-problems"><a class="header" href="#optional-problems">Optional Problems</a></h3>
-<p><em>필수 문제와 달리 제출/검사 대상은 아니지만, 큰 도움이 되므로 시간이 남으면
-모두 시도해보는 것을 권합니다 (대부분 기출문제입니다).</em></p>
-<p><strong>3.</strong> 2번 문제에서는 직각 다각형을 표현하는 점들이 반시계 방향으로만
-입력으로 주어진 경우를 고려하였다. 이 문제에서는 이를 확장하여 직각
-다각형을 표현하는 점들의 방향이 시계 방향일 수도 있고 반시계 방향일
-수도 있는 일반적인 경우를 고려한다.</p>
-<p>다음과 같이 정의된 함수 <code>surveillableRegion</code>를 완성하라:</p>
-<ul>
-<li>입력: rectilinear polygon을 표현하는 <code>Point</code> object들의 리스트
-<ul>
-<li>2번 문제와 달리 반시계 방향일 수도 있고 시계 방향일 수도 있다.</li>
-</ul>
-</li>
-<li>리턴값: 하나의 CCTV로 전체 지역이 감시가능하면 CCTV 설치가능지역을
-나타내는 <code>Rectangle</code> object, 하나의 CCTV로 전체 지역이 감시불가능하면
-<code>None</code></li>
-</ul>
-<p><em>1번 문제의 <code>orientation</code> 함수를 이용하여 반시계/시계 방향을 판단하고,
-반시계 방향이면 2번 문제의 그대로 사용하고 시계 방향인 경우 “UP”/“DOWN“과
-“LEFT”/“RIGHT“의 역할을 바꾸어서 비슷하게 처리하면 된다.</em></p>
-<p><strong>4.</strong> 2번 문제에서는 다각형 내부 및 경계선(다각형을 이루는 선분들의)
-임의의 위치에 설치할 수 있는 경우를 고려하였다. 이 문제에서는 다각형의
-<strong>경계선</strong>에만 CCTV를 설치할 수 있는 경우를 다룬다.</p>
-<p>다음과 같이 정의된 함수 <code>surveillableLength</code>를 완성하라:</p>
-<ul>
-<li>입력: rectilinear polygon을 표현하는 <code>Point</code> object들의 리스트(수업
-문제와 마찬가지로 반시계 방향 순서로 주어짐)</li>
-<li>리턴값: polygon 내부의 모든 점들을 모두 감시할 수 있는 CCTV 설치 가능
-구간 길이의 총 합</li>
-</ul>
-<p><em>수업때 만들었던 <code>surveillableRegion</code> 함수를 이용하여 설치 가능
-직사각형을 먼저 계산한 후, 이 직사각형과 polygon의 경계선이 겹치는
-구간을 찾으면서 더하면 된다.</em></p>
-<p><strong>5.</strong> 2번 문제에서는 다각형 내부 및 경계선의 임의의 위치에 CCTV를 설치할
-수 있는 경우를 고려하였고, 4번 문제에서는 다각형의 경계선에만 CCTV를
-설치할 수 있는 경우를 다루었다. 이 문제에서는 다각형의 <strong>꼭짓점</strong>(즉,
-polygon을 표현하는 <code>Point</code>들)에만 CCTV를 설치할 수 있는 경우를 고려한다.</p>
-<p>다음과 같이 정의된 함수 <code>surveillablePoint</code>를 완성하라:</p>
-<ul>
-<li>입력: rectilinear polygon을 표현하는 <code>Point</code> object들의 리스트(수업
-문제와 마찬가지로 반시계 방향 순서로 주어짐)
-<ul>
-<li>수업 문제에서와 마찬가지로 polygon의 경계를 이루는 선분들이
-교차하는 입력은 주어지지 않음(즉, polygon 내부는 하나의 연결된
-영역)</li>
-</ul>
-</li>
-<li>리턴값: (수업 문제에서와 마찬가지로 CCTV를 1대만 설치했을 때) polygon
-내부의 모든 점들을 감시할 수 있는 CCTV 설치 가능 꼭지점들의 갯수
-<ul>
-<li>예: 입력이 (경계가 겹쳐지는 부분이 있는 ㄴ자 모양) 그림과 같이
-주어진 경우 설치 가능 꼭지점은 2개</li>
-</ul>
-</li>
-</ul>
-<p><em>두개의 <code>Point</code> object <code>p1</code>과 <code>p2</code>가 같은 지점을 나타내는 지를 판단하기
-위해 <code>p1 == p2</code>를 사용하면 의도와 다르게 작동한다. <code>Point</code> class 내부에
-정의된 <code>equal</code> 함수를 사용하여 <code>p1.equal(p2)</code>로 이를 판단하면 된다.</em></p>
+<h2 id="비교--포함관계--연결-연산자"><a class="header" href="#비교--포함관계--연결-연산자">비교 / 포함관계 / 연결 연산자</a></h2>
+<pre><code class="language-python">print([1,2,3] == [1,2,3])        # True — 리스트 비교
+L = [0,1,2,3,4,5]
+print(3 in L)                     # True
+print(8 in L)                     # False
+print([1,2] in L)                 # False (string의 경우와 다름! 원소 하나가
+                                   #        [1,2] 자체여야 True)
+print([1,2] in [0,[1,2],3])       # True
+
+L = [0,1] + [2,3,4,5]             # [0,1,2,3,4,5]  연결
+M = [0,1] * 3                     # [0,1,0,1,0,1]  반복
+</code></pre>
+<p><code>==</code>로 리스트 전체를 비교하는 것과, “∀-pattern” loop으로 원소를 하나씩
+비교하는 것은 결과가 같다 — 다만 <code>==</code>가 이미 그 루프를 대신 해준다:</p>
+<pre><code class="language-python"># 같은 일을 하는 두 가지 방법
+def equal(L1, L2):
+    return L1 == L2
+
+def equal_manual(L1, L2):
+    if len(L1) != len(L2):
+        return False
+    for i in range(len(L1)):
+        if L1[i] != L2[i]:
+            return False
+    return True
+</code></pre>
+<p><code>in</code>도 마찬가지로 “∃-pattern” loop을 대신한다.</p>
+<h2 id="built-in-함수"><a class="header" href="#built-in-함수">Built-in 함수</a></h2>
+<p>숫자로만 이루어진 리스트에는 <code>sum(L)</code>, <code>max(L)</code>, <code>min(L)</code>을 바로 쓸 수
+있다(<code>L.sum()</code>처럼 메소드 형태가 아님에 유의). 반면 뒤에 나오는
+<code>L.append(x)</code>, <code>L.sort()</code>는 <code>L.???()</code> 형태의 <strong>메소드</strong>이고, <code>L</code> 자체를
+바꾸면서 반환값은 <code>None</code>이다:</p>
+<pre><code class="language-python">L = [1,2,3]
+M = L.append(5)
+print(M)   # None — L 자체만 바뀌고 M에는 아무 값도 안 감
+print(L)   # [1,2,3,5]
+
+L2 = [3,2,7,1,4]
+L2.sort()
+print(L2)  # [1,2,3,4,7]
+</code></pre>
+<h2 id="string도-list처럼"><a class="header" href="#string도-list처럼">String도 List처럼</a></h2>
+<p>String(<code>"Porori"</code>)은 문자들의 list(<code>["P","o","r","o","r","i"]</code>)처럼
+다룰 수 있다 — <code>len(·)</code>, <code>[i]</code>, slicing 모두 리스트와 똑같이 동작한다.
+<strong>큰 차이점: string은 <code>s[i] = ...</code>로 직접 수정할 수 없다</strong>(변경 불가).</p>
+<pre><code class="language-python">s = "Porori"
+counter = 0
+for i in range(len(s)):
+    if s[i] == "o":
+        counter += 1
+
+print(s[1:4])   # "oro"
+print(s[-1])    # "i"
+</code></pre>
+<p>String 비교(<code>==</code>, <code>!=</code>, <code>&lt;</code>, <code>&gt;</code>)는 사전순(lexicographic order)을 따른다.
+연결은 <code>+</code>, 반복은 <code>str * int</code>:</p>
+<pre><code class="language-python">print("abc" &lt; "abde")   # True — 사전에서 먼저 나오는 쪽이 작음
+
+s = "Po" + "rori"       # "Porori"
+r = ""
+for i in range(len(s)):
+    r = r + s[len(s)-1-i]   # s의 문자를 거꾸로 r에 붙임
+print(r)                 # "iroroP"
+
+print("Porori".find("ror"))  # 2
+</code></pre>
+<p><em>int/float가 메모리에 실제로 어떤 비트로 저장되는지, 그리고 그게 왜
+<code>0.1 + 0.2 == 0.3</code>이 <code>False</code>가 되는 원인인지 궁금하다면 참고자료의
+<a href="../general/number-representation.html">숫자가 메모리에 저장되는 방식</a>
+참고.</em></p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../kor/lecture12-topics.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../kor/lecture01.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                             </a>
 
-                            <a rel="next prefetch" href="../general/number-representation.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../kor/lecture01-problems.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                             </a>
 
@@ -365,11 +295,11 @@ polygon을 표현하는 <code>Point</code>들)에만 CCTV를 설치할 수 있�
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../kor/lecture12-topics.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../kor/lecture01.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                     </a>
 
-                    <a rel="next prefetch" href="../general/number-representation.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../kor/lecture01-problems.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                     </a>
             </nav>

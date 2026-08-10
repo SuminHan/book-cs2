@@ -38,10 +38,10 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-97d8eddd.js";
+            window.path_to_searchindex_js = "../searchindex-be08fbfa.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../toc-af8f4a15.js"></script>
+        <script src="../toc-7992028c.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -182,121 +182,222 @@
                     <main>
                         <h1 id="problem-set"><a class="header" href="#problem-set">Problem Set</a></h1>
 <h3 id="필수-문제"><a class="header" href="#필수-문제">필수 문제</a></h3>
-<p><strong>1.</strong> Write a function <code>gaussian_elimination</code>:</p>
+<p><strong>1.</strong> We consider the problem of finding the equilibrium state of a
+physical system that consists of springs, fixed objects, and free objects:
+free objects \(P_1,\ldots,P_n\)이 스프링들로 연결되어 있고, 고정 물체
+\(F_1,\ldots,F_k\)는 위치가 고정되어 있으며, 스프링 \(S_1,\ldots,S_m\)은
+각각 탄성계수(elastic coefficient) \(w_1,\ldots,w_m\)을 가지고 고정/자유
+물체를 서로 연결한다(두 고정 물체를 잇는 스프링은 없음). 스프링의 초기
+길이는 모두 0이라고 가정한다(Topics Covered 참고).</p>
+<p>문제를 잘 정의하기 위해 다음을 가정할 수 있다:</p>
 <ul>
-<li>input parameter: <code>a</code>와 <code>b</code>
+<li>모든 자유 물체는 최소 2개의 스프링에 연결되어 있다.</li>
+<li>(자유,자유) 또는 (자유,고정) 물체 쌍 사이에는 스프링이 최대 1개다.</li>
+<li>모든 물체가 평형 상태일 때, 어떤 두 스프링도 서로 교차하지 않고 어떤
+두 물체도 같은 위치에 있지 않는다.</li>
+</ul>
+<p>Write a function <code>equilibrium</code>:</p>
 <ul>
-<li><code>a</code>: two-dimensional list of integers that represents an <code>n</code>-by-<code>n</code>
-matrix</li>
-<li><code>b</code>: list of <code>n</code> integers</li>
+<li>input parameter: (1) integer <code>n</code> (2) list <code>S1</code> of 3-element lists (3)
+list <code>S2</code> of 4-element lists
+<ol>
+<li><code>n</code>: the number of free objects</li>
+<li><code>S1</code>: <code>S1[i]</code>는 (i+1)번째 스프링을 나타내며, 두 자유 물체를 연결한다
+<ul>
+<li><code>S1[i][0]</code>은 스프링의 탄성계수</li>
+<li>이 스프링은 인덱스 <code>S1[i][1]</code>과 <code>S1[i][2]</code>인 두 자유 물체를 연결</li>
+<li>예: <code>S1</code>이 <code>[[3,0,1],[4,5,2]]</code>이면, 첫 스프링은 탄성계수 3이고
+자유 물체 <code>P0</code>와 <code>P1</code>을 연결, 두번째 스프링은 탄성계수 4이고 자유
+물체 <code>P5</code>와 <code>P2</code>를 연결</li>
 </ul>
 </li>
-<li>return value: a length-<code>n</code> list <code>x</code> of float numbers where <code>x</code>
-represents the unique solution to the linear system of equations
-\(a \cdot x = b\)
+<li><code>S2</code>: <code>S2[i]</code>는 (i+1)번째 스프링을 나타내며, 자유 물체와 고정 물체를
+연결한다
 <ul>
-<li>return <code>None</code> if the system has no solution or infinitely many
-solutions</li>
+<li><code>S2[i][0]</code>은 스프링의 탄성계수</li>
+<li>이 스프링은 인덱스 <code>S2[i][1]</code>인 자유 물체와 xy좌표
+<code>(S2[i][2], S2[i][3])</code>인 고정 물체를 연결</li>
+<li>예: <code>S2</code>가 <code>[[3,0,-7,9],[4,5,-9,11]]</code>이면, 첫 스프링은 탄성계수
+3이고 자유 물체 <code>P0</code>와 위치 <code>(-7,9)</code>의 고정 물체를 연결, 두번째
+스프링은 탄성계수 4이고 자유 물체 <code>P5</code>와 위치 <code>(-9,11)</code>의 고정
+물체를 연결</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>return value: the list (with length <code>n</code>) of list <code>[xi,yi]</code> where each
+<code>(xi,yi)</code> is the position of free object <code>Pi</code> in an equilibrium state
+<ul>
+<li>each <code>xi</code> and <code>yi</code> should be a <code>float</code> number</li>
 </ul>
 </li>
 </ul>
-<pre><code class="language-python">def gaussian_elimination(a, b):
+<p><em>Hint: <code>gaussian_elimination</code> from last week를 사용.</em></p>
+<pre><code class="language-python"># copy the function gaussian_elimination from L06_P01.py here
+
+def equilibrium(n, S1, S2):
+    ax = [[0]*n for i in range(n)]
+    bx = [0]*n
+    ay = [[0]*n for i in range(n)]
+    by = [0]*n
     # ADD ADDITIONAL CODE HERE!
 
-a = [[0, 1, 1], [2, 4, -2], [0, 3, 15]]
-b = [4, 2, 36]
-print(gaussian_elimination(a, b))  # [-1.0, 2.0, 2.0]
+S1 = [[1,0,1]]
+S2 = [[4,0,-2,7], [3,0,-6,2], [2,1,6,-1], [5,1,2,-5]]
+print(equilibrium(2, S1, S2))
+# [[-2.95, 3.89], [2.38, -2.89]]
 
-a = [[1, 0, 1, 4], [2, -1, 1, 7], [-2, 1, 0, -6], [1, 1, 1, 9]]
-b = [1, 2, 3, 4]
-print(gaussian_elimination(a, b))  # [-8.8, -5.0, 3.4, 1.6]
+S1 = [[3,0,1], [1,0,2], [7,2,1], [8,3,2]]
+S2 = [[2,0,-81,67], [5,1,-4,67], [4,1,59,0], [4,3,-40,-68], [5,3,0,-65]]
+print(equilibrium(4, S1, S2))
+# [[-25.05, 30.11], [5.56, 18.79], [-5.02, -9.75], [-11.77, -39.71]]
 
-a = [[0, 1, 1], [2, 4, -2], [2, 5, -1]]
-b = [4, 2, 36]
-print(gaussian_elimination(a, b))  # None
+S1 = [[13,9,0], [14,0,6], [11,6,10], [11,3,1], [13,1,2], [10,2,4],
+      [11,11,5], [15,5,7], [12,7,8], [11,9,3], [13,0,1], [11,6,2],
+      [15,10,4], [10,3,11], [14,1,5], [14,4,8], [10,0,2],
+      [12,6,4], [11,3,5], [11,2,5], [11,2,8]]
+S2 = [[11,9,-50,50], [14,10,50,50], [12,11,-50,-50], [12,8,50,-50]]
+print(equilibrium(12, S1, S2))
+# [[-0.6, 5.21], [-1.74, -1.85], [7.33, -2.39], [-11.65, -2.98],
+#  [18.28, 3.35], [-3.43, -7.02], [12.44, 6.52], [7.37, -7.65],
+#  [20.92, -13.7], [-19.6, 16.71], [27.77, 20.55], [-22.86, -21.43]]
 </code></pre>
 <h3 id="optional-problems"><a class="header" href="#optional-problems">Optional Problems</a></h3>
 <p><em>필수 문제와 달리 제출/검사 대상은 아니지만, 큰 도움이 되므로 시간이 남으면
 모두 시도해보는 것을 권합니다 (대부분 기출문제입니다).</em></p>
-<p><strong>2.</strong> (수학 수업시간에 다루었을 <strong>matrix product</strong>의 정의를 상기: \(m
-\times p\) 행렬 <code>A</code>와 \(p \times n\) 행렬 <code>B</code>의 곱 \(A \cdot B\)는
-\(c_{ij} = \sum_{k=1}^{p} a_{ik}b_{kj}\)로 정의되는 \(m \times n\)
-행렬이다.)</p>
-<p>다음과 같이 정의된 함수 <code>inverse</code>를 완성하라:</p>
+<p><strong>2.</strong> 아래 그림과 같이 숫자들과 화살표들이 표시된 <code>1×n</code> 격자를
+고려하자. 문제를 간단하게 하기 위해 화살표들이 다음 조건을 만족하도록
+놓여져 있는 것으로 가정하자:</p>
+<ol>
+<li>각 화살표는 <code>n</code>개의 격자들 중 하나에서 시작하며, 이 격자와 다른
+격자를 도착점으로 가진다(즉, 어떤 <code>i</code>에 대해 <code>i</code>번 격자에서 시작하여
+<code>i</code>번 격자에서 끝나는 화살표는 없음). 화살표들의 모든 시작점들과
+도착점들 중 중복되는 것은 없다.</li>
+<li>조건 1에 의해 화살표들의 개수는 <code>n/2</code>보다 많을 수 없다. <code>n</code>번
+격자에서 시작하는 화살표는 없다.</li>
+<li><code>n</code>번 격자에 도착하는 화살표는 존재할 수 있다.</li>
+</ol>
+<p>정 <code>m</code>면체 주사위를 이용하여 동전 하나를 위와 같은 격자 위에서
+이동시키는 1인용 게임을 하려고 한다: 주사위를 굴려서 1부터 <code>m</code>까지의
+자연수 중 하나를 선택(각 자연수가 선택될 확률은 <code>1/m</code>)하고, 선택된
+자연수만큼 동전을 오른쪽으로 이동시킨다(동전의 초기 위치는 격자
+바깥으로, 처음 던진 경우에는 선택된 자연수에 해당하는 칸으로 이동;
+도착점이 <code>n</code>번 격자를 넘어가는 경우에는 <code>n</code>번 격자까지만 이동). 이동시킨
+위치에서 출발하는 화살표가 있으면 그 화살표의 도착지점으로 동전을
+이동시킨다(연쇄 이동까지는 고려할 필요 없음). 이 절차들을 반복하되 <code>n</code>번
+격자에 도달하면 게임이 끝난다.</p>
+<p>임의의 자연수 <code>n,m</code>과 위 조건들을 만족시키는 임의의 <code>1×n</code> 격자가
+주어졌을 때, 게임이 종료될 때까지 주사위를 굴리는 횟수의 기댓값
+(expected value)를 계산하는 것이 이 문제의 목표다.</p>
+<p>다음과 같이 정의된 함수 <code>dice</code>를 완성하라:</p>
 <ul>
-<li>입력: <code>n</code>-by-<code>n</code> 행렬을 나타내는 2차원 정수 리스트 <code>a</code></li>
-<li>리턴값: 다음 방정식을 만족하는 2차원 <code>n×n</code> float 리스트 <code>b</code>(즉, <code>a</code>의
-역행렬): \(a \cdot b = I\) (단위행렬)
+<li>입력: 정수 <code>n, m</code>과 리스트 <code>A</code>
 <ul>
-<li>(이와 같은 행렬 <code>b</code>가 존재하지 않으면 <code>None</code>을 리턴)</li>
+<li><code>m</code>은 주사위의 면수를 나타냄 (예: <code>m</code>이 6인 경우 정육면체 주사위)</li>
+<li><code>n</code>은 격자의 길이를 나타냄</li>
+<li><code>A</code>는 격자에 놓인 화살표들을 나타내는 리스트로, <code>A</code>의 각 원소는
+화살표의 발점과 도착점을 나타내는 길이 2의 리스트 (예: 주어진
+격자의 화살표들은 <code>A = [[3,10],[4,1],[6,14],[9,7],[12,5],[13,11]]</code>로
+나타냄)</li>
+<li><code>n</code>은 10 이상 100 이하의 자연수, <code>m</code>은 <code>m ∈ {4,6,8,12,20}</code>인 자연수</li>
+</ul>
+</li>
+<li>리턴값: 입력으로 정의되는 게임이 종료될 때까지 주사위를 굴리는 횟수의
+기댓값(expected value)
+<ul>
+<li>정확한 기댓값과의 차이가 \(10^{-10}\) 이내여야 함(<code>float</code> 연산의
+오차를 고려하여 \(10^{-10}\)까지의 오차는 허용)</li>
+<li>아래의 힌트와 같이 Gaussian Elimination을 이용해 기댓값을 계산하면
+이 오차범위 이내에 충분히 들어옴</li>
+<li>제시된 Monte Carlo 시뮬레이션 방식과 같이 random 수를 사용하는 것은
+허용하지 않음</li>
+<li>문제에서 원하는 값이 정의되지 않는 입력도 존재하나(예: 주사위를
+굴려서 동전을 이동시키는 과정을 무한히 반복해도 게임이 종료되지
+않도록 화살표가 주어지는 경우) 이러한 경우는 입력으로 주어지지
+않는다고 가정한다.</li>
 </ul>
 </li>
 </ul>
-<p>Hint:</p>
-<ul>
-<li><code>b</code>의 각 열을 <code>gaussian_elimination</code>을 이용해 찾는 과정을 <code>n</code>번
-반복하면 된다.</li>
-<li><code>gaussian_elimination(a,b)</code>이 modifier(입력 리스트 자체를 변경하는
-함수, 6주차에 자세히 다룸)임에 유의해야 한다(이 함수의 코드를 잘
-살펴보면 2차원 리스트 <code>a</code>의 값을 변경한다). 따라서, <code>gaussian_ elimination(a,b)</code>를 여러번 호출할 경우 템플릿 파일에 제공된
-<code>copy2DList(a)</code> 함수를 이용하여 2차원 리스트 <code>a</code>를 통째로 복사하여
-새로운 2차원 리스트를 만들고 이를 <code>gaussian_elimination</code>으로 넘기는
-방식으로 구현해야 한다.</li>
-</ul>
-<pre><code class="language-python">def inverse(a):
+<p><em>힌트: 기대값을 구하는 문제를 어떤 연립 일차 방정식으로 대응시키고 이
+방정식을 Gaussian Elimination을 이용해서 풀면 된다. 임의의 고정된 <code>n</code>에
+대해 \(x_i\) (\(i=0,1,\ldots,n+m\))를 “격자 <code>i</code>에서 게임을 시작할 때
+게임이 종료될 때까지 주사위를 굴리는 횟수의 기댓값”(\(i \ge n\)인
+경우 \(x_i = 0\))으로 정의하면, \(x_0\)가 문제에서 원하는 값이 된다.
+화살표가 없는 경우: \(x_i = 1 + \frac{1}{m}\sum_{k=1}^{m} x_{f(i+k)}\)
+where <code>f(i)</code>는 격자 <code>i</code>에서 출발하는 화살표가 없으면 <code>i</code>, 있으면
+화살표의 도착점.</em></p>
+<p>아래 코드는 참고용 Monte Carlo 시뮬레이션(추정치만 계산, 정확한 값은
+아님. Monte Carlo 시뮬레이션 자체는 “#11: Poker Hands“에서 다룸):</p>
+<pre><code class="language-python">import random
+
+def estimate(n, m, A):
+    f = list(range(n+m))
+    for h in range(len(A)):
+        f[A[h][0]] = A[h][1]
+
+    T = 1000000  # sufficiently large number
+    total_trials = 0
+    for k in range(T):
+        pos = 0
+        num_trials = 0
+        while True:
+            num_trials += 1
+            step = random.randrange(1, m+1)
+            pos = f[pos + step]
+            if pos &gt;= n:
+                break
+        total_trials += num_trials
+    return total_trials / float(T)
+
+n = 14
+m = 6
+A = [[3,10], [4,1], [6,14], [9,7], [12,5], [13,11]]
+print(estimate(n, m, A))
+</code></pre>
+<pre><code class="language-python">def dice(n, m, A):
     # ADD ADDITIONAL CODE HERE!
 </code></pre>
-<p><strong>3.</strong> 이 문제에서는 <code>n-1</code>차 다항함수 \(f: \mathbb{Z} \to \mathbb{Z}\)의
-함수값 \(f(0), f(1), \ldots, f(n-1)\)들이 주어졌을 때, <code>f(n)</code>을 계산하는
-것을 목표로 한다.</p>
-<p>다음과 같이 정의된 함수 <code>poly</code>를 완성하라:</p>
+<p><strong>3.</strong> 다음과 같이 여러 사람들이 비밀을 공유하는 문제를 고려하자: <code>N</code>명의
+사람들과 이들 모두가 신뢰하는 딜러(dealer) 한명이 있다. <code>N</code>명의 사람들은
+<code>ℓ(≥2)</code>개의 서로소 집합(disjoint sets) \(\mathcal{P}<em>1,\ldots,
+\mathcal{P}</em>\ell\)로 분할되는데, 각 \(\mathcal{P}<em>i\)는 \(n_i\)명의 사람
+\(P</em>{i,1},\ldots,P_{i,n_i}\)들로 구성된다(\(N = \sum_{i=1}^{\ell} n_i\)).</p>
+<p>딜러는 <code>N</code>명의 사람들이 공유할 정수(음수도 가능)로 표현되는 비밀(예: 금고
+비밀번호) <code>S</code>를 임의로 생성한다. 딜러는 비밀 <code>S</code>를 <code>N</code>개의 정보
+\(s_{i,j}\) (\(1\le i\le \ell,\ 1\le j\le n_i\))들로 ‘적당히’ 분해하여
+각 사람 \(P_{i,j}\)에게 나눠준다(<code>S</code>와 \(s_{i’,j’}\)(<code>i'≠i</code> or
+<code>j'≠j</code>)는 \(P_{i,j}\)에게 알려주지 않는다). 이때, 어떤 주어진 자연수
+\(t_1,\ldots,t_\ell, T\)들(\(\sum_{i=1}^{\ell} t_i &lt; T &lt; N\)과 각
+<code>i</code>에 대해 \(t_i \le n_i\))에 대해 다음 조건이 만족되도록 한다:</p>
+<ol>
+<li>(어느 정도 시간이 흐른 후) <code>T</code>명 이상이 모이되 각 \(\mathcal{P}_i\)
+에서 \(t_i\)명 이상씩 모이면(즉, 모인 사람들의 집합 <code>A</code>가 <code>|A|≥T</code>와
+모든 <code>i</code>에 대해 <code>|A∩Pi|≥ti</code>를 모두 만족하면), 항상 <code>S</code>를 복구할 수
+있다.</li>
+<li>이 조건을 만족하지 않은 사람들이 모인 경우(즉, 모인 사람들의 수가
+<code>T</code> 미만이거나 어떤 \(\mathcal{P}_i\)에 속한 사람들의 수가 \(t_i\)
+미만)에는 이들이 가지고 있는 정보만으로 <code>S</code>를 완벽하게 복구할 수
+없다.</li>
+</ol>
+<p>요약하면, 딜러가 임의로 선택한 정수 <code>S</code>로부터 조건 1-2가 만족되도록
+<code>N</code>개의 정보 \(s_{i,j}\) (\(1\le i\le \ell,\ 1\le j\le n_i\))들을
+생성하는 것이다.</p>
+<p>Write a function <code>secret</code>:</p>
 <ul>
-<li>입력: 정수 리스트 <code>L</code>
+<li>딜러가 정보 \(s_{i,j}\)들을 생성하는 방식(공개된 좌표 <code>x</code>와 함께)과,
+모인 사람들의 정보 <code>s</code>(모이지 않은 사람은 <code>None</code>)로부터 비밀 <code>S</code>를
+복구하는 절차를 구현
 <ul>
-<li><code>n = len(L)</code>로 둘 때, 어떤 <code>n-1</code>차 다항함수 <code>f</code>가 존재하여, 각
-<code>L[i]</code>는 <code>f(i)</code>를 나타냄. 즉, <code>L = [f(0), f(1), ..., f(n-1)]</code></li>
+<li><em>자세한 생성 절차(다항식 \(g, f_i\) 구성 등)와 함수 시그니처는
+원본 문제지 참고 — 요지는 딜러가 \(\ell-1\)차 다항함수 <code>g</code>
+(\(g(x) = S + \sum_{i=1}^{\ell-1} c_i x^i\))와, 각 그룹마다
+\(t_i+D-1\)차 다항함수 \(f_i\)를 구성해 정보를 분배하고, 모인
+사람들의 정보로부터 다항식을 복원(Gaussian elimination 활용)해 <code>S</code>를
+되찾는 방식이다.</em></li>
 </ul>
 </li>
-<li>리턴값: <code>f(n)</code>
-<ul>
-<li>입력 조건을 만족하는 <code>n-1</code>차 다항함수 <code>f</code>가 존재하지 않거나 여러개
-존재할 경우에는 <code>None</code>을 리턴</li>
 </ul>
-</li>
-</ul>
-<p><em><code>gaussian_elimination</code>을 이용하여 <code>f</code>를 찾을 수 있다.</em></p>
-<pre><code class="language-python">def poly(L):
-    # ADD ADDITIONAL CODE HERE!
-</code></pre>
-<p><strong>4.</strong> 1번 문제에서 다음 두 경우를 구별하지 않았는데(모두 <code>None</code>을
-리턴하도록 하였음), 이 문제에서는 이 두 경우도 구별하는 것을 목표로
-한다:</p>
-<ul>
-<li>방정식이 해를 가지지 않는 경우(inconsistent)와</li>
-<li>무한히 많은 해를 가지는 경우(consistent dependent)</li>
-</ul>
-<p>다음과 같이 정의된 함수 <code>classify</code>를 완성하라:</p>
-<ul>
-<li>입력: 1번 문제와 동일한 형태</li>
-<li>리턴값: <code>0</code>(해가 유일한 경우 — <code>0</code> 대신 방정식의 해를 리턴하지 않도록
-주의), <code>1</code>(해가 존재하지 않는 경우), <code>2</code>(해가 무한히 많은 경우)</li>
-</ul>
-<p>힌트:</p>
-<ul>
-<li>Forward elimination을 약간만 수정하면 된다(pivot 값이 0이 되는 경우
-row는 증가시키지 않고 column만 증가시켜 다음 pivot을 찾음).</li>
-<li>아래 형태의 연립 방정식에서 <code>b4 = b5 = 0</code>이면 무한히 많은 해를
-가지고, <code>b4, b5</code> 중 하나 이상이 non-zero면 해가 존재하지 않음을 수학
-수업시간에 배웠을 것이다:
-<pre><code>[1 1 1 1 1]   [x1]   [b1]
-[0 1 1 1 1]   [x2]   [b2]
-[0 0 0 0 1] · [x3] = [b3]
-[0 0 0 0 0]   [x4]   [b4]
-[0 0 0 0 0]   [x5]   [b5]
-</code></pre>
-</li>
-</ul>
-<pre><code class="language-python">def classify(a, b):
+<pre><code class="language-python">def secret(n, t, T, x, s):
     # ADD ADDITIONAL CODE HERE!
 </code></pre>
 

@@ -1,113 +1,90 @@
 # Topics Covered
 
-## Stable Matching이란?
+## Propose-Reject (Gale-Shapley) 알고리즘
 
-`n`명의 남자와 `n`명의 여자가 있고, 각자 상대편 전원에 대한 선호 순위를
-가지고 있다고 하자. 목표는 **모든 사람이 정확히 한 명과 짝지어지는**
-매칭(perfect matching)을 찾되, **아무도 배정된 상대를 버리고 다른 상대로
-바꾸고 싶어하지 않는** 매칭을 찾는 것이다.
+Stable matching을 **실제로 계산**하는 알고리즘이다. 아이디어는 흔한
+연애 시뮬레이션과 비슷하다: 남자는 자기 선호 순서대로 계속 프로포즈하고,
+여자는 프로포즈를 받을 때마다 "지금까지 받은 것 중 최선"과 잠정적으로
+맺어지되, 더 나은 프로포즈가 오면 갈아탄다.
 
-**Unstable pair**: 매칭 `M`에서 짝지어진 남녀가 아닌 쌍 `(x, y)`가, 다음
-두 조건을 모두 만족하면 unstable하다고 한다 — `x`가 자신의 현재 배정
-상대보다 `y`를 더 선호하고, **동시에** `y`도 자신의 현재 배정 상대보다
-`x`를 더 선호. 이런 쌍이 있으면 두 사람 모두 기존 매칭을 벗어나 서로
-바꾸고 싶어할 동기가 생긴다.
+```
+모든 남자/여자를 free(솔로)로 초기화
 
-**Stable matching** = unstable pair가 하나도 없는 perfect matching.
+while 아직 프로포즈 안 한 여자가 있는 free한 남자 m이 존재:
+    그런 m을 아무나 선택   # 선택 순서는 최종 결과에 영향 없음
+    w = m이 아직 프로포즈 안 한 여자 중 가장 선호하는 여자
 
-이 개념은 실제로 미국의 고교-학교 배정, 레지던트-수련병원 배정, 신장이식
-배정 등에 쓰이고, KSA에서도 룸메이트/수강신청/서클 배정 등에 응용될 수
-있다. 학문적·실용적 중요성을 인정받아 2012년 노벨 경제학상까지 수여됐다.
+    if w가 free:
+        m과 w를 잠정적으로 engage
+    elif w가 자신의 현재 파트너보다 m을 선호:
+        w의 기존 파트너와 breakUp, m과 engage
+    else:
+        아무 일도 없음 (w가 m을 거절)
+```
 
-## `Person` Class로 자료구조 만들기
+**직관적으로 그럴듯해 보이지만, 이 알고리즘이 실제로 stable matching을
+계산해준다는 것은 증명이 필요하다** — 종료된다는 것도, 종료됐을 때
+perfect하다는 것도, 종료됐을 때 stable하다는 것도 각각 별도로 증명해야
+한다(자세한 증명은 생략하되, 결론만 정리하면 아래와 같다).
 
-각 사람을 `Person` object로 표현한다. 선호 리스트(`prefList`)는
-**Person object들의 리스트**로 저장한다는 점이 핵심이다(이름이나 인덱스가
-아니라):
+- **항상 종료**: 각 남자는 최대 `n`번만 프로포즈할 수 있으므로, `while`
+  루프는 최대 \\(n^2\\)번 반복 후 끝난다.
+- **결과는 항상 perfect matching**: 만약 어떤 남자가 솔로로 남았다면,
+  그는 모든 여자에게 거절당했다는 뜻인데 — 여자는 한 번 맺어지면 절대
+  다시 솔로가 되지 않으므로 모든 여자도 이미 다 맺어져 있어야 하고, 이는
+  모순이다.
+- **결과는 항상 stable**: 만약 unstable pair `(m, w)`가 있었다면, `m`이
+  `w`에게 프로포즈했든 안 했든 둘 다 모순이 발생한다(자세한 논증은 부록
+  참고).
+
+## Python 구현
+
+`Person`에 두 필드를 추가한다: `numProposal`(이 남자가 지금까지 몇 번
+프로포즈했는지 — 남자에게만 의미 있음), 그리고 다음에 프로포즈할 여자를
+알려주는 메소드:
 
 ```python
 class Person:
     def __init__(self, name, gender):
-        self.gender = gender      # "male" 또는 "female"
-        self.name = name
-        self.prefList = None      # Person object들의 리스트
-        self.partner = None       # 현재 배정된 상대 Person object. 없으면 None
+        ...
+        self.numProposal = 0    # 남자인 경우에만 사용
 
-men = [None]*3
-women = [None]*3
-men[0] = Person("Victor", "male")
-women[0] = Person("Amy", "female")
-...
-men[0].prefList = [women[0], women[1], women[2]]   # 선호순
+    def womanToPropose(self):   # 남자인 경우에만 사용, modifier
+        w = self.prefList[self.numProposal]
+        self.numProposal += 1
+        return w
 ```
 
-`prefList`가 Person object들의 리스트이기 때문에, `men[0].prefList[0]`은
-바로 `women[0]`(Person object) 자체를 가리킨다 — 이름 문자열이나 인덱스를
-따로 조회할 필요가 없다.
-
-## 매칭을 표현하는 함수: `engage` / `breakUp`
-
-현재 매칭 상태는 각 `Person`의 `partner` 필드들로 표현된다 — **양쪽 다
-연결/해제**해야 한다는 점이 중요(둘 다 modifier):
+`findMatch`는 free한 남자가 없을 때까지 위 알고리즘을 그대로 코드로
+옮긴 것이다 — `isFree()`, `womanToPropose()`, `prefer()`(Week 9)로
+상황을 파악하고, `engage()`/`breakUp()`(Week 9)로 실제 상태를 바꾼다:
 
 ```python
-def engage(self, p):    # modifier
-    self.partner = p
-    p.partner = self
-
-def breakUp(self):      # modifier
-    self.partner.partner = None
-    self.partner = None
-```
-
-`m.engage(w)`와 `w.engage(m)`은 같은 효과이고, `m.breakUp()`과
-`m.partner.breakUp()`도 같은 효과다(양방향 관계이므로).
-
-## 선호도 비교: `prefer(·)`
-
-`self.prefList.index(p)`로 `p`의 선호 순위(인덱스가 작을수록 선호)를 알
-수 있다. 이를 이용해 "이 사람이 `p`를 지금 파트너보다 더 선호하는가?"를
-판정하는 boolean function을 만들 수 있다:
-
-```python
-def prefer(self, p):   # pure function (boolean)
-    if self.partner is None:
-        return True
-    return self.prefList.index(p) < self.prefList.index(self.partner)
-```
-
-## Perfect / Stable 여부 검사
-
-**Perfect matching 검사** — 모든 사람의 `partner`가 `None`이 아닌지만
-확인하면 된다(`engage`/`breakUp`을 통해서만 파트너가 바뀌므로, 한쪽만
-연결되고 반대쪽은 안 되는 상황은 애초에 생기지 않는다):
-
-```python
-def isPerfectMatch(men, women):   # "for all" 패턴
+def findMatch(men, women):
     n = len(men)
-    for i in range(n):
-        if men[i].partner is None:
-            return False
-    for i in range(n):
-        if women[i].partner is None:
-            return False
-    return True
+    numFreeMen = n
+    while numFreeMen > 0:
+        m = free한 남자 아무나
+        w = m.womanToPropose()
+        if w가 free:
+            m.engage(w)
+            numFreeMen -= 1
+        elif w.prefer(m):              # w가 m을 현재 파트너보다 선호
+            w.partner.breakUp()        # (breakUp 후 numFreeMen 다시 +1 필요)
+            m.engage(w)
+        # else: w가 m을 거절 — 할 일 없음, m은 계속 free 상태로 다음 루프에서
+        #       또 프로포즈하게 됨
 ```
 
-**Stable matching 검사** — 정의 그대로, 모든 남녀 쌍에 대해 unstable
-pair인지 확인한다(`prefer`를 이용):
+## Man-Optimal / Woman-Pessimal
 
-```python
-def isStableMatch(men, women):    # "for all" 패턴
-    n = len(men)
-    for i in range(n):
-        for j in range(n):
-            m, w = men[i], women[j]
-            if m.prefer(w) and w.prefer(m):
-                return False   # (m, w)가 unstable pair
-    return True
-```
+같은 입력에 대해 stable matching이 여러 개 존재할 수 있는데(유일하지
+않음), propose-reject 알고리즘이 찾아내는 결과는 항상 **남자 각각에게
+가능한 stable matching 중 최선의 파트너를, 여자 각각에게는 최악의
+파트너를** 준다는 놀라운 성질이 있다(남자가 먼저 프로포즈하기
+때문). 남녀 역할을 바꿔 여자가 프로포즈하게 하면 반대로
+woman-optimal/man-pessimal 결과가 나온다.
 
-이번 주는 여기까지 — "주어진 매칭이 stable한지 판정"할 수 있는
-자료구조와 함수를 갖췄다. 다음 주(Stable Matching II)에서는 이런 매칭을
-**직접 찾아내는** propose-reject(Gale-Shapley) 알고리즘을 다룬다.
+이로부터 실전 교훈도 나온다: **프로포즈하는 쪽이 유리하다** — 솔직하게
+좋아하는 순서대로 적극적으로 프로포즈하는 것이 전략적으로 손해가 없는
+반면(남자), 수동적으로 프로포즈를 기다리기만 하는 쪽(여자)은 불리하다.

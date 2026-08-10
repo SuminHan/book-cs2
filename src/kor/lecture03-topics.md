@@ -1,160 +1,63 @@
 # Topics Covered
 
-## `range(·)`는 사실 list
+## 2차원 리스트
 
-`range(n)`은 `list(range(n))`이 곧 `[0,1,...,n-1]`인 것처럼, 사실 하나의
-list다(수학의 "for each \\(i \in \{0,1,\ldots,n-1\}\\)"와 비슷하되, Python은
-순서가 명시적으로 정해져 있다는 차이가 있음).
-
-```python
-range(n)      # [0, 1, ..., n-1]
-range(m, n)   # [m, m+1, ..., n-1]
-range(m, n, k)  # [m, m+k, m+2k, ...]  (n을 넘기 직전까지)
-
-for i in range(10, 21, 3):
-    total += i   # 10+13+16+19
-```
-
-루프 변수 `i`를 루프 안에서 직접 바꾸는 것은 에러는 아니지만, 매 iteration마다
-`range(·)`가 준 값으로 다시 초기화되므로 원하는 효과를 내지 못한다 — 지양할 것.
-
-## List Traversal: Index 방식 vs. 직접 방식
-
-리스트를 훑는 두 가지 방법이 있다.
+행렬(matrix)을 표현할 때 유용하다(순서도 "행"/"열"로 같다고 생각하면 됨).
+`table[i]`는 `i`-행에 대응되는 리스트(길이 `width`), `table[i][j]`는 그
+행의 `j`번째 원소다. `len(table)`은 `height`(행 개수), `len(table[0])`은
+`width`(열 개수)가 된다.
 
 ```python
-S = [2, 4, 2, 9, 5]
+height = 3   # 행 개수 = 열의 크기
+width = 4    # 열 개수 = 행의 크기
+table = [[None]*width for i in range(height)]
 
-# ① index로 간접적으로 훑기
-total = 0
-for i in range(len(S)):
-    total += S[i]
-
-# ② 원소를 직접 건드리며 훑기
-total = 0
-for x in S:
-    total += x
+for i in range(height):
+    for j in range(width):
+        table[i][j] = (i + 2*j + 1)
 ```
 
-두 방식 다 존재 이유가 있다: **순서/위치 정보가 필요 없다면(예: 합 계산)
-직접 방식(`for x in S`)이 훨씬 간결**하다. 반대로 **이웃한 원소를 비교하는
-등 인덱스가 필요하다면(예: 단조증가 판정, `S[i]`와 `S[i+1]` 비교) index
-방식**을 써야 한다.
+`[None]*width for i in range(height)`처럼 **list comprehension**으로 각
+행을 독립적으로 새로 생성해야 한다 — `[[None]*width] * height`처럼 쓰면
+모든 행이 **같은 리스트를 가리키는 alias**가 되어, 한 행을 고치면 다른
+모든 행도 같이 바뀌는 버그가 생긴다.
 
-## `break` / `continue`
+## 3차원 리스트
 
-`break`는 루프를 즉시 빠져나가고, `continue`는 현재 iteration만 건너뛰고
-루프는 계속된다. 다중 루프에서는 **가장 안쪽 루프만** 영향을 받는다.
-코드 구조가 복잡해지므로 boolean function 등으로 대체 가능하면 가능한 한
-피하는 것이 좋다.
+한 단계 더 중첩하면 된다. `table[i]`는 `i`-층에 대응되는 2D array,
+`table[i][j]`는 그 층의 `j`-행에 대응되는 1D array다.
 
 ```python
-for i in range(8):
-    if i == 5:
-        break
-    print(i)
-# 0 1 2 3 4
+height = 3   # 행 개수
+width = 4    # 열 개수
+depth = 2    # 층 개수
+table = [[[None]*width for j in range(height)] for i in range(depth)]
 
-for i in range(8):
-    if i in [3, 5]:
-        continue
-    print(i)
-# 0 1 2 4 6 7
+for i in range(depth):
+    for j in range(height):
+        for k in range(width):
+            table[i][j][k] = (i + 2*j + 1 + k)
 ```
 
-## `for` 루프의 3가지 기본 패턴
+## Boundary 체크 패턴
 
-거의 모든 `for` 루프는 아래 세 패턴의 조합으로 만들어진다.
-
-**① Maximum/Minimum** — 최솟값(또는 최댓값)뿐 아니라 그 **인덱스**가
-필요한 경우도 있다는 점에 유의:
+다차원 배열에서 인접 칸을 볼 때(예: 지뢰찾기), 인덱스가 배열 범위를
+벗어나지 않는지 매번 확인해야 한다. 이 체크를 별도 함수로 분리해두면
+코드가 훨씬 깔끔해진다:
 
 ```python
-def findMin(numbers):
-    m = numbers[0]
-    for i in range(len(numbers)):
-        if numbers[i] < m:
-            m = numbers[i]
-    return m
-
-def findMinIndex(numbers):
-    minIndex = 0
-    for i in range(len(numbers)):
-        if numbers[i] < numbers[minIndex]:
-            minIndex = i
-    return minIndex
+def withinBoundary(height, width, i, j):
+    return 0 <= i < height and 0 <= j < width
 ```
 
-**② Counter** — 조건을 만족하는 원소의 개수. 조건이 복잡하면 boolean
-function으로 분리해 넣으면 코드가 그대로 재사용된다:
+1차원의 경우:
 
 ```python
-def countPrime(numbers):
-    counter = 0
-    for i in range(len(numbers)):
-        if isPrime(numbers[i]):   # boolean function
-            counter += 1
-    return counter
+def withinBoundary(size, i):
+    return 0 <= i < size
 ```
 
-**③ Quantifier ("for some" / "for all")** — "어떤 원소가 조건을
-만족하는가"(∃)와 "모든 원소가 조건을 만족하는가"(∀)는 사실 De Morgan's
-law로 연결된 짝이다: \\(\forall x,\, p(x) \equiv \neg\big(\exists x,\, \neg
-p(x)\big)\\).
-
-```python
-def somePositive(numbers):        # "for some" — 찾으면 즉시 True
-    for i in range(len(numbers)):
-        if numbers[i] > 0:
-            return True
-    return False
-
-def allPositive(numbers):         # "for all" — 반례를 찾으면 즉시 False
-    for i in range(len(numbers)):
-        if not (numbers[i] > 0):
-            return False
-    return True
-```
-
-이번 학기 자주 쓰이는 함수인 소수 판별 `isPrime(p)`도 사실 "for all"
-패턴이다: "`p`가 소수" ≡ "모든 `i`에 대해 `p % i != 0`":
-
-```python
-def isPrime(p):
-    if p < 2:
-        return False
-    for i in range(2, p//2 + 1):
-        if not (p % i != 0):   # p % i == 0 — 반례(약수) 발견
-            return False
-    return True
-```
-
-## Example: File I/O
-
-파일을 읽어 단어 리스트로 만드는 표준 패턴:
-
-```python
-words = open("input.txt", "r").read().split()
-```
-
-`open(filename, "r")`로 읽기 전용으로 열고, `.read()`로 전체 내용을
-하나의 string으로 읽은 뒤, `.split()`으로 공백 기준으로 쪼개 단어들의
-list를 만든다. 이 세 단계를 한 줄로 이어 쓴 것이 바로 위 코드다.
-
-이 패턴과 Maximum 패턴을 합치면, 파일에서 가장 긴 단어를 찾을 수 있다.
-**길이가 아니라 단어 자체**를 반환해야 하므로, `maxLen`뿐 아니라 그 길이를
-가진 단어 `maxWord`도 함께 유지해야 한다:
-
-```python
-def maxPalindrome(filename):
-    words = open(filename, "r").read().split()
-    n = len(words)
-    maxWord = ""
-    maxLen = 0
-    for i in range(n):
-        s = words[i]
-        if maxLen < len(s):
-            maxWord = s
-            maxLen = len(s)
-    return maxWord
-```
+이 패턴은 "자기 자신 + 인접 칸들"을 순회하며 무언가를 세거나 판정하는
+모든 문제(지뢰밭 인접 지뢰 수 세기, 0으로만 이루어진 최대 직사각형 찾기
+등)의 뼈대가 된다: 후보 인접 칸들을 나열하고, 그중 boundary 안에 있는
+것만 실제로 확인한다.

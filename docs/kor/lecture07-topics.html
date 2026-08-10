@@ -38,10 +38,10 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-97d8eddd.js";
+            window.path_to_searchindex_js = "../searchindex-be08fbfa.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../toc-af8f4a15.js"></script>
+        <script src="../toc-7992028c.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -181,69 +181,94 @@
                 <div id="mdbook-content" class="content">
                     <main>
                         <h1 id="topics-covered"><a class="header" href="#topics-covered">Topics Covered</a></h1>
-<h2 id="문제-설정"><a class="header" href="#문제-설정">문제 설정</a></h2>
-<p>고정된 물체 \(F_1,\ldots,F_\ell\)과 자유롭게 움직일 수 있는 물체
-\(P_1,\ldots,P_n\)이 스프링들로 연결되어 있다(각 스프링은 자유-자유
-또는 자유-고정 물체를 잇고, 각자 탄성계수 \(w\)를 가진다). 목표: 모든
-자유 물체가 힘의 평형을 이루는 위치 \((x_i, y_i)\)를 구하는 것.</p>
-<p><strong>단순화 가정</strong>: 스프링의 원래 길이는 0이라고 가정한다. 그러면 스프링이
-가하는 힘은 늘어난 길이 \(\Delta\ell\)에 비례하고(\(F = w \cdot
-\Delta\ell\)), 그 힘을 \(x\)/\(y\) 성분으로 나누면 각각
-\(\Delta x\), \(\Delta y\)에 정비례하는 아주 간단한 형태가 된다:</p>
-<p>\[F_x = w \cdot \Delta x, \qquad F_y = w \cdot \Delta y\]</p>
-<h2 id="평형-조건--선형방정식"><a class="header" href="#평형-조건--선형방정식">평형 조건 → 선형방정식</a></h2>
-<p>자유 물체 \(P_i\)가 평형이라는 것은, \(P_i\)에 연결된 모든 스프링이
-가하는 힘의 합이 \(x\)방향/\(y\)방향 각각 0이라는 뜻이다. \(P_i\)와
-연결된 자유 물체들의 인덱스 집합을 \(A_i\), 고정 물체들의 인덱스
-집합을 \(B_i\)라 하면:</p>
-<p>\[\sum_{k \in A_i} w_{ik}(x_k - x_i) + \sum_{k \in B_i} w’_{ik}(x’_k - x_i) = 0\]</p>
-<p>(\(y\)방향도 대칭적으로 동일한 식이 나온다.) 자유 물체가 \(n\)개이면
-이런 식이 \(x\)방향에 \(n\)개, \(y\)방향에 \(n\)개 — 총 \(2n\)개
-나오고, 미지수도 \(x_1,\ldots,x_n,y_1,\ldots,y_n\) 정확히 \(2n\)개다.
-즉 <strong>Week 6에서 배운 Gaussian elimination으로 풀 수 있는 정확히 그
-형태</strong>가 된다.</p>
-<h2 id="계수-정리-a_ij-b_i"><a class="header" href="#계수-정리-a_ij-b_i">계수 정리: \(a_{ij}\), \(b_i\)</a></h2>
-<p>위 식을 표준형 \(a_{i1}x_1 + \cdots + a_{in}x_n = b_i\)로 정리하면
-계수들이 다음과 같은 규칙을 따른다:</p>
-<p>\[a_{ij} = \begin{cases}
-\sum_{k \in A_i} w_{ik} + \sum_{k \in B_i} w’<em>{ik} &amp; i = j \\
--w</em>{ij} &amp; P_i, P_j \text{가 연결됨} \\
-0 &amp; \text{그 외}
-\end{cases}
-\qquad
-b_i = \sum_{k \in B_i} w’_{ik} x’_k\]</p>
-<p>(\(P_i\)가 고정 물체와 연결되어 있지 않으면 \(b_i = 0\).)</p>
-<h2 id="행렬을-효율적으로-구성하기"><a class="header" href="#행렬을-효율적으로-구성하기">행렬을 효율적으로 구성하기</a></h2>
-<p>입력은 보통 “스프링 하나하나“의 목록(탄성계수 + 어느 물체들을 잇는지)으로
-주어진다. 모든 쌍 <code>(i,j)</code>를 순회하며 연결 여부를 확인하는 대신, <strong>각
-스프링을 한 번씩만 보면서 그 스프링이 영향을 주는 자리에 바로 누적</strong>하는
-것이 효율적이다:</p>
-<ul>
-<li>자유 물체 <code>Pi</code>-<code>Pj</code>를 잇는 스프링(탄성계수 <code>w</code>)이 있다면:
-<code>a[i][i] += w</code>, <code>a[j][j] += w</code>, <code>a[i][j] -= w</code>, <code>a[j][i] -= w</code></li>
-<li>자유 물체 <code>Pi</code>와 고정 물체 <code>Fk</code>(좌표 <code>x'</code>)를 잇는 스프링(탄성계수 <code>w'</code>)이
-있다면:
-<code>a[i][i] += w'</code>, <code>b[i] += w' * x'</code></li>
-</ul>
-<pre><code class="language-python">def buildSystem(n, springs):
-    # springs: (w, i, j) 형태(자유-자유) 또는 (w, i, x') 형태(자유-고정)의 목록
-    a = [[0]*n for _ in range(n)]
-    b = [0]*n
-    for spring in springs:
-        if spring는 자유-자유:
-            w, i, j = spring
-            a[i][i] += w; a[j][j] += w
-            a[i][j] -= w; a[j][i] -= w
-        else:  # 자유-고정
-            w, i, xprime = spring
-            a[i][i] += w
-            b[i] += w * xprime
-    return a, b
+<h2 id="object와-class"><a class="header" href="#object와-class">Object와 Class</a></h2>
+<p><strong>Object</strong>는 데이터(state 변수)와 함수(메소드)의 묶음이고, <strong>class</strong>는
+그 object의 “틀”(type)이다. 이미 Week 8 이전에 써온 Toy Robot의
+<code>Robot</code> class가 좋은 예다 — <code>hubo</code>, <code>amy</code> 같은 각 로봇이 object이고,
+<code>Robot</code>이 그 class다.</p>
+<pre><code class="language-python">class Robot(object):
+    def __init__(self, beepers, ...):
+        self._beeper_bag = beepers
+        self._x = avenue
+        self._y = street
+        ...
+
+    def move(self):            # state 변수를 수정 — return 값 없음
+        xx, yy = _directions[self._dir]
+        self._x += xx
+        self._y += yy
+        ...
+
+    def carries_beepers(self):  # state 변수를 읽기만 — return 값 있음
+        return self._beeper_bag &gt; 0
 </code></pre>
-<p>이 과정을 \(x\)방향, \(y\)방향 각각에 대해 독립적으로 한 번씩
-수행하고(계수 행렬 <code>a</code>는 두 방향이 동일하고 <code>b</code>만 다르다), <strong>Gaussian
-elimination을 두 번 돌리면</strong> 모든 자유 물체의 평형 위치
-\((x_i, y_i)\)를 얻는다.</p>
+<p><code>hubo = Robot(beepers=6)</code>은 <code>__init__(hubo, 6)</code>이 호출되는 것으로 이해하면
+된다 — <strong>모든 메소드의 첫 번째 파라미터는 자기 자신을 가리키는
+<code>self</code>이고, 호출할 때는 명시하지 않아도 자동으로 넘어간다.</strong></p>
+<h2 id="직접-class-만들기-point"><a class="header" href="#직접-class-만들기-point">직접 Class 만들기: <code>Point</code></a></h2>
+<p>2차원 평면의 점을 나타내는 <code>Point</code> class를 만들어보자.</p>
+<pre><code class="language-python">class Point:
+    def __init__(self, px, py):   # 생성자 — 항상 modifier
+        self.x = px
+        self.y = py
+</code></pre>
+<p><code>p1 = Point(1, 2)</code>는 <code>__init__(p1, 1, 2)</code>를 호출하는 것과 같다. state
+변수는 항상 <code>self.x</code>처럼 <code>self.</code>을 붙여 나타낸다.</p>
+<h2 id="__str__-프린트되는-모양-정의"><a class="header" href="#__str__-프린트되는-모양-정의"><code>__str__</code>: 프린트되는 모양 정의</a></h2>
+<p><code>__str__</code>을 정의하지 않으면 <code>print(p1)</code>은 <code>(1,2)</code>가 아니라
+<code>0xb69b5a0c</code> 같은 메모리 주소가 찍힌다. 원하는 형태의 string을 만들어
+<code>return</code>하면 해결된다(<strong><code>__str__</code>은 항상 pure function</strong>):</p>
+<pre><code class="language-python">def __str__(self):
+    return "(" + str(self.x) + "," + str(self.y) + ")"
+</code></pre>
+<h2 id="pure-function-vs-modifier"><a class="header" href="#pure-function-vs-modifier">Pure Function vs. Modifier</a></h2>
+<ul>
+<li><strong>Pure function</strong>: state 변수를 수정하지 않고, 계산 결과만 <code>return</code>한다.</li>
+<li><strong>Modifier</strong>: state 변수를 직접 수정하고, 보통 <code>return</code> 값이 없다
+(<code>None</code>).</li>
+</ul>
+<pre><code class="language-python">def setX(self, v):     # modifier — x를 수정, return 없음
+    self.x = v
+
+def getX(self):         # pure function — 읽기만, x는 self.x
+    return self.x
+
+def distance(self, p):  # pure function — 다른 object를 입력받아 계산만
+    dx = self.x - p.x
+    dy = self.y - p.y
+    return (dx**2 + dy**2)**0.5
+</code></pre>
+<p><strong><code>__init__</code>은 항상 modifier, <code>__str__</code>은 항상 pure function</strong> — 이
+둘은 예외 없이 고정이다. <code>dx</code>, <code>dy</code>처럼 계산 도중에만 쓰이는 임시
+변수에는 <code>self.</code>를 붙이지 않는다(state 변수가 아니므로).</p>
+<h2 id="object를-반환하는-함수-같은-연산-두-가지-스타일"><a class="header" href="#object를-반환하는-함수-같은-연산-두-가지-스타일">Object를 반환하는 함수: 같은 연산, 두 가지 스타일</a></h2>
+<p><code>add</code>처럼 다른 object와 결합해 <strong>새로운</strong> object를 만드는 함수는, pure
+function으로도 modifier로도 만들 수 있다 — 어느 쪽인지에 따라 호출
+결과가 완전히 달라진다:</p>
+<pre><code class="language-python"># pure function 버전: 새 Point를 만들어 반환, p1/p2는 그대로
+def add(self, p):
+    x = self.x + p.x
+    y = self.y + p.y
+    return Point(x, y)
+
+p3 = p1.add(p2)
+print(p3)   # (5,8) — 새로 만들어진 object
+print(p1)   # (1,2) — 변경 없음
+
+# modifier 버전: self 자신을 직접 수정, return 없음
+def add_as_modifier(self, p):
+    self.x += p.x
+    self.y += p.y
+
+p3 = p1.add_as_modifier(p2)
+print(p3)   # None — modifier는 return 값이 없음
+print(p1)   # (5,8) — p1 자신이 바뀜
+</code></pre>
+<p><code>List</code>의 <code>.sort()</code>, <code>.append()</code>도 전형적인 modifier다(Week 2). <strong>연습
+문제를 풀 때 그 함수가 pure function인지 modifier인지부터 구분하고
+시작할 것</strong> — 문제(예: <code>Circle</code>의 <code>getRadius</code>/<code>getCenter</code>/<code>area</code>는 pure
+function, <code>setRadius</code>/<code>move</code>/<code>moveTo</code>는 modifier)마다 명시적으로
+요구하는 형태가 다르다.</p>
 
                     </main>
 

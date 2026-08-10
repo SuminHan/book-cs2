@@ -2,239 +2,238 @@
 
 ### 필수 문제
 
-**1.** Write a function `deleteThree`:
-- input parameter: a list `L`
-- return value: the list obtained by removing all occurrences of `3`
-  (L에서 3을 모두 제거하여 얻은 list)
+**1.** Write a function `inOrder`:
+- input parameter: a string `filename` that represents the name of the
+  input file
+- return value: `True` if all the words in the file is in dictionary
+  order, `False` otherwise
 
-새로운 list를 만들 때는 `[]`로 초기화한 후, `M.append(·)`로 하나씩 붙여나가면
-된다.
-
-```python
-M = []
-for i in range(len(L)):
-    if some_condition_on(L[i]):
-        M.append(??)
-return M
-```
-
-이 문제의 경우 위의 `some_condition`과 `??`을 뭘로 채우면 될까?
+힌트:
+- `words = open(filename,"r").read().split()`는 이름이 `filename`인 파일의
+  내용을 모두 읽어들인 후 단어단위로 조개서 단어들의 list를 `words`로 대입
+  (즉, `words[0], words[1], words[2], ...`는 파일에 포함된 단어들)
+- 두 단어간의 dictionary order는 `<`, `>`로 판단
+- "for all" 패턴의 for 루프를 사용
+- for 루프를 `range(n)`와 써야 할까, `range(n-1)`와 써야 할까?
 
 ```python
-def deleteThree(L):
+def inOrder(filename):
+    words = open(filename, "r").read().split()
+    n = len(words)
     # ADD ADDITIONAL CODE HERE!
 
-print(deleteThree([2,5,7,3,2,8,3,3]))  # [2,5,7,2,8]
-print(deleteThree([2,3,7,3,2,8,3,3]))  # [2,7,2,8]
-print(deleteThree([3,3,7,3,2,8,3,3]))  # [7,2,8]
+print(inOrder("dictionary.txt"))   # True
+print(inOrder("dictionary2.txt"))  # False
 ```
 
-**2.** Write a function `delete`:
-- input parameter: a list `L` and an integer `e`
-- return value: the list obtained by removing all occurrences of `e`
-  (L에서 e를 모두 제거하여 얻은 list)
+**2.** Write a function `isPalindrome`:
+- input parameter: a string `s`
+- return value: `True` if `s` is a palindrome, `False` otherwise
+  (단어가 앞으로 읽으나 뒤로 읽으나 같으면 palindrome, 예: `"deified"`,
+  `"malayalam"`, `"abccba"`)
+
+Write a function `maxPalindrome` using the function `isPalindrome`:
+- input parameter: a string `filename`
+- return value: the longest palindrome in the file; if there is a tie,
+  return the *first* occurrence (가장 긴 palindrome이 두개 이상 있으면 가장
+  먼저 나타나는 것)
+
+힌트:
+- `isPalindrome`은 "for all" 패턴의 for 루프를 사용 (`s[i]`와 `s[n-1-i]`를
+  쭉 비교)
+- `maxPalindrome`은 max/min 패턴의 for 루프를 사용 ("최대 길이"를 찾는
+  것이 아니고 "최대 길이" palindrome을 찾는 것이므로 `maxLen`뿐만 아니라
+  `maxWord`도 유지해야 함)
 
 ```python
-def delete(L, e):
+def isPalindrome(s):
     # ADD ADDITIONAL CODE HERE!
 
-print(delete([2,5,7,3,2,8,3,3], 3))  # [2,5,7,2,8]
-print(delete([2,3,7,3,2,8,3,3], 2))  # [3,7,3,8,3,3]
-print(delete([2,2,7,2,2,2,2,2], 2))  # [7]
+def maxPalindrome(filename):
+    words = open(filename, "r").read().split()
+    n = len(words)
+    # ADD ADDITIONAL CODE HERE!
+
+print(maxPalindrome("dictionary.txt"))   # malayalam
+print(maxPalindrome("dictionary2.txt"))  # deified
 ```
 
-**3.** Write a function `kthSmallest`:
-- input parameter: an integer list `L` and an integer `k` s.t.
-  `1 <= k <= len(L)`
-- return value: the k-th smallest integer in `L`
+**3.** Write a function `isAbecedarian`:
+- input parameter: a string `s`
+- return value: `True` if `s` is an abecedarian, `False` otherwise — a
+  word is called an "abecedarian" if all the letters in the word appear in
+  alphabetical order (e.g. `"aaabb"`, `"acknow"`, `"acorsy"`, `"adempt"`,
+  `"beknow"`)
 
-`L.sort()`를 사용하여 정렬. `M = L.sort()`로 하면 `L`은 정렬된 list이고
-`M`은 `None`임에 유의. `L`의 k번째 원소는 `L[k]`인가? `L[k-1]`인가?
+Write a function `countAbecedarian`:
+- input parameter: a string `filename`
+- return value: the number of abecedarians in the file
+
+힌트:
+- `isAbecedarian`은 "for all" 패턴의 for 루프를 사용
+- `countAbecedarian`은 counter 패턴의 for 루프를 사용
 
 ```python
-def kthSmallest(L, k):
+def isAbecedarian(s):
     # ADD ADDITIONAL CODE HERE!
 
-print(kthSmallest([3,4,2,8,8], 1))  # 2
-print(kthSmallest([3,4,2,8,8], 2))  # 3
-print(kthSmallest([3,4,2,8,8], 3))  # 4
-print(kthSmallest([3,4,2,8,8], 4))  # 8
+def countAbecedarian(filename):
+    # ADD ADDITIONAL CODE HERE!
+
+print(countAbecedarian("dictionary.txt"))   # 582
+print(countAbecedarian("dictionary2.txt"))  # 10
 ```
 
-**4.** Write a function `same`:
-- input parameter: two lists `L1`, `L2`
-- return value: `True` if `L1`과 `L2`가 같은 원소를 같은 개수만큼 가지면,
+**4.** Write a function `disjoint`:
+- input parameter: two strings `s1, s2`
+- return value: `True` if `s1` and `s2` do not have any same character,
   `False` otherwise
 
-`L1 == L2`는 list `L1, L2`의 내용이 똑같으면 `True`, 아님 `False`. List의
-원소들을 정렬해서 비교해보면 어떨까?
+힌트:
+- "for all" 패턴의 for 루프를 사용
+- `s1`의 각 글자가 `s2`에 포함되는 지를 `s1[i] in s2`와 같은 boolean expr로
+  체크
 
 ```python
-def same(L1, L2):
+def disjoint(s1, s2):
     # ADD ADDITIONAL CODE HERE!
 
-print(same([2,3,2,7], [2,7,2,3]))  # True
-print(same([2,5,7,8], [2,3,4,5]))  # False
-print(same([1,1,2,3], [1,2,1,3]))  # True
-print(same([2,3,5,5], [2,2,5,3]))  # False
+print(disjoint("ace", "a"))          # False
+print(disjoint("aurora", "steel"))   # True
+print(disjoint("elephant", "long"))  # False
 ```
 
-**5.** Write a function `makeSet`:
-- input parameter: a list `L`
-- return value: the new sorted list which contains every element of `L`
-  exactly once (L의 원소들을 중복없이 정확히 하나씩만 포함한, 정렬된 list)
+**5.** Write a function `countWordWithE`:
+- input parameter: a string `filename`
+- return value: the number of words that contain the alphabet "e" in the
+  file
 
-1, 2번 문제의 코드 형태와 유사. `L[i]`가 지금까지 만들어둔 `M`에 포함되지
-않을 때만 `append`하면 됨. `x in L`은 list `L`에 `x`가 포함되어 있으면
-`True`. `x not in L`이나 `not (x in L)`은 반대.
+Counter 패턴의 for 루프를 사용.
 
 ```python
-def makeSet(L):
+def countWordWithE(filename):
     # ADD ADDITIONAL CODE HERE!
 
-print(makeSet([1,1,3,5]))        # [1,3,5]
-print(makeSet([2,1,2,8,8]))      # [1,2,8]
-print(makeSet([3,4,5,6,7,3,4]))  # [3,4,5,6,7]
+print(countWordWithE("dictionary.txt"))   # 75473
+print(countWordWithE("dictionary2.txt"))  # 23
 ```
 
-**6.** Write a function `sortId`:
-- input parameter: a list `L` of strings in which ID and names of students
-  appear alternately
-- return value: the sorted list of `L` according to students' ID
+**6.** Write a function `countPrime`:
+- input parameter: a string `filename`
+- return value: the number of words with prime length in the file (소수
+  길이를 갖는 단어의 갯수)
 
-기본적인 형태는 1, 2번과 같이 `M = []`로 초기화하고 하나씩 더해가면서
-return할 list를 만들면 됨. `ID = L[::2]`로 하면 ID는 뭘까? (Python shell에서
-test해보길 추천) `y = L.index(x)`로 하면 `y`값은 `L`에 등장하는 첫번째 `x`의
-index (L에 `x`가 없으면 error뜨니 `x`가 `L`에 확실히 존재할 경우에만
-`.index(·)` 사용).
+`isPrime`을 사용한 counter 패턴의 for 루프를 사용.
 
 ```python
-def sortId(L):
+def countPrime(filename):
     # ADD ADDITIONAL CODE HERE!
 
-print(sortId(["14-002","Kim","13-009","Lee","16-005","Na","15-003","Kim"]))
-# ['13-009','Lee','14-002','Kim','15-003','Kim','16-005','Na']
+print(countPrime("dictionary.txt"))   # 37114
+print(countPrime("dictionary2.txt"))  # 72
 ```
 
-**7.** Write a function `countA`:
+**7.** Write a function `istcdl`:
 - input parameter: a string `s`
-- return value: the number of `"A"` in the string `s`
+- return value: `True` if `s` has three consecutive double letters, `False`
+  otherwise (같은 글자가 두개 연속으로 나오는 경우가 세번 연속으로 있는
+  단어면 `True`. e.g. `"bookkeeper"`, `"Missiippi"`, `"aaaabb"`)
 
-다음을 이용: Counter pattern의 for loop —
+Write a function `tcdl` using the function `istcdl`:
+- input parameter: a string `filename`
+- return value: the list of all the words with three consecutive double
+  letters
+
+힌트:
+- `istcdl`은 "for all" 패턴의 for 루프를 사용 (`s[i:i+5:2]`의 의미는?
+  `s[i+1:i+6:2]`는?)
+- `tcdl`에서 새로운 list를 만들어야 하는데, 지난주처럼 다음 형태의 코드를
+  사용:
+  ```python
+  L = []
+  for i in range(n):
+      if some_condition_on(words[i]):
+          L.append(words[i])
+  return L
+  ```
 
 ```python
-counter = 0
-for i in range(len(s)):
-    if some_condition_on(s[i]):
-        counter += 1
-return counter
-```
-
-String comparison operation `==`를 이용하여 boolean expression 만들기:
-`s[i] == "A"`.
-
-```python
-def countA(s):
+def istcdl(s):
     # ADD ADDITIONAL CODE HERE!
 
-print(countA("AbAA"))        # 3
-print(countA("bcdAAAdfAA"))  # 5
-print(countA("abc"))         # 0
-```
-
-**8.** Write a function `countChar`:
-- input parameter: a string `s` and a character `c` (character는 길이가 1인
-  문자열, e.g. `"a"`)
-- return value: the number of `c` in the string `s`
-
-```python
-def countChar(s, c):
+def tcdl(filename):
+    words = open(filename, "r").read().split()
+    n = len(words)
     # ADD ADDITIONAL CODE HERE!
 
-print(countChar("AbAA","b"))        # 1
-print(countChar("AbAA","A"))        # 3
-print(countChar("DbDD","D"))        # 3
-print(countChar("bcdAAAdfAA","A"))  # 5
-print(countChar("abc","A"))         # 0
+print(tcdl("dictionary.txt"))  # ['bookkeeper','bookkeepers','bookkeeping']
 ```
 
-**9.** Write a function `reverse`:
-- input parameter: a string `s`
-- return value: the reversed string of `s` (s를 뒤집어서 얻은 string)
+**8.** Write a function `meter`:
+- input parameter: none
+- return value: 다음 조건을 만족하는 모든 정수 `i`의 list
+  - `100000 <= i <= 999996`
+  - `i`의 마지막 네자리는 palindrome
+  - `i+1`의 마지막 다섯자리는 palindrome
+  - `i+2`의 중간 네자리는 palindrome
+  - `i+3`의 여섯자리 전체는 palindrome
 
-`""`로 초기화한 후 `+`로 문자를 하나씩 붙여나가면서 새로운 string을 만드는
-패턴:
+힌트:
+- `meter`에서 새로운 list를 만들어야 하는데, 다음 형태의 코드 사용:
+  ```python
+  L = []
+  for i in range(100000, ??):
+      if some_condition_on(i):
+          L.append(i)
+  return L
+  ```
+- 위 코드의 `some_condition`을 체크해주는 boolean 함수 `check`를 따로
+  만들어 이용
+  - 함수 `check`에서 `isPalindrome`을 이용
+- 정수 `i`를 string으로 바꾸려면 `str(i)`
+- `str(i+1)[1:]`와 같이 slicing을 이용하여 원하는 자리만큼 잘라내고 이를
+  `isPalindrome`으로 체크
 
 ```python
-r = ""
-for i in range(len(s)):
-    r = r + ??
-return r
-```
+def isPalindrome(s):
+    n = len(s)
+    for i in range(n // 2):
+        if s[i] != s[n - 1 - i]:
+            return False
+    return True
 
-`s`의 문자들을 가장 뒤에서부터 `r`에 붙여나가면 됨.
-
-```python
-def reverse(s):
+def check(i):
     # ADD ADDITIONAL CODE HERE!
 
-print(reverse("abc"))    # cba
-print(reverse("abcDF"))  # FDcba
-print(reverse("abcd"))   # dcba
-```
-
-**10.** Write a function `delete`:
-- input parameter: a string `s` and a character `c`
-- return value: the string obtained by removing all occurrences of `c` in
-  `s` (s에서 c를 모두 제거하여 얻은 string)
-
-앞 문제와 유사한 코드 형태로 만들면 됨. `s`의 문자들을 앞에서부터 `r`에
-붙여나가되 `s[i] != c`일 때만 붙이면 됨 (for 루프 내부에 if 구문 필요).
-
-```python
-def delete(s, c):
+def meter():
     # ADD ADDITIONAL CODE HERE!
 
-print(delete("abc","a"))       # bc
-print(delete("abcDFabc","c"))  # abDFab
-print(delete("abcdddd","d"))   # abc
+print(meter())  # [198888, 199999]
 ```
 
-**11.** Write a function `replace`:
-- input parameter: a string `s`, a character `c`, and a string `to`
-- return value: the string obtained by replacing all occurrences of `c` in
-  `s` with `to` (s에서 c를 모두 to로 교체하여 얻은 string)
+**9.** 다음과 같은 상황을 생각하자: 길이가 같은 성냥개비들이 주어지고, 이
+성냥개비들로 삼각형을 만들려고 한다. 삼각형의 각 변은 하나 이상의
+성냥개비로 이루어지며, 성냥개비를 부러뜨려 여러 조각으로 나누는 것은
+허용되지 않는다. 주어진 성냥개비를 모두 사용해야 한다. 그렇다면, 주어진
+개수의 성냥개비로 몇 개의 삼각형을 만들 수 있을까? 예를 들어, 9개의
+성냥개비로 만들 수 있는 삼각형의 개수는 **합동(congruence)** 관계 하에서
+3개다(즉, 합동인 여러개의 삼각형들은 하나의 삼각형으로 count).
 
-`s`의 문자들을 앞에서부터 `r`에 붙여나가되 `s[i] == c`일 때는 `s[i]` 대신에
-`to`를 붙이고 아니면 `s[i]`를 그대로 붙이면 됨 (for 루프 내부에 if-else
-구문 필요).
-
-```python
-def replace(s, c, to):
-    # ADD ADDITIONAL CODE HERE!
-
-print(replace("abc","a","b"))        # bbc
-print(replace("abcDFabc","c","DD"))  # abDDDFabDD
-print(replace("abcdddd","d","fg"))   # abcfgfgfgfg
-```
-
-**12.** Write a function `firstStr`:
-- input parameter: three strings `s1, s2, s3`
-- return value: the lexicographically smallest of the three strings (사전
-  순서로 가장 먼저 나오는 string)
-
-String에 대한 비교연산자 `<`의 의미는 무엇? `"abcde" < "acbde"`는 boolean
-expression으로 값은 `True`. `"acbde" < "abcde"`는 boolean expression으로 값은
-`False`.
+Write a function `triangle`:
+- input parameter: a positive integer `n`
+- return value: the number of triangles that can be formed with `n`
+  matchsticks under the above constraints and the congruence relation
+  - 합동인 여러개의 삼각형들은 하나의 삼각형으로 count
+  - 하나의 삼각형도 형성할 수 없으면 `0`을 return
 
 ```python
-def firstStr(s1, s2, s3):
+def triangle(n):
     # ADD ADDITIONAL CODE HERE!
 
-print(firstStr("abcde","deabc","abc"))  # abc
-print(firstStr("bcde","ebcd","bedc"))   # bcde
-print(firstStr("abcde","bcd","abcd"))   # abcd
-print(firstStr("cde","abced","bcd"))    # abced
+print(triangle(9))    # 3
+print(triangle(30))   # 19
+print(triangle(70))   # 102
+print(triangle(400))  # 3333
 ```
 
 ### Optional Problems
@@ -242,64 +241,44 @@ print(firstStr("cde","abced","bcd"))    # abced
 *필수 문제와 달리 제출/검사 대상은 아니지만, 큰 도움이 되므로 시간이 남으면
 모두 시도해보는 것을 권합니다 (대부분 기출문제입니다).*
 
-**13.** Write a function `factorize`:
-- input parameter: a positive integer `n` (`n >= 2`)
-- return value: the list of prime factors of `n` sorted in increasing
-  order — e.g. `factorize(504)` returns `[2,3,7]` since \\(504 = 2^3 \cdot
-  3^2 \cdot 7\\)
+**10.** 두 소수 `p1, p2`가 `p2 - p1 = 2`를 만족하면 **twin primes**라고
+부른다. 다음과 같이 정의된 함수 `maxTwinPrimes`를 완성하라:
+- 입력: 정수 `n >= 5`
+- 리턴값: 리스트 `[p1,p2]`; `p1, p2`는 `p1 < p2 <= n`인 가장 큰 twin
+  primes
+  - 예: `maxTwinPrimes(5)`는 `[3,5]`를 리턴
 
 ```python
-print(factorize(504))  # [2, 3, 7]
+print(maxTwinPrimes(5))  # [3, 5]
 ```
 
-**14.** *(1학기 Week07 P25.py에서 다루었던 문제로, `n` 값을 알려주지 않아
-리스트의 길이를 미리 알 수 없도록 변경)*
+**11.** 주어진 두개의 정수 리스트 `L, M`에 대해, 다음 조건을 만족하는
+리스트 `D`를 `L`과 `M`의 **symmetric difference**로 부르자:
+- `D`는 `L`과 `M` 중 정확히 하나의 리스트에 포함된 숫자들로 구성된다
+  (D, L, M에 대응되는 집합을 D, L, M로 나타내면 \\(D = (L \cup M)
+  \setminus (L \cap M)\\))
+- `D`에는 같은 숫자들이 중복되어 나타나지 않는다
+- `D`의 숫자들은 증가하는 순서로 나열되어 있다
 
-A finite continued fraction is an expression of the form
-\\[a_1 + \cfrac{1}{a_2 + \cfrac{1}{a_3 + \cfrac{1}{\ddots + \cfrac{1}{a_n}}}}\\]
-where \\(a_1,a_2,\ldots,a_n\\) are integers satisfying \\(a_2,\ldots,a_{n-1}
-\ge 1\\) and \\(a_n \ge 2\\). We express this continued fraction as the
-list `[a1,a2,...,an]`. Every rational number has a unique such
-representation — e.g. \\(\frac{415}{93} = 4 + \cfrac{1}{2+\cfrac{1}{6+
-\frac17}}\\), i.e. `[4,2,6,7]`.
+예를 들어, `[1,2,3,5,6]`은 `[3,4,7,6,5,3,4]`와 `[4,7,4,7,1,2,1]`의
+(유일한) symmetric difference이다.
 
-Write a function `fraction`:
-- input parameter: two positive integers `numer` and `denom`
-- return value: the list `[a1,a2,...,an]` representing the unique continued
-  fraction of `numer/denom` — e.g. if `numer=415`, `denom=93`, the list
-  `[4,2,6,7]` is returned
+다음과 같이 정의된 함수 `sym_diff`를 완성하라:
+- 입력: 정수 리스트 `L`와 `M`
+- 리턴값: `L`과 `M`의 symmetric difference
 
 ```python
-print(fraction(415, 93))  # [4, 2, 6, 7]
+print(sym_diff([3,4,7,6,5,3,4], [4,7,4,7,1,2,1]))  # [1,2,3,5,6]
 ```
 
-**15.** Define a function \\(f: \mathbb{N} \to \mathbb{N}\\) by: `f(n)` = n의
-각 digit를 제곱하여 더한 값. 이 문제에서는 주어진 임의의 `n`에 대해
-\\(f^k(n) = \underbrace{f(f(\cdots f(n)))}_{k \text{ times}} = 1\\)이 되는 최소의
-양의 정수 `k`를 찾는 것을 목표로 하는데, 예를 들어 `n=19`인 경우:
-`f(19)=1²+9²=82`, `f(82)=8²+2²=68`, `f(68)=6²+8²=100`, `f(100)=1²+0²+0²=1`이므로
-`k=4`가 된다.
-
-Write a function `composition`:
-- input: 정수 `n` (`2 <= n <= 1,000,000,000`)
-- return value: \\(f^k(n) = 1\\)이 되는 최소의 양의 정수 `k` (이런 `k`가
-  존재하지 않으면 `None`)
-  - 힌트: 수열 `n, f(n), f²(n), f³(n), ...`이 무한히 증가할 수 없음을 쉽게
-    보일 수 있다 (자세한 논증은 원본 문제지 참고).
-
-**16.** 다음과 같이 `n`명의 학생 `S1,S2,...,Sn`을 `k`(`≤n`)개의 조로
-분할하려고 한다: 각 학생 `Si`의 키는 `hi`이며 `h1 <= h2 <= ... <= hn`이다.
-이들을 `k`개의 조로 분할하고 각 조마다 동일한 규격의 교복을 맞추려고 한다.
-학생 `Si1,...,Sip`(`i1<...<ip`)로 구성된 조의 교복 제작 비용은
-`(sum of h_ij) + (h_ip - h_i1)`이다(키의 총합에 키의 최댓값-최솟값 차이를
-더한 값). 전체 학생들의 교복 제작 총 비용은 각 조에 대한 비용을 단순히
-합한 것과 같다. 학교는 전체 교복 제작 비용을 최소화하도록 `k`개의 조로
-분할하려고 한다. 각 조는 인접해 있는 학생들로 구성된다.
-
-Write a function `minCost`:
-- 입력: 리스트 `[h1,h2,...,hn]`와 양의 정수 `k` (`≤ n`)
-- 리턴값: 전체 교복 제작 비용의 최솟값
+**12.** 다음과 같이 정의된 함수 `multiple`을 완성하라:
+- 입력: 두 정수 리스트 `L1, L2`
+- 리턴값: `L1`에 속한 각 숫자들이 `L2`에 속한 어떤 숫자의 배수이면
+  `True`, 아니면 `False` (\\(\forall x \in L_1,\, \exists y \in L_2,\ x
+  \text{ is a multiple of } y\\))
+  - 예: `multiple([14,24,18,35,39], [6,13,7])`는 `True`를 리턴해야 하는데
+    `14, 35`는 `7`의 배수, `24, 18`은 `6`의 배수, `39`는 `13`의 배수므로
 
 ```python
-print(minCost([1,3,5,6,10], 3))  # 28
+print(multiple([14,24,18,35,39], [6,13,7]))  # True
 ```

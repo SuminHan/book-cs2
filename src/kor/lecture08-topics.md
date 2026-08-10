@@ -1,111 +1,113 @@
 # Topics Covered
 
-## Object와 Class
+## Stable Matching이란?
 
-**Object**는 데이터(state 변수)와 함수(메소드)의 묶음이고, **class**는
-그 object의 "틀"(type)이다. 이미 Week 8 이전에 써온 Toy Robot의
-`Robot` class가 좋은 예다 — `hubo`, `amy` 같은 각 로봇이 object이고,
-`Robot`이 그 class다.
+`n`명의 남자와 `n`명의 여자가 있고, 각자 상대편 전원에 대한 선호 순위를
+가지고 있다고 하자. 목표는 **모든 사람이 정확히 한 명과 짝지어지는**
+매칭(perfect matching)을 찾되, **아무도 배정된 상대를 버리고 다른 상대로
+바꾸고 싶어하지 않는** 매칭을 찾는 것이다.
 
-```python
-class Robot(object):
-    def __init__(self, beepers, ...):
-        self._beeper_bag = beepers
-        self._x = avenue
-        self._y = street
-        ...
+**Unstable pair**: 매칭 `M`에서 짝지어진 남녀가 아닌 쌍 `(x, y)`가, 다음
+두 조건을 모두 만족하면 unstable하다고 한다 — `x`가 자신의 현재 배정
+상대보다 `y`를 더 선호하고, **동시에** `y`도 자신의 현재 배정 상대보다
+`x`를 더 선호. 이런 쌍이 있으면 두 사람 모두 기존 매칭을 벗어나 서로
+바꾸고 싶어할 동기가 생긴다.
 
-    def move(self):            # state 변수를 수정 — return 값 없음
-        xx, yy = _directions[self._dir]
-        self._x += xx
-        self._y += yy
-        ...
+**Stable matching** = unstable pair가 하나도 없는 perfect matching.
 
-    def carries_beepers(self):  # state 변수를 읽기만 — return 값 있음
-        return self._beeper_bag > 0
-```
+이 개념은 실제로 미국의 고교-학교 배정, 레지던트-수련병원 배정, 신장이식
+배정 등에 쓰이고, KSA에서도 룸메이트/수강신청/서클 배정 등에 응용될 수
+있다. 학문적·실용적 중요성을 인정받아 2012년 노벨 경제학상까지 수여됐다.
 
-`hubo = Robot(beepers=6)`은 `__init__(hubo, 6)`이 호출되는 것으로 이해하면
-된다 — **모든 메소드의 첫 번째 파라미터는 자기 자신을 가리키는
-`self`이고, 호출할 때는 명시하지 않아도 자동으로 넘어간다.**
+## `Person` Class로 자료구조 만들기
 
-## 직접 Class 만들기: `Point`
-
-2차원 평면의 점을 나타내는 `Point` class를 만들어보자.
+각 사람을 `Person` object로 표현한다. 선호 리스트(`prefList`)는
+**Person object들의 리스트**로 저장한다는 점이 핵심이다(이름이나 인덱스가
+아니라):
 
 ```python
-class Point:
-    def __init__(self, px, py):   # 생성자 — 항상 modifier
-        self.x = px
-        self.y = py
+class Person:
+    def __init__(self, name, gender):
+        self.gender = gender      # "male" 또는 "female"
+        self.name = name
+        self.prefList = None      # Person object들의 리스트
+        self.partner = None       # 현재 배정된 상대 Person object. 없으면 None
+
+men = [None]*3
+women = [None]*3
+men[0] = Person("Victor", "male")
+women[0] = Person("Amy", "female")
+...
+men[0].prefList = [women[0], women[1], women[2]]   # 선호순
 ```
 
-`p1 = Point(1, 2)`는 `__init__(p1, 1, 2)`를 호출하는 것과 같다. state
-변수는 항상 `self.x`처럼 `self.`을 붙여 나타낸다.
+`prefList`가 Person object들의 리스트이기 때문에, `men[0].prefList[0]`은
+바로 `women[0]`(Person object) 자체를 가리킨다 — 이름 문자열이나 인덱스를
+따로 조회할 필요가 없다.
 
-## `__str__`: 프린트되는 모양 정의
+## 매칭을 표현하는 함수: `engage` / `breakUp`
 
-`__str__`을 정의하지 않으면 `print(p1)`은 `(1,2)`가 아니라
-`0xb69b5a0c` 같은 메모리 주소가 찍힌다. 원하는 형태의 string을 만들어
-`return`하면 해결된다(**`__str__`은 항상 pure function**):
+현재 매칭 상태는 각 `Person`의 `partner` 필드들로 표현된다 — **양쪽 다
+연결/해제**해야 한다는 점이 중요(둘 다 modifier):
 
 ```python
-def __str__(self):
-    return "(" + str(self.x) + "," + str(self.y) + ")"
+def engage(self, p):    # modifier
+    self.partner = p
+    p.partner = self
+
+def breakUp(self):      # modifier
+    self.partner.partner = None
+    self.partner = None
 ```
 
-## Pure Function vs. Modifier
+`m.engage(w)`와 `w.engage(m)`은 같은 효과이고, `m.breakUp()`과
+`m.partner.breakUp()`도 같은 효과다(양방향 관계이므로).
 
-- **Pure function**: state 변수를 수정하지 않고, 계산 결과만 `return`한다.
-- **Modifier**: state 변수를 직접 수정하고, 보통 `return` 값이 없다
-  (`None`).
+## 선호도 비교: `prefer(·)`
+
+`self.prefList.index(p)`로 `p`의 선호 순위(인덱스가 작을수록 선호)를 알
+수 있다. 이를 이용해 "이 사람이 `p`를 지금 파트너보다 더 선호하는가?"를
+판정하는 boolean function을 만들 수 있다:
 
 ```python
-def setX(self, v):     # modifier — x를 수정, return 없음
-    self.x = v
-
-def getX(self):         # pure function — 읽기만, x는 self.x
-    return self.x
-
-def distance(self, p):  # pure function — 다른 object를 입력받아 계산만
-    dx = self.x - p.x
-    dy = self.y - p.y
-    return (dx**2 + dy**2)**0.5
+def prefer(self, p):   # pure function (boolean)
+    if self.partner is None:
+        return True
+    return self.prefList.index(p) < self.prefList.index(self.partner)
 ```
 
-**`__init__`은 항상 modifier, `__str__`은 항상 pure function** — 이
-둘은 예외 없이 고정이다. `dx`, `dy`처럼 계산 도중에만 쓰이는 임시
-변수에는 `self.`를 붙이지 않는다(state 변수가 아니므로).
+## Perfect / Stable 여부 검사
 
-## Object를 반환하는 함수: 같은 연산, 두 가지 스타일
-
-`add`처럼 다른 object와 결합해 **새로운** object를 만드는 함수는, pure
-function으로도 modifier로도 만들 수 있다 — 어느 쪽인지에 따라 호출
-결과가 완전히 달라진다:
+**Perfect matching 검사** — 모든 사람의 `partner`가 `None`이 아닌지만
+확인하면 된다(`engage`/`breakUp`을 통해서만 파트너가 바뀌므로, 한쪽만
+연결되고 반대쪽은 안 되는 상황은 애초에 생기지 않는다):
 
 ```python
-# pure function 버전: 새 Point를 만들어 반환, p1/p2는 그대로
-def add(self, p):
-    x = self.x + p.x
-    y = self.y + p.y
-    return Point(x, y)
-
-p3 = p1.add(p2)
-print(p3)   # (5,8) — 새로 만들어진 object
-print(p1)   # (1,2) — 변경 없음
-
-# modifier 버전: self 자신을 직접 수정, return 없음
-def add_as_modifier(self, p):
-    self.x += p.x
-    self.y += p.y
-
-p3 = p1.add_as_modifier(p2)
-print(p3)   # None — modifier는 return 값이 없음
-print(p1)   # (5,8) — p1 자신이 바뀜
+def isPerfectMatch(men, women):   # "for all" 패턴
+    n = len(men)
+    for i in range(n):
+        if men[i].partner is None:
+            return False
+    for i in range(n):
+        if women[i].partner is None:
+            return False
+    return True
 ```
 
-`List`의 `.sort()`, `.append()`도 전형적인 modifier다(Week 2). **연습
-문제를 풀 때 그 함수가 pure function인지 modifier인지부터 구분하고
-시작할 것** — 문제(예: `Circle`의 `getRadius`/`getCenter`/`area`는 pure
-function, `setRadius`/`move`/`moveTo`는 modifier)마다 명시적으로
-요구하는 형태가 다르다.
+**Stable matching 검사** — 정의 그대로, 모든 남녀 쌍에 대해 unstable
+pair인지 확인한다(`prefer`를 이용):
+
+```python
+def isStableMatch(men, women):    # "for all" 패턴
+    n = len(men)
+    for i in range(n):
+        for j in range(n):
+            m, w = men[i], women[j]
+            if m.prefer(w) and w.prefer(m):
+                return False   # (m, w)가 unstable pair
+    return True
+```
+
+이번 주는 여기까지 — "주어진 매칭이 stable한지 판정"할 수 있는
+자료구조와 함수를 갖췄다. 다음 주(Stable Matching II)에서는 이런 매칭을
+**직접 찾아내는** propose-reject(Gale-Shapley) 알고리즘을 다룬다.

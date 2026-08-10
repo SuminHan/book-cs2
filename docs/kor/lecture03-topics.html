@@ -38,10 +38,10 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-97d8eddd.js";
+            window.path_to_searchindex_js = "../searchindex-be08fbfa.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../toc-af8f4a15.js"></script>
+        <script src="../toc-7992028c.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -181,129 +181,51 @@
                 <div id="mdbook-content" class="content">
                     <main>
                         <h1 id="topics-covered"><a class="header" href="#topics-covered">Topics Covered</a></h1>
-<h2 id="range는-사실-list"><a class="header" href="#range는-사실-list"><code>range(·)</code>는 사실 list</a></h2>
-<p><code>range(n)</code>은 <code>list(range(n))</code>이 곧 <code>[0,1,...,n-1]</code>인 것처럼, 사실 하나의
-list다(수학의 “for each \(i \in {0,1,\ldots,n-1}\)“와 비슷하되, Python은
-순서가 명시적으로 정해져 있다는 차이가 있음).</p>
-<pre><code class="language-python">range(n)      # [0, 1, ..., n-1]
-range(m, n)   # [m, m+1, ..., n-1]
-range(m, n, k)  # [m, m+k, m+2k, ...]  (n을 넘기 직전까지)
+<h2 id="2차원-리스트"><a class="header" href="#2차원-리스트">2차원 리스트</a></h2>
+<p>행렬(matrix)을 표현할 때 유용하다(순서도 “행”/“열“로 같다고 생각하면 됨).
+<code>table[i]</code>는 <code>i</code>-행에 대응되는 리스트(길이 <code>width</code>), <code>table[i][j]</code>는 그
+행의 <code>j</code>번째 원소다. <code>len(table)</code>은 <code>height</code>(행 개수), <code>len(table[0])</code>은
+<code>width</code>(열 개수)가 된다.</p>
+<pre><code class="language-python">height = 3   # 행 개수 = 열의 크기
+width = 4    # 열 개수 = 행의 크기
+table = [[None]*width for i in range(height)]
 
-for i in range(10, 21, 3):
-    total += i   # 10+13+16+19
+for i in range(height):
+    for j in range(width):
+        table[i][j] = (i + 2*j + 1)
 </code></pre>
-<p>루프 변수 <code>i</code>를 루프 안에서 직접 바꾸는 것은 에러는 아니지만, 매 iteration마다
-<code>range(·)</code>가 준 값으로 다시 초기화되므로 원하는 효과를 내지 못한다 — 지양할 것.</p>
-<h2 id="list-traversal-index-방식-vs-직접-방식"><a class="header" href="#list-traversal-index-방식-vs-직접-방식">List Traversal: Index 방식 vs. 직접 방식</a></h2>
-<p>리스트를 훑는 두 가지 방법이 있다.</p>
-<pre><code class="language-python">S = [2, 4, 2, 9, 5]
+<p><code>[None]*width for i in range(height)</code>처럼 <strong>list comprehension</strong>으로 각
+행을 독립적으로 새로 생성해야 한다 — <code>[[None]*width] * height</code>처럼 쓰면
+모든 행이 <strong>같은 리스트를 가리키는 alias</strong>가 되어, 한 행을 고치면 다른
+모든 행도 같이 바뀌는 버그가 생긴다.</p>
+<h2 id="3차원-리스트"><a class="header" href="#3차원-리스트">3차원 리스트</a></h2>
+<p>한 단계 더 중첩하면 된다. <code>table[i]</code>는 <code>i</code>-층에 대응되는 2D array,
+<code>table[i][j]</code>는 그 층의 <code>j</code>-행에 대응되는 1D array다.</p>
+<pre><code class="language-python">height = 3   # 행 개수
+width = 4    # 열 개수
+depth = 2    # 층 개수
+table = [[[None]*width for j in range(height)] for i in range(depth)]
 
-# ① index로 간접적으로 훑기
-total = 0
-for i in range(len(S)):
-    total += S[i]
-
-# ② 원소를 직접 건드리며 훑기
-total = 0
-for x in S:
-    total += x
+for i in range(depth):
+    for j in range(height):
+        for k in range(width):
+            table[i][j][k] = (i + 2*j + 1 + k)
 </code></pre>
-<p>두 방식 다 존재 이유가 있다: <strong>순서/위치 정보가 필요 없다면(예: 합 계산)
-직접 방식(<code>for x in S</code>)이 훨씬 간결</strong>하다. 반대로 <strong>이웃한 원소를 비교하는
-등 인덱스가 필요하다면(예: 단조증가 판정, <code>S[i]</code>와 <code>S[i+1]</code> 비교) index
-방식</strong>을 써야 한다.</p>
-<h2 id="break--continue"><a class="header" href="#break--continue"><code>break</code> / <code>continue</code></a></h2>
-<p><code>break</code>는 루프를 즉시 빠져나가고, <code>continue</code>는 현재 iteration만 건너뛰고
-루프는 계속된다. 다중 루프에서는 <strong>가장 안쪽 루프만</strong> 영향을 받는다.
-코드 구조가 복잡해지므로 boolean function 등으로 대체 가능하면 가능한 한
-피하는 것이 좋다.</p>
-<pre><code class="language-python">for i in range(8):
-    if i == 5:
-        break
-    print(i)
-# 0 1 2 3 4
-
-for i in range(8):
-    if i in [3, 5]:
-        continue
-    print(i)
-# 0 1 2 4 6 7
+<h2 id="boundary-체크-패턴"><a class="header" href="#boundary-체크-패턴">Boundary 체크 패턴</a></h2>
+<p>다차원 배열에서 인접 칸을 볼 때(예: 지뢰찾기), 인덱스가 배열 범위를
+벗어나지 않는지 매번 확인해야 한다. 이 체크를 별도 함수로 분리해두면
+코드가 훨씬 깔끔해진다:</p>
+<pre><code class="language-python">def withinBoundary(height, width, i, j):
+    return 0 &lt;= i &lt; height and 0 &lt;= j &lt; width
 </code></pre>
-<h2 id="for-루프의-3가지-기본-패턴"><a class="header" href="#for-루프의-3가지-기본-패턴"><code>for</code> 루프의 3가지 기본 패턴</a></h2>
-<p>거의 모든 <code>for</code> 루프는 아래 세 패턴의 조합으로 만들어진다.</p>
-<p><strong>① Maximum/Minimum</strong> — 최솟값(또는 최댓값)뿐 아니라 그 <strong>인덱스</strong>가
-필요한 경우도 있다는 점에 유의:</p>
-<pre><code class="language-python">def findMin(numbers):
-    m = numbers[0]
-    for i in range(len(numbers)):
-        if numbers[i] &lt; m:
-            m = numbers[i]
-    return m
-
-def findMinIndex(numbers):
-    minIndex = 0
-    for i in range(len(numbers)):
-        if numbers[i] &lt; numbers[minIndex]:
-            minIndex = i
-    return minIndex
+<p>1차원의 경우:</p>
+<pre><code class="language-python">def withinBoundary(size, i):
+    return 0 &lt;= i &lt; size
 </code></pre>
-<p><strong>② Counter</strong> — 조건을 만족하는 원소의 개수. 조건이 복잡하면 boolean
-function으로 분리해 넣으면 코드가 그대로 재사용된다:</p>
-<pre><code class="language-python">def countPrime(numbers):
-    counter = 0
-    for i in range(len(numbers)):
-        if isPrime(numbers[i]):   # boolean function
-            counter += 1
-    return counter
-</code></pre>
-<p><strong>③ Quantifier (“for some” / “for all”)</strong> — “어떤 원소가 조건을
-만족하는가”(∃)와 “모든 원소가 조건을 만족하는가”(∀)는 사실 De Morgan’s
-law로 연결된 짝이다: \(\forall x,, p(x) \equiv \neg\big(\exists x,, \neg
-p(x)\big)\).</p>
-<pre><code class="language-python">def somePositive(numbers):        # "for some" — 찾으면 즉시 True
-    for i in range(len(numbers)):
-        if numbers[i] &gt; 0:
-            return True
-    return False
-
-def allPositive(numbers):         # "for all" — 반례를 찾으면 즉시 False
-    for i in range(len(numbers)):
-        if not (numbers[i] &gt; 0):
-            return False
-    return True
-</code></pre>
-<p>이번 학기 자주 쓰이는 함수인 소수 판별 <code>isPrime(p)</code>도 사실 “for all”
-패턴이다: “<code>p</code>가 소수” ≡ “모든 <code>i</code>에 대해 <code>p % i != 0</code>”:</p>
-<pre><code class="language-python">def isPrime(p):
-    if p &lt; 2:
-        return False
-    for i in range(2, p//2 + 1):
-        if not (p % i != 0):   # p % i == 0 — 반례(약수) 발견
-            return False
-    return True
-</code></pre>
-<h2 id="example-file-io"><a class="header" href="#example-file-io">Example: File I/O</a></h2>
-<p>파일을 읽어 단어 리스트로 만드는 표준 패턴:</p>
-<pre><code class="language-python">words = open("input.txt", "r").read().split()
-</code></pre>
-<p><code>open(filename, "r")</code>로 읽기 전용으로 열고, <code>.read()</code>로 전체 내용을
-하나의 string으로 읽은 뒤, <code>.split()</code>으로 공백 기준으로 쪼개 단어들의
-list를 만든다. 이 세 단계를 한 줄로 이어 쓴 것이 바로 위 코드다.</p>
-<p>이 패턴과 Maximum 패턴을 합치면, 파일에서 가장 긴 단어를 찾을 수 있다.
-<strong>길이가 아니라 단어 자체</strong>를 반환해야 하므로, <code>maxLen</code>뿐 아니라 그 길이를
-가진 단어 <code>maxWord</code>도 함께 유지해야 한다:</p>
-<pre><code class="language-python">def maxPalindrome(filename):
-    words = open(filename, "r").read().split()
-    n = len(words)
-    maxWord = ""
-    maxLen = 0
-    for i in range(n):
-        s = words[i]
-        if maxLen &lt; len(s):
-            maxWord = s
-            maxLen = len(s)
-    return maxWord
-</code></pre>
+<p>이 패턴은 “자기 자신 + 인접 칸들“을 순회하며 무언가를 세거나 판정하는
+모든 문제(지뢰밭 인접 지뢰 수 세기, 0으로만 이루어진 최대 직사각형 찾기
+등)의 뼈대가 된다: 후보 인접 칸들을 나열하고, 그중 boundary 안에 있는
+것만 실제로 확인한다.</p>
 
                     </main>
 

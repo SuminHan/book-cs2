@@ -1,98 +1,97 @@
 # Topics Covered
 
-## 포커 패의 종류
+## Rectilinear Polygon의 방향(Orientation) 판정
 
-카드 한 장은 suit(무늬) 4종류(♣♦♥♠) × rank(숫자) 13종류(A,2,...,10,J,Q,K —
-A/J/Q/K는 각각 1/11/12/13으로 취급)로 이루어진다. 5장의 hand로 아래
-9가지 족보를 판정한다(낮은 것부터):
-
-- **pair**: 같은 rank 2장
-- **two pair**: rank가 다른 pair 두 쌍
-- **triple**: 같은 rank 3장
-- **full house**: triple + pair (rank는 서로 다름)
-- **straight**: rank가 연속 5장 (10,J,Q,K,A 포함)
-- **flush**: 같은 suit 5장
-- **quadruple**: 같은 rank 4장
-- **straight flush**: straight이면서 flush
-
-## 포함관계(Inclusion-Exclusion)와 우선순위
-
-이 족보들은 서로 **포함관계**를 가진다: `straight_flush = flush ∩
-straight`, `quadruple ⊂ triple ⊂ pair`, `full_house = triple ∩
-two_pair`. 즉 한 hand가 여러 족보를 동시에 만족할 수 있다(예: quadruple인
-hand는 자동으로 triple이기도, pair이기도 하다).
-
-따라서 hand를 하나의 등급으로 분류할 때는 **가장 높은 순위의 것으로만**
-분류해야 한다(순위: straight flush > quadruple > full house > flush >
-straight > triple > two pair > pair). 판정 함수를 짤 때도 이 포함관계를
-그대로 활용할 수 있다 — 예를 들어 `atLeastStraight`(straight 또는
-straight flush)와 `atLeastFlush`(flush 또는 straight flush)를 먼저
-만들면, `straightFlush = atLeastStraight and atLeastFlush`처럼 조합해서
-구할 수 있다.
-
-## `Card` / `Hand` Class
+모든 변이 수평/수직인 다각형을 **rectilinear polygon**이라 한다. 이
+다각형이 시계방향(CW)으로 주어졌는지 반시계방향(CCW)으로 주어졌는지는,
+**맨 위쪽 변**(top edge — `y`좌표가 최댓값인 변)의 방향만 보면 바로 알 수
+있다: 그 변이 **왼쪽**을 향하면 CCW, **오른쪽**을 향하면 CW.
 
 ```python
-class Card:
-    def __init__(self, suit, rank):
-        self.suit = suit    # 0,1,2,3  (♣,♦,♥,♠)
-        self.rank = rank    # 1~13     (A,2,...,K)
-
-class Hand:
-    def __init__(self, cards):
-        self.cards = cards  # Card object 5개의 list
+def orientation(polygon):
+    n = len(polygon)
+    top = polygon[0].y
+    topIndex = 0
+    for i in range(n):
+        if polygon[i].y > top:
+            top = polygon[i].y
+            topIndex = i
+    # polygon[topIndex] -> polygon[(topIndex+1) % n] 방향을 보면 됨
+    if polygon[(topIndex+1) % n].x < polygon[topIndex].x:
+        return "CCW"   # top edge가 왼쪽을 향함
+    else:
+        return "CW"    # top edge가 오른쪽을 향함
 ```
 
-## Rank별/Suit별 개수 세기
+## CCTV 한 대로 감시 가능한 영역 (Surveillability)
 
-straight/flush 계열 판정 대부분은 "각 rank(또는 suit)의 카드가 몇 장씩
-있는가"를 세는 것에서 시작한다 — 전형적인 **counter 패턴**의 응용:
+**문제**: 반시계방향으로 주어진 rectilinear polygon 내부 전체를 CCTV
+한 대로 감시할 수 있는 설치 가능 영역을 구하라(불가능하면 없음).
+
+**핵심 관찰**: 다각형의 각 변은, CCTV가 그 변 안쪽에서 **바깥으로 튀어나온
+부분들을 모두 볼 수 있으려면 있어야 할 위치**를 제약한다. 반시계방향
+기준으로 각 변의 방향에 따라:
+
+- 변이 **아래(DOWN)**를 향함(다각형 위쪽 경계) → CCTV는 그 변의 `y`
+  **이하**에 있어야 함 → `topMin` 갱신
+- 변이 **위(UP)**를 향함(다각형 아래쪽 경계) → CCTV는 그 변의 `y`
+  **이상**에 있어야 함 → `bottomMax` 갱신
+- 변이 **왼쪽(LEFT)**을 향함(다각형 오른쪽 경계) → CCTV는 그 변의 `x`
+  **이하**에 있어야 함 → `rightMin` 갱신
+- 변이 **오른쪽(RIGHT)**을 향함(다각형 왼쪽 경계) → CCTV는 그 변의 `x`
+  **이상**에 있어야 함 → `leftMax` 갱신
+
+즉 각 변이 허용 영역을 반평면(half-plane)으로 하나씩 제한하고, 그
+반평면들의 **교집합**이 곧 설치 가능 영역이다 — 다각형과 마찬가지로
+axis-aligned 사각형 `(leftMax, bottomMax)`–`(rightMin, topMin)`이 된다
+(`leftMax > rightMin`이거나 `bottomMax > topMin`이면 교집합이 비어
+있다는 뜻 — 설치 가능한 곳이 없다).
 
 ```python
-class Hand:
-    ...
-    def getNumCardsByRank(self):
-        numCardsByRank = [0]*13
-        for i in range(5):
-            j = self.cards[i].rank         # 1 <= j <= 13
-            numCardsByRank[j-1] += 1
-        return numCardsByRank
+def direction(fr, to):
+    if fr.x == to.x:
+        return "UP" if fr.y < to.y else "DOWN"
+    elif fr.y == to.y:
+        return "RIGHT" if fr.x < to.x else "LEFT"
 
-    def getNumCardsBySuit(self):
-        numCardsBySuit = [0]*4
-        for i in range(5):
-            j = self.cards[i].suit          # 0 <= j <= 3
-            numCardsBySuit[j] += 1
-        return numCardsBySuit
+def surveillableRegion(polygon):
+    # polygon이 반시계방향이라고 가정
+    leftMax, rightMin = -INF, INF
+    bottomMax, topMin = -INF, INF
+    n = len(polygon)
+    for i in range(n):
+        fr, to = polygon[i], polygon[(i+1) % n]
+        d = direction(fr, to)
+        if d == "UP":
+            bottomMax = max(bottomMax, fr.y)
+        elif d == "DOWN":
+            topMin = min(topMin, fr.y)
+        elif d == "RIGHT":
+            leftMax = max(leftMax, fr.x)
+        elif d == "LEFT":
+            rightMin = min(rightMin, fr.x)
+    if leftMax > rightMin or bottomMax > topMin:
+        return None
+    return Rectangle(leftMax, rightMin, bottomMax, topMin)
 ```
 
-이 두 리스트만 있으면 대부분의 족보를 판정할 수 있다:
+**정당성**: "실제로 전체를 감시할 수 있는 위치들의 집합" `A`와 "위
+계산으로 나온 사각형" `B`가 정확히 같은 집합임을 양방향 포함으로
+보인다 — `A ⊆ B`(감시 가능한 위치라면 각 변의 제약을 반드시 만족해야
+하므로), `B ⊆ A`(그 사각형 안의 어떤 점이든, 다각형 경계의 모든 점을
+직접 볼 수 있고, 경계를 볼 수 있으면 내부 전체도 볼 수 있으므로).
 
-- **flush**: `getNumCardsBySuit()`의 원소 중 하나가 5인가? ("for some" 패턴)
-- **quadruple/triple/pair**: `getNumCardsByRank()`의 원소 중 원하는 값(4, 3, 2)이
-  있는가?
-- **two pair**: `getNumCardsByRank()`에 2가 정확히 두 번 등장하는가?
-  (counter 패턴)
-- **straight**: `getNumCardsByRank()`에서 1이 5번 연속 등장하는가(원형으로
-  봐서 A,K도 이어질 수 있음에 유의) — Week 11 Problem Set에 주어지는
-  `hasConsecutivePositive`가 이 판정을 돕는 헬퍼 함수다.
+## Art Gallery Problem 일반화
 
-## Monte Carlo Simulation으로 확률 추정
+이 문제는 "카메라 한 대, rectilinear polygon" 특수한 경우였다. 일반화
+방향은 여러 갈래다:
 
-각 족보가 등장할 정확한 확률은 조합론으로 계산 가능하지만(예: straight
-flush는 \\(40/2598960 \approx 0.0015\%\\)), 카드 수가 늘어나면(예: hand당
-7장) 손으로 계산하기 매우 힘들어진다. 대신 **무작위로 대량의 hand를
-생성해 각 족보의 등장 비율을 세는 것**으로 확률을 근사할 수 있다 — 이런
-실험 방식을 **Monte Carlo simulation**이라 부른다. 실험 횟수 `n`이
-많을수록 측정치가 이론적 확률에 더 가까워진다(통계학의 신뢰구간 이론으로
-필요한 `n`을 정할 수 있다).
+- 카메라를 **꼭짓점/변 위에만** 설치할 수 있다면? (Optional 문제
+  `surveillablePoint`, `surveillableLength`)
+- 카메라가 **여러 대**라면 몇 대가 필요한가(최소화), 또는 주어진 `k`대로
+  충분한가(결정 문제)?
+- 다각형이 rectilinear가 아니라 **임의의 모양**이라면?
+- **3차원**(건물 한 층이 아니라 건물 전체)이라면?
 
-```python
-def randomHand(numCards):
-    cards = []
-    for suit in range(4):
-        for rank in range(1, 14):
-            cards.append(Card(suit, rank))
-    random.shuffle(cards)
-    return Hand(cards[:numCards])
-```
+이런 일반화들은 계산기하학(computational geometry)의 고전적인 연구
+주제로, "Art Gallery Problem"이라는 이름으로 불린다.

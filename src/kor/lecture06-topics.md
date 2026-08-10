@@ -1,93 +1,80 @@
 # Topics Covered
 
-## 선형 연립방정식
+## 문제 설정
 
-많은 과학/공학 문제가 \\(a \cdot x = b\\) 형태의 선형 연립방정식으로
-귀결된다. 행렬 역원(determinant/cofactor 기반)으로 직접 풀면 시간이
-\\(n!\\)에 비례해 순식간에 감당 못 할 정도로 커진다. **Gaussian
-elimination**은 같은 문제를 \\(n^3\\)에 비례하는 시간에 푼다(부수적으로
-행렬의 determinant, rank, basis, inverse 계산에도 쓸 수 있다).
+고정된 물체 \\(F_1,\ldots,F_\ell\\)과 자유롭게 움직일 수 있는 물체
+\\(P_1,\ldots,P_n\\)이 스프링들로 연결되어 있다(각 스프링은 자유-자유
+또는 자유-고정 물체를 잇고, 각자 탄성계수 \\(w\\)를 가진다). 목표: 모든
+자유 물체가 힘의 평형을 이루는 위치 \\((x_i, y_i)\\)를 구하는 것.
 
-## Upper Triangular Form과 Back Substitution
+**단순화 가정**: 스프링의 원래 길이는 0이라고 가정한다. 그러면 스프링이
+가하는 힘은 늘어난 길이 \\(\Delta\ell\\)에 비례하고(\\(F = w \cdot
+\Delta\ell\\)), 그 힘을 \\(x\\)/\\(y\\) 성분으로 나누면 각각
+\\(\Delta x\\), \\(\Delta y\\)에 정비례하는 아주 간단한 형태가 된다:
 
-`i > j`인 모든 자리에서 `a[i][j] == 0`인 형태를 **upper triangular
-form**(row echelon form)이라 한다. 이 형태는 아래 행부터 위로 하나씩
-**대입**해서 쉽게 풀 수 있다(뒤에서부터 풀어나간다는 뜻에서 back
-substitution):
+\\[F_x = w \cdot \Delta x, \qquad F_y = w \cdot \Delta y\\]
 
-```python
-for i in range(n-1, -1, -1):
-    total = 0
-    for j in range(i+1, n):
-        total += a[i][j] * x[j]
-    x[i] = (b[i] - total) / a[i][i]
-```
+## 평형 조건 → 선형방정식
 
-## Forward Elimination: 두 가지 Row Operation
+자유 물체 \\(P_i\\)가 평형이라는 것은, \\(P_i\\)에 연결된 모든 스프링이
+가하는 힘의 합이 \\(x\\)방향/\\(y\\)방향 각각 0이라는 뜻이다. \\(P_i\\)와
+연결된 자유 물체들의 인덱스 집합을 \\(A_i\\), 고정 물체들의 인덱스
+집합을 \\(B_i\\)라 하면:
 
-Gaussian elimination은 두 단계로 이루어진다: **① forward elimination** —
-row operation을 반복 적용해 시스템을 upper triangular 형태로 만들고,
-**② back substitution** — 그 형태를 위 방식대로 푼다.
+\\[\sum_{k \in A_i} w_{ik}(x_k - x_i) + \sum_{k \in B_i} w'_{ik}(x'_k - x_i) = 0\\]
 
-row operation은 두 종류뿐이다:
+(\\(y\\)방향도 대칭적으로 동일한 식이 나온다.) 자유 물체가 \\(n\\)개이면
+이런 식이 \\(x\\)방향에 \\(n\\)개, \\(y\\)방향에 \\(n\\)개 — 총 \\(2n\\)개
+나오고, 미지수도 \\(x_1,\ldots,x_n,y_1,\ldots,y_n\\) 정확히 \\(2n\\)개다.
+즉 **Week 6에서 배운 Gaussian elimination으로 풀 수 있는 정확히 그
+형태**가 된다.
 
-- 행 `p`와 `q`를 통째로 교환
-- 행 `p`의 배수를 행 `q`에 더하기
+## 계수 정리: \\(a_{ij}\\), \\(b_i\\)
 
-두 연산 모두 **해를 바꾸지 않는다**(방정식의 성질을 그대로 보존). 그리고
-어떤 연립방정식이든 이 두 연산만으로 upper triangular 형태로 만들 수
-있다는 것이 증명되어 있다.
+위 식을 표준형 \\(a_{i1}x_1 + \cdots + a_{in}x_n = b_i\\)로 정리하면
+계수들이 다음과 같은 규칙을 따른다:
 
-forward elimination은, 각 pivot `a[p][p]`에 대해 그 **아래**에 있는
-모든 행의 `p`번째 항을 0으로 지운다:
+\\[a_{ij} = \begin{cases}
+\sum_{k \in A_i} w_{ik} + \sum_{k \in B_i} w'_{ik} & i = j \\\\
+-w_{ij} & P_i, P_j \text{가 연결됨} \\\\
+0 & \text{그 외}
+\end{cases}
+\qquad
+b_i = \sum_{k \in B_i} w'_{ik} x'_k\\]
 
-```python
-for p in range(n):
-    for i in range(p+1, n):
-        c = a[i][p] / a[p][p]
-        for j in range(p, n):
-            a[i][j] -= c * a[p][j]
-        b[i] -= c * b[p]
-```
+(\\(P_i\\)가 고정 물체와 연결되어 있지 않으면 \\(b_i = 0\\).)
 
-행 `i`에서 "행 `p`의 `c`배를 빼기"만 하면 `a[i][p]`가 정확히 0이 된다
-(`c = a[i][p] / a[p][p]`이므로).
+## 행렬을 효율적으로 구성하기
 
-## Partial Pivoting
+입력은 보통 "스프링 하나하나"의 목록(탄성계수 + 어느 물체들을 잇는지)으로
+주어진다. 모든 쌍 `(i,j)`를 순회하며 연결 여부를 확인하는 대신, **각
+스프링을 한 번씩만 보면서 그 스프링이 영향을 주는 자리에 바로 누적**하는
+것이 효율적이다:
 
-위 코드는 `a[p][p] == 0`이면(0으로 나누게 되어) 작동하지 않는다. **Partial
-pivoting**: 행 `p`를, `p` 아래 행 중 `p`번째 값의 절댓값이 가장 큰 행
-`q`와 미리 교환해둔다(수치적으로도 더 안정적).
+- 자유 물체 `Pi`-`Pj`를 잇는 스프링(탄성계수 `w`)이 있다면:
+  `a[i][i] += w`, `a[j][j] += w`, `a[i][j] -= w`, `a[j][i] -= w`
+- 자유 물체 `Pi`와 고정 물체 `Fk`(좌표 `x'`)를 잇는 스프링(탄성계수 `w'`)이
+  있다면:
+  `a[i][i] += w'`, `b[i] += w' * x'`
 
 ```python
-q = p
-for i in range(p+1, n):
-    if abs(a[i][p]) > abs(a[q][p]):
-        q = i
-a[p], a[q] = a[q], a[p]
-b[p], b[q] = b[q], b[p]
-
-if a[p][p] == 0:
-    return None   # 해가 없거나 무수히 많음
+def buildSystem(n, springs):
+    # springs: (w, i, j) 형태(자유-자유) 또는 (w, i, x') 형태(자유-고정)의 목록
+    a = [[0]*n for _ in range(n)]
+    b = [0]*n
+    for spring in springs:
+        if spring는 자유-자유:
+            w, i, j = spring
+            a[i][i] += w; a[j][j] += w
+            a[i][j] -= w; a[j][i] -= w
+        else:  # 자유-고정
+            w, i, xprime = spring
+            a[i][i] += w
+            b[i] += w * xprime
+    return a, b
 ```
 
-pivoting까지 마친 뒤에도 `a[p][p] == 0`이라면 — 즉 `p` 아래 모든 행의
-`p`번째 값이 전부 0이라면 — 그 시스템은 해가 없거나 무수히 많다(증명은
-선형대수 교재 참고).
-
-## 전체 구조
-
-```python
-def gaussian_elimination(a, b):
-    n = len(a)
-    # forward elimination
-    for p in range(n):
-        # partial pivoting: a[p][p]가 0이 아니도록 가장 큰 절댓값의 행과 교환
-        # a[p] 아래 모든 행의 p번째 항을 0으로 소거
-        ...
-    # 이제 a는 upper triangular
-
-    # back substitution으로 x 계산
-    ...
-    return x
-```
+이 과정을 \\(x\\)방향, \\(y\\)방향 각각에 대해 독립적으로 한 번씩
+수행하고(계수 행렬 `a`는 두 방향이 동일하고 `b`만 다르다), **Gaussian
+elimination을 두 번 돌리면** 모든 자유 물체의 평형 위치
+\\((x_i, y_i)\\)를 얻는다.

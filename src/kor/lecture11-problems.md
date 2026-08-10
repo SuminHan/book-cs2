@@ -1,210 +1,107 @@
 # Problem Set
 
-이미 주어진 클래스와 헬퍼 함수:
+### 필수 문제
+
+**1.** (Orientations of Rectilinear Polygons) Write a function
+`orientation`:
+- input parameter: a list of `Point` objects that represents a
+  rectilinear polygon (수직선과 수평선으로만 이루어진 다각형)
+- return value: `"CW"`(if `Point` object들이 시계방향(clockwise)으로
+  돌때), `"CCW"`(if `Point` object들이 반시계방향(counter-clockwise)으로
+  돌때)
 
 ```python
-class Card:
-    def __init__(self, suit, rank):
-        self.suit = suit
-        self.rank = rank
+class Point:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
 
-class Hand:
-    def __init__(self, cards):
-        self.cards = cards
-        assert len(cards) == 5
+def orientation(polygon):
+    n = len(polygon)
+    top = polygon[0].y
+    # ADD ADDITIONAL CODE HERE!!
 
-    def getNumCardsByRank(self):
-        numCardsByRank = [0] * 13
-        for i in range(len(self.cards)):
-            j = self.cards[i].rank
-            assert 1 <= j <= 13
-            numCardsByRank[j - 1] += 1
-        return numCardsByRank
-
-    def getNumCardsBySuit(self):
-        numCardsBySuit = [0] * 4
-        # ADD ADDITIONAL CODE HERE!
+polygon1 = [Point(30,10), Point(30,20), Point(50,20), Point(50,40),
+            Point(40,40), Point(40,30), Point(30,30), Point(30,40),
+            Point(20,40), Point(20,20), Point(10,20), Point(10,10)]
+polygon2 = [Point(30,10), Point(30,30), Point(10,30), Point(10,10)]
+polygon3 = [Point(10,30), Point(10,10), Point(30,10), Point(30,30)]
+polygon4 = [Point(30,30), Point(30,10), Point(10,10), Point(10,30)]
+print(orientation(polygon1))  # CCW
+print(orientation(polygon2))  # CCW
+print(orientation(polygon3))  # CCW
+print(orientation(polygon4))  # CW
 ```
 
-**1.** Write a function `getNumCardsBySuit` that work on the class `Hand`:
-- input parameter: `self`
-- return value: list `self.cards`에 포함된 5개의 `Card` object들의
-  suit값(0,1,2,3)의 등장 횟수를 기록한 새로운 list
-  - 수업 슬라이드에서 세로축으로 그려진 list `numCardsBySuit`로 ♣ 모양의
-    카드의 갯수는 `numCardsBySuit[0]`, ..., ♠ 모양의 카드의 갯수는
-    `numCardsBySuit[3]`
-  - `numCardsBySuit`의 index는 각 `Card` object의 suit 값에 대응됨
+**2.** (Surveillability of Rectilinear Polygons)
 
-**2.** Write functions for determining "straight flush"/"straight"/"flush":
-
-1. Write a function `atLeastStraight`:
-   - input parameter: a `Hand` object `hand`
-   - return value: `True`(if hand is "straight" or "straight flush"),
-     `False`(otherwise)
-   - *suit가 모두 같은지 여부는 따질 필요 없고 rank 값만 따져보면 되므로
-     `L = hand.getNumCardsByRank()`로 얻은 `L` 정보만으로 충분. 주어진
-     함수 `hasConsecutivePositive`를 이용하면 코드가 매우 간단해짐.*
-2. Write a function `atLeastFlush`:
-   - input parameter: a `Hand` object `hand`
-   - return value: `True`(if hand is "flush" or "straight flush"),
-     `False`(otherwise)
-   - *rank 정보는 필요없고 suit 값만 따져보면 되므로 `L =
-     hand.getNumCardsBySuit()`로 얻은 `L` 정보만으로 충분*
-3. Write a function `straightFlush`:
-   - input parameter: a `Hand` object `hand`
-   - return value: `True`(if hand is "straight flush"), `False`(otherwise)
-   - *함수 `atLeastStraight`와 `atLeastFlush`를 이용하면 매우 간단하게
-     해결됨*
-4. Write a function `flush`:
-   - input parameter: a `Hand` object `hand`
-   - return value: `True`(if hand is "flush"), `False`(otherwise)
-   - *tie-breaking rule에 의해 "straight flush" 경우는 제외해줘야 함. 위의
-     함수들을 이용하면 쉽게 해결됨*
-5. Write a function `straight`:
-   - input parameter: a `Hand` object `hand`
-   - return value: `True`(if hand is "straight"), `False`(otherwise)
-   - *마찬가지로 "straight flush" 경우는 제외해줘야 함*
+1. Write a function `__str__` for the `Rectangle` class:
+   - input parameter: `self`
+   - return value: the string for the `print` command in the following
+     format: `"(x1,y1)-(x2,y2)"` where `(x1,y1)`은 bottom-left, `(x2,y2)`는
+     top-right point of the rectangle `self`, e.g., `"(2,2)-(3,3)"`
+2. Write a function `surveillableRegion`:
+   - input parameter: a list of `Point` objects that represents a
+     rectilinear polygon (1번 문제와 같은 형태. 단, **반시계방향**으로
+     돌아가는 입력만 주어짐)
+   - return value: 하나의 CCTV로 전체 지역이 감시가능하면 CCTV
+     설치가능지역을 나타내는 `Rectangle` object, 하나의 CCTV로 전체
+     지역이 감시불가능하면 `None`
+   - *반시계방향으로 polygon을 돌아가면서 CCTV 설치가능지역을 나타내는
+     4개의 변수 `leftMax, rightMin, bottomMax, topMin`을 적당히
+     조절해나가면 된다. 반시계방향으로 돌때 현재 선분의 방향(상/하/좌/우)을
+     파악하기 위해서는 주어진 함수 `direction`을 이용하면 된다.*
 
 ```python
-# use this function for atLeastStraight()
-def hasConsecutivePositive(L, k):
-    n = len(L)
-    assert k <= n
-    counter = 0
-    for i in range(n + 1):  # +1: account for wrapping
-        if L[i % n] >= 1:
-            counter += 1
-            if counter == k:
-                return True
-        else:
-            counter = 0  # reset
-    return False
+class Point:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
 
-def atLeastStraight(hand):
-    L = hand.getNumCardsByRank()
-    # ADD ADDITIONAL CODE HERE!!
+class Rectangle:
+    def __init__(self, left, right, bottom, top):
+        self.left = left
+        self.right = right
+        self.bottom = bottom
+        self.top = top
 
-def atLeastFlush(hand):  # for some pattern
-    L = hand.getNumCardsBySuit()
-    # ADD ADDITIONAL CODE HERE!!
-
-def straightFlush(hand):
-    # ADD ADDITIONAL CODE HERE!!
-
-def flush(hand):
-    # ADD ADDITIONAL CODE HERE!!
-
-def straight(hand):
-    # ADD ADDITIONAL CODE HERE!!
-```
-
-**3.** Write functions for determining "quadruple"/"full house"/"triple"/
-"two pair"/"pair":
-
-1. Write a function `hasMultipleCardsWithSameRank`:
-   - input parameter: a `Hand` object `hand` and an integer `num`
-   - return value: `True`(if hand contains **exactly** `num` cards of a
-     certain rank), `False`(otherwise)
-   - *예를 들어, `hasMultipleCardsWithSameRank(hand,4)`는 `hand`가
-     "quadruple"일 때 `True`이며 그 역도 성립한다.*
-2. Write a function `fullHouse`:
-   - input parameter: a `Hand` object `hand`
-   - return value: `True`(if hand is "full house"), `False`(otherwise)
-   - *`hasMultipleCardsWithSameRank`를 이용하면 간단하게 해결됨*
-3. Write a function `triple`:
-   - input parameter: a `Hand` object `hand`
-   - return value: `True`(if hand is "triple"), `False`(otherwise)
-   - *함수 `hasMultipleCardsWithSameRank`를 이용하면 간단하게 해결됨*
-   - *tie-breaking rule에 의해 "full house"와 "quadruple" 경우는
-     제외해줘야 함*
-4. Write a function `twoPair`:
-   - input parameter: a `Hand` object `hand`
-   - return value: `True`(if hand is "two pair"), `False`(otherwise)
-   - *`hasMultipleCardsWithSameRank`는 "for some" 패턴으로 만들어졌는데,
-     이와 유사하게 counter 패턴으로 변형*
-   - *tie-breaking rule에 의해 "full house" 경우는 제외해야*
-5. Write a function `pair`:
-   - input parameter: a `Hand` object `hand`
-   - return value: `True`(if hand is "pair"), `False`(otherwise)
-   - *`hasMultipleCardsWithSameRank`를 이용*
-   - *tie-breaking rule에 의해 "full house", "two pair", "quadruple",
-     "triple" 경우는 제외해야*
-
-```python
-def hasMultipleCardsWithSameRank(hand, num):  # for some pattern
-    L = hand.getNumCardsByRank()
-    # ADD ADDITIONAL CODE HERE!!
-
-def quadruple(hand):
-    return hasMultipleCardsWithSameRank(hand, 4)
-
-def fullHouse(hand):
-    # ADD ADDITIONAL CODE HERE!!
-
-def triple(hand):
-    # ADD ADDITIONAL CODE HERE!!
-
-def twoPair(hand):  # counter pattern
-    L = hand.getNumCardsByRank()
-    # ADD ADDITIONAL CODE HERE!!
-
-def pair(hand):
-    # ADD ADDITIONAL CODE HERE!!
-```
-
-**4.** Write a function `countPokerHands`:
-- input parameter: a list of `Hand` objects (함수 `randomHand`로
-  랜덤하게 생성한 수십만~수천만 개의 `Hand` object들의 list)
-- return value: `Hand` object들을 "straight flush", "quadruple", "full
-  house", "flush", "straight", "triple", "two pair", "pair"로
-  분류했을때 각 포커패에 속하는 것들의 갯수를 세어서 이 순서대로 나열한
-  list
-
-```python
-# counter pattern
-def countPokerHands(hands):
-    nStraightFlush = 0
-    nQuadruple = 0
-    nFullHouse = 0
-    nFlush = 0
-    nStraight = 0
-    nTriple = 0
-    nTwoPair = 0
-    nPair = 0
-
-    for i in range(len(hands)):
-        hand = hands[i]
+    def __str__(self):
         # ADD ADDITIONAL CODE HERE!!
+        return None  # remove it after completing your code
 
-    return [nStraightFlush, nQuadruple, nFullHouse, nFlush,
-            nStraight, nTriple, nTwoPair, nPair]
+def direction(fr, to):
+    if fr.x == to.x:
+        if fr.y < to.y:
+            return "UP"
+        elif fr.y > to.y:
+            return "DOWN"
+    elif fr.y == to.y:
+        if fr.x < to.x:
+            return "RIGHT"
+        elif fr.x > to.x:
+            return "LEFT"
+    else:
+        print("Input polygon is not rectlinear!")
+        assert False
 
-def randomHand(numCards):
-    cards = []
-    for suit in range(4):
-        for rank in range(1, 13+1):
-            cards.append(Card(suit, rank))
-    random.shuffle(cards)
-    return Hand(cards[:numCards])
+def surveillableRegion(polygon):
+    # assume the orientation of the polygon is counterclockwise
+    leftMax = -sys.maxint
+    rightMin = sys.maxint
+    bottomMax = -sys.maxint
+    topMin = sys.maxint
+    n = len(polygon)
 
-def test():
-    print("\nWait for your program to estimate probabilities with 5-card hand...")
+    # ADD ADDITIONAL CODE HERE!!
+    return -1  # remove it after completing your code
 
-    hands = []
-    nTrials = 100000  # 26000000
-    for i in range(nTrials):
-        hands.append(randomHand(5))
-    L = countPokerHands(hands)
-
-    print("Straight Flush:" + str(1.0*L[0]/nTrials*100))
-    print("Quadruple:" + str(1.0*L[1]/nTrials*100))
-    print("Full House:" + str(1.0*L[2]/nTrials*100))
-    print("Flush:" + str(1.0*L[3]/nTrials*100))
-    print("Straight:" + str(1.0*L[4]/nTrials*100))
-    print("Triple:" + str(1.0*L[5]/nTrials*100))
-    print("TwoPair:" + str(1.0*L[6]/nTrials*100))
-    print("Pair:" + str(1.0*L[7]/nTrials*100))
-test()
+polygon1 = [Point(0,1), Point(2,1), Point(2,0), Point(4,0),
+            Point(4,2), Point(5,2), Point(5,4), Point(3,4),
+            Point(3,5), Point(1,5), Point(1,3), Point(0,3)]
+polygon2 = [Point(0,0), Point(2,0), Point(2,3), Point(0,3),
+            Point(0,2), Point(1,2), Point(1,1), Point(0,1)]
+print(surveillableRegion(polygon1))  # (2,2)-(3,3)
+print(surveillableRegion(polygon2))  # None
 ```
 
 ### Optional Problems
@@ -212,96 +109,52 @@ test()
 *필수 문제와 달리 제출/검사 대상은 아니지만, 큰 도움이 되므로 시간이 남으면
 모두 시도해보는 것을 권합니다 (대부분 기출문제입니다).*
 
-**5.** 다음과 같이 정의된 함수 `nDistinct`를 완성하라:
-- 입력: `Hand` object인 `hand`
-  - `hand`에 포함된 카드의 갯수는 5가 아닐 수 있다
-  - `hand`에 포함된 카드들 중 동일한 suit/rank를 가진 카드들도 있다
-- 리턴값: `hand`에 포함된 카드들 중 다른 것들의 갯수
+**3.** 2번 문제에서는 직각 다각형을 표현하는 점들이 반시계 방향으로만
+입력으로 주어진 경우를 고려하였다. 이 문제에서는 이를 확장하여 직각
+다각형을 표현하는 점들의 방향이 시계 방향일 수도 있고 반시계 방향일
+수도 있는 일반적인 경우를 고려한다.
 
-**6.** 다음과 같이 정의된 함수 `k_flush`를 완성하라:
-- 입력: 정수 `k >= 0`와 `Hand` object인 `hand`
-  - `hand`에 포함된 카드의 갯수는 5가 아닐 수 있다
-  - `hand`에 포함된 카드들 중 동일한 suit/rank를 가진 카드는 없다
-- 리턴값: `hand`에 `ℓ`장의 카드를 추가해서 `k`-flush로 만들 수 있는 `ℓ`중
-  최소값
-  - `k`개 이상의 동일한 suit를 포함한 `hand`를 `k`-flush로 부른다
+다음과 같이 정의된 함수 `surveillableRegion`를 완성하라:
+- 입력: rectilinear polygon을 표현하는 `Point` object들의 리스트
+  - 2번 문제와 달리 반시계 방향일 수도 있고 시계 방향일 수도 있다.
+- 리턴값: 하나의 CCTV로 전체 지역이 감시가능하면 CCTV 설치가능지역을
+  나타내는 `Rectangle` object, 하나의 CCTV로 전체 지역이 감시불가능하면
+  `None`
 
-**7.** 다음과 같이 정의된 함수 `k_straight`를 완성하라:
-- 입력: 양의 정수 `k <= 13`과 `Hand` object인 `hand` (`hand`의 조건은
-  6번 문제와 동일)
-- 리턴값: `hand`에 `ℓ`장의 카드를 추가해서 `k`-straight로 만들 수 있는
-  `ℓ`중 최소값
-  - `k`개 이상의 consecutive rank를 포함한 `hand`를 `k`-straight로
-    부른다
-  - 이 문제에서의 `k`-straight는 모든 "wrap-around"를 허용한다. 예를
-    들어, Jack-Queen-King-Ace, Queen-King-Ace-2, King-Ace-2-3는 모두
-    4-straight이다. (수업시간에 다루었던 straight는 마지막이 Ace인
-    경우까지만 허용)
+*1번 문제의 `orientation` 함수를 이용하여 반시계/시계 방향을 판단하고,
+반시계 방향이면 2번 문제의 그대로 사용하고 시계 방향인 경우 "UP"/"DOWN"과
+"LEFT"/"RIGHT"의 역할을 바꾸어서 비슷하게 처리하면 된다.*
 
-**8.** 다음과 같이 정의된 함수 `k_straight_flush`를 완성하라:
-- 입력: 양의 정수 `k <= 13`과 `Hand` object인 `hand`
-  - `hand`에 포함된 카드의 갯수는 5가 아닐 수 있다
-  - `hand`에 포함된 카드들 중 동일한 suit/rank를 가진 카드는 없다
-- 리턴값: `hand`에 `ℓ`(≥0)장의 카드를 추가해서 `k`-straight-flush로 만들
-  수 있는 `ℓ`중 최소값
-  - `hand`에 포함된 어떤 `k`개의 카드들이 존재하여, 이들이 모두 같은
-    suit를 가지고 rank들이 "`k`-straight"하면 `hand`가
-    `k`-straight-flush라고 부른다
-  - 이 문제에서의 `k`-straight는 (7번 문제와 마찬가지로) 모든
-    "wrap-around"를 허용한다.
-  - *6, 7번 문제를 일반화시킨 것으로 `k`-straight-flush는
-    `k`-straight와 `k`-flush를 단순히 and로 연결한 것이 아님에 유의.*
+**4.** 2번 문제에서는 다각형 내부 및 경계선(다각형을 이루는 선분들의)
+임의의 위치에 설치할 수 있는 경우를 고려하였다. 이 문제에서는 다각형의
+**경계선**에만 CCTV를 설치할 수 있는 경우를 다룬다.
 
-**9.** 포커 규칙을 다음과 같이 약간 변형한 상황을 고려하자: rank가 2인
-카드는 임의의 suit/rank로 변환할 수 있다(변환하지 않아도 됨). 예를 들어,
-hand `(♣2, ♡3, ♣3, ♠3, ♡4)`는 다음 중 임의로 변환해도 된다:
-`(◇3, ♡3, ♣3, ♠3, ♡4)`(quadruple), `(♣4, ♡3, ♣3, ♠3, ♡4)`(full house),
-`(♣2, ♡3, ♣3, ♠3, ♡4)`(triple, as it is without being changed).
+다음과 같이 정의된 함수 `surveillableLength`를 완성하라:
+- 입력: rectilinear polygon을 표현하는 `Point` object들의 리스트(수업
+  문제와 마찬가지로 반시계 방향 순서로 주어짐)
+- 리턴값: polygon 내부의 모든 점들을 모두 감시할 수 있는 CCTV 설치 가능
+  구간 길이의 총 합
 
-다음과 같이 정의된 함수 `full_house`를 완성하라:
-- 입력: 5개의 `Card`로 구성된 `Hand` object (11주차 문제와 같은 형태)
-- 리턴값: `True`(주어진 입력을 위 규칙에 따라 변환하면 full house가 될
-  수 있을 때), `False`(otherwise)
-  - 예: 입력이 `(♣2, ♡3, ♣3, ♠3, ♡4)`면 `♣2`를 `♣4`로 변환하여 full
-    house로 만들 수 있으므로 `True`를 리턴
+*수업때 만들었던 `surveillableRegion` 함수를 이용하여 설치 가능
+직사각형을 먼저 계산한 후, 이 직사각형과 polygon의 경계선이 겹치는
+구간을 찾으면서 더하면 된다.*
 
-**10.** 이 문제에서는 "#11: Poker Hands"에서 hand에 포함된 카드의
-개수가 5가 아닌 경우를 고려한다(6개 이상의 카드들로 hand가 구성될 수도
-있고, 4개 이하의 카드들로 구성될 수도 있다). 이러한 상황에서 straight,
-flush, straight flush를 다음과 같이 재정의하자:
-1. **straight**: 모든 카드들의 rank들을 연속되게 나열할 수 있을 경우
-   - 7, 8번 문제에서와 같이 모든 "wrap-arounds"를 허용한다.
-   - 예를 들어, 6장의 카드 `(♣King), (♠Ace), (♡2), (◇3), (♣4), (♣5)`로
-     구성된 hand는 straight이다
-2. **flush**: 모든 카드들이 같은 suit를 가지는 경우
-3. **straight flush**: 위 두 조건을 모두 만족하는 경우
+**5.** 2번 문제에서는 다각형 내부 및 경계선의 임의의 위치에 CCTV를 설치할
+수 있는 경우를 고려하였고, 4번 문제에서는 다각형의 경계선에만 CCTV를
+설치할 수 있는 경우를 다루었다. 이 문제에서는 다각형의 **꼭짓점**(즉,
+polygon을 표현하는 `Point`들)에만 CCTV를 설치할 수 있는 경우를 고려한다.
 
-위 정의에 따르면 straight flush인 hand는 straight일 수도 있고 flush일
-수도 있는데, 이러한 hand는 straight flush로만 분류하고 straight나
-flush로는 분류하지 않는다. 즉:
-- **straight**: 조건 1은 만족하되 조건 2는 만족하지 않는 경우
-- **flush**: 조건 2는 만족하되 조건 1은 만족하지 않는 경우
+다음과 같이 정의된 함수 `surveillablePoint`를 완성하라:
+- 입력: rectilinear polygon을 표현하는 `Point` object들의 리스트(수업
+  문제와 마찬가지로 반시계 방향 순서로 주어짐)
+  - 수업 문제에서와 마찬가지로 polygon의 경계를 이루는 선분들이
+    교차하는 입력은 주어지지 않음(즉, polygon 내부는 하나의 연결된
+    영역)
+- 리턴값: (수업 문제에서와 마찬가지로 CCTV를 1대만 설치했을 때) polygon
+  내부의 모든 점들을 감시할 수 있는 CCTV 설치 가능 꼭지점들의 갯수
+  - 예: 입력이 (경계가 겹쳐지는 부분이 있는 ㄴ자 모양) 그림과 같이
+    주어진 경우 설치 가능 꼭지점은 2개
 
-로 분류한다.
-
-다음과 같이 정의된 함수 `flush`를 완성하라:
-- 입력: `Hand` object인 `hand`
-  - `hand`에 포함된 카드의 개수는 3 이상 12 이하
-  - `hand`에 포함된 카드들 중 동일한(suit와 rank가 모두 일치하는)
-    카드는 없음
-- 리턴값: `1`(hand가 flush인 경우), `0`(그렇지 않은 경우)
-  - 상술한 바와 같이 hand가 straight flush이면 이는 flush로 분류하지
-    않으므로 `0`을 리턴해야 한다.
-
-**11.** 주어진 hand에 포함된 카드들 중 세개를 적절히 선택하여 세개의
-rank를 더한 값을 최대화하되 주어진 자연수 `k` 값은 넘지 않도록 하려고
-한다. 즉, 세개의 rank를 더한 값들 중 `k` 이하인 것들만 골라내고 이들 중
-최대값을 hand의 "`k`-점수"로 정의하자.
-
-다음과 같이 정의된 함수 `k_score`를 완성하라:
-- 입력: `Hand` object인 `hand`와 정수 `k`
-  - `hand`에 포함된 카드의 갯수는 5가 아닐 수 있다.
-  - `hand`에 포함된 카드들 중 suit와 rank 모두 동일한 카드는 없다.
-    하지만 suit만 동일하거나 rank만 동일한 카드는 있을 수 있다.
-- 리턴값: `hand`의 "`k`-점수"
-  - 세개의 카드의 rank를 더한 값이 모두 `k`보다 크면 `0`을 리턴
+*두개의 `Point` object `p1`과 `p2`가 같은 지점을 나타내는 지를 판단하기
+위해 `p1 == p2`를 사용하면 의도와 다르게 작동한다. `Point` class 내부에
+정의된 `equal` 함수를 사용하여 `p1.equal(p2)`로 이를 판단하면 된다.*
