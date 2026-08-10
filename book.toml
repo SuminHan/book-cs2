@@ -6,6 +6,7 @@ src = "src"
 
 [output.html]
 git-repository-url = "https://github.com/SuminHan/book-cs2"
+sidebar-header-nav = false
 
 [output.html.fold]
 enable = true
