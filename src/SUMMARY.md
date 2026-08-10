@@ -5,7 +5,6 @@
 # 국내반
 
 - [Week 1: 프로그래밍은 왜 여전히 중요한가](kor/week01-motivation.md)
-- [L00: 강좌 개요](kor/l00.md)
 - [L01: CS1 리뷰](kor/l01.md)
 - [L02: 리스트/문자열](kor/l02.md)
 - [L03: 파일 입출력](kor/l03.md)
