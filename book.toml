@@ -1,7 +1,7 @@
 [book]
-title = "Book-CS2"
-description = "KSA 정보과학2(CS2) 보충자료 — International + 국내반"
-language = "en"
+title = "CS2 국내반 보충자료"
+description = "KSA 정보과학2(CS2) 국내반 보충자료"
+language = "ko"
 src = "src"
 
 [output.html]
