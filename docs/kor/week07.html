@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Lists / Strings - CS2 국내반 보충자료</title>
+        <title>Spring Equilibrium (optional) - CS2 국내반 보충자료</title>
 
 
         <!-- Custom HTML head -->
@@ -28,6 +28,7 @@
         <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="../ayu-highlight-3fdfc3ac.css">
 
         <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../theme/custom-9b2a6305.css">
 
         <!-- MathJax -->
         <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
@@ -37,10 +38,10 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-26a7b3be.js";
+            window.path_to_searchindex_js = "../searchindex-565e9d62.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../toc-60a1819a.js"></script>
+        <script src="../toc-dc4e3852.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -179,25 +180,24 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h1 id="lists--strings"><a class="header" href="#lists--strings">Lists / Strings</a></h1>
+                        <h1 id="spring-equilibrium-optional"><a class="header" href="#spring-equilibrium-optional">Spring Equilibrium (optional)</a></h1>
 <ul>
-<li>List를 생성하는 또 다른 방법: <code>.append(·)</code>로 빈 리스트 <code>[]</code>에 하나씩 추가하기</li>
-<li>Slicing 연산자: <code>[ : ]</code>, <code>[::2]</code>(건너뛰기), <code>[::-1]</code>(뒤집기)</li>
-<li>List 비교(<code>==</code>) / 연결(<code>+</code>) / 포함관계(<code>in</code>, <code>not in</code>) 연산자</li>
-<li>List용 built-in 함수: <code>sum()</code>, <code>max()</code>, <code>min()</code>, <code>sort()</code></li>
-<li>String: <code>s[i] == c</code>로 문자 비교, <code>+</code>로 새 문자열 이어붙이기(string은 immutable이라
-직접 수정 불가 — 항상 새 문자열을 만들어야 함), 사전순 비교 연산자 <code>&lt;</code></li>
+<li>자유 물체(\(P_1, \ldots, P_n\)), 고정 물체(\(F_1, \ldots, F_k\)), 탄성계수
+\(w_1, \ldots, w_m\)을 갖는 스프링들로 이루어진 물리 시스템의 평형 상태</li>
+<li>스프링 초기 길이를 0으로 가정하면, 물체에 작용하는 힘이 위치의 선형식이 되어
+평형 조건이 연립일차방정식이 됨 → 6주차 Gaussian elimination으로 해결</li>
+<li>자유 물체 각각의 \(x\)좌표끼리, \(y\)좌표끼리 독립적인 연립방정식을 이룸</li>
 </ul>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../kor/week06-problems.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                             </a>
 
-                            <a rel="next prefetch" href="../kor/l02-problems.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../kor/week07-problems.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                             </a>
 
@@ -207,11 +207,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../kor/week06-problems.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                     </a>
 
-                    <a rel="next prefetch" href="../kor/l02-problems.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../kor/week07-problems.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                     </a>
             </nav>

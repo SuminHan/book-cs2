@@ -28,6 +28,7 @@
         <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="../ayu-highlight-3fdfc3ac.css">
 
         <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../theme/custom-9b2a6305.css">
 
         <!-- MathJax -->
         <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
@@ -37,10 +38,10 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-26a7b3be.js";
+            window.path_to_searchindex_js = "../searchindex-565e9d62.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../toc-60a1819a.js"></script>
+        <script src="../toc-dc4e3852.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -180,109 +181,82 @@
                 <div id="mdbook-content" class="content">
                     <main>
                         <h1 id="problem-set"><a class="header" href="#problem-set">Problem Set</a></h1>
+<p><em>이 문제집은 그림(3D 큐브 더미 시각화)이 포함되어 있었으나, 텍스트로만 옮기는
+과정에서 그림은 생략했다. 원본 PDF를 함께 참고할 것.</em></p>
 <h3 id="필수-문제"><a class="header" href="#필수-문제">필수 문제</a></h3>
-<p><strong>1. <code>deleteThree(L)</code></strong> — 리스트 <code>L</code>에서 3을 모두 제거한 리스트를 반환.</p>
-<pre><code class="language-python">def deleteThree(L):
-    M = []
-    for i in range(len(L)):
-        if L[i] != 3:
-            M.append(L[i])
-    return M
+<p><strong>1. <code>topView(P)</code> / <code>frontView(P)</code> / <code>rightView(P)</code></strong> — \(N \times N \times N\)
+0/1 리스트로 주어진 큐브 더미 <code>P</code>에서, 위/앞/오른쪽 방향으로 본 \(N \times N\)
+0/1 투영도를 반환.</p>
+<pre><code class="language-python">P1 = [[[0,0,0],[0,0,0],[1,0,0]],
+      [[1,0,1],[0,0,0],[1,0,1]],
+      [[1,0,1],[1,1,1],[1,1,1]]]
 
-print(deleteThree([2,5,7,3,2,8,3,3]))  # [2,5,7,2,8]
-print(deleteThree([2,3,7,3,2,8,3,3]))  # [2,7,2,8]
-print(deleteThree([3,3,7,3,2,8,3,3]))  # [7,2,8]
+print(topView(P1))    # [[1,0,1],[1,1,1],[1,1,1]]
+print(frontView(P1))  # [[1,0,0],[1,0,1],[1,1,1]]
+print(rightView(P1))  # [[0,0,1],[1,0,1],[1,1,1]]
 </code></pre>
 <blockquote>
-<p>새 리스트를 만들 땐 <code>[]</code>로 초기화한 후 <code>M.append(·)</code>로 하나씩 붙여나가면 된다.</p>
+<p><code>j</code>좌표의 방향에 주의 — <code>rightView</code>의 결과는 <code>[[1,0,0],[1,0,1],[1,1,1]]</code>이
+<em>아니라</em> 위 예시처럼 나온다 (이 규약이 프로그래밍을 더 쉽게 만들어준다).</p>
 </blockquote>
-<p><strong>2. <code>delete(L, e)</code></strong> — 리스트 <code>L</code>에서 정수 <code>e</code>를 모두 제거한 리스트를 반환. (1번과
-같은 패턴, 조건만 <code>e</code>로 일반화)</p>
-<p><strong>3. <code>kthSmallest(L, k)</code></strong> — 정수 리스트 <code>L</code>에서 <code>k</code>번째로 작은 값을 반환
-(<code>1 ≤ k ≤ len(L)</code>).</p>
-<blockquote>
-<p><code>L.sort()</code>를 쓰면 <code>L</code> 자체가 정렬되고 반환값은 <code>None</code>이라는 점에 유의.
-<code>k</code>번째로 작은 원소는 정렬 후 <code>L[k]</code>가 아니라 <code>L[k-1]</code>.</p>
-</blockquote>
-<p><strong>4. <code>same(L1, L2)</code></strong> — 두 리스트가 (순서 상관없이) 같은 원소를 같은 개수만큼
-가지면 <code>True</code>.</p>
-<blockquote>
-<p><code>L1 == L2</code>는 순서까지 완전히 같아야 <code>True</code>. 정렬 후 비교하면 순서를 무시할 수
-있다.</p>
-</blockquote>
-<p><strong>5. <code>makeSet(L)</code></strong> — 리스트 <code>L</code>의 원소를 중복 없이 정확히 하나씩만 포함한, 정렬된
-리스트를 반환.</p>
-<blockquote>
-<p>1, 2번과 유사한 형태 — 지금까지 만든 <code>M</code>에 아직 없는 원소일 때만 <code>append</code>.
-<code>x in L</code> / <code>x not in L</code>로 포함 여부 확인.</p>
-</blockquote>
-<p><strong>6. <code>sortId(L)</code></strong> — <code>ID</code>와 이름이 번갈아 나오는 문자열 리스트 <code>L</code>을, 학생 ID
-기준으로 정렬해서 반환.</p>
-<blockquote>
-<p><code>ID = L[::2]</code>로 짝수 인덱스만 뽑아낼 수 있다.
-<code>y = L.index(x)</code>는 <code>L</code>에서 <code>x</code>가 처음 등장하는 인덱스(없으면 에러).</p>
-</blockquote>
-<p><strong>7. <code>countA(s)</code></strong> — 문자열 <code>s</code>에서 <code>"A"</code>의 개수를 반환.</p>
-<pre><code class="language-python">def countA(s):
-    counter = 0
-    for i in range(len(s)):
-        if s[i] == "A":
-            counter += 1
-    return counter
-
-print(countA("AbAA"))          # 3
-print(countA("bcdAAAdfAA"))    # 5
-print(countA("abc"))           # 0
+<p><strong>2. <code>countCubes(top, front, right)</code></strong> — 세 투영도가 주어졌을 때, 그 투영도를
+만족하는(존재한다면 여러 개일 수 있는) 큐브 더미 중 <strong>최대</strong> 큐브 개수를 반환.
+만족하는 더미가 하나도 없으면 <code>None</code>.</p>
+<pre><code class="language-python">def countCubes(top, front, right):
+    n = len(top)
+    count = 0
+    P = [[[None] * n for i in range(n)] for j in range(n)]
+    # 각 (i,j,k)에 대해 P[i][j][k]를 채워보고 큐브 수를 센 뒤,
+    # 세 투영도를 모두 만족하는지(feasibility) 확인
 </code></pre>
-<p><strong>8. <code>countChar(s, c)</code></strong> — 문자열 <code>s</code>에서 문자 <code>c</code>(길이 1인 문자열)의 개수를 반환.
-(7번의 일반화)</p>
-<p><strong>9. <code>reverse(s)</code></strong> — 문자열 <code>s</code>를 뒤집은 문자열을 반환.</p>
 <blockquote>
-<p><code>""</code>로 초기화한 뒤 <code>+</code>로 한 글자씩 이어붙이는 패턴: <code>r = r + ??</code>. <code>s</code>의 뒤쪽
-문자부터 <code>r</code>에 붙여나가면 된다.</p>
-</blockquote>
-<p><strong>10. <code>delete(s, c)</code></strong> — 문자열 <code>s</code>에서 문자 <code>c</code>를 모두 제거한 문자열을 반환.</p>
-<blockquote>
-<p>9번과 비슷한 형태로, 앞에서부터 <code>r</code>에 붙이되 <code>s[i] != c</code>일 때만 붙이면 된다.</p>
-</blockquote>
-<p><strong>11. <code>replace(s, c, to)</code></strong> — 문자열 <code>s</code>에서 문자 <code>c</code>를 전부 <code>to</code>로 교체한 문자열을
-반환.</p>
-<blockquote>
-<p><code>s[i] == c</code>일 때는 <code>s[i]</code> 대신 <code>to</code>를, 아니면 <code>s[i]</code>를 그대로 붙인다.</p>
-</blockquote>
-<p><strong>12. <code>firstStr(s1, s2, s3)</code></strong> — 세 문자열 중 사전순으로 가장 앞서는 문자열을
-반환.</p>
-<blockquote>
-<p>문자열 비교 연산자 <code>&lt;</code>는 사전순 비교. 예: <code>"abcde" &lt; "acbde"</code>는 <code>True</code>.</p>
+<p><code>==</code>는 다차원 리스트에 대해서도 (깊은) 동등 비교로 동작한다.</p>
 </blockquote>
 <h3 id="optional-problems"><a class="header" href="#optional-problems">Optional Problems</a></h3>
 <p><em>필수 문제와 달리 제출/검사 대상은 아니지만 도움이 되므로 시간이 남으면
 시도해볼 것을 권장 (대부분 기출문제).</em></p>
-<p><strong>13. <code>factorize(n)</code></strong> — 2 이상의 정수 <code>n</code>의 소인수를 오름차순으로 정렬한 리스트를
-반환. 예: <code>factorize(504)</code> → <code>[2, 3, 7]</code> (504 = 2³·3²·7).</p>
-<p><strong>14. <code>fraction(numer, denom)</code></strong> — 두 양의 정수 <code>numer</code>, <code>denom</code>이 주어질 때, 유리수
-<code>numer/denom</code>의 연분수(continued fraction) 표현 <code>[a1, a2, ..., an]</code>을 반환.
-예를 들어 <code>numer=415, denom=93</code>이면 <code>[4, 2, 6, 7]</code>을 반환한다.</p>
-<p><strong>15.</strong> 함수 f(n)을 “n의 각 자릿수를 제곱해서 더한 값“으로 정의할 때, 주어진 정수
-<code>n</code> (2 ≤ n ≤ 10억)에 대해 f를 k번 반복 적용한 값이 1이 되는 최소의 양의 정수
-<code>k</code>를 반환하는 함수 <code>composition(n)</code>을 작성 (그런 <code>k</code>가 없으면 <code>None</code>). 예:
-<code>n=19</code>이면 <code>f(19)=82, f(82)=68, f(68)=100, f(100)=1</code>이므로 <code>k=4</code>.</p>
-<p><strong>16.</strong> 키가 정렬된 n명의 학생을 인접한 k개 조로 나눌 때, 각 조의 비용(키의 합 +
-그 조 내 키의 최댓값−최솟값)의 총합을 최소화하는 <code>minCost(heights, k)</code>를 작성.
-예: <code>heights=[1,3,5,6,10], k=3</code>이면 최소 비용은 28.</p>
+<p><strong>3.</strong> 2번 문제 알고리즘의 정당성 증명을 완성하는 문제. 보조 함수:</p>
+<pre><code class="language-python">def build(top, front, right):
+    n = len(top)
+    P = [[[0] * n for i in range(n)] for j in range(n)]
+    for i in range(n):
+        for j in range(n):
+            for k in range(n):
+                if top[j][k] == front[i][k] == right[i][j] == 1:
+                    P[i][j][k] = 1
+    return P
+
+def check(P, top, front, right):
+    return topView(P) == top and frontView(P) == front and rightView(P) == right
+</code></pre>
+<p>어떤 투영도 조합에 대해 <code>check(build(top,front,right), ...) == False</code>라면,
+그 투영도를 만족하는 <code>Q</code>가 아예 존재하지 않음을 증명하는 논증에서, 마지막
+단계(“<code>P[i][j][k]</code>가 1이면 <code>Q[i][j][k]</code>도 반드시 1이어야 한다”)를 증명할 것.</p>
+<p><strong>4. <code>gravity(P)</code></strong> — 큐브 더미 <code>P</code>가 “중력 조건”(허공에 떠 있는 큐브가 없음)을
+만족하면 <code>True</code>.</p>
+<p><strong>5. <code>floating(P)</code></strong> — 중력 조건을 만족하지 않을 때, 허공에 떠 있는 큐브의 개수를
+반환.</p>
+<p><strong>6. <code>countCubes(top, front, right)</code>(일반화 버전)</strong> — 2번 문제를 $D \times H
+\times W$(세 축의 길이가 다를 수 있는) 형태로 일반화. 세 투영도가 주어졌을 때
+그것을 만족하는 최대 큐브 개수를 반환(없으면 <code>None</code>).</p>
+<pre><code class="language-python">top = [[0,0,0,0],[0,0,0,1],[1,1,0,0]]
+front = [[1,1,0,1],[1,1,0,0]]
+right = [[0,1,1],[0,0,1]]
+# 이 경우 최대 큐브 개수는 5
+</code></pre>
 <hr>
-<p><em>원본: <code>CS2(2026-2)_all/CS2/CS2/problem_set/P02.pdf</code>. 표현/코드는 정리하며 일부
+<p><em>원본: <code>CS2(2026-2)_all/CS2/CS2/problem_set/P05.pdf</code>. 표현/코드는 정리하며 일부
 재구성함.</em></p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../kor/l02.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../kor/week05.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                             </a>
 
-                            <a rel="next prefetch" href="../kor/l03.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../kor/week06.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                             </a>
 
@@ -292,11 +266,11 @@ print(countA("abc"))           # 0
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../kor/l02.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../kor/week05.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                     </a>
 
-                    <a rel="next prefetch" href="../kor/l03.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../kor/week06.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                     </a>
             </nav>

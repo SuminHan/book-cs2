@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Stable Matching II - CS2 국내반 보충자료</title>
+        <title>Problem Set - CS2 국내반 보충자료</title>
 
 
         <!-- Custom HTML head -->
@@ -28,6 +28,7 @@
         <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="../ayu-highlight-3fdfc3ac.css">
 
         <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../theme/custom-9b2a6305.css">
 
         <!-- MathJax -->
         <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
@@ -37,10 +38,10 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-26a7b3be.js";
+            window.path_to_searchindex_js = "../searchindex-565e9d62.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../toc-60a1819a.js"></script>
+        <script src="../toc-dc4e3852.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -179,23 +180,93 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h1 id="stable-matching-ii"><a class="header" href="#stable-matching-ii">Stable Matching II</a></h1>
+                        <h1 id="problem-set"><a class="header" href="#problem-set">Problem Set</a></h1>
+<p>이미 정의된 <code>Person</code> 클래스:</p>
+<pre><code class="language-python">class Person(object):
+    def __init__(self, name, gender):
+        self.gender = gender      # "male" or "female"
+        self.name = name
+        self.prefList = None      # preference list (of Person objects)
+        self.partner = None       # Person object. None if free
+
+    def isFree(self):             # pure function
+        return self.partner == None
+
+    def engage(self, p):          # modifier
+        assert type(p) == Person
+        assert self.isFree() and p.isFree()
+        # ADD ADDITIONAL CODE HERE!
+
+    def breakUp(self):            # modifier
+        assert not self.isFree()
+        assert self.partner.partner == self
+        # ADD ADDITIONAL CODE HERE!
+
+    def prefer(self, p):          # pure function -- self가 현재 partner보다 p를 선호?
+        assert type(p) == Person
+        assert not self.isFree()
+        # ADD ADDITIONAL CODE HERE!
+</code></pre>
+<h3 id="필수-문제"><a class="header" href="#필수-문제">필수 문제</a></h3>
+<p><strong>1. <code>Person.engage(self, p)</code> / <code>Person.breakUp(self)</code> / <code>Person.prefer(self, p)</code></strong>
+위 세 메서드를 완성.</p>
+<blockquote>
+<p><code>engage</code>: <code>self.partner</code>와 <code>p.partner</code>를 서로로 설정. <code>breakUp</code>: <code>self</code>와
+<code>self.partner</code>의 관계를 서로 끊어 둘 다 <code>None</code>으로. <code>prefer</code>: 선호도 리스트의
+<code>.index(·)</code>를 이용해 <code>p</code>의 순위가 현재 파트너보다 앞서는지 비교.</p>
+</blockquote>
+<p><strong>2. <code>isPerfectMatch(men, women)</code></strong> — <code>men</code>, <code>women</code>(둘 다 <code>Person</code> 리스트)의 모든
+사람이 정확히 한 명의 파트너를 가지고 있으면 <code>True</code>.</p>
+<pre><code class="language-python">def isPerfectMatch(men, women):  # for all pattern
+    assert len(men) == len(women)
+    n = len(men)
+    # ADD ADDITIONAL CODE HERE!
+</code></pre>
+<p><strong>3. <code>isUnstablePair(man, woman)</code> / <code>isStableMatch(men, women)</code></strong> —
+<code>isUnstablePair</code>는 <code>(man, woman)</code>이 unstable pair인지 판정(서로 각자의 현재
+파트너보다 상대를 선호하면 unstable). <code>isStableMatch</code>는 전체 매칭에 unstable
+pair가 하나도 없으면 <code>True</code>.</p>
+<pre><code class="language-python">def isUnstablePair(man, woman):
+    assert type(man) == Person and type(woman) == Person
+    assert man.gender == "male" and woman.gender == "female"
+    # ADD ADDITIONAL CODE HERE!
+
+def isStableMatch(men, women):  # for all pattern
+    assert len(men) == len(women)
+    n = len(men)
+    # ADD ADDITIONAL CODE HERE!
+</code></pre>
+<h3 id="optional-problems"><a class="header" href="#optional-problems">Optional Problems</a></h3>
+<p><em>필수 문제와 달리 제출/검사 대상은 아니지만 도움이 되므로 시간이 남으면
+시도해볼 것을 권장 (대부분 기출문제).</em></p>
+<p><strong>4. <code>nUnstablePair(men, women)</code></strong> — 매칭 정보가 채워진 <code>men</code>, <code>women</code>에서
+unstable pair의 개수를 반환.</p>
+<p><strong>5~8.</strong> (10주차 과제의 일대다(one-to-many) stable matching 확장 — 교사
+<code>Teacher</code>(<code>apprentice</code> 리스트, <code>quota</code>)와 학생 <code>Student</code>(<code>advisor</code>)를 이용)</p>
 <ul>
-<li>Propose-Reject 알고리즘(Gale-Shapley): 자유로운 남자가 자기 선호도 순으로
-여자에게 프로포즈하고, 여자는 더 마음에 드는 상대가 나타나면 갈아탄다 —
-이 과정을 반복하면 항상 stable matching으로 수렴함</li>
-<li><code>numProposal</code>로 “다음에 누구에게 프로포즈할지” 진행 상황을 추적</li>
+<li><code>isPerfect(teachers, students)</code> — 주어진 매칭이 “perfect”(모든 학생이 배정되고,
+교사-학생 상호 참조가 일관되고, 각 교사가 정확히 자기 정원만큼 배정됨) 조건을
+만족하면 <code>1</code>, 아니면 <code>0</code>.</li>
+<li><code>isStable(teachers, students)</code> — perfect한 매칭이 stability 조건까지 만족하면
+<code>1</code>, 아니면 <code>0</code>. (두 교사가 서로의 학생을 교환하고 싶어하는 상황이 없어야 함)</li>
+<li><code>nUnstablePair(teachers, students)</code> — 위 stable 조건을 위배하는 (교사,교사,학생,학생)
+쌍의 개수, 단 교사 쌍 <code>(Ti, Tj)</code> 기준으로 중복 없이 카운트.</li>
+<li>teacher-unstable pair 변형: 학생 쌍이 아니라 “교환하고 싶어하는 교사 쌍”
+자체의 개수를 세는 변형(<code>(Ti,Tj)</code>와 <code>(Tj,Ti)</code>는 같은 쌍으로 취급).</li>
 </ul>
+<hr>
+<p><em>원본: <code>CS2(2026-2)_all/CS2/CS2/problem_set/P09.pdf</code>. 표현/코드는 정리하며 일부
+재구성함(4~8번은 이전 과제 맥락에 의존하는 문제라 핵심만 요약).</em></p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../kor/l09-problems.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../kor/week09.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                             </a>
 
-                            <a rel="next prefetch" href="../kor/l10-problems.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../kor/week10.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                             </a>
 
@@ -205,11 +276,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../kor/l09-problems.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../kor/week09.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                     </a>
 
-                    <a rel="next prefetch" href="../kor/l10-problems.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../kor/week10.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                     </a>
             </nav>
