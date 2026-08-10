@@ -38,7 +38,7 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-72819e89.js";
+            window.path_to_searchindex_js = "../searchindex-153fd64b.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../toc-516cd8df.js"></script>
@@ -182,8 +182,18 @@
                     <main>
                         <h1 id="problem-set"><a class="header" href="#problem-set">Problem Set</a></h1>
 <h3 id="필수-문제"><a class="header" href="#필수-문제">필수 문제</a></h3>
-<p><strong>1. <code>Person.womanToPropose(self)</code></strong> — (<code>self</code>가 남자일 때만 사용) <code>prefList</code>
-순서대로 다음 차례에 프로포즈할 여자를 반환하고, <code>numProposal</code>을 갱신.</p>
+<p><strong>1.</strong> Write a function <code>womanToPropose</code> that work on the class <code>Person</code>.</p>
+<ul>
+<li>input parameter: <code>self</code> (<code>self</code>가 남자일때만 사용됨)</li>
+<li>action:
+<ol>
+<li><code>self</code>는 <code>prefList</code> 순서대로 여자들에게 propose하는데 이번 차례에
+propose할 여자를 return.</li>
+<li>다음 차례에 propose할 여자를 기록해두기 위해 <code>numProposal</code>도
+적절히 수정해줘야 함</li>
+</ol>
+</li>
+</ul>
 <pre><code class="language-python">class Person(object):
     def __init__(self, name, gender):
         ...
@@ -194,45 +204,105 @@
     def womanToPropose(self):   # used only if self is man
         assert self.gender == "male"
         assert self.numProposal &lt; len(self.prefList)
-        # ADD ADDITIONAL CODE HERE!
+        # ADD ADDITIONAL CODE HERE!!
 </code></pre>
-<p><strong>2. <code>findMatch(men, women)</code></strong> — 파트너 정보가 전혀 채워지지 않은 <code>men</code>, <code>women</code>
-에 대해, propose-reject 알고리즘으로 stable matching이 되도록 파트너 정보를
-채우는 modifier (반환값 없음).</p>
+<p><strong>2.</strong> Write a function <code>findMatch</code>:</p>
+<ul>
+<li>input parameter: Two lists <code>men</code>/<code>women</code> of <code>Person</code> objects
+<ul>
+<li><code>men</code> represents the list of <code>Person</code> objects each of which
+represents a man</li>
+<li><code>women</code> represents the list of <code>Person</code> objects each of which
+represents a woman</li>
+<li>지난주 문제에서는 <code>men</code>/<code>women</code>의 파트너 정보(즉, matching)이 이미
+주어진 상태에서 stability를 check만 하는 것이었고, 이 문제는 파트너
+정보(matching)이 전혀 채워지지 않은 상태로 <code>men</code>/<code>women</code>이 넘어옴</li>
+</ul>
+</li>
+<li>action: stable matching이 되도록 파트너 정보를 채움</li>
+<li>return value: 없음 (<strong>modifier</strong>)</li>
+</ul>
 <pre><code class="language-python">def findMatch(men, women):
     assert len(men) == len(women)
     n = len(men)
+
     numFreeMen = n  # initially, every man has no partner
     while numFreeMen &gt; 0:
-        # 자유로운 남자를 하나 찾는다
-        # (자유로운 남자를 고르는 순서는 알고리즘의 정확성/결과에 영향을 주지
-        #  않음이 이미 증명되어 있음)
-        # womanToPropose()로 이 남자가 이번에 프로포즈할 여자를 찾는다
-        # 그 여자가 free하면 -&gt; engage하고 numFreeMen 감소
-        # 그 여자가 free하지 않지만 현재 파트너보다 이 남자를 선호하면
-        #   -&gt; 기존 커플 breakUp 후 이 남자와 engage
-        # 그 외의 경우 -&gt; 여자가 거절 (코드에서 딱히 할 일 없음)
+        # search for a free man
+        # (it is already proved that the order of selecting free men
+        #  does not affect the correctness/output of the algorithm)
+
+        # find the woman that this man is about to propose to
+        # by using womanToPropose()
+
+        # if the woman is free, then engage these man/woman,
+        # and decrement numFreemen
+
+        # elif the woman prefer the man to her current partner,
+        # then break up the current couple and engage these man &amp; woman
+
+        # else the woman rejects the man
+        # (is there anything to do in program?)
+
+        # ADD ADDITIONAL CODE HERE!!
 </code></pre>
 <h3 id="optional-problems"><a class="header" href="#optional-problems">Optional Problems</a></h3>
-<p><em>필수 문제와 달리 제출/검사 대상은 아니지만 도움이 되므로 시간이 남으면
-시도해볼 것을 권장 (대부분 기출문제).</em></p>
-<p><strong>3. <code>compute_schedule(schedule)</code></strong> — \(n\)척의 배 \(S_0, \ldots, S_{n-1}\)과 \(n\)개의
-항구 \(P_0, \ldots, P_{n-1}\)가 있고, 각 배는 \(m\)일(\(m&gt;n\)) 동안의 스케줄(각 날짜에
-어느 항구에 있는지, 또는 바다 위에 있는지)을 가진다. 각 배는 기간 중 각 항구를
-정확히 하루씩 방문하며, 어떤 두 배도 같은 날 같은 항구에 있지 않는다는 조건(†)을
-만족한다.</p>
-<p>이제 회사는 각 배가 “어느 날짜부터 도착한 항구에 계속 머무르며(수리를 위해)
-남은 스케줄을 취소“하도록 스케줄을 단축하려 한다 — 단, 단축된 스케줄에서도
-조건(†)이 계속 성립해야 한다.</p>
+<p><em>필수 문제와 달리 제출/검사 대상은 아니지만, 큰 도움이 되므로 시간이 남으면
+모두 시도해보는 것을 권합니다 (대부분 기출문제입니다).</em></p>
+<p><strong>3.</strong> Consider the following situation: a shipping company owns <code>n</code>
+ships \(S_0,\ldots,S_{n-1}\) and <code>n</code> ports \(P_0,\ldots,P_{n-1}\).
+Each ship has a <strong>schedule</strong> that says, for each day of the period, which
+of the ports it’s visiting, or whether it’s out at sea (기간은 <code>m</code>일,
+<code>m&gt;n</code>이라고 가정). Each ship visits each port for exactly one day during
+the period. For safety reasons, the following condition is imposed on
+schedules of ships:</p>
+<blockquote>
+<p>(†) No two ships can be in the same port on the same day.</p>
+</blockquote>
+<p>For example, <code>n=2, m=4</code>이고, 배 \(S_0\)의 스케줄이
+<code>[port0, sea, port1, sea]</code>, 배 \(S_1\)의 스케줄이
+<code>[sea, port0, sea, port1]</code>이면 위 조건을 만족한다.</p>
+<p>Now, the company wants to <strong>truncate</strong>(단축하다) each ship’s schedule
+(for repairing): 각 배 \(S_i\)에 대해, 예정된 항구에 도착하는 어떤
+날짜가 있어 그 날부터 기간이 끝날 때까지 그 항구에 계속 머무른다(그
+기간동안 남은 항구들은 방문하지 않음). 예를 들어, 회사는 \(S_0\)의
+단축된 스케줄을 <code>[port0, sea, port1, port1]</code>로, \(S_1\)의 단축된
+스케줄을 <code>[sea, port0, port0, port0]</code>로 정할 수 있다 (즉 \(S_0\)은 3일째
+<code>port1</code>에 멈추고, \(S_1\)은 2일째 <code>port0</code>에 멈춤). 이 단축은 조건(†)을
+위배하면 안 된다(즉, 단축된 스케줄 하에서도 어떤 두 배도 같은 날 같은
+항구에 있으면 안 된다). 위 단축 예시는 이 조건을 만족한다. 하지만 만약
+\(S_0\)의 단축된 스케줄을 <code>[port0, port0, port0, port0]</code>(1일째 멈춤)로,
+\(S_1\)의 것을 <code>[sea, port0, sea, port1]</code>(원본 그대로)로 정하면, 두 배
+모두 2일째 <code>port0</code>에 있게 되어 조건(†)을 위배한다.</p>
+<p>Write a function <code>compute_schedule</code>:</p>
+<ul>
+<li>input parameter: a 2D <code>n×m</code> list that represents original schedules of
+ships (위 예시의 경우 <code>[[0,None,1,None],[None,0,None,1]]</code>)
+<ul>
+<li><code>None</code> represents “at sea” and an integer represents the port index</li>
+</ul>
+</li>
+<li>return value: any truncated schedule that satisfies the condition (†),
+represented by a list of “stopping” ports of ships
+\(S_0,S_1,\ldots,S_{n-1}\). <code>None</code> if no such one exists
+<ul>
+<li>위 예시의 경우 <code>[1,0]</code> (\(S_0\)는 <code>port1</code>에, \(S_1\)은 <code>port0</code>에
+멈춤)</li>
+</ul>
+</li>
+</ul>
+<p>Also, <strong>prove the correctness</strong> of your algorithm. (Without the
+correctness proof, you will not get a point.)</p>
+<p>Hint:</p>
+<ul>
+<li>Find a link between this problem and the stable matching problem and
+make use of the code for stable matching.</li>
+<li>Use the modifier <code>L.reverse()</code> to reverse a list <code>L</code>.</li>
+</ul>
 <pre><code class="language-python">def compute_schedule(schedule):
     # ADD ADDITIONAL CODE HERE!
 
-# 입력: 원본 스케줄을 나타내는 2차원 n×m 리스트
-# (None = 바다 위, 정수 = 항구 번호)
 schedule = [[0, None, 1, None], [None, 0, None, 1]]
-
-# 반환: 각 배가 "멈추는" 항구를 나타내는 리스트(조건(†)을 만족하는 것 아무거나),
-# 그런 스케줄이 없으면 None
 print(compute_schedule(schedule))  # [1, 0]
 </code></pre>
 

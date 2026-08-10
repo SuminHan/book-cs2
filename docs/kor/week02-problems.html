@@ -38,7 +38,7 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-72819e89.js";
+            window.path_to_searchindex_js = "../searchindex-153fd64b.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../toc-516cd8df.js"></script>
@@ -182,7 +182,21 @@
                     <main>
                         <h1 id="problem-set"><a class="header" href="#problem-set">Problem Set</a></h1>
 <h3 id="필수-문제"><a class="header" href="#필수-문제">필수 문제</a></h3>
-<p><strong>1. <code>deleteThree(L)</code></strong> — 리스트 <code>L</code>에서 3을 모두 제거한 리스트를 반환.</p>
+<p><strong>1.</strong> Write a function <code>deleteThree</code>:</p>
+<ul>
+<li>input parameter: a list <code>L</code></li>
+<li>return value: the list obtained by removing all occurrences of <code>3</code>
+(L에서 3을 모두 제거하여 얻은 list)</li>
+</ul>
+<p>새로운 list를 만들 때는 <code>[]</code>로 초기화한 후, <code>M.append(·)</code>로 하나씩 붙여나가면
+된다.</p>
+<pre><code class="language-python">M = []
+for i in range(len(L)):
+    if some_condition_on(L[i]):
+        M.append(??)
+return M
+</code></pre>
+<p>이 문제의 경우 위의 <code>some_condition</code>과 <code>??</code>을 뭘로 채우면 될까?</p>
 <pre><code class="language-python">def deleteThree(L):
     # ADD ADDITIONAL CODE HERE!
 
@@ -190,7 +204,12 @@ print(deleteThree([2,5,7,3,2,8,3,3]))  # [2,5,7,2,8]
 print(deleteThree([2,3,7,3,2,8,3,3]))  # [2,7,2,8]
 print(deleteThree([3,3,7,3,2,8,3,3]))  # [7,2,8]
 </code></pre>
-<p><strong>2. <code>delete(L, e)</code></strong> — 리스트 <code>L</code>에서 정수 <code>e</code>를 모두 제거한 리스트를 반환.</p>
+<p><strong>2.</strong> Write a function <code>delete</code>:</p>
+<ul>
+<li>input parameter: a list <code>L</code> and an integer <code>e</code></li>
+<li>return value: the list obtained by removing all occurrences of <code>e</code>
+(L에서 e를 모두 제거하여 얻은 list)</li>
+</ul>
 <pre><code class="language-python">def delete(L, e):
     # ADD ADDITIONAL CODE HERE!
 
@@ -198,8 +217,14 @@ print(delete([2,5,7,3,2,8,3,3], 3))  # [2,5,7,2,8]
 print(delete([2,3,7,3,2,8,3,3], 2))  # [3,7,3,8,3,3]
 print(delete([2,2,7,2,2,2,2,2], 2))  # [7]
 </code></pre>
-<p><strong>3. <code>kthSmallest(L, k)</code></strong> — 정수 리스트 <code>L</code>에서 <code>k</code>번째로 작은 값을 반환
-(<code>1 ≤ k ≤ len(L)</code>).</p>
+<p><strong>3.</strong> Write a function <code>kthSmallest</code>:</p>
+<ul>
+<li>input parameter: an integer list <code>L</code> and an integer <code>k</code> s.t.
+<code>1 &lt;= k &lt;= len(L)</code></li>
+<li>return value: the k-th smallest integer in <code>L</code></li>
+</ul>
+<p><code>L.sort()</code>를 사용하여 정렬. <code>M = L.sort()</code>로 하면 <code>L</code>은 정렬된 list이고
+<code>M</code>은 <code>None</code>임에 유의. <code>L</code>의 k번째 원소는 <code>L[k]</code>인가? <code>L[k-1]</code>인가?</p>
 <pre><code class="language-python">def kthSmallest(L, k):
     # ADD ADDITIONAL CODE HERE!
 
@@ -208,8 +233,14 @@ print(kthSmallest([3,4,2,8,8], 2))  # 3
 print(kthSmallest([3,4,2,8,8], 3))  # 4
 print(kthSmallest([3,4,2,8,8], 4))  # 8
 </code></pre>
-<p><strong>4. <code>same(L1, L2)</code></strong> — 두 리스트가 (순서 상관없이) 같은 원소를 같은 개수만큼
-가지면 <code>True</code>.</p>
+<p><strong>4.</strong> Write a function <code>same</code>:</p>
+<ul>
+<li>input parameter: two lists <code>L1</code>, <code>L2</code></li>
+<li>return value: <code>True</code> if <code>L1</code>과 <code>L2</code>가 같은 원소를 같은 개수만큼 가지면,
+<code>False</code> otherwise</li>
+</ul>
+<p><code>L1 == L2</code>는 list <code>L1, L2</code>의 내용이 똑같으면 <code>True</code>, 아님 <code>False</code>. List의
+원소들을 정렬해서 비교해보면 어떨까?</p>
 <pre><code class="language-python">def same(L1, L2):
     # ADD ADDITIONAL CODE HERE!
 
@@ -218,93 +249,203 @@ print(same([2,5,7,8], [2,3,4,5]))  # False
 print(same([1,1,2,3], [1,2,1,3]))  # True
 print(same([2,3,5,5], [2,2,5,3]))  # False
 </code></pre>
-<p><strong>5. <code>makeSet(L)</code></strong> — 리스트 <code>L</code>의 원소를 중복 없이 정확히 하나씩만 포함한, 정렬된
-리스트를 반환.</p>
+<p><strong>5.</strong> Write a function <code>makeSet</code>:</p>
+<ul>
+<li>input parameter: a list <code>L</code></li>
+<li>return value: the new sorted list which contains every element of <code>L</code>
+exactly once (L의 원소들을 중복없이 정확히 하나씩만 포함한, 정렬된 list)</li>
+</ul>
+<p>1, 2번 문제의 코드 형태와 유사. <code>L[i]</code>가 지금까지 만들어둔 <code>M</code>에 포함되지
+않을 때만 <code>append</code>하면 됨. <code>x in L</code>은 list <code>L</code>에 <code>x</code>가 포함되어 있으면
+<code>True</code>. <code>x not in L</code>이나 <code>not (x in L)</code>은 반대.</p>
 <pre><code class="language-python">def makeSet(L):
     # ADD ADDITIONAL CODE HERE!
 
-print(makeSet([1,1,3,5]))         # [1,3,5]
-print(makeSet([2,1,2,8,8]))       # [1,2,8]
-print(makeSet([3,4,5,6,7,3,4]))   # [3,4,5,6,7]
+print(makeSet([1,1,3,5]))        # [1,3,5]
+print(makeSet([2,1,2,8,8]))      # [1,2,8]
+print(makeSet([3,4,5,6,7,3,4]))  # [3,4,5,6,7]
 </code></pre>
-<p><strong>6. <code>sortId(L)</code></strong> — <code>ID</code>와 이름이 번갈아 나오는 문자열 리스트 <code>L</code>을, 학생 ID
-기준으로 정렬해서 반환.</p>
+<p><strong>6.</strong> Write a function <code>sortId</code>:</p>
+<ul>
+<li>input parameter: a list <code>L</code> of strings in which ID and names of students
+appear alternately</li>
+<li>return value: the sorted list of <code>L</code> according to students’ ID</li>
+</ul>
+<p>기본적인 형태는 1, 2번과 같이 <code>M = []</code>로 초기화하고 하나씩 더해가면서
+return할 list를 만들면 됨. <code>ID = L[::2]</code>로 하면 ID는 뭘까? (Python shell에서
+test해보길 추천) <code>y = L.index(x)</code>로 하면 <code>y</code>값은 <code>L</code>에 등장하는 첫번째 <code>x</code>의
+index (L에 <code>x</code>가 없으면 error뜨니 <code>x</code>가 <code>L</code>에 확실히 존재할 경우에만
+<code>.index(·)</code> 사용).</p>
 <pre><code class="language-python">def sortId(L):
     # ADD ADDITIONAL CODE HERE!
 
 print(sortId(["14-002","Kim","13-009","Lee","16-005","Na","15-003","Kim"]))
 # ['13-009','Lee','14-002','Kim','15-003','Kim','16-005','Na']
 </code></pre>
-<p><strong>7. <code>countA(s)</code></strong> — 문자열 <code>s</code>에서 <code>"A"</code>의 개수를 반환.</p>
+<p><strong>7.</strong> Write a function <code>countA</code>:</p>
+<ul>
+<li>input parameter: a string <code>s</code></li>
+<li>return value: the number of <code>"A"</code> in the string <code>s</code></li>
+</ul>
+<p>다음을 이용: Counter pattern의 for loop —</p>
+<pre><code class="language-python">counter = 0
+for i in range(len(s)):
+    if some_condition_on(s[i]):
+        counter += 1
+return counter
+</code></pre>
+<p>String comparison operation <code>==</code>를 이용하여 boolean expression 만들기:
+<code>s[i] == "A"</code>.</p>
 <pre><code class="language-python">def countA(s):
     # ADD ADDITIONAL CODE HERE!
 
-print(countA("AbAA"))          # 3
-print(countA("bcdAAAdfAA"))    # 5
-print(countA("abc"))           # 0
+print(countA("AbAA"))        # 3
+print(countA("bcdAAAdfAA"))  # 5
+print(countA("abc"))         # 0
 </code></pre>
-<p><strong>8. <code>countChar(s, c)</code></strong> — 문자열 <code>s</code>에서 문자 <code>c</code>(길이 1인 문자열)의 개수를 반환.</p>
+<p><strong>8.</strong> Write a function <code>countChar</code>:</p>
+<ul>
+<li>input parameter: a string <code>s</code> and a character <code>c</code> (character는 길이가 1인
+문자열, e.g. <code>"a"</code>)</li>
+<li>return value: the number of <code>c</code> in the string <code>s</code></li>
+</ul>
 <pre><code class="language-python">def countChar(s, c):
     # ADD ADDITIONAL CODE HERE!
 
-print(countChar("AbAA","b"))          # 1
-print(countChar("AbAA","A"))          # 3
-print(countChar("DbDD","D"))          # 3
-print(countChar("bcdAAAdfAA","A"))    # 5
-print(countChar("abc","A"))           # 0
+print(countChar("AbAA","b"))        # 1
+print(countChar("AbAA","A"))        # 3
+print(countChar("DbDD","D"))        # 3
+print(countChar("bcdAAAdfAA","A"))  # 5
+print(countChar("abc","A"))         # 0
 </code></pre>
-<p><strong>9. <code>reverse(s)</code></strong> — 문자열 <code>s</code>를 뒤집은 문자열을 반환.</p>
+<p><strong>9.</strong> Write a function <code>reverse</code>:</p>
+<ul>
+<li>input parameter: a string <code>s</code></li>
+<li>return value: the reversed string of <code>s</code> (s를 뒤집어서 얻은 string)</li>
+</ul>
+<p><code>""</code>로 초기화한 후 <code>+</code>로 문자를 하나씩 붙여나가면서 새로운 string을 만드는
+패턴:</p>
+<pre><code class="language-python">r = ""
+for i in range(len(s)):
+    r = r + ??
+return r
+</code></pre>
+<p><code>s</code>의 문자들을 가장 뒤에서부터 <code>r</code>에 붙여나가면 됨.</p>
 <pre><code class="language-python">def reverse(s):
     # ADD ADDITIONAL CODE HERE!
 
-print(reverse("abc"))     # cba
-print(reverse("abcDF"))   # FDcba
-print(reverse("abcd"))    # dcba
+print(reverse("abc"))    # cba
+print(reverse("abcDF"))  # FDcba
+print(reverse("abcd"))   # dcba
 </code></pre>
-<p><strong>10. <code>delete(s, c)</code></strong> — 문자열 <code>s</code>에서 문자 <code>c</code>를 모두 제거한 문자열을 반환.</p>
+<p><strong>10.</strong> Write a function <code>delete</code>:</p>
+<ul>
+<li>input parameter: a string <code>s</code> and a character <code>c</code></li>
+<li>return value: the string obtained by removing all occurrences of <code>c</code> in
+<code>s</code> (s에서 c를 모두 제거하여 얻은 string)</li>
+</ul>
+<p>앞 문제와 유사한 코드 형태로 만들면 됨. <code>s</code>의 문자들을 앞에서부터 <code>r</code>에
+붙여나가되 <code>s[i] != c</code>일 때만 붙이면 됨 (for 루프 내부에 if 구문 필요).</p>
 <pre><code class="language-python">def delete(s, c):
     # ADD ADDITIONAL CODE HERE!
 
-print(delete("abc","a"))          # bc
-print(delete("abcDFabc","c"))     # abDFab
-print(delete("abcdddd","d"))      # abc
+print(delete("abc","a"))       # bc
+print(delete("abcDFabc","c"))  # abDFab
+print(delete("abcdddd","d"))   # abc
 </code></pre>
-<p><strong>11. <code>replace(s, c, to)</code></strong> — 문자열 <code>s</code>에서 문자 <code>c</code>를 전부 <code>to</code>로 교체한 문자열을
-반환.</p>
+<p><strong>11.</strong> Write a function <code>replace</code>:</p>
+<ul>
+<li>input parameter: a string <code>s</code>, a character <code>c</code>, and a string <code>to</code></li>
+<li>return value: the string obtained by replacing all occurrences of <code>c</code> in
+<code>s</code> with <code>to</code> (s에서 c를 모두 to로 교체하여 얻은 string)</li>
+</ul>
+<p><code>s</code>의 문자들을 앞에서부터 <code>r</code>에 붙여나가되 <code>s[i] == c</code>일 때는 <code>s[i]</code> 대신에
+<code>to</code>를 붙이고 아니면 <code>s[i]</code>를 그대로 붙이면 됨 (for 루프 내부에 if-else
+구문 필요).</p>
 <pre><code class="language-python">def replace(s, c, to):
     # ADD ADDITIONAL CODE HERE!
 
-print(replace("abc","a","b"))          # bbc
-print(replace("abcDFabc","c","DD"))    # abDDDFabDD
-print(replace("abcdddd","d","fg"))     # abcfgfgfgfg
+print(replace("abc","a","b"))        # bbc
+print(replace("abcDFabc","c","DD"))  # abDDDFabDD
+print(replace("abcdddd","d","fg"))   # abcfgfgfgfg
 </code></pre>
-<p><strong>12. <code>firstStr(s1, s2, s3)</code></strong> — 세 문자열 중 사전순으로 가장 앞서는 문자열을
-반환.</p>
+<p><strong>12.</strong> Write a function <code>firstStr</code>:</p>
+<ul>
+<li>input parameter: three strings <code>s1, s2, s3</code></li>
+<li>return value: the lexicographically smallest of the three strings (사전
+순서로 가장 먼저 나오는 string)</li>
+</ul>
+<p>String에 대한 비교연산자 <code>&lt;</code>의 의미는 무엇? <code>"abcde" &lt; "acbde"</code>는 boolean
+expression으로 값은 <code>True</code>. <code>"acbde" &lt; "abcde"</code>는 boolean expression으로 값은
+<code>False</code>.</p>
 <pre><code class="language-python">def firstStr(s1, s2, s3):
     # ADD ADDITIONAL CODE HERE!
 
-print(firstStr("abcde","deabc","abc"))    # abc
-print(firstStr("bcde","ebcd","bedc"))     # bcde
-print(firstStr("abcde","bcd","abcd"))     # abcd
-print(firstStr("cde","abced","bcd"))      # abced
+print(firstStr("abcde","deabc","abc"))  # abc
+print(firstStr("bcde","ebcd","bedc"))   # bcde
+print(firstStr("abcde","bcd","abcd"))   # abcd
+print(firstStr("cde","abced","bcd"))    # abced
 </code></pre>
 <h3 id="optional-problems"><a class="header" href="#optional-problems">Optional Problems</a></h3>
-<p><em>필수 문제와 달리 제출/검사 대상은 아니지만 도움이 되므로 시간이 남으면
-시도해볼 것을 권장 (대부분 기출문제).</em></p>
-<p><strong>13. <code>factorize(n)</code></strong> — 2 이상의 정수 <code>n</code>의 소인수를 오름차순으로 정렬한 리스트를
-반환.</p>
+<p><em>필수 문제와 달리 제출/검사 대상은 아니지만, 큰 도움이 되므로 시간이 남으면
+모두 시도해보는 것을 권합니다 (대부분 기출문제입니다).</em></p>
+<p><strong>13.</strong> Write a function <code>factorize</code>:</p>
+<ul>
+<li>input parameter: a positive integer <code>n</code> (<code>n &gt;= 2</code>)</li>
+<li>return value: the list of prime factors of <code>n</code> sorted in increasing
+order — e.g. <code>factorize(504)</code> returns <code>[2,3,7]</code> since \(504 = 2^3 \cdot
+3^2 \cdot 7\)</li>
+</ul>
 <pre><code class="language-python">print(factorize(504))  # [2, 3, 7]
 </code></pre>
-<p><strong>14. <code>fraction(numer, denom)</code></strong> — 두 양의 정수 <code>numer</code>, <code>denom</code>이 주어질 때, 유리수
-<code>numer/denom</code>의 연분수(continued fraction) 표현 <code>[a1, a2, ..., an]</code>을 반환.</p>
+<p><strong>14.</strong> <em>(1학기 Week07 P25.py에서 다루었던 문제로, <code>n</code> 값을 알려주지 않아
+리스트의 길이를 미리 알 수 없도록 변경)</em></p>
+<p>A finite continued fraction is an expression of the form
+\[a_1 + \cfrac{1}{a_2 + \cfrac{1}{a_3 + \cfrac{1}{\ddots + \cfrac{1}{a_n}}}}\]
+where \(a_1,a_2,\ldots,a_n\) are integers satisfying \(a_2,\ldots,a_{n-1}
+\ge 1\) and \(a_n \ge 2\). We express this continued fraction as the
+list <code>[a1,a2,...,an]</code>. Every rational number has a unique such
+representation — e.g. \(\frac{415}{93} = 4 + \cfrac{1}{2+\cfrac{1}{6+
+\frac17}}\), i.e. <code>[4,2,6,7]</code>.</p>
+<p>Write a function <code>fraction</code>:</p>
+<ul>
+<li>input parameter: two positive integers <code>numer</code> and <code>denom</code></li>
+<li>return value: the list <code>[a1,a2,...,an]</code> representing the unique continued
+fraction of <code>numer/denom</code> — e.g. if <code>numer=415</code>, <code>denom=93</code>, the list
+<code>[4,2,6,7]</code> is returned</li>
+</ul>
 <pre><code class="language-python">print(fraction(415, 93))  # [4, 2, 6, 7]
 </code></pre>
-<p><strong>15. <code>composition(n)</code></strong> — 함수 f(n)을 “n의 각 자릿수를 제곱해서 더한 값“으로 정의할
-때, 주어진 정수 <code>n</code>(2 ≤ n ≤ 10억)에 대해 f를 k번 반복 적용한 값이 1이 되는 최소의
-양의 정수 <code>k</code>를 반환 (그런 <code>k</code>가 없으면 <code>None</code>).</p>
-<p><strong>16. <code>minCost(heights, k)</code></strong> — 키가 정렬된 리스트 <code>heights</code>를 인접한 <code>k</code>개 조로
-나눌 때, 각 조의 비용(키의 합 + 그 조 내 키의 최댓값−최솟값)의 총합을 최소화한
-값을 반환.</p>
+<p><strong>15.</strong> Define a function \(f: \mathbb{N} \to \mathbb{N}\) by: <code>f(n)</code> = n의
+각 digit를 제곱하여 더한 값. 이 문제에서는 주어진 임의의 <code>n</code>에 대해
+\(f^k(n) = \underbrace{f(f(\cdots f(n)))}_{k \text{ times}} = 1\)이 되는 최소의
+양의 정수 <code>k</code>를 찾는 것을 목표로 하는데, 예를 들어 <code>n=19</code>인 경우:
+<code>f(19)=1²+9²=82</code>, <code>f(82)=8²+2²=68</code>, <code>f(68)=6²+8²=100</code>, <code>f(100)=1²+0²+0²=1</code>이므로
+<code>k=4</code>가 된다.</p>
+<p>Write a function <code>composition</code>:</p>
+<ul>
+<li>input: 정수 <code>n</code> (<code>2 &lt;= n &lt;= 1,000,000,000</code>)</li>
+<li>return value: \(f^k(n) = 1\)이 되는 최소의 양의 정수 <code>k</code> (이런 <code>k</code>가
+존재하지 않으면 <code>None</code>)
+<ul>
+<li>힌트: 수열 <code>n, f(n), f²(n), f³(n), ...</code>이 무한히 증가할 수 없음을 쉽게
+보일 수 있다 (자세한 논증은 원본 문제지 참고).</li>
+</ul>
+</li>
+</ul>
+<p><strong>16.</strong> 다음과 같이 <code>n</code>명의 학생 <code>S1,S2,...,Sn</code>을 <code>k</code>(<code>≤n</code>)개의 조로
+분할하려고 한다: 각 학생 <code>Si</code>의 키는 <code>hi</code>이며 <code>h1 &lt;= h2 &lt;= ... &lt;= hn</code>이다.
+이들을 <code>k</code>개의 조로 분할하고 각 조마다 동일한 규격의 교복을 맞추려고 한다.
+학생 <code>Si1,...,Sip</code>(<code>i1&lt;...&lt;ip</code>)로 구성된 조의 교복 제작 비용은
+<code>(sum of h_ij) + (h_ip - h_i1)</code>이다(키의 총합에 키의 최댓값-최솟값 차이를
+더한 값). 전체 학생들의 교복 제작 총 비용은 각 조에 대한 비용을 단순히
+합한 것과 같다. 학교는 전체 교복 제작 비용을 최소화하도록 <code>k</code>개의 조로
+분할하려고 한다. 각 조는 인접해 있는 학생들로 구성된다.</p>
+<p>Write a function <code>minCost</code>:</p>
+<ul>
+<li>입력: 리스트 <code>[h1,h2,...,hn]</code>와 양의 정수 <code>k</code> (<code>≤ n</code>)</li>
+<li>리턴값: 전체 교복 제작 비용의 최솟값</li>
+</ul>
 <pre><code class="language-python">print(minCost([1,3,5,6,10], 3))  # 28
 </code></pre>
 

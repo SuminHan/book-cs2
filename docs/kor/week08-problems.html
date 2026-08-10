@@ -38,7 +38,7 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-72819e89.js";
+            window.path_to_searchindex_js = "../searchindex-153fd64b.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../toc-516cd8df.js"></script>
@@ -201,19 +201,72 @@
         dy = self.y - p.y
         return (dx*dx + dy*dy) ** 0.5
     def add(self, p):                  # pure function
-        return Point(self.x + p.x, self.y + p.y)
+        x = self.x + p.x
+        y = self.y + p.y
+        return Point(x, y)
 </code></pre>
 <h3 id="필수-문제"><a class="header" href="#필수-문제">필수 문제</a></h3>
-<p><strong>1. <code>Circle</code> 클래스</strong> — 중심(<code>Point</code>)과 반지름을 갖는 원.</p>
+<p><strong>1.</strong> Write an object type <code>Circle</code> for circles and some functions that
+work on <code>Circle</code>.</p>
+<ol>
+<li>Write a function <code>__init__</code> (<strong>modifier</strong>) that creates an object of
+<code>Circle</code> class:
 <ul>
-<li><code>__init__(self, c, r)</code> (modifier) — <code>center</code>, <code>radius</code> 상태 변수 초기화</li>
-<li><code>__str__(self)</code> (pure) — <code>"(center,radius)"</code> 형태, 예: <code>"((0,1) , 5)"</code></li>
-<li><code>area(self)</code> (pure) — 넓이 (<code>math.pi</code> 사용)</li>
-<li><code>getRadius(self)</code> / <code>getCenter(self)</code> (pure)</li>
-<li><code>setRadius(self, r)</code> (modifier)</li>
-<li><code>moveTo(self, x, y)</code> (modifier) — 중심을 <code>Point(x,y)</code>로 이동</li>
-<li><code>move(self, dx, dy)</code> (modifier) — 중심을 <code>(dx,dy)</code>만큼 이동</li>
+<li>input parameter: <code>self</code>, a <code>Point</code> object <code>c</code>, and an integer <code>r</code></li>
+<li>action: create state variables <code>center</code>(원의 중심) and
+<code>radius</code>(반지름)이고 initialize them to <code>c</code>와 <code>r</code>, respectively</li>
+<li>return value: 없음</li>
 </ul>
+</li>
+<li>Write a function <code>__str__</code> (<strong>pure function</strong>) that returns a string
+for the <code>print</code> command:
+<ul>
+<li>input parameter: <code>self</code></li>
+<li>return value: the string in the following format:
+<code>"(center,radius)"</code>, e.g. <code>"((0,1) , 5)"</code></li>
+</ul>
+</li>
+<li>Write a function <code>area</code> (<strong>pure function</strong>):
+<ul>
+<li>input parameter: <code>self</code></li>
+<li>return value: the area of <code>self</code> (use <code>math.pi</code> for \(\pi\))</li>
+</ul>
+</li>
+<li>Write a function <code>getRadius</code> (<strong>pure function</strong>):
+<ul>
+<li>input parameter: <code>self</code></li>
+<li>return value: the radius of <code>self</code></li>
+</ul>
+</li>
+<li>Write a function <code>getCenter</code> (<strong>pure function</strong>):
+<ul>
+<li>input parameter: <code>self</code></li>
+<li>return value: the center of <code>self</code> (as <code>Point</code> object)</li>
+</ul>
+</li>
+<li>Write a function <code>setRadius</code> (<strong>modifier</strong>):
+<ul>
+<li>input parameter: <code>self</code> and an integer <code>r</code></li>
+<li>action: change the radius of <code>self</code> to <code>r</code></li>
+<li>return value: 없음</li>
+</ul>
+</li>
+<li>Write a function <code>moveTo</code> (<strong>modifier</strong>):
+<ul>
+<li>input parameter: <code>self</code> and two integers <code>x, y</code></li>
+<li>action: move the center of <code>self</code> to <code>Point(x,y)</code></li>
+<li>return value: 없음</li>
+</ul>
+</li>
+<li>Write a function <code>move</code> (<strong>modifier</strong>):
+<ul>
+<li>input parameter: <code>self</code> and two integers <code>dx, dy</code></li>
+<li>action: move the center of <code>self</code> by the amount of <code>(dx,dy)</code> (원중심의
+x/y 좌표를 <code>dx,dy</code>만큼 이동)</li>
+<li>return value: 없음</li>
+</ul>
+</li>
+</ol>
 <pre><code class="language-python">class Circle:
     def __init__(self, c, r):
         # ADD ADDITIONAL CODE HERE!
@@ -248,17 +301,85 @@ def test():
     print(c1)              # ((4,5) , 5)
 test()
 </code></pre>
-<p><strong>2. <code>Rational</code> 클래스</strong> — 분자/분모로 표현되는 유리수.</p>
+<p><strong>2.</strong> A rational number is a number that can be represented as the ratio
+of two integers. For example, <code>2/3</code> is a rational number, where <code>2</code> is a
+<strong>numerator</strong>(분자) and <code>3</code> is a <strong>denominator</strong>(분모). (<code>7</code>은 분모가
+암묵적으로 1인 rational number로 간주.)</p>
+<p>Write an object type <code>Rational</code> for rational numbers and some functions
+that work on the class <code>Rational</code>.</p>
+<ol>
+<li>Write a function <code>__init__</code> (<strong>modifier</strong>) that creates an object of
+<code>Rational</code> class:
 <ul>
-<li><code>__init__(self, n, d)</code> (modifier) — <code>numerator</code>, <code>denominator</code> 초기화</li>
-<li><code>__str__(self)</code> (pure) — <code>"7/24"</code> 형태</li>
-<li><code>toFloat(self)</code> (pure) — float 값 반환</li>
-<li><code>negate(self)</code> (modifier) — 부호 반전(분자 부호만 바꾸면 됨)</li>
-<li><code>invert(self)</code> (modifier) — 역수로 변경(분자·분모 교환)</li>
-<li><code>reduce(self)</code> (modifier) — 기약분수로 변환(주어진 <code>gcd</code> 함수 활용)</li>
-<li><code>add(self, r)</code> (pure) — 덧셈 결과(기약분수)를 새 <code>Rational</code>로 반환</li>
-<li><code>mul(self, r)</code> (pure) — 곱셈 결과(기약분수)를 새 <code>Rational</code>로 반환</li>
+<li>input parameter: <code>self</code> and two integers <code>n</code> and <code>d</code></li>
+<li>action: create state variables <code>numerator</code>(분자) and
+<code>denominator</code>(분모) and initialize them to <code>n</code>과 <code>d</code>, respectively</li>
+<li>return value: 없음</li>
 </ul>
+</li>
+<li>Write a function <code>__str__</code> (<strong>pure function</strong>) that returns a string
+for the <code>print</code> command:
+<ul>
+<li>input parameter: <code>self</code></li>
+<li>return value: the string in the following format: <code>"7/24"</code></li>
+</ul>
+</li>
+<li>Write a function <code>toFloat</code> (<strong>pure function</strong>):
+<ul>
+<li>input parameter: <code>self</code></li>
+<li>return value: the float value of <code>self</code> (e.g. <code>0.29166666</code>)</li>
+</ul>
+</li>
+<li>Write a function <code>negate</code> (<strong>modifier</strong>):
+<ul>
+<li>input parameter: <code>self</code></li>
+<li>action: reverse the sign of <code>self</code> (hint: reverse the sign of the
+numerator)</li>
+<li>return value: 없음</li>
+</ul>
+</li>
+<li>Write a function <code>invert</code> (<strong>modifier</strong>):
+<ul>
+<li>input parameter: <code>self</code></li>
+<li>action: invert <code>self</code> (hint: swap the numerator and denominator)</li>
+<li>return value: 없음</li>
+</ul>
+</li>
+<li>Write a function <code>reduce</code> (<strong>modifier</strong>):
+<ul>
+<li>input parameter: <code>self</code></li>
+<li>action: convert <code>self</code> to the irreducible fraction(최대공약수로
+약분) (hint: make use of the provided function <code>gcd</code>)</li>
+<li>return value: 없음</li>
+</ul>
+</li>
+<li>Write a function <code>add</code> (<strong>pure function</strong>):
+<ul>
+<li>input parameter: <code>self</code> and <code>r</code> (both are <code>Rational</code> objects)</li>
+<li>return value: a new <code>Rational</code> object that represents the sum of
+<code>self</code> and <code>r</code> (in the form of irreducible fraction)
+<ul>
+<li>반드시 덧셈 결과를 최대공약수로 약분</li>
+<li><strong>Pure function</strong> 형태로 만들어야 하므로 <code>self</code>와 <code>r</code>은
+변경하면 안됨</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Write a function <code>mul</code> (<strong>pure function</strong>):
+<ul>
+<li>input parameter: <code>self</code> and <code>r</code> (both are <code>Rational</code> objects)</li>
+<li>return value: a new <code>Rational</code> object that represents the product of
+<code>self</code> and <code>r</code> (in the form of irreducible fraction)
+<ul>
+<li>반드시 곱셈 결과를 최대공약수로 약분</li>
+<li><strong>Pure function</strong> 형태로 만들어야 하므로 <code>self</code>와 <code>r</code>은
+변경하면 안됨</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
 <pre><code class="language-python">def gcd(a, b):
     if b &gt; a:
         a, b = b, a
@@ -305,27 +426,186 @@ def test():
 test()
 </code></pre>
 <h3 id="optional-problems"><a class="header" href="#optional-problems">Optional Problems</a></h3>
-<p><em>필수 문제와 달리 제출/검사 대상은 아니지만 도움이 되므로 시간이 남으면
-시도해볼 것을 권장 (대부분 기출문제).</em></p>
-<p><strong>3. <code>Rectangle</code> 클래스</strong> — 두 <code>Point</code>(대각 꼭짓점)로 정의되는, 축에 평행한
-직사각형.</p>
+<p><em>필수 문제와 달리 제출/검사 대상은 아니지만, 큰 도움이 되므로 시간이 남으면
+모두 시도해보는 것을 권합니다 (대부분 기출문제입니다).</em></p>
+<p><strong>3.</strong> Write a class <code>Rectangle</code> for representing rectangles:</p>
 <ul>
-<li><code>get_min_x/y</code>, <code>get_max_x/y</code> (pure)</li>
-<li><code>contains(self, point3)</code> (pure) — 경계 포함, 내부에 있으면 <code>True</code></li>
-<li><code>area(self)</code> (pure)</li>
-<li><code>isEqual(self, other)</code> (pure) — 같은 위치의 직사각형이면 <code>True</code>(꼭짓점 순서
-달라도 무관)</li>
+<li>Each <code>Rectangle</code> object is made up of two <code>Point</code> objects <code>point1</code> and
+<code>point2</code> (생성되는 직사각형은 가로, 세로가 각각 x축, y축에 평행하고,
+<code>point1</code>과 <code>point2</code>는 직사각형의 대각에 위치하는 두 꼭짓점이라 가정).
+<code>Point</code> class is already defined.</li>
+<li>Fill the body of each function in the class <code>Rectangle</code>. The exact
+requirement of each function is given as comment.
+<ul>
+<li><code>min(a,b)</code>와 <code>max(a,b)</code>를 사용하여 두 수중 최대/최소값을 구하면 됨</li>
 </ul>
-<p><strong>4. <code>belt(L, M)</code></strong> — 반지름 리스트 <code>L</code>(원기둥 \(C_0, \ldots, C_{n-1}\))과 연결 형태
-리스트 <code>M</code>(벨트 \(B_0, \ldots, B_{n-2}\); <code>1</code>=안 꼬임, <code>-1</code>=8자로 꼬임)이 주어질 때,
-\(C_0\)을 시계방향으로 1회전시켰을 때 \(C_1, \ldots, C_{n-1}\)의 회전수(부호 있음,
-시계방향이 양수) 총합을 <code>Rational</code> 객체로 반환.</p>
+</li>
+</ul>
+<pre><code class="language-python">class Rectangle:
+    def __init__(self, point1, point2):
+        # Set two instance variables --&gt; already completed.
+        # We assume that all parameters are valid.
+        # (point1, point2는 항상 직사각형을 생성할 수 있는 대각에 있는
+        #  두 꼭짓점으로 주어진다고 가정한다.)
+        self.point1 = point1
+        self.point2 = point2
+
+    def __str__(self):
+        # make a string format as "[(1,1),(4,5)]" style
+        # Use the function in the Point class
+        # ADD ADDITIONAL CODE HERE!
+
+    def get_min_x(self):
+        # return the minimum x-value among points of the rectangle
+        # ADD ADDITIONAL CODE HERE!
+
+    def get_min_y(self):
+        # return the minimum y-value among points of the rectangle
+        # ADD ADDITIONAL CODE HERE!
+
+    def get_max_x(self):
+        # return the maximum x-value among points of the rectangle
+        # ADD ADDITIONAL CODE HERE!
+
+    def get_max_y(self):
+        # return the maximum y-value among points of the rectangle
+        # ADD ADDITIONAL CODE HERE!
+
+    def contains(self, point3):
+        # return True if the rectangle contains point3, otherwise False
+        # if the point3 is on the edge of the rectangle, return True
+        # ADD ADDITIONAL CODE HERE!
+
+    def area(self):
+        # return the area of rectangle
+        # ADD ADDITIONAL CODE HERE!
+
+    def isEqual(self, other):
+        # return True when the rectangle is the same as other
+        # r1 = Rectangle(Point(5,0), Point(2,3))
+        # r2 = Rectangle(Point(2,0), Point(5,3))
+        # r1.isEqual(r2) will return True
+        # 즉 두 사각형이 같은 좌표 상에 위치하면 True를 return 한다.
+        # ADD ADDITIONAL CODE HERE!
+
+def test():
+    p1, p2, p3, p4 = Point(1,1), Point(4,5), Point(5,0), Point(2,3)
+    p5, p6, p7, p8 = Point(4,3), Point(0,0), Point(2,0), Point(5,3)
+    r1, r2, r3 = Rectangle(p1,p2), Rectangle(p3,p4), Rectangle(p7,p8)
+
+    print(r1, r2, r3)     # [(1,1),(4,5)] [(5,0),(2,3)] [(2,0),(5,3)]
+    print(r1.area())      # 12
+    print(r2.area())      # 9
+    print(r3.area())      # 9
+    print(r1.contains(p4))  # True
+    print(r1.contains(p5))  # True
+    print(r2.contains(p6))  # False
+    print(r1.isEqual(r3))   # False
+    print(r2.isEqual(r3))   # True
+    print(r1.isEqual(r1))   # True
+test()
+</code></pre>
+<p><strong>4.</strong> 위와 같이 벨트 \(B_0, B_1, \ldots, B_{n-2}\)들로 연결된 원기둥
+\(C_0, C_1, \ldots, C_{n-1}\)들을 고려하자(\(n \ge 2\)):</p>
+<ul>
+<li>원기둥 \(C_0, C_1, \ldots, C_{n-1}\)는 왼쪽부터 오른쪽으로 차례대로
+배치되어 있는데, 중심이 축으로 고정되어 자유롭게 회전할 수 있다.</li>
+<li>각 벨트 \(B_i\)는 원기둥 \(C_i\)와 \(C_{i+1}\)을 연결한다.</li>
+<li>한쪽 원기둥이 회전하게 되면 벨트로 연결된 다른 원기둥도 회전하게 된다.</li>
+<li>두 원기둥의 반지름의 차이에 따라 두 원기둥의 회전수가 서로 다를 수
+있다.</li>
+<li>벨트가 꼬이지 않고 0자 형태로 연결될 수 있고, 8자 형태로 한번 꼬여서
+연결될 수도 있다. 이 형태에 따라 두 원기둥의 회전방향은 같을 수도 있고
+반대 방향일 수도 있다.</li>
+</ul>
+<p>위 그림의 예에서 \(C_0,C_1,C_2,C_3\)의 반지름이 각각 10,5,1,2라고
+가정하자: \(C_0\)을 시계방향으로 1회전시키면 \(C_1\)은 시계방향으로
+<code>10/5 = 2</code>회전하게 된다. \(C_1\)을 시계방향으로 1회전시키면 \(C_2\)는
+반시계방향으로 <code>5/1 = 5</code>회전하게 된다(\(B_1\)이 8자 형태로 꼬여서
+\(C_1\)과 \(C_2\)를 연결하므로 두 원기둥의 회전방향은 서로 반대).
+\(C_2\)를 시계방향으로 1회전시키면 \(C_3\)는 시계방향으로
+<code>1/2</code>회전하게 된다.</p>
+<p>이 문제에서는 \(C_0\)을 시계방향으로 1회전시켰을 때, \(C_1, C_2,
+\ldots, C_{n-1}\)의 회전수의 총합을 계산하는 것을 목표로 한다.</p>
+<p>다음과 같이 정의된 함수 <code>belt</code>를 완성하라:</p>
+<ul>
+<li>입력: 원기둥 \(C_0,C_1,\ldots,C_{n-1}\)의 반지름을 나타내는 정수
+리스트 <code>L</code>과 벨트 \(B_0,B_1,\ldots,B_{n-2}\)의 연결 형태를 나타내는
+정수 리스트 <code>M</code>
+<ul>
+<li><code>L[i]</code>는 원기둥 \(C_i\)의 반지름을 나타냄</li>
+<li><code>M[i] = 1</code>(벨트 \(B_i\)가 꼬이지 않고 0자 형태로 연결된 경우),
+<code>M[i] = -1</code>(벨트 \(B_i\)가 한번 꼬여서 8자 형태로 연결된 경우)</li>
+<li>위 예의 경우 <code>L=[10,5,1,2]</code>이고 <code>M=[1,-1,1]</code></li>
+</ul>
+</li>
+<li>리턴값: \(C_0\)을 시계방향으로 1회전시켰을 때, \(C_1,C_2,\ldots,
+C_{n-1}\)의 회전수의 총합을 나타내는 <code>Rational</code> object
+<ul>
+<li>\(C_i\)가 반시계방향으로 회전하는 경우 회전수의 부호를 음으로
+하고, 시계방향으로 회전하면 양으로 한다. 위 예의 경우 \(C_1, C_2,
+C_3\)의 회전 수는 각각 <code>2, -10, -5</code>이다.</li>
+<li>위 예의 경우 <code>2-10-5 = -13</code>을 나타내는 <code>Rational(-13,1)</code>을 리턴</li>
+</ul>
+</li>
+</ul>
+<p><em>본 문제의 의도는 class/object를 제대로 사용할 수 있는 지를 평가하는
+것으로, 주어진 <code>Rational</code> class를 변경/추가없이 사용하고, 반드시
+<code>Rational</code> object를 return해야 하며 <code>float</code>나 임의로 정의한 object를
+return하면 안된다.</em></p>
 <pre><code class="language-python">print(belt([10,5,1,2], [1,-1,1]))  # Rational(-13,1)
 </code></pre>
-<p><strong>5. <code>gaussian_rational(a, b)</code></strong> — 6주차의 <code>gaussian_elimination</code>을 실수(float)
-대신 <code>Rational</code> 객체로 수행하여, 부동소수점 오차 없이 정확한 해를 구함. 입력은
-6주차 1번 문제와 같은 형태(정수), 반환값은 <code>Rational</code> 객체로 이루어진 리스트
-(해가 없거나 무한히 많으면 <code>None</code>).</p>
+<p><strong>5.</strong> 6주차에 다루었던 Gaussian elimination을 사용하여 일차연립방정식의
+해를 계산할 때, 해가 정수값일 경우에도 <code>1.9999..</code>나 <code>2.00001..</code>과 같이
+정확하게 계산되지 않음을 경험했을 것이다. 특히, 7주차 3번 문제를
+시도해봤다면 거대한 규모의 방정식을 다룰 때 오차가 매우 심하게 발생함을
+경험했을 것이다.</p>
+<p>이런 문제점이 야기되는 이유는:</p>
+<ul>
+<li>Gaussian elimination을 수행하는 과정에서 나눗셈 연산이 적용되어
+<code>float</code> 값이 발생하는데,</li>
+<li><code>float</code> 값에 대한 사칙연산은 오차가 있으며 연산을 여러 번 거치면서
+오차가 매우 큰 수준으로 누적되기 때문이다.</li>
+</ul>
+<p>연립방정식의 계수가 정수로 주어진 경우 계산과정을 유리수에서 수행하여
+오차없이 정확한 값을 계산할 수 있는데, Gaussian elimination에서 <code>float</code>
+값으로 다루어지는 <code>a[i][j], b[i], x[i]</code>들을 8주차에 다루었던 <code>Rational</code>
+object로 표현하고, 이들 값에 대한 연산들을 <code>Rational</code> class 내부에
+정의된 함수들을 사용하여 수행함으로써 <code>a[i][j], b[i], x[i]</code>들을
+<code>Rational</code> object로 유지하고, 최종적으로 <code>x</code>도 <code>Rational</code> object의
+리스트로 계산하여 리턴할 수 있고 이렇게 하면 오차가 발생하지 않는다.
+예를 들어,</p>
+<ul>
+<li>Gaussian elimination을 수행하기 직전에 정수값인 <code>a[i][j]</code>와 <code>b[i]</code>들을
+<code>Rational</code> object로 바꿔주고(템플릿 코드에 이미 구현되어 있음)</li>
+<li><code>c = a[i][p]/a[p][p]</code>는 <code>c = a[i][p].div(a[p][p])</code>로 변경하고</li>
+<li><code>a[p][p] == 0</code>은 <code>a[p][p].equal(Rational(0,1))</code>로 변경하는</li>
+</ul>
+<p>등 <code>Rational</code> class 내부의 함수들을 이용하면 유리수에 대한 Gaussian
+elimination을 간단히 구현할 수 있을 것이다.</p>
+<p>다음과 같이 정의된 함수 <code>gaussian_rational</code>을 완성하라:</p>
+<ul>
+<li>입력: 6주차 1번 문제와 같은 형태 — <code>a[i][j]</code>와 <code>b[i]</code>는 정수로
+주어지는데, 템플릿 코드에 주어진 함수의 입구에서 이 값들을 바로
+<code>Rational</code> object로 변경함</li>
+<li>리턴값: 6주차 1번 문제와 같은 리스트 <code>x</code>를 계산하되 <code>float</code> 값 대신
+<code>Rational</code> object들로 이루어진 리스트
+<ul>
+<li>6주차 1번 문제와 마찬가지로 연립방정식의 해가 없거나 해가 무한히
+많이 존재하면 <code>None</code>을 리턴한다.</li>
+<li>분모가 1인 <code>Rational</code>의 경우 <code>print</code>하면 정수처럼 출력되는데, 이는
+<code>__str__</code> 함수에서 그렇게 되도록 정의했기 때문이다.</li>
+<li>분모가 1이라고 해서 이를 <code>toInt</code> 함수를 사용하여 정수로 변환하면
+안되고 <code>Rational</code> object 그대로 놔둬야 한다(<code>toInt</code> 함수는 이 문제가
+아니고 7주차 3번 문제에서 사용하기 위해 정의된 것이다).</li>
+</ul>
+</li>
+</ul>
+<p><em>8주차에 다룬 <code>Rational</code> class 내부의 함수들이 약간 바뀌고, 새로운
+함수들이 여러개 추가되었는데, 이들의 의미를 정확히 이해하고 이용하는
+것이 관건이다. 예를 들어, 4번 문제에서와 마찬가지로 두개의 <code>Rational</code>
+object <code>r1</code>과 <code>r2</code>가 같은 값을 나타내는 지를 판단하기 위해 <code>r1 == r2</code>를
+사용하면 의도와 다르게 작동하는데, <code>r1.equal(r2)</code>를 사용해야 한다.</em></p>
 <pre><code class="language-python">def gaussian_rational(a, b):
     # ADD ADDITIONAL CODE HERE!
 </code></pre>

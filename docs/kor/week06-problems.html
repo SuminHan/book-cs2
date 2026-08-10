@@ -38,7 +38,7 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-72819e89.js";
+            window.path_to_searchindex_js = "../searchindex-153fd64b.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../toc-516cd8df.js"></script>
@@ -182,9 +182,24 @@
                     <main>
                         <h1 id="problem-set"><a class="header" href="#problem-set">Problem Set</a></h1>
 <h3 id="필수-문제"><a class="header" href="#필수-문제">필수 문제</a></h3>
-<p><strong>1. <code>gaussian_elimination(a, b)</code></strong> — \(n \times n\) 행렬 <code>a</code>와 길이 \(n\) 리스트 <code>b</code>가
-주어질 때, \(a \cdot x = b\)의 유일한 해 <code>x</code>(길이 \(n\)의 float 리스트)를 반환. 해가
-없거나 무한히 많으면 <code>None</code>.</p>
+<p><strong>1.</strong> Write a function <code>gaussian_elimination</code>:</p>
+<ul>
+<li>input parameter: <code>a</code>와 <code>b</code>
+<ul>
+<li><code>a</code>: two-dimensional list of integers that represents an <code>n</code>-by-<code>n</code>
+matrix</li>
+<li><code>b</code>: list of <code>n</code> integers</li>
+</ul>
+</li>
+<li>return value: a length-<code>n</code> list <code>x</code> of float numbers where <code>x</code>
+represents the unique solution to the linear system of equations
+\(a \cdot x = b\)
+<ul>
+<li>return <code>None</code> if the system has no solution or infinitely many
+solutions</li>
+</ul>
+</li>
+</ul>
 <pre><code class="language-python">def gaussian_elimination(a, b):
     # ADD ADDITIONAL CODE HERE!
 
@@ -201,21 +216,86 @@ b = [4, 2, 36]
 print(gaussian_elimination(a, b))  # None
 </code></pre>
 <h3 id="optional-problems"><a class="header" href="#optional-problems">Optional Problems</a></h3>
-<p><em>필수 문제와 달리 제출/검사 대상은 아니지만 도움이 되므로 시간이 남으면
-시도해볼 것을 권장 (대부분 기출문제).</em></p>
-<p><strong>2. <code>inverse(a)</code></strong> — \(n \times n\) 정수 행렬 <code>a</code>의 역행렬(float 행렬 <code>b</code>,
-\(a \cdot b = I\))을 반환. 존재하지 않으면 <code>None</code>.</p>
+<p><em>필수 문제와 달리 제출/검사 대상은 아니지만, 큰 도움이 되므로 시간이 남으면
+모두 시도해보는 것을 권합니다 (대부분 기출문제입니다).</em></p>
+<p><strong>2.</strong> (수학 수업시간에 다루었을 <strong>matrix product</strong>의 정의를 상기: \(m
+\times p\) 행렬 <code>A</code>와 \(p \times n\) 행렬 <code>B</code>의 곱 \(A \cdot B\)는
+\(c_{ij} = \sum_{k=1}^{p} a_{ik}b_{kj}\)로 정의되는 \(m \times n\)
+행렬이다.)</p>
+<p>다음과 같이 정의된 함수 <code>inverse</code>를 완성하라:</p>
+<ul>
+<li>입력: <code>n</code>-by-<code>n</code> 행렬을 나타내는 2차원 정수 리스트 <code>a</code></li>
+<li>리턴값: 다음 방정식을 만족하는 2차원 <code>n×n</code> float 리스트 <code>b</code>(즉, <code>a</code>의
+역행렬): \(a \cdot b = I\) (단위행렬)
+<ul>
+<li>(이와 같은 행렬 <code>b</code>가 존재하지 않으면 <code>None</code>을 리턴)</li>
+</ul>
+</li>
+</ul>
+<p>Hint:</p>
+<ul>
+<li><code>b</code>의 각 열을 <code>gaussian_elimination</code>을 이용해 찾는 과정을 <code>n</code>번
+반복하면 된다.</li>
+<li><code>gaussian_elimination(a,b)</code>이 modifier(입력 리스트 자체를 변경하는
+함수, 6주차에 자세히 다룸)임에 유의해야 한다(이 함수의 코드를 잘
+살펴보면 2차원 리스트 <code>a</code>의 값을 변경한다). 따라서, <code>gaussian_ elimination(a,b)</code>를 여러번 호출할 경우 템플릿 파일에 제공된
+<code>copy2DList(a)</code> 함수를 이용하여 2차원 리스트 <code>a</code>를 통째로 복사하여
+새로운 2차원 리스트를 만들고 이를 <code>gaussian_elimination</code>으로 넘기는
+방식으로 구현해야 한다.</li>
+</ul>
 <pre><code class="language-python">def inverse(a):
     # ADD ADDITIONAL CODE HERE!
 </code></pre>
-<p><strong>3. <code>poly(L)</code></strong> — 길이 \(n\)인 정수 리스트 <code>L</code>이 어떤 \(n-1\)차 다항함수 \(f\)에 대해
-\(L = [f(0), f(1), \ldots, f(n-1)]\)을 나타낼 때, \(f(n)\)을 반환. 그런 \(f\)가 존재하지
-않거나 여러 개면 <code>None</code>.</p>
+<p><strong>3.</strong> 이 문제에서는 <code>n-1</code>차 다항함수 \(f: \mathbb{Z} \to \mathbb{Z}\)의
+함수값 \(f(0), f(1), \ldots, f(n-1)\)들이 주어졌을 때, <code>f(n)</code>을 계산하는
+것을 목표로 한다.</p>
+<p>다음과 같이 정의된 함수 <code>poly</code>를 완성하라:</p>
+<ul>
+<li>입력: 정수 리스트 <code>L</code>
+<ul>
+<li><code>n = len(L)</code>로 둘 때, 어떤 <code>n-1</code>차 다항함수 <code>f</code>가 존재하여, 각
+<code>L[i]</code>는 <code>f(i)</code>를 나타냄. 즉, <code>L = [f(0), f(1), ..., f(n-1)]</code></li>
+</ul>
+</li>
+<li>리턴값: <code>f(n)</code>
+<ul>
+<li>입력 조건을 만족하는 <code>n-1</code>차 다항함수 <code>f</code>가 존재하지 않거나 여러개
+존재할 경우에는 <code>None</code>을 리턴</li>
+</ul>
+</li>
+</ul>
+<p><em><code>gaussian_elimination</code>을 이용하여 <code>f</code>를 찾을 수 있다.</em></p>
 <pre><code class="language-python">def poly(L):
     # ADD ADDITIONAL CODE HERE!
 </code></pre>
-<p><strong>4. <code>classify(a, b)</code></strong> — 1번 문제와 같은 입력에 대해, 해가 유일하면 <code>0</code>, 해가
-없으면 <code>1</code>, 해가 무한히 많으면 <code>2</code>를 반환.</p>
+<p><strong>4.</strong> 1번 문제에서 다음 두 경우를 구별하지 않았는데(모두 <code>None</code>을
+리턴하도록 하였음), 이 문제에서는 이 두 경우도 구별하는 것을 목표로
+한다:</p>
+<ul>
+<li>방정식이 해를 가지지 않는 경우(inconsistent)와</li>
+<li>무한히 많은 해를 가지는 경우(consistent dependent)</li>
+</ul>
+<p>다음과 같이 정의된 함수 <code>classify</code>를 완성하라:</p>
+<ul>
+<li>입력: 1번 문제와 동일한 형태</li>
+<li>리턴값: <code>0</code>(해가 유일한 경우 — <code>0</code> 대신 방정식의 해를 리턴하지 않도록
+주의), <code>1</code>(해가 존재하지 않는 경우), <code>2</code>(해가 무한히 많은 경우)</li>
+</ul>
+<p>힌트:</p>
+<ul>
+<li>Forward elimination을 약간만 수정하면 된다(pivot 값이 0이 되는 경우
+row는 증가시키지 않고 column만 증가시켜 다음 pivot을 찾음).</li>
+<li>아래 형태의 연립 방정식에서 <code>b4 = b5 = 0</code>이면 무한히 많은 해를
+가지고, <code>b4, b5</code> 중 하나 이상이 non-zero면 해가 존재하지 않음을 수학
+수업시간에 배웠을 것이다:
+<pre><code>[1 1 1 1 1]   [x1]   [b1]
+[0 1 1 1 1]   [x2]   [b2]
+[0 0 0 0 1] · [x3] = [b3]
+[0 0 0 0 0]   [x4]   [b4]
+[0 0 0 0 0]   [x5]   [b5]
+</code></pre>
+</li>
+</ul>
 <pre><code class="language-python">def classify(a, b):
     # ADD ADDITIONAL CODE HERE!
 </code></pre>
