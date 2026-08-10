@@ -2,9 +2,10 @@
 
 KSA 정보과학2(CS2) 보충자료 — International 트랙과 국내반을 한 곳에 모은 mdBook.
 
-**Live:** https://smhanlab.com/Book-CS2/
+**Live:** https://smhanlab.com/book-cs2/
 (개인 계정 커스텀 도메인 하위로 자동 서빙됨 — 대소문자까지 저장소 이름과 정확히 일치해야 함.
-`suminhan.github.io/Book-CS2/`로 접속해도 자동으로 위 주소로 리다이렉트됨)
+저장소 이름을 `Book-CS2`→`book-cs2`로 rename해서 URL도 소문자로 통일함.
+`suminhan.github.io/book-cs2/`로 접속해도 자동으로 위 주소로 리다이렉트됨)
 
 이 저장소는 수업을 대체하지 않는 보충 노트다. 원 강의자료의 원저작자는
 각각 다르며(윤상현·김호숙 선생님 원작 포함), 여기서는 정리·보완만 담당한다.
@@ -36,7 +37,7 @@ GitHub Pages: **Settings → Pages → Deploy from a branch → `main` / `/docs`
 
 ## ⚠️ 주의
 
-- 이 저장소(`suminhan/Book-CS2`)와 개인 홈페이지 저장소
+- 이 저장소(`SuminHan/book-cs2`)와 개인 홈페이지 저장소
   (`suminhan/suminhan.github.io`, Hugo 기반 실제 블로그)는 **완전히 별개**다.
   절대 혼동해서 개인 홈페이지 저장소에 push하지 말 것.
 - 새 챕터를 채울 땐 `src/<intl|kor>/*.md`만 수정 → `mdbook build`로 `docs/` 재생성 →

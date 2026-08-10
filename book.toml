@@ -5,7 +5,7 @@ language = "en"
 src = "src"
 
 [output.html]
-git-repository-url = "https://github.com/suminhan/Book-CS2"
+git-repository-url = "https://github.com/SuminHan/book-cs2"
 
 [build]
 build-dir = "docs"
