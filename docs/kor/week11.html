@@ -38,7 +38,7 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-e4e025c4.js";
+            window.path_to_searchindex_js = "../searchindex-72819e89.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../toc-516cd8df.js"></script>
@@ -181,15 +181,39 @@
                 <div id="mdbook-content" class="content">
                     <main>
                         <h1 id="poker-hands"><a class="header" href="#poker-hands">Poker Hands</a></h1>
-<ul>
-<li><code>Card(suit, rank)</code>, <code>Hand(cards)</code>(카드 5장) 클래스</li>
-<li><code>getNumCardsByRank()</code> / <code>getNumCardsBySuit()</code> — rank(1~13)별/suit(0~3)별 카드
-개수를 세어 리스트로 반환 (이후 모든 판정 함수의 기반)</li>
-<li>포커 핸드 종류 간 포함관계에 유의 — 예: full house를 판정할 땐 quadruple을
-제외해야 하고, flush를 판정할 땐 straight flush를 제외해야 함(tie-breaking rule)</li>
-<li>Monte Carlo 시뮬레이션: 무작위 핸드를 대량 생성해 각 핸드 종류의 등장 확률을
-통계적으로 추정</li>
-</ul>
+<p>1946년, 수학자 스타니스와프 울람은 병을 앓고 회복하는 동안 혼자
+카드놀이(솔리테어)를 하며 시간을 보내고 있었다. 문득 “이 카드 배치가
+나올 확률이 정확히 얼마일까“라는 생각이 들었는데, 조합론으로 정확히
+계산하려니 너무 복잡했다. 대신 그는 이렇게 생각했다 — “그냥 카드를
+수백 번 실제로 섞어보고, 몇 번이나 그 배치가 나오는지 세어보면
+되지 않을까?”</p>
+<p>울람은 이 아이디어를 동료 존 폰 노이만에게 전했고, 둘은 이것을
+맨해튼 프로젝트의 핵무기 설계 계산(중성자가 물질을 통과하는 과정을
+예측하는 문제)에 그대로 적용했다. 정확한 확률을 계산하기엔 너무
+복잡한 문제를 무작위 시행을 대량으로 반복해서 근사하는 이 방법에는
+이름이 필요했다 — 동료 니콜라스 메트로폴리스는 울람의 삼촌이 즐겨
+찾던 모나코의 도박 도시 이름을 따서 <strong>몬테카를로(Monte Carlo) 방법</strong>
+이라고 불렀다.<sup class="footnote-reference" id="fr-monte-1"><a href="#footnote-monte">1</a></sup></p>
+<h2 id="카드-게임에서-시작해-카드-게임으로"><a class="header" href="#카드-게임에서-시작해-카드-게임으로">카드 게임에서 시작해 카드 게임으로</a></h2>
+<p>포커 핸드의 정확한 확률은 조합론으로 계산할 수 있지만(예: straight
+flush는 정확히 40/2,598,960), 카드 수가 늘어나거나 규칙이 복잡해지면
+손으로 계산하기 매우 어려워진다. 이번 주 마지막에 다루는 Monte Carlo
+시뮬레이션은 울람이 처음 떠올렸던 바로 그 방식이다 — 무작위 핸드를
+대량으로 만들어보고, 각 족보가 몇 번 등장하는지 세어서 확률을
+추정한다.</p>
+<h2 id="오늘-배우는-것과의-연결"><a class="header" href="#오늘-배우는-것과의-연결">오늘 배우는 것과의 연결</a></h2>
+<p>핵무기 설계라는 매우 진지한 문제에 쓰인 방법의 뿌리가 혼자 하는
+카드놀이였다는 사실은, 좋은 아이디어가 어디서 시작될 수 있는지를
+보여준다.</p>
+<p><strong>오늘 짜는 <code>randomHand()</code> 시뮬레이션 코드는, 카드놀이에서 시작해
+핵무기 설계까지 쓰인 아이디어의 가장 단순한 형태다.</strong></p>
+<hr>
+<ol class="footnote-definition">
+<li id="footnote-monte">
+<p>Metropolis &amp; Ulam, <em>The Monte Carlo Method</em>, Journal of the
+American Statistical Association, Vol. 44, No. 247 (1949). <a href="#fr-monte-1">↩</a></p>
+</li>
+</ol>
 
                     </main>
 

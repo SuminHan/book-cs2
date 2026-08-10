@@ -38,7 +38,7 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-e4e025c4.js";
+            window.path_to_searchindex_js = "../searchindex-72819e89.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../toc-516cd8df.js"></script>
@@ -181,12 +181,33 @@
                 <div id="mdbook-content" class="content">
                     <main>
                         <h1 id="gaussian-elimination"><a class="header" href="#gaussian-elimination">Gaussian Elimination</a></h1>
-<ul>
-<li>연립일차방정식 \(a \cdot x = b\)를 상삼각형태(upper triangular form)로 만든 뒤
-back substitution으로 해를 구하는 forward elimination 과정</li>
-<li>해가 유일한 경우 / 해가 없는 경우(inconsistent) / 해가 무한히 많은 경우
-(consistent dependent)를 pivot이 0이 되는 상황으로 구분</li>
-</ul>
+<p>스마트폰이 “내 위치“를 알아내는 원리는 뜻밖에도 이번 주 배우는 내용과
+맞닿아 있다. GPS 위성은 각자 자신의 위치와 신호를 보낸 시각을 계속
+방송한다. 스마트폰은 최소 4개의 위성으로부터 신호가 도착하는 데 걸린
+시간을 재서 위성까지의 거리를 계산하고, “내 위치에서 각 위성까지의
+거리가 이만큼이다“라는 식을 위성 개수만큼 세워 풀어서 자신의 위치를
+알아낸다 — 정리하면 미지수(위치 좌표와 시계 오차)에 대한 <strong>연립일차
+방정식</strong>이 나온다.</p>
+<h2 id="n3의-의미"><a class="header" href="#n3의-의미">\(n^3\)의 의미</a></h2>
+<p>행렬식(determinant)으로 직접 풀면 계산량이 \(n!\)에 비례해서 순식간에
+감당할 수 없는 크기가 된다. Gaussian elimination은 같은 문제를
+\(n^3\)에 비례하는 시간에 푼다 — 미지수가 몇 개뿐인 위치 계산이라면
+초당 수십 번씩 반복해도 전혀 무리가 없는 속도다.</p>
+<h2 id="오늘-배우는-것과의-연결"><a class="header" href="#오늘-배우는-것과의-연결">오늘 배우는 것과의 연결</a></h2>
+<p>이 방법 자체는 가우스(Gauss, 19세기 초)보다 훨씬 오래됐다 — 고대 중국
+수학서 《구장산술(九章算術)》에 이미 사실상 같은 절차가 등장한다.
+<sup class="footnote-reference" id="fr-nine-1"><a href="#footnote-nine">1</a></sup> 이름은 가우스를 따랐지만, “연립방정식을 체계적으로 소거해서
+푼다“는 아이디어 자체는 2천 년 넘게 쓰여온 셈이다.</p>
+<p><strong>오늘 짜는 forward elimination 코드는, 2천 년 전 계산 기법과 스마트폰
+GPS 칩이 지금도 똑같이 쓰고 있는 바로 그 절차다.</strong></p>
+<hr>
+<ol class="footnote-definition">
+<li id="footnote-nine">
+<p>《九章算術》(구장산술, “The Nine Chapters on the Mathematical
+Art”), 방정(方程) 장 — Gaussian elimination과 사실상 동일한 절차가
+기원전에 이미 기술되어 있다. <a href="#fr-nine-1">↩</a></p>
+</li>
+</ol>
 
                     </main>
 

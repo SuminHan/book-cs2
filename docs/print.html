@@ -39,7 +39,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-e4e025c4.js";
+            window.path_to_searchindex_js = "searchindex-72819e89.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-516cd8df.js"></script>
@@ -294,14 +294,36 @@ and <a href="http://newsletter.pragmaticengineer.com/p/the-job-market-in-2026-pa
 </ol>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="lists--strings"><a class="header" href="#lists--strings">Lists / Strings</a></h1>
-<ul>
-<li>List를 생성하는 또 다른 방법: <code>.append(·)</code>로 빈 리스트 <code>[]</code>에 하나씩 추가하기</li>
-<li>Slicing 연산자: <code>[ : ]</code>, <code>[::2]</code>(건너뛰기), <code>[::-1]</code>(뒤집기)</li>
-<li>List 비교(<code>==</code>) / 연결(<code>+</code>) / 포함관계(<code>in</code>, <code>not in</code>) 연산자</li>
-<li>List용 built-in 함수: <code>sum()</code>, <code>max()</code>, <code>min()</code>, <code>sort()</code></li>
-<li>String: <code>s[i] == c</code>로 문자 비교, <code>+</code>로 새 문자열 이어붙이기(string은 immutable이라
-직접 수정 불가 — 항상 새 문자열을 만들어야 함), 사전순 비교 연산자 <code>&lt;</code></li>
-</ul>
+<p>“서버가 요청받은 길이만큼, 확인도 없이 메모리를 그대로 잘라 돌려준다면?”</p>
+<p>2014년 4월, 암호화 라이브러리 OpenSSL에서 하트블리드(Heartbleed)라는
+취약점이 발견됐다. 원인은 단순했다: 서버는 클라이언트가 “이만큼의
+데이터를 돌려달라“고 요청하면, 실제로 받은 데이터의 길이는 확인하지
+않고 요청한 길이만큼 그대로 메모리에서 잘라 돌려줬다. 클라이언트가
+“나는 1바이트를 보냈지만, 6만 4천 바이트를 돌려달라“고 요청하면, 서버는
+그 1바이트 뒤에 있는 — 전혀 상관없는 — 메모리 6만 4천 바이트를 그대로
+잘라서 돌려줬다. 거기엔 다른 사용자의 비밀번호나 서버의 개인키가 들어
+있을 수도 있었다.</p>
+<h2 id="lij가-실제로-하는-일"><a class="header" href="#lij가-실제로-하는-일"><code>L[i:j]</code>가 실제로 하는 일</a></h2>
+<p>이번 주 배우는 slicing 연산자 <code>L[i:j]</code>는 “리스트의 실제 길이“와
+무관하게 인덱스 <code>i</code>부터 <code>j-1</code>까지를 잘라낸다. <code>L</code>이 정말 그 길이를
+갖고 있는지는 프로그래머가 확인해야 하는 몫이다. Python은 리스트
+경계를 넘어가면 에러를 내주지만, 하트블리드가 발생한 C 언어의 메모리
+조작에는 그런 보호장치가 없었다. “요청한 길이“와 “실제 있는 길이“를
+혼동하면, 있어서는 안 될 데이터까지 함께 잘려 나온다.</p>
+<h2 id="오늘-배우는-것과의-연결"><a class="header" href="#오늘-배우는-것과의-연결">오늘 배우는 것과의 연결</a></h2>
+<p>전 세계 웹 서버의 상당수가 이 취약점에 노출되어 있었고, 복구에는
+수개월이 걸렸다.<sup class="footnote-reference" id="fr-heartbleed-1"><a href="#footnote-heartbleed">1</a></sup> <code>len(·)</code>으로 실제 길이를 확인하고 그
+범위 안에서만 인덱싱/슬라이싱하는 습관은 사소해 보이지만, 이 사고가
+벌어진 근본 원인과 정확히 같은 지점을 다룬다.</p>
+<p><strong>어떤 인덱스가 유효한지 항상 정확히 알고 있을 것 — 이번 주 배우는
+List/String 연산은 모두 그 위에 세워진다.</strong></p>
+<hr>
+<ol class="footnote-definition">
+<li id="footnote-heartbleed">
+<p>Codenomicon, <em>Heartbleed Bug</em> (heartbleed.com, 2014);
+CVE-2014-0160. <a href="#fr-heartbleed-1">↩</a></p>
+</li>
+</ol>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="topics-covered"><a class="header" href="#topics-covered">Topics Covered</a></h1>
 <h2 id="list-생성하는-또-다른-방법-append"><a class="header" href="#list-생성하는-또-다른-방법-append">List 생성하는 또 다른 방법: <code>.append(·)</code></a></h2>
@@ -525,14 +547,34 @@ print(firstStr("cde","abced","bcd"))      # abced
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="file-io"><a class="header" href="#file-io">File I/O</a></h1>
-<ul>
-<li><code>open(filename, "r").read().split()</code> — 파일 내용을 전부 읽어서 단어 단위로 쪼갠
-리스트로 변환</li>
-<li>“for all” 패턴: 조건을 만족하지 않는 원소가 하나라도 있으면 <code>False</code></li>
-<li>Counter 패턴: 조건을 만족하는 원소의 개수 세기</li>
-<li>Max/min 패턴: 조건을 만족하는 것 중 최댓값/최솟값(+ 그 대상) 유지</li>
-<li>문자열 슬라이싱으로 부분 문자열 검사(<code>s[i:i+5:2]</code> 등)</li>
-</ul>
+<p>2016년, 국제탐사보도언론인협회(ICIJ)는 파나마의 로펌 모색 폰세카에서
+유출된 문서 1,150만 건, 총 2.6테라바이트를 넘겨받았다. 사람이 한 장씩
+읽는다면 평생이 걸릴 분량이었다.</p>
+<p>기자 수백 명이 협업한 끝에 한 일은, 결국 “파일을 열어서 그 안의 모든
+줄(또는 단어)을 훑으며, 원하는 조건을 만족하는 것이 있는지 확인하는”
+단순한 작업의 반복이었다 — 특정 이름이 등장하는 문서가 있는가(for
+some), 조건을 만족하는 문서가 몇 건인가(counter). 이번 주에 배우는
+패턴 그대로다.</p>
+<h2 id="파일을-코드로-다루기"><a class="header" href="#파일을-코드로-다루기">파일을 코드로 다루기</a></h2>
+<pre><code class="language-python">words = open("input.txt", "r").read().split()
+</code></pre>
+<p>이 한 줄이 하는 일은 “파일을 열고, 전체 내용을 읽고, 단어 단위로
+쪼개기“다. 사람이 눈으로 1,150만 건을 읽을 수는 없어도, 컴퓨터는 이
+한 줄을 기반으로 초당 수만 건을 검사할 수 있다.</p>
+<h2 id="오늘-배우는-것과의-연결-1"><a class="header" href="#오늘-배우는-것과의-연결-1">오늘 배우는 것과의 연결</a></h2>
+<p>파나마 페이퍼스 보도는 2016년 아이슬란드 총리 사임을 비롯해 여러 나라의
+탈세 수사로 이어졌다.<sup class="footnote-reference" id="fr-panama-1"><a href="#footnote-panama">1</a></sup> 그 시작은 별다를 것 없는 “파일 열기 →
+한 줄씩 훑기 → 조건 확인하기“였다.</p>
+<p><strong>오늘 배우는 for all / counter / max-min 패턴은 데이터가 5줄이든
+1,150만 건이든 똑같이 적용된다 — 다른 건 오직 컴퓨터가 대신 훑어준다는
+사실뿐이다.</strong></p>
+<hr>
+<ol class="footnote-definition">
+<li id="footnote-panama">
+<p>ICIJ, <em>The Panama Papers</em> (2016),
+icij.org/investigations/panama-papers. <a href="#fr-panama-1">↩</a></p>
+</li>
+</ol>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="topics-covered-1"><a class="header" href="#topics-covered-1">Topics Covered</a></h1>
 <h2 id="range는-사실-list"><a class="header" href="#range는-사실-list"><code>range(·)</code>는 사실 list</a></h2>
@@ -780,14 +822,35 @@ twin primes. <code>n</code> 이하에서 \(p_1 &lt; p_2\)가 가장 큰 쌍 <cod
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="multi-dimensional-lists"><a class="header" href="#multi-dimensional-lists">Multi-Dimensional Lists</a></h1>
-<ul>
-<li>2차원 배열: <code>table[i]</code>는 <code>i</code>행에 대응하는 리스트. <code>height = len(table)</code>,
-<code>width = len(table[0])</code></li>
-<li>3차원 배열: <code>table[i]</code>는 <code>i</code>층에 대응하는 2D 배열. <code>depth = len(table)</code>,
-<code>height = len(table[0])</code>, <code>width = len(table[0][0])</code></li>
-<li>다중 for 루프로 모든 칸 순회: counter, max/min, “for all” 패턴이 그대로 확장됨</li>
-<li>경계 체크 함수(<code>withinBoundary</code>)로 인접 칸을 안전하게 순회</li>
-</ul>
+<p>2010년, 경제학자 카르멘 라인하트와 케네스 로고프는 “정부 부채가
+GDP의 90%를 넘으면 경제성장률이 급격히 떨어진다“는 연구 결과를
+발표했다. 이 논문은 2008년 금융위기 이후 유럽과 미국의 긴축 재정
+정책을 정당화하는 핵심 근거로 반복 인용됐다.</p>
+<p>2013년, 대학원생 토머스 헌든이 이 논문의 계산을 재현하려다 원본
+엑셀 파일을 입수했다. 원인은 <strong>범위 선택 실수</strong>였다: 20개국의 평균
+성장률을 구하는 수식이 실제로는 그중 5개국(호주, 오스트리아, 벨기에,
+캐나다, 덴마크)이 들어있는 행을 계산 범위에서 빠뜨리고 있었다. 표
+(2차원 데이터)에서 몇 개 행을 빼먹은 것 — 그것이 원인의 전부였다.</p>
+<h2 id="tablei가-가리키는-것"><a class="header" href="#tablei가-가리키는-것"><code>table[i]</code>가 가리키는 것</a></h2>
+<p>2차원 리스트 <code>table</code>에서 <code>table[i]</code>는 정확히 “몇 번째 행“인지가
+전부다. <code>for i in range(height)</code>로 도는 루프가 실제로 표의 모든
+행을 포함하는지는 코드를 쓰는 사람이 직접 확인해야 한다 — 엑셀
+수식이든 Python의 <code>for</code> 루프든, “몇 번째 줄부터 몇 번째 줄까지“를
+정확히 지정하지 않으면 그만큼의 데이터가 조용히 빠진다.</p>
+<h2 id="오늘-배우는-것과의-연결-2"><a class="header" href="#오늘-배우는-것과의-연결-2">오늘 배우는 것과의 연결</a></h2>
+<p>빠진 5개국을 포함시키자 논문의 결론은 뒤집혔고, “90% 부채 한도“라는
+정책적 근거는 크게 흔들렸다.<sup class="footnote-reference" id="fr-rr-1"><a href="#footnote-rr">1</a></sup></p>
+<p><strong>2차원 리스트를 순회할 때 “내가 정말 모든 행/열을 다 돌고 있는가“를
+확인하는 습관 — 오늘 배우는 것 중 가장 사소해 보이지만, 세계 경제
+정책을 흔들어놓은 실수도 바로 여기서 났다.</strong></p>
+<hr>
+<ol class="footnote-definition">
+<li id="footnote-rr">
+<p>Herndon, Ash, Pollin, <em>Does High Public Debt Consistently Stifle
+Economic Growth? A Critique of Reinhart and Rogoff</em>, Cambridge
+Journal of Economics (2014). <a href="#fr-rr-1">↩</a></p>
+</li>
+</ol>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="topics-covered-2"><a class="header" href="#topics-covered-2">Topics Covered</a></h1>
 <h2 id="2차원-리스트"><a class="header" href="#2차원-리스트">2차원 리스트</a></h2>
@@ -951,14 +1014,34 @@ def findMines(C):
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="pile-of-cubes"><a class="header" href="#pile-of-cubes">Pile of Cubes</a></h1>
-<ul>
-<li>3차원 큐브 더미를 \(N \times N \times N\) 크기의 0/1 리스트 <code>P</code>로 표현
-(<code>P[i][j][k] == 1</code>이면 그 위치에 큐브가 있음)</li>
-<li>위/앞/오른쪽에서 본 2D 투영(top/front/right view)을 3중 for 루프로 계산</li>
-<li>역으로 세 투영도만 보고 원래 큐브 더미를 복원하는 문제 — 여러 개의 큐브
-더미가 같은 투영을 가질 수 있으므로, “최대 큐브 개수“를 묻는 형태로 문제를
-단순화</li>
-</ul>
+<p>몸 안을 째지 않고 들여다보려면 어떻게 해야 할까? 1970년대, 고드프리
+하운스필드는 이 질문에 답을 내놨다 — 몸의 여러 각도에서 X선 사진을
+찍고, 그 여러 장의 2차원 사진들로부터 몸속의 3차원 구조를 역으로
+계산해내는 것. 이것이 CT(컴퓨터 단층촬영)의 원리이고, 하운스필드는
+이 업적으로 1979년 노벨 생리의학상을 받았다.<sup class="footnote-reference" id="fr-ct-1"><a href="#footnote-ct">1</a></sup></p>
+<p>이번 주 다루는 “Pile of Cubes” 문제는 이 아이디어를 아주 단순화한
+버전이다: 큐브 더미를 위/앞/오른쪽, 딱 세 방향에서 본 그림자(2차원
+투영)만 가지고, 원래 3차원 구조를 역으로 알아낸다.</p>
+<h2 id="왜-유일하지-않은가"><a class="header" href="#왜-유일하지-않은가">왜 유일하지 않은가</a></h2>
+<p>CT 스캐너가 수백 장의 각도에서 사진을 찍는 이유가 여기 있다 — 투영이
+적을수록 같은 그림자를 만드는 3차원 구조가 여러 개 있을 수 있다.
+이번 문제도 마찬가지다: 세 방향의 투영만으로는 원래 큐브 더미를
+유일하게 복원할 수 없는 경우가 있다. 그래서 문제는 “정확히 복원하라”
+대신 “그 투영을 만들 수 있는 것 중 큐브 개수가 최대인 것을 찾아라“로
+바뀐다.</p>
+<h2 id="오늘-배우는-것과의-연결-3"><a class="header" href="#오늘-배우는-것과의-연결-3">오늘 배우는 것과의 연결</a></h2>
+<p>세 방향의 그림자만으로 가장 그럴듯한 3차원 구조를 논리적으로 구성해
+내는 방식은, 의료 영상부터 이번 주 3중 for 루프 코드까지 똑같이
+적용된다.</p>
+<p><strong>세 장의 그림자에서 입체를 복원하는 이번 주 퍼즐은, 그 자체로 노벨상을
+받은 아이디어의 축소판이다.</strong></p>
+<hr>
+<ol class="footnote-definition">
+<li id="footnote-ct">
+<p>The Nobel Prize in Physiology or Medicine 1979, Godfrey N.
+Hounsfield &amp; Allan M. Cormack, nobelprize.org. <a href="#fr-ct-1">↩</a></p>
+</li>
+</ol>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="topics-covered-3"><a class="header" href="#topics-covered-3">Topics Covered</a></h1>
 <h2 id="problem-1-3d--2d-투영"><a class="header" href="#problem-1-3d--2d-투영">Problem 1: 3D → 2D 투영</a></h2>
@@ -1084,12 +1167,33 @@ print(countCubes(top, front, right))  # 5
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="gaussian-elimination"><a class="header" href="#gaussian-elimination">Gaussian Elimination</a></h1>
-<ul>
-<li>연립일차방정식 \(a \cdot x = b\)를 상삼각형태(upper triangular form)로 만든 뒤
-back substitution으로 해를 구하는 forward elimination 과정</li>
-<li>해가 유일한 경우 / 해가 없는 경우(inconsistent) / 해가 무한히 많은 경우
-(consistent dependent)를 pivot이 0이 되는 상황으로 구분</li>
-</ul>
+<p>스마트폰이 “내 위치“를 알아내는 원리는 뜻밖에도 이번 주 배우는 내용과
+맞닿아 있다. GPS 위성은 각자 자신의 위치와 신호를 보낸 시각을 계속
+방송한다. 스마트폰은 최소 4개의 위성으로부터 신호가 도착하는 데 걸린
+시간을 재서 위성까지의 거리를 계산하고, “내 위치에서 각 위성까지의
+거리가 이만큼이다“라는 식을 위성 개수만큼 세워 풀어서 자신의 위치를
+알아낸다 — 정리하면 미지수(위치 좌표와 시계 오차)에 대한 <strong>연립일차
+방정식</strong>이 나온다.</p>
+<h2 id="n3의-의미"><a class="header" href="#n3의-의미">\(n^3\)의 의미</a></h2>
+<p>행렬식(determinant)으로 직접 풀면 계산량이 \(n!\)에 비례해서 순식간에
+감당할 수 없는 크기가 된다. Gaussian elimination은 같은 문제를
+\(n^3\)에 비례하는 시간에 푼다 — 미지수가 몇 개뿐인 위치 계산이라면
+초당 수십 번씩 반복해도 전혀 무리가 없는 속도다.</p>
+<h2 id="오늘-배우는-것과의-연결-4"><a class="header" href="#오늘-배우는-것과의-연결-4">오늘 배우는 것과의 연결</a></h2>
+<p>이 방법 자체는 가우스(Gauss, 19세기 초)보다 훨씬 오래됐다 — 고대 중국
+수학서 《구장산술(九章算術)》에 이미 사실상 같은 절차가 등장한다.
+<sup class="footnote-reference" id="fr-nine-1"><a href="#footnote-nine">1</a></sup> 이름은 가우스를 따랐지만, “연립방정식을 체계적으로 소거해서
+푼다“는 아이디어 자체는 2천 년 넘게 쓰여온 셈이다.</p>
+<p><strong>오늘 짜는 forward elimination 코드는, 2천 년 전 계산 기법과 스마트폰
+GPS 칩이 지금도 똑같이 쓰고 있는 바로 그 절차다.</strong></p>
+<hr>
+<ol class="footnote-definition">
+<li id="footnote-nine">
+<p>《九章算術》(구장산술, “The Nine Chapters on the Mathematical
+Art”), 방정(方程) 장 — Gaussian elimination과 사실상 동일한 절차가
+기원전에 이미 기술되어 있다. <a href="#fr-nine-1">↩</a></p>
+</li>
+</ol>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="topics-covered-4"><a class="header" href="#topics-covered-4">Topics Covered</a></h1>
 <h2 id="선형-연립방정식"><a class="header" href="#선형-연립방정식">선형 연립방정식</a></h2>
@@ -1205,13 +1309,25 @@ print(gaussian_elimination(a, b))  # None
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="spring-equilibrium-optional"><a class="header" href="#spring-equilibrium-optional">Spring Equilibrium (optional)</a></h1>
-<ul>
-<li>자유 물체(\(P_1, \ldots, P_n\)), 고정 물체(\(F_1, \ldots, F_k\)), 탄성계수
-\(w_1, \ldots, w_m\)을 갖는 스프링들로 이루어진 물리 시스템의 평형 상태</li>
-<li>스프링 초기 길이를 0으로 가정하면, 물체에 작용하는 힘이 위치의 선형식이 되어
-평형 조건이 연립일차방정식이 됨 → 6주차 Gaussian elimination으로 해결</li>
-<li>자유 물체 각각의 \(x\)좌표끼리, \(y\)좌표끼리 독립적인 연립방정식을 이룸</li>
-</ul>
+<p>건물이나 다리를 설계할 때, 엔지니어는 실제로 짓기 전에 컴퓨터 안에서
+먼저 무너뜨려본다. 구조물을 아주 작은 조각(요소, element)들로 잘게
+나누고, 그 조각들이 스프링처럼 서로 힘을 주고받는다고 가정한 뒤, 모든
+조각이 힘의 평형을 이루는 상태를 계산한다 — 이것이 <strong>유한요소해석</strong>
+(Finite Element Analysis, FEA)이고, 오늘날 거의 모든 건물·다리·항공기·
+자동차가 이 방식으로 설계·검증된다.</p>
+<h2 id="이번-주-문제가-실제로-하는-일"><a class="header" href="#이번-주-문제가-실제로-하는-일">이번 주 문제가 실제로 하는 일</a></h2>
+<p>이번 주 다루는 문제는 이 아이디어를 그대로 축소한 것이다 — 자유롭게
+움직이는 물체들이 스프링으로 연결되어 있을 때, 모든 물체가 동시에
+힘의 평형을 이루는 위치를 구한다. 스프링의 원래 길이를 0으로
+단순화하면, 이 평형 조건이 정확히 6주차에 배운 <strong>연립일차방정식</strong>이
+된다 — 그래서 Gaussian elimination을 그대로 다시 쓸 수 있다.</p>
+<h2 id="오늘-배우는-것과의-연결-5"><a class="header" href="#오늘-배우는-것과의-연결-5">오늘 배우는 것과의 연결</a></h2>
+<p>실제 유한요소해석은 요소가 수백만 개에 이르고, 스프링 하나보다 훨씬
+복잡한 재료 모델을 쓴다. 하지만 “각 지점이 이웃과 주고받는 힘의 합이
+0이 되는 위치를 찾는다“는 핵심 아이디어는, 이번 주 몇 개의 물체와
+스프링으로 이루어진 작은 시스템과 다르지 않다.</p>
+<p><strong>작은 스프링 시스템의 평형을 계산하는 이번 주 코드는, 초고층 빌딩과
+항공기를 설계하는 소프트웨어와 같은 자리에 서 있다.</strong></p>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="topics-covered-5"><a class="header" href="#topics-covered-5">Topics Covered</a></h1>
 <h2 id="문제-설정"><a class="header" href="#문제-설정">문제 설정</a></h2>
@@ -1322,14 +1438,38 @@ print(equilibrium(2, S1, S2))
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="classes--objects"><a class="header" href="#classes--objects">Classes &amp; Objects</a></h1>
-<ul>
-<li><code>class</code> 정의: <code>__init__</code>(생성자, modifier), <code>__str__</code>(print용, pure function)</li>
-<li>Pure function(입력을 변경하지 않고 새 값을 반환) vs. modifier(<code>self</code>의
-상태를 직접 변경)</li>
-<li>Getter/setter 패턴: <code>getX()</code>, <code>setX(v)</code></li>
-<li>객체를 매개변수/반환값으로 사용하기 (<code>Point</code>를 받아 새 <code>Point</code>를 반환하는
-<code>add(self, p)</code> 등)</li>
-</ul>
+<p>1985년부터 1987년 사이, 방사선 치료기 Therac-25가 적어도 6건의 심각한
+방사선 과다 노출 사고를 일으켰고, 그중 일부 환자는 목숨을 잃었다.
+<sup class="footnote-reference" id="fr-therac-1"><a href="#footnote-therac">1</a></sup> 원인은 하드웨어 결함이 아니라 소프트웨어였다 — 여러 화면
+(모드)이 같은 전역 변수들을 공유하며 상태를 주고받았는데, 특정 순서로
+빠르게 키를 입력하면 한 화면이 남긴 상태값을 다른 화면이 미처 정리하지
+못한 채로 읽어버리는 경우가 있었다.</p>
+<p>이전 모델은 이런 소프트웨어 오류가 나더라도 하드웨어 안전장치가
+최종적으로 막아줬다. Therac-25는 비용 절감을 위해 그 하드웨어
+안전장치를 없애고 “소프트웨어가 알아서 안전을 보장할 것“이라고
+가정했다. 문제는 그 소프트웨어의 상태가 여러 곳에 흩어진 전역 변수로
+관리되고 있어서, 정확히 누가 언제 그 값을 바꾸는지 아무도 장담할 수
+없었다는 데 있었다.</p>
+<h2 id="상태를-한곳에-가두기"><a class="header" href="#상태를-한곳에-가두기">상태를 한곳에 가두기</a></h2>
+<p>이번 주 배우는 <code>class</code>는 정확히 이 문제를 겨냥한다: 관련된 상태 변수
+(state 변수)들을 하나의 object 안에 가두고, 그 상태를 건드리는 함수도
+그 object에 딸린 메소드로만 제한한다. <code>self.x</code>처럼 상태가 어디에
+속하는지 항상 명시적이고, 상태를 바꾸는 쪽(modifier)과 읽기만 하는 쪽
+(pure function)을 구분해서 부르는 습관도 여기서 나온다.</p>
+<h2 id="오늘-배우는-것과의-연결-6"><a class="header" href="#오늘-배우는-것과의-연결-6">오늘 배우는 것과의 연결</a></h2>
+<p><code>class</code> 하나로 이런 사고가 전부 방지되는 것은 아니다. 하지만 “이
+데이터는 정확히 누가, 어떤 함수를 통해서만 바꿀 수 있는가“를 코드
+구조로 분명히 하는 습관은, Therac-25 사고 이후 소프트웨어 공학
+교육에서 빠짐없이 강조하는 원칙이 됐다.</p>
+<p><strong>상태를 아무 데서나 건드릴 수 있게 흩어놓지 않는 것 — 오늘 배우는
+<code>class</code>의 가장 근본적인 이유다.</strong></p>
+<hr>
+<ol class="footnote-definition">
+<li id="footnote-therac">
+<p>Nancy Leveson &amp; Clark Turner, <em>An Investigation of the
+Therac-25 Accidents</em>, IEEE Computer, Vol. 26, No. 7 (1993). <a href="#fr-therac-1">↩</a></p>
+</li>
+</ol>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="topics-covered-6"><a class="header" href="#topics-covered-6">Topics Covered</a></h1>
 <h2 id="object와-class"><a class="header" href="#object와-class">Object와 Class</a></h2>
@@ -1572,25 +1712,50 @@ test()
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="stable-matching-i"><a class="header" href="#stable-matching-i">Stable Matching I</a></h1>
-<ul>
-<li><code>Person</code> 객체: <code>gender</code>, <code>name</code>, <code>prefList</code>(선호도 리스트), <code>partner</code>(현재
-파트너, 없으면 <code>None</code>)</li>
-<li><code>engage(self, p)</code> / <code>breakUp(self)</code> (modifier) — 파트너 관계를 맺거나 끊기</li>
-<li><code>prefer(self, p)</code> (pure function) — <code>self</code>가 현재 파트너보다 <code>p</code>를 더
-선호하는지 (<code>.index(·)</code>로 선호도 리스트에서의 순위 비교)</li>
-<li>Stable matching: unstable pair(서로 바람나고 싶어하는 쌍)가 하나도 없는 매칭</li>
-</ul>
+<p>1900년대 초, 미국의 병원들은 의대생을 레지던트로 뽑을 때 서로
+경쟁하듯 점점 더 이른 시점에 채용을 제안했다. 1940년대 말에는 학생이
+아직 학교를 2년이나 더 다녀야 하는 시점에 이미 제안을 받는 일까지
+벌어졌다 — 학생도 병원도 상대를 제대로 알지 못한 채 성급하게 결정을
+내려야 했고, 나중에 더 나은 제안이 오면 이미 한 약속을 깨는 일도
+잦았다.</p>
+<p>이 혼란을 해결하기 위해 1952년, 미국의 병원과 의대생을 짝짓는 중앙
+매칭 시스템(NRMP)이 도입됐다. 흥미로운 건 이 시스템이 쓰던 알고리즘이,
+10년 뒤인 1962년 수학자 데이비드 게일과 로이드 섀플리가 발표한 이론
+— 오늘 배우는 stable matching — 과 사실상 동일한 방식이었다는 점이다.
+현장에서 먼저 문제를 실용적으로 풀어냈고, 이론이 나중에 그것을
+수학적으로 설명해낸 셈이다.</p>
+<h2 id="stable-matching이-막는-것"><a class="header" href="#stable-matching이-막는-것">Stable Matching이 막는 것</a></h2>
+<p>배정된 짝이 있는데도, 서로가 서로를 지금 짝보다 더 선호하는 다른
+쌍(unstable pair)이 남아있다면 그 매칭은 오래가지 못한다 — 둘 다
+기존 매칭을 깨고 새로 짝지어질 동기가 있기 때문이다. NRMP가 막으려던
+것이 정확히 이것이었다: 매칭이 발표된 뒤에 “사실 이쪽이 서로 더
+낫다“며 뒤집히는 상황.</p>
+<h2 id="오늘-배우는-것과의-연결-7"><a class="header" href="#오늘-배우는-것과의-연결-7">오늘 배우는 것과의 연결</a></h2>
+<p>이 개념은 학문적으로도 인정받아, 게일-섀플리 이론을 발전시킨 로이드
+섀플리와 앨빈 로스가 2012년 노벨 경제학상을 받았다.<sup class="footnote-reference" id="fr-nobel-1"><a href="#footnote-nobel">1</a></sup> 오늘은
+이 개념을 정확히 정의하고, 주어진 매칭이 stable한지 판정하는 코드를
+만든다 — 실제로 매칭을 찾아내는 알고리즘은 다음 주에 다룬다.</p>
+<p><strong>70년 전 병원과 의대생 사이의 혼란이, 오늘 배우는 정의 하나로 정확히
+설명된다.</strong></p>
+<hr>
+<ol class="footnote-definition">
+<li id="footnote-nobel">
+<p>The Sveriges Riksbank Prize in Economic Sciences in Memory of
+Alfred Nobel 2012, Lloyd Shapley &amp; Alvin Roth, nobelprize.org. <a href="#fr-nobel-1">↩</a></p>
+</li>
+</ol>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="topics-covered-7"><a class="header" href="#topics-covered-7">Topics Covered</a></h1>
 <h2 id="stable-matching이란"><a class="header" href="#stable-matching이란">Stable Matching이란?</a></h2>
 <p><code>n</code>명의 남자와 <code>n</code>명의 여자가 있고, 각자 상대편 전원에 대한 선호 순위를
 가지고 있다고 하자. 목표는 <strong>모든 사람이 정확히 한 명과 짝지어지는</strong>
-매칭(perfect matching)을 찾되, <strong>아무도 배정된 상대를 버리고 눈이 맞을
-동기가 없는</strong> 매칭을 찾는 것이다.</p>
+매칭(perfect matching)을 찾되, <strong>아무도 배정된 상대를 버리고 다른 상대로
+바꾸고 싶어하지 않는</strong> 매칭을 찾는 것이다.</p>
 <p><strong>Unstable pair</strong>: 매칭 <code>M</code>에서 짝지어진 남녀가 아닌 쌍 <code>(x, y)</code>가, 다음
 두 조건을 모두 만족하면 unstable하다고 한다 — <code>x</code>가 자신의 현재 배정
 상대보다 <code>y</code>를 더 선호하고, <strong>동시에</strong> <code>y</code>도 자신의 현재 배정 상대보다
-<code>x</code>를 더 선호. 이런 쌍이 있으면 둘이 야반도주(elope)할 동기가 생긴다.</p>
+<code>x</code>를 더 선호. 이런 쌍이 있으면 두 사람 모두 기존 매칭을 벗어나 서로
+바꾸고 싶어할 동기가 생긴다.</p>
 <p><strong>Stable matching</strong> = unstable pair가 하나도 없는 perfect matching.</p>
 <p>이 개념은 실제로 미국의 고교-학교 배정, 레지던트-수련병원 배정, 신장이식
 배정 등에 쓰이고, KSA에서도 룸메이트/수강신청/서클 배정 등에 응용될 수
@@ -1738,12 +1903,34 @@ unstable pair의 개수를 반환.</p>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="stable-matching-ii"><a class="header" href="#stable-matching-ii">Stable Matching II</a></h1>
-<ul>
-<li>Propose-Reject 알고리즘(Gale-Shapley): 자유로운 남자가 자기 선호도 순으로
-여자에게 프로포즈하고, 여자는 더 마음에 드는 상대가 나타나면 갈아탄다 —
-이 과정을 반복하면 항상 stable matching으로 수렴함</li>
-<li><code>numProposal</code>로 “다음에 누구에게 프로포즈할지” 진행 상황을 추적</li>
-</ul>
+<p>2003년 이전, 뉴욕시 고등학교 배정 시스템은 매년 수만 명의 학생을
+제대로 배정하지 못한 채 남겼다. 학생들은 여러 학교에 원서를 내고,
+학교는 합격자를 발표하고, 학생은 그중 하나를 고르고 — 이 과정을 여러
+차례 반복하는 동안 정보가 뒤엉켰고, 정작 빈자리와 갈 곳 없는 학생이
+동시에 존재하는 비효율이 반복됐다.</p>
+<p>2003년, 경제학자 아트만 압둘카디로글루, 파라그 파탁, 앨빈 로스가
+게일-섀플리 알고리즘을 이 시스템에 도입했다.<sup class="footnote-reference" id="fr-nyc-1"><a href="#footnote-nyc">1</a></sup> 결과는 확실했다 —
+배정받지 못한 학생 수가 크게 줄었고, 이 방식은 이후 보스턴 등 다른
+도시의 학교 배정 시스템에도 그대로 채택됐다.</p>
+<h2 id="오늘-배우는-알고리즘이-실제로-하는-일"><a class="header" href="#오늘-배우는-알고리즘이-실제로-하는-일">오늘 배우는 알고리즘이 실제로 하는 일</a></h2>
+<p>핵심 아이디어는 단순하다: 자유로운 쪽(예: 남자, 또는 학생)이 자기
+선호 순서대로 계속 지원하고, 받는 쪽(예: 여자, 또는 학교)은 지금까지
+받은 것 중 최선을 잠정적으로 붙잡아두되, 더 나은 지원이 오면 그쪽으로
+바꾼다. 이 과정이 끝나면 항상 — 예외 없이 — stable matching이
+만들어진다는 것이 게일과 섀플리가 증명한 정리다.</p>
+<h2 id="오늘-배우는-것과의-연결-8"><a class="header" href="#오늘-배우는-것과의-연결-8">오늘 배우는 것과의 연결</a></h2>
+<p>이번 주는 지난주에 정의한 stable matching을 실제로 <strong>찾아내는</strong>
+propose-reject 알고리즘을 코드로 구현한다. 뉴욕시가 실제로 도입한
+것과 원리적으로 동일한 절차다.</p>
+<p><strong>뉴욕시 수만 명의 학생을 구했던 알고리즘을, 오늘 직접 코드로
+구현한다.</strong></p>
+<hr>
+<ol class="footnote-definition">
+<li id="footnote-nyc">
+<p>Abdulkadiroğlu, Pathak, Roth, <em>The New York City High School
+Match</em>, American Economic Review, Vol. 95, No. 2 (2005). <a href="#fr-nyc-1">↩</a></p>
+</li>
+</ol>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="topics-covered-8"><a class="header" href="#topics-covered-8">Topics Covered</a></h1>
 <h2 id="propose-reject-gale-shapley-알고리즘"><a class="header" href="#propose-reject-gale-shapley-알고리즘">Propose-Reject (Gale-Shapley) 알고리즘</a></h2>
@@ -1820,8 +2007,7 @@ perfect하다는 것도, 종료됐을 때 stable하다는 것도 각각 별도�
 woman-optimal/man-pessimal 결과가 나온다.</p>
 <p>이로부터 실전 교훈도 나온다: <strong>프로포즈하는 쪽이 유리하다</strong> — 솔직하게
 좋아하는 순서대로 적극적으로 프로포즈하는 것이 전략적으로 손해가 없는
-반면(남자), 수동적으로 프로포즈를 기다리며 어장관리만 하는 쪽(여자)은
-불리하다.</p>
+반면(남자), 수동적으로 프로포즈를 기다리기만 하는 쪽(여자)은 불리하다.</p>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="problem-set-8"><a class="header" href="#problem-set-8">Problem Set</a></h1>
 <h3 id="필수-문제-8"><a class="header" href="#필수-문제-8">필수 문제</a></h3>
@@ -1880,15 +2066,39 @@ print(compute_schedule(schedule))  # [1, 0]
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="poker-hands"><a class="header" href="#poker-hands">Poker Hands</a></h1>
-<ul>
-<li><code>Card(suit, rank)</code>, <code>Hand(cards)</code>(카드 5장) 클래스</li>
-<li><code>getNumCardsByRank()</code> / <code>getNumCardsBySuit()</code> — rank(1~13)별/suit(0~3)별 카드
-개수를 세어 리스트로 반환 (이후 모든 판정 함수의 기반)</li>
-<li>포커 핸드 종류 간 포함관계에 유의 — 예: full house를 판정할 땐 quadruple을
-제외해야 하고, flush를 판정할 땐 straight flush를 제외해야 함(tie-breaking rule)</li>
-<li>Monte Carlo 시뮬레이션: 무작위 핸드를 대량 생성해 각 핸드 종류의 등장 확률을
-통계적으로 추정</li>
-</ul>
+<p>1946년, 수학자 스타니스와프 울람은 병을 앓고 회복하는 동안 혼자
+카드놀이(솔리테어)를 하며 시간을 보내고 있었다. 문득 “이 카드 배치가
+나올 확률이 정확히 얼마일까“라는 생각이 들었는데, 조합론으로 정확히
+계산하려니 너무 복잡했다. 대신 그는 이렇게 생각했다 — “그냥 카드를
+수백 번 실제로 섞어보고, 몇 번이나 그 배치가 나오는지 세어보면
+되지 않을까?”</p>
+<p>울람은 이 아이디어를 동료 존 폰 노이만에게 전했고, 둘은 이것을
+맨해튼 프로젝트의 핵무기 설계 계산(중성자가 물질을 통과하는 과정을
+예측하는 문제)에 그대로 적용했다. 정확한 확률을 계산하기엔 너무
+복잡한 문제를 무작위 시행을 대량으로 반복해서 근사하는 이 방법에는
+이름이 필요했다 — 동료 니콜라스 메트로폴리스는 울람의 삼촌이 즐겨
+찾던 모나코의 도박 도시 이름을 따서 <strong>몬테카를로(Monte Carlo) 방법</strong>
+이라고 불렀다.<sup class="footnote-reference" id="fr-monte-1"><a href="#footnote-monte">1</a></sup></p>
+<h2 id="카드-게임에서-시작해-카드-게임으로"><a class="header" href="#카드-게임에서-시작해-카드-게임으로">카드 게임에서 시작해 카드 게임으로</a></h2>
+<p>포커 핸드의 정확한 확률은 조합론으로 계산할 수 있지만(예: straight
+flush는 정확히 40/2,598,960), 카드 수가 늘어나거나 규칙이 복잡해지면
+손으로 계산하기 매우 어려워진다. 이번 주 마지막에 다루는 Monte Carlo
+시뮬레이션은 울람이 처음 떠올렸던 바로 그 방식이다 — 무작위 핸드를
+대량으로 만들어보고, 각 족보가 몇 번 등장하는지 세어서 확률을
+추정한다.</p>
+<h2 id="오늘-배우는-것과의-연결-9"><a class="header" href="#오늘-배우는-것과의-연결-9">오늘 배우는 것과의 연결</a></h2>
+<p>핵무기 설계라는 매우 진지한 문제에 쓰인 방법의 뿌리가 혼자 하는
+카드놀이였다는 사실은, 좋은 아이디어가 어디서 시작될 수 있는지를
+보여준다.</p>
+<p><strong>오늘 짜는 <code>randomHand()</code> 시뮬레이션 코드는, 카드놀이에서 시작해
+핵무기 설계까지 쓰인 아이디어의 가장 단순한 형태다.</strong></p>
+<hr>
+<ol class="footnote-definition">
+<li id="footnote-monte">
+<p>Metropolis &amp; Ulam, <em>The Monte Carlo Method</em>, Journal of the
+American Statistical Association, Vol. 44, No. 247 (1949). <a href="#fr-monte-1">↩</a></p>
+</li>
+</ol>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="topics-covered-9"><a class="header" href="#topics-covered-9">Topics Covered</a></h1>
 <h2 id="포커-패의-종류"><a class="header" href="#포커-패의-종류">포커 패의 종류</a></h2>
@@ -2109,13 +2319,44 @@ straight flush가 아니면서 flush인 경우에만 <code>1</code>, 아니면 <
 최대가 되는 값(“k-점수”)을 반환(불가능하면 0).</p>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="art-gallery-problem"><a class="header" href="#art-gallery-problem">Art Gallery Problem</a></h1>
-<ul>
-<li>Rectilinear polygon(수직선/수평선으로만 이루어진 다각형)의 방향(시계/
-반시계) 판별</li>
-<li>하나의 CCTV(감시 카메라)로 다각형 내부 전체를 감시할 수 있는 “설치 가능
-영역“을 leftMax/rightMin/bottomMax/topMin 네 값으로 좁혀나가며 계산</li>
-<li>인접한 두 점의 방향(상/하/좌/우)을 판별하는 <code>direction(fr, to)</code> 헬퍼</li>
-</ul>
+<p>1973년, 수학자 빅터 클리는 동료 바츨라프 흐바탈에게 이런 질문을
+던졌다: “n개의 벽으로 이루어진 미술관을 감시 카메라(또는 경비원)로
+전부 감시하려면, 최소 몇 대가 필요한가?” 미술관의 벽이 복잡하게
+꺾여 있을수록 사각지대가 늘어난다는 게 직관이었지만, 정확히 몇 대면
+충분한지는 아무도 몰랐다.</p>
+<p>흐바탈은 곧 답을 내놨다: <strong>어떤 모양의 미술관이든 \(\lfloor n/3
+\rfloor\)대면 항상 충분하다</strong>(그리고 빗 모양처럼 뾰족한 미술관에서는
+그만큼이 실제로 필요하기도 하다).<sup class="footnote-reference" id="fr-chvatal-1"><a href="#footnote-chvatal">1</a></sup> 몇 년 뒤 스티브 피스크는
+이 결과를 훨씬 우아한 방법으로 다시 증명했다 — 미술관을 삼각형들로
+쪼갠 뒤, 그 삼각형들의 꼭짓점을 세 가지 색으로 칠할 수 있음을 보이고,
+가장 적게 쓰인 색의 꼭짓점에만 카메라를 두면 된다는 것이었다.
+<sup class="footnote-reference" id="fr-fisk-1"><a href="#footnote-fisk">2</a></sup></p>
+<h2 id="이번-주-문제와의-관계"><a class="header" href="#이번-주-문제와의-관계">이번 주 문제와의 관계</a></h2>
+<p>이번 주 다루는 문제는 이 유명한 정리의 한 갈래다 — 다만 임의의
+다각형이 아니라 <strong>rectilinear polygon</strong>(모든 벽이 수직/수평)으로
+제한하고, 카메라도 딱 1대만 쓴다는 조건을 붙인 특수한 경우다. 조건을
+좁힌 대신, “카메라 1대로 전부 감시 가능한 위치가 어디인지“를 정확히
+계산해내는 것이 이번 주의 목표다.</p>
+<h2 id="오늘-배우는-것과의-연결-10"><a class="header" href="#오늘-배우는-것과의-연결-10">오늘 배우는 것과의 연결</a></h2>
+<p>Optional 문제에서 다루는 “카메라 여러 대”, “임의의 다각형” 같은
+일반화는 모두 흐바탈의 원래 정리로 이어지는 방향이다. 오늘 배우는
+좌표 계산 하나하나가, 50년 전 나온 이 우아한 정리의 세계로 들어가는
+첫걸음이다.</p>
+<p><strong>“미술관에 카메라 몇 대가 필요한가“라는 질문 하나가, 정확히 50년
+전 우아한 수학 정리로 이어졌다 — 오늘 그 정리의 특수한 경우를 코드로
+직접 계산해본다.</strong></p>
+<hr>
+<ol class="footnote-definition">
+<li id="footnote-chvatal">
+<p>Václav Chvátal, <em>A Combinatorial Theorem in Plane
+Geometry</em>, Journal of Combinatorial Theory, Series B, Vol. 18
+(1975). <a href="#fr-chvatal-1">↩</a></p>
+</li>
+<li id="footnote-fisk">
+<p>Steve Fisk, <em>A Short Proof of Chvátal’s Watchman Theorem</em>,
+Journal of Combinatorial Theory, Series B, Vol. 24 (1978). <a href="#fr-fisk-1">↩</a></p>
+</li>
+</ol>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="topics-covered-10"><a class="header" href="#topics-covered-10">Topics Covered</a></h1>
 <h2 id="rectilinear-polygon의-방향orientation-판정"><a class="header" href="#rectilinear-polygon의-방향orientation-판정">Rectilinear Polygon의 방향(Orientation) 판정</a></h2>

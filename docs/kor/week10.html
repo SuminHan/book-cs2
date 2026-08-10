@@ -38,7 +38,7 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-e4e025c4.js";
+            window.path_to_searchindex_js = "../searchindex-72819e89.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../toc-516cd8df.js"></script>
@@ -181,12 +181,34 @@
                 <div id="mdbook-content" class="content">
                     <main>
                         <h1 id="stable-matching-ii"><a class="header" href="#stable-matching-ii">Stable Matching II</a></h1>
-<ul>
-<li>Propose-Reject 알고리즘(Gale-Shapley): 자유로운 남자가 자기 선호도 순으로
-여자에게 프로포즈하고, 여자는 더 마음에 드는 상대가 나타나면 갈아탄다 —
-이 과정을 반복하면 항상 stable matching으로 수렴함</li>
-<li><code>numProposal</code>로 “다음에 누구에게 프로포즈할지” 진행 상황을 추적</li>
-</ul>
+<p>2003년 이전, 뉴욕시 고등학교 배정 시스템은 매년 수만 명의 학생을
+제대로 배정하지 못한 채 남겼다. 학생들은 여러 학교에 원서를 내고,
+학교는 합격자를 발표하고, 학생은 그중 하나를 고르고 — 이 과정을 여러
+차례 반복하는 동안 정보가 뒤엉켰고, 정작 빈자리와 갈 곳 없는 학생이
+동시에 존재하는 비효율이 반복됐다.</p>
+<p>2003년, 경제학자 아트만 압둘카디로글루, 파라그 파탁, 앨빈 로스가
+게일-섀플리 알고리즘을 이 시스템에 도입했다.<sup class="footnote-reference" id="fr-nyc-1"><a href="#footnote-nyc">1</a></sup> 결과는 확실했다 —
+배정받지 못한 학생 수가 크게 줄었고, 이 방식은 이후 보스턴 등 다른
+도시의 학교 배정 시스템에도 그대로 채택됐다.</p>
+<h2 id="오늘-배우는-알고리즘이-실제로-하는-일"><a class="header" href="#오늘-배우는-알고리즘이-실제로-하는-일">오늘 배우는 알고리즘이 실제로 하는 일</a></h2>
+<p>핵심 아이디어는 단순하다: 자유로운 쪽(예: 남자, 또는 학생)이 자기
+선호 순서대로 계속 지원하고, 받는 쪽(예: 여자, 또는 학교)은 지금까지
+받은 것 중 최선을 잠정적으로 붙잡아두되, 더 나은 지원이 오면 그쪽으로
+바꾼다. 이 과정이 끝나면 항상 — 예외 없이 — stable matching이
+만들어진다는 것이 게일과 섀플리가 증명한 정리다.</p>
+<h2 id="오늘-배우는-것과의-연결"><a class="header" href="#오늘-배우는-것과의-연결">오늘 배우는 것과의 연결</a></h2>
+<p>이번 주는 지난주에 정의한 stable matching을 실제로 <strong>찾아내는</strong>
+propose-reject 알고리즘을 코드로 구현한다. 뉴욕시가 실제로 도입한
+것과 원리적으로 동일한 절차다.</p>
+<p><strong>뉴욕시 수만 명의 학생을 구했던 알고리즘을, 오늘 직접 코드로
+구현한다.</strong></p>
+<hr>
+<ol class="footnote-definition">
+<li id="footnote-nyc">
+<p>Abdulkadiroğlu, Pathak, Roth, <em>The New York City High School
+Match</em>, American Economic Review, Vol. 95, No. 2 (2005). <a href="#fr-nyc-1">↩</a></p>
+</li>
+</ol>
 
                     </main>
 
