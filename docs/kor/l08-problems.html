@@ -29,13 +29,15 @@
 
         <!-- Custom theme stylesheets -->
 
+        <!-- MathJax -->
+        <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
         <!-- Provide site root and default themes to javascript -->
         <script>
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-5ca27f37.js";
+            window.path_to_searchindex_js = "../searchindex-26a7b3be.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../toc-60a1819a.js"></script>
@@ -281,12 +283,12 @@ test()
 <li><code>isEqual(self, other)</code> (pure) — 같은 위치의 직사각형이면 <code>True</code>(꼭짓점 순서
 달라도 무관)</li>
 </ul>
-<p><strong>4. <code>belt(L, M)</code></strong> — 반지름 리스트 <code>L</code>(원기둥 $C_0, \ldots, C_{n-1}$)과 연결 형태
-리스트 <code>M</code>(벨트 $B_0, \ldots, B_{n-2}$; <code>1</code>=안 꼬임, <code>-1</code>=8자로 꼬임)이 주어질 때,
-$C_0$을 시계방향으로 1회전시켰을 때 $C_1, \ldots, C_{n-1}$의 회전수(부호 있음,
+<p><strong>4. <code>belt(L, M)</code></strong> — 반지름 리스트 <code>L</code>(원기둥 \(C_0, \ldots, C_{n-1}\))과 연결 형태
+리스트 <code>M</code>(벨트 \(B_0, \ldots, B_{n-2}\); <code>1</code>=안 꼬임, <code>-1</code>=8자로 꼬임)이 주어질 때,
+\(C_0\)을 시계방향으로 1회전시켰을 때 \(C_1, \ldots, C_{n-1}\)의 회전수(부호 있음,
 시계방향이 양수) 총합을 <code>Rational</code> 객체로 반환.</p>
 <blockquote>
-<p>예: <code>L=[10,5,1,2], M=[1,-1,1]</code>이면 $C_1,C_2,C_3$의 회전수는 각각 $2, -10, -5$이고
+<p>예: <code>L=[10,5,1,2], M=[1,-1,1]</code>이면 \(C_1,C_2,C_3\)의 회전수는 각각 \(2, -10, -5\)이고
 합은 <code>Rational(-13,1)</code>. 8주차에 만든 <code>Rational</code> 클래스를 그대로 사용해야 하며,
 <code>float</code>나 임의의 다른 타입을 반환하면 안 됨.</p>
 </blockquote>

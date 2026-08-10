@@ -105,8 +105,8 @@ print(triangle(400))  # 3333
 *필수 문제와 달리 제출/검사 대상은 아니지만 도움이 되므로 시간이 남으면
 시도해볼 것을 권장 (대부분 기출문제).*
 
-**10. `maxTwinPrimes(n)`** — $p_2 - p_1 = 2$인 두 소수(twin primes) 중, `n` 이하에서
-$p_1 < p_2$가 가장 큰 쌍 `[p1, p2]`를 반환. 예: `maxTwinPrimes(5)` → `[3, 5]`.
+**10. `maxTwinPrimes(n)`** — \\(p_2 - p_1 = 2\\)인 두 소수(twin primes) 중, `n` 이하에서
+\\(p_1 < p_2\\)가 가장 큰 쌍 `[p1, p2]`를 반환. 예: `maxTwinPrimes(5)` → `[3, 5]`.
 
 **11. `sym_diff(L, M)`** — 두 정수 리스트 `L`, `M`의 symmetric difference(정확히
 한쪽에만 속한 숫자들, 중복 없이 오름차순)를 반환.

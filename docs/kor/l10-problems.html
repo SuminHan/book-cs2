@@ -29,13 +29,15 @@
 
         <!-- Custom theme stylesheets -->
 
+        <!-- MathJax -->
+        <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
         <!-- Provide site root and default themes to javascript -->
         <script>
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-5ca27f37.js";
+            window.path_to_searchindex_js = "../searchindex-26a7b3be.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../toc-60a1819a.js"></script>
@@ -213,8 +215,8 @@
 <h3 id="optional-problems"><a class="header" href="#optional-problems">Optional Problems</a></h3>
 <p><em>필수 문제와 달리 제출/검사 대상은 아니지만 도움이 되므로 시간이 남으면
 시도해볼 것을 권장 (대부분 기출문제).</em></p>
-<p><strong>3. <code>compute_schedule(schedule)</code></strong> — $n$척의 배 $S_0, \ldots, S_{n-1}$과 $n$개의
-항구 $P_0, \ldots, P_{n-1}$가 있고, 각 배는 $m$일($m&gt;n$) 동안의 스케줄(각 날짜에
+<p><strong>3. <code>compute_schedule(schedule)</code></strong> — \(n\)척의 배 \(S_0, \ldots, S_{n-1}\)과 \(n\)개의
+항구 \(P_0, \ldots, P_{n-1}\)가 있고, 각 배는 \(m\)일(\(m&gt;n\)) 동안의 스케줄(각 날짜에
 어느 항구에 있는지, 또는 바다 위에 있는지)을 가진다. 각 배는 기간 중 각 항구를
 정확히 하루씩 방문하며, 어떤 두 배도 같은 날 같은 항구에 있지 않는다는 조건(†)을
 만족한다.</p>

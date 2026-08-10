@@ -29,13 +29,15 @@
 
         <!-- Custom theme stylesheets -->
 
+        <!-- MathJax -->
+        <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
         <!-- Provide site root and default themes to javascript -->
         <script>
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-5ca27f37.js";
+            window.path_to_searchindex_js = "../searchindex-26a7b3be.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../toc-60a1819a.js"></script>
@@ -179,7 +181,7 @@
                     <main>
                         <h1 id="problem-set"><a class="header" href="#problem-set">Problem Set</a></h1>
 <h3 id="필수-문제"><a class="header" href="#필수-문제">필수 문제</a></h3>
-<p><strong>1. <code>equilibrium(n, S1, S2)</code></strong> — 자유 물체 $n$개, 자유-자유 스프링 리스트 <code>S1</code>,
+<p><strong>1. <code>equilibrium(n, S1, S2)</code></strong> — 자유 물체 \(n\)개, 자유-자유 스프링 리스트 <code>S1</code>,
 자유-고정 스프링 리스트 <code>S2</code>가 주어질 때, 각 자유 물체의 평형 위치
 <code>[[x1,y1], ..., [xn,yn]]</code>을 반환.</p>
 <ul>
@@ -187,8 +189,8 @@
 <li><code>S2[i] = [elastic_coeff, free_idx, fixed_x, fixed_y]</code> — 자유 물체와 고정 물체를
 잇는 스프링</li>
 </ul>
-<p>예: 고정 물체 $F_1=(0,0)$, $F_2=(7,0)$에 탄성계수 3, 4인 스프링으로 연결된 자유
-물체 하나의 평형 위치는, $-w_1 x + w_2(7-x) = 0$을 풀어 $x=4$.</p>
+<p>예: 고정 물체 \(F_1=(0,0)\), \(F_2=(7,0)\)에 탄성계수 3, 4인 스프링으로 연결된 자유
+물체 하나의 평형 위치는, \(-w_1 x + w_2(7-x) = 0\)을 풀어 \(x=4\).</p>
 <pre><code class="language-python"># copy the function gaussian_elimination from L06 here
 def equilibrium(n, S1, S2):
     ax = [[0] * n for i in range(n)]
@@ -204,34 +206,34 @@ print(equilibrium(2, S1, S2))
 </code></pre>
 <blockquote>
 <p>힌트: 각 자유 물체에 대해 “그 물체에 연결된 모든 스프링의 힘의 합 = 0“이라는
-식을 세우면, $x$좌표들에 대한 연립방정식과 $y$좌표들에 대한 연립방정식이
+식을 세우면, \(x\)좌표들에 대한 연립방정식과 \(y\)좌표들에 대한 연립방정식이
 각각 만들어진다. 6주차의 <code>gaussian_elimination</code>을 그대로 재사용.</p>
 </blockquote>
 <h3 id="optional-problems"><a class="header" href="#optional-problems">Optional Problems</a></h3>
 <p><em>필수 문제와 달리 제출/검사 대상은 아니지만 도움이 되므로 시간이 남으면
 시도해볼 것을 권장 (대부분 기출문제).</em></p>
-<p><strong>2. <code>dice(n, m, A)</code></strong> — $1 \times n$ 격자 위에서, $m$면체 주사위를 굴려 나온
+<p><strong>2. <code>dice(n, m, A)</code></strong> — \(1 \times n\) 격자 위에서, \(m\)면체 주사위를 굴려 나온
 수만큼 동전을 오른쪽으로 옮기고(단, 화살표 <code>A</code>를 만나면 도착점으로 순간이동)
-$n$번 칸에 도달하면 끝나는 게임에서, 게임이 끝날 때까지 주사위를 굴리는
-횟수의 기댓값을 정확히(오차 $10^{-10}$ 이내) 계산.</p>
+\(n\)번 칸에 도달하면 끝나는 게임에서, 게임이 끝날 때까지 주사위를 굴리는
+횟수의 기댓값을 정확히(오차 \(10^{-10}\) 이내) 계산.</p>
 <blockquote>
 <p>Monte Carlo 시뮬레이션(랜덤 추정)은 허용되지 않음 — 기댓값을 연립일차방정식
 으로 세운 뒤 Gaussian elimination으로 정확히 풀어야 한다. 화살표가 없는 단순
-경우는 점화식 $a_n = 1 + \frac{1}{6}\sum_{i=\max{1,n-6}}^{n-1} a_i$로 풀 수
-있고, 화살표가 있는 일반적인 경우는 각 칸 $i$에서의 기댓값 $x_i$에 대한
-연립방정식 $x_i = 1 + \frac{1}{m}\sum_{k=1}^{m} x_{f(i+k)}$를 세워서 푼다.</p>
+경우는 점화식 \(a_n = 1 + \frac{1}{6}\sum_{i=\max{1,n-6}}^{n-1} a_i\)로 풀 수
+있고, 화살표가 있는 일반적인 경우는 각 칸 \(i\)에서의 기댓값 \(x_i\)에 대한
+연립방정식 \(x_i = 1 + \frac{1}{m}\sum_{k=1}^{m} x_{f(i+k)}\)를 세워서 푼다.</p>
 </blockquote>
 <p><strong>3. <code>secret(n, t, T, x, s)</code></strong> — 다항함수를 이용한 비밀 분산(secret sharing) 문제.
-딜러가 정수 비밀 $S$를, $\ell$개의 그룹으로 나뉜 $N$명에게 각각 정보 조각을
-나눠준다. 조건을 만족하는 인원(전체 $T$명 이상, 각 그룹에서 $t_i$명 이상)이
-모이면 다항식 값들로부터 $S$를 유일하게 복구할 수 있고, 조건을 만족하지 못하면
+딜러가 정수 비밀 \(S\)를, \(\ell\)개의 그룹으로 나뉜 \(N\)명에게 각각 정보 조각을
+나눠준다. 조건을 만족하는 인원(전체 \(T\)명 이상, 각 그룹에서 \(t_i\)명 이상)이
+모이면 다항식 값들로부터 \(S\)를 유일하게 복구할 수 있고, 조건을 만족하지 못하면
 복구할 수 없다. 모인 사람들의 정보 <code>s</code>(모이지 않은 사람은 <code>None</code>)와 공개된
 좌표 <code>x</code>로부터 비밀 <code>S</code>를 복구하는 함수를 작성.</p>
 <blockquote>
-<p>Shamir’s Secret Sharing의 일반화 버전. 각 그룹 $i$에 대해 다항함수
-$f_i(x) = g(i) + \sum a_{i,j}x^j + \sum b_j x^{t_i+j-1}$을 구성해 정보를
+<p>Shamir’s Secret Sharing의 일반화 버전. 각 그룹 \(i\)에 대해 다항함수
+\(f_i(x) = g(i) + \sum a_{i,j}x^j + \sum b_j x^{t_i+j-1}\)을 구성해 정보를
 나눠주며, 충분한 정보가 모이면 이 다항함수들을 Gaussian elimination으로
-복원해 $S = g(0)$을 얻는다. (부동소수점 오차를 피하려면 8주차에서 다룰
+복원해 \(S = g(0)\)을 얻는다. (부동소수점 오차를 피하려면 8주차에서 다룰
 유리수 기반 Gaussian elimination을 사용.)</p>
 </blockquote>
 <hr>

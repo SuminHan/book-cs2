@@ -29,13 +29,15 @@
 
         <!-- Custom theme stylesheets -->
 
+        <!-- MathJax -->
+        <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
         <!-- Provide site root and default themes to javascript -->
         <script>
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-5ca27f37.js";
+            window.path_to_searchindex_js = "../searchindex-26a7b3be.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../toc-60a1819a.js"></script>
@@ -275,8 +277,8 @@ print(triangle(400))  # 3333
 <h3 id="optional-problems"><a class="header" href="#optional-problems">Optional Problems</a></h3>
 <p><em>필수 문제와 달리 제출/검사 대상은 아니지만 도움이 되므로 시간이 남으면
 시도해볼 것을 권장 (대부분 기출문제).</em></p>
-<p><strong>10. <code>maxTwinPrimes(n)</code></strong> — $p_2 - p_1 = 2$인 두 소수(twin primes) 중, <code>n</code> 이하에서
-$p_1 &lt; p_2$가 가장 큰 쌍 <code>[p1, p2]</code>를 반환. 예: <code>maxTwinPrimes(5)</code> → <code>[3, 5]</code>.</p>
+<p><strong>10. <code>maxTwinPrimes(n)</code></strong> — \(p_2 - p_1 = 2\)인 두 소수(twin primes) 중, <code>n</code> 이하에서
+\(p_1 &lt; p_2\)가 가장 큰 쌍 <code>[p1, p2]</code>를 반환. 예: <code>maxTwinPrimes(5)</code> → <code>[3, 5]</code>.</p>
 <p><strong>11. <code>sym_diff(L, M)</code></strong> — 두 정수 리스트 <code>L</code>, <code>M</code>의 symmetric difference(정확히
 한쪽에만 속한 숫자들, 중복 없이 오름차순)를 반환.</p>
 <p><strong>12. <code>multiple(L1, L2)</code></strong> — <code>L1</code>의 모든 숫자가 <code>L2</code>의 어떤 숫자의 배수이면

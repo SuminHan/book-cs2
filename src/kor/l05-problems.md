@@ -6,8 +6,8 @@
 
 ### 필수 문제
 
-**1. `topView(P)` / `frontView(P)` / `rightView(P)`** — $N \times N \times N$
-0/1 리스트로 주어진 큐브 더미 `P`에서, 위/앞/오른쪽 방향으로 본 $N \times N$
+**1. `topView(P)` / `frontView(P)` / `rightView(P)`** — \\(N \times N \times N\\)
+0/1 리스트로 주어진 큐브 더미 `P`에서, 위/앞/오른쪽 방향으로 본 \\(N \times N\\)
 0/1 투영도를 반환.
 
 ```python

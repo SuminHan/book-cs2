@@ -29,13 +29,15 @@
 
         <!-- Custom theme stylesheets -->
 
+        <!-- MathJax -->
+        <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
         <!-- Provide site root and default themes to javascript -->
         <script>
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-5ca27f37.js";
+            window.path_to_searchindex_js = "../searchindex-26a7b3be.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../toc-60a1819a.js"></script>
@@ -181,8 +183,8 @@
 <p><em>이 문제집은 그림(3D 큐브 더미 시각화)이 포함되어 있었으나, 텍스트로만 옮기는
 과정에서 그림은 생략했다. 원본 PDF를 함께 참고할 것.</em></p>
 <h3 id="필수-문제"><a class="header" href="#필수-문제">필수 문제</a></h3>
-<p><strong>1. <code>topView(P)</code> / <code>frontView(P)</code> / <code>rightView(P)</code></strong> — $N \times N \times N$
-0/1 리스트로 주어진 큐브 더미 <code>P</code>에서, 위/앞/오른쪽 방향으로 본 $N \times N$
+<p><strong>1. <code>topView(P)</code> / <code>frontView(P)</code> / <code>rightView(P)</code></strong> — \(N \times N \times N\)
+0/1 리스트로 주어진 큐브 더미 <code>P</code>에서, 위/앞/오른쪽 방향으로 본 \(N \times N\)
 0/1 투영도를 반환.</p>
 <pre><code class="language-python">P1 = [[[0,0,0],[0,0,0],[1,0,0]],
       [[1,0,1],[0,0,0],[1,0,1]],
