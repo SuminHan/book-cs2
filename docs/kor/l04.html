@@ -35,10 +35,10 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-bcc30a53.js";
+            window.path_to_searchindex_js = "../searchindex-5ca27f37.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../toc-6f28b252.js"></script>
+        <script src="../toc-0713bf2f.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -178,7 +178,6 @@
                 <div id="mdbook-content" class="content">
                     <main>
                         <h1 id="multi-dimensional-lists"><a class="header" href="#multi-dimensional-lists">Multi-Dimensional Lists</a></h1>
-<h2 id="31-key-concepts"><a class="header" href="#31-key-concepts">3.1. Key Concepts</a></h2>
 <ul>
 <li>2차원 배열: <code>table[i]</code>는 <code>i</code>행에 대응하는 리스트. <code>height = len(table)</code>,
 <code>width = len(table[0])</code></li>
@@ -187,145 +186,16 @@
 <li>다중 for 루프로 모든 칸 순회: counter, max/min, “for all” 패턴이 그대로 확장됨</li>
 <li>경계 체크 함수(<code>withinBoundary</code>)로 인접 칸을 안전하게 순회</li>
 </ul>
-<h2 id="32-problem-set"><a class="header" href="#32-problem-set">3.2. Problem Set</a></h2>
-<h3 id="필수-문제"><a class="header" href="#필수-문제">필수 문제</a></h3>
-<p><strong>1. <code>countZero(a)</code></strong> — 2차원 배열 <code>a</code>에서 0의 개수. Counter 패턴의 2중 for 루프.</p>
-<pre><code class="language-python">def countZero(a):
-    height = len(a)
-    width = len(a[0])
-    count = 0
-    for i in range(height):
-        for j in range(width):
-            if a[i][j] == 0:
-                count += 1
-    return count
-
-print(countZero([[1,2,3],[0,0,5],[0,3,0],[0,0,0]]))  # 7
-print(countZero([[0,2,3],[0,0,5],[0,3,0]]))          # 5
-</code></pre>
-<p><strong>2. <code>countZero(a)</code>(3차원 버전)</strong> — 3차원 배열에서 0의 개수. 1번과 같은 패턴을
-3중 for 루프로 확장.</p>
-<pre><code class="language-python">print(countZero([[[1,2],[0,0]],[[0,0],[0,0]]]))                  # 6
-print(countZero([[[1,2],[0,0]],[[0,0],[0,0]],[[0,0],[0,0]]]))    # 10
-</code></pre>
-<p><strong>3. <code>maxPrime(a)</code></strong> — 3차원 배열에서 가장 큰 소수(없으면 0). Max/min 패턴, 주어진
-<code>isPrime</code> 함수 활용.</p>
-<pre><code class="language-python">print(maxPrime([[[2,3],[3,9]],[[17,3],[3,19]]]))   # 19
-print(maxPrime([[[29,3],[3,9]],[[17,3],[3,19]]]))  # 29
-</code></pre>
-<p><strong>4. <code>sorted(a)</code></strong> — 2차원 배열의 모든 행과 모든 열이 각각 비감소 순서인지 여부.</p>
-<pre><code class="language-python">test1 = [
-    [2,3,7,9,11,12],
-    [5,6,8,10,12,15],
-    [7,7,8,10,12,15],
-    [8,9,10,10,13,17],
-]
-test2 = [
-    [2,3,7,9,11,12],
-    [5,6,8,10,12,15],
-    [7,7,8,10,12,18],
-    [8,9,10,10,13,17],
-]
-print(sorted(test1))  # True
-print(sorted(test2))  # False
-</code></pre>
-<blockquote>
-<p>“for all” 패턴의 2중 for 루프를 두 번 사용 — 하나는 각 행(가로), 하나는 각
-열(세로) 방향 체크. <code>range</code>에 <code>height</code>/<code>width</code>를 그대로 넣을지 <code>-1</code>을 뺄지
-꼼꼼히 따져볼 것.</p>
-</blockquote>
-<p><strong>5. <code>countMines(mineField)</code>(1차원)</strong> — 1차원 지뢰밭(boolean 리스트)에서, 각
-칸(자기 자신 + 좌우 인접 칸)의 지뢰 개수를 리스트로 반환.</p>
-<pre><code class="language-python">def withinBoundary(size, i):
-    return i &gt;= 0 and i &lt; size
-
-def countMines(mineField):
-    size = len(mineField)
-    mines = [0] * size
-    for i in range(size):
-        for j in range(i - 1, i + 2):
-            if withinBoundary(size, j):
-                mines[i] += mineField[j]
-    return mines
-
-T, F = True, False
-mineField1 = [T, F, F, T, T, T, T, F, T, F]
-mineField2 = [T, F, T, T, T, F, F]
-print(countMines(mineField1))  # [1,1,1,2,3,3,2,2,1,1]
-print(countMines(mineField2))  # [1,2,2,3,2,1,0]
-</code></pre>
-<p><strong>6. <code>countMines(mineField)</code>(2차원)</strong> — 2차원 지뢰밭에서, 각 칸(자기 자신 + 8방향
-인접 칸)의 지뢰 개수를 2차원 리스트로 반환.</p>
-<blockquote>
-<p>2차원 리스트 초기화는 <code>None</code> 대신 <code>0</code>으로 해두고 그대로 누적하면 편하다.</p>
-</blockquote>
-<pre><code class="language-python">def withinBoundary(height, width, i, j):
-    return 0 &lt;= i &lt; height and 0 &lt;= j &lt; width
-
-def countMines(mineField):
-    height = len(mineField)
-    width = len(mineField[0])
-    # ADD ADDITIONAL CODE HERE!
-</code></pre>
-<p><strong>7. <code>maxZeroRect(M)</code></strong> — 0/1 행렬 <code>M</code>에서, 0으로만 이루어진 가장 큰 직사각형의
-넓이를 반환.</p>
-<pre><code class="language-python">def zeroRect(M, i1, i2, j1, j2):
-    # returns True iff M[i][j] == 0 for all i1&lt;=i&lt;=i2, j1&lt;=j&lt;=j2
-    ...
-
-def maxZeroRect(M):
-    ...
-
-M = [[1,1,0,1,0,0,1],
-     [0,0,0,0,0,1,1],
-     [0,0,0,0,0,1,1],
-     [0,0,0,0,0,1,1],
-     [1,0,0,0,0,0,1],
-     [1,0,0,0,0,1,0],
-     [1,0,1,0,0,1,0],
-     [1,0,1,0,0,1,0]]
-print(maxZeroRect(M))  # 20
-</code></pre>
-<blockquote>
-<p>보조 함수 <code>zeroRect(M, i1, i2, j1, j2)</code>를 먼저 만들어, <code>M[i][j]</code>가
-<code>i1≤i≤i2, j1≤j≤j2</code> 범위에서 전부 0인지 판정한 뒤 <code>maxZeroRect</code>에서 활용.</p>
-</blockquote>
-<h3 id="optional-problems"><a class="header" href="#optional-problems">Optional Problems</a></h3>
-<p><em>필수 문제와 달리 제출/검사 대상은 아니지만 도움이 되므로 시간이 남으면
-시도해볼 것을 권장 (대부분 기출문제).</em></p>
-<p><strong>8. <code>product(A, B)</code></strong> — 두 행렬(2차원 리스트) <code>A</code>(m×p), <code>B</code>(p×n)의 행렬곱을
-반환. 차원이 안 맞아 곱이 정의되지 않으면 <code>None</code>.</p>
-<p><strong>9. <code>rotate(M)</code></strong> — 2차원 리스트 <code>M</code>을 시계방향으로 90° 회전시킨 리스트를 반환.</p>
-<p><strong>10. <code>check(M)</code></strong> — 2차원 리스트 <code>M</code>의 각 행에 음수가 존재하면 <code>True</code>.</p>
-<p><strong>11. <code>findMines(C)</code></strong> — 5번 문제의 역연산. <code>C[i]</code>가 <code>M[i-1]+M[i]+M[i+1]</code>(경계
-밖은 무시)의 합일 때, 그런 <code>M</code>을 하나 찾아 반환(없으면 <code>None</code>).</p>
-<pre><code class="language-python">def countMines(M):
-    n = len(M)
-    C = [0] * n
-    for i in range(n):
-        for j in range(i - 1, i + 2):
-            if 0 &lt;= j &lt; n:
-                C[i] += M[j]
-    return C
-</code></pre>
-<blockquote>
-<p>힌트: <code>M[0]</code>의 각 후보값(0부터 <code>max(C)</code>까지)에 대해 나머지 <code>M[1..n-1]</code>이
-<code>M[i]+M[i+1]+M[i+2] = C[i]</code> 형태의 등식들로 유일하게 결정된다. 이 값들이
-모두 0 이상이고 마지막 등식(<code>M[n-2]+M[n-1]=C[n-1]</code>)까지 성립하면 답.</p>
-</blockquote>
-<hr>
-<p><em>원본: <code>CS2(2026-2)_all/CS2/CS2/problem_set/P04.pdf</code>. 표현/코드는 정리하며 일부
-재구성함.</em></p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../kor/l03.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../kor/l03-problems.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                             </a>
 
-                            <a rel="next prefetch" href="../kor/l05.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../kor/l04-problems.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                             </a>
 
@@ -335,11 +205,11 @@ print(maxZeroRect(M))  # 20
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../kor/l03.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../kor/l03-problems.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                     </a>
 
-                    <a rel="next prefetch" href="../kor/l05.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../kor/l04-problems.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                     </a>
             </nav>

@@ -3,8 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Page not found - CS2 국내반 보충자료</title>
-        <base href="/">
+        <title>Problem Set - CS2 국내반 보충자료</title>
 
 
         <!-- Custom HTML head -->
@@ -13,33 +12,33 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
-        <link rel="icon" href="favicon-de23e50b.svg">
-        <link rel="shortcut icon" href="favicon-8114d1fc.png">
-        <link rel="stylesheet" href="css/variables-8adf115d.css">
-        <link rel="stylesheet" href="css/general-e96d0476.css">
-        <link rel="stylesheet" href="css/chrome-d279d366.css">
-        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+        <link rel="icon" href="../favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="../favicon-8114d1fc.png">
+        <link rel="stylesheet" href="../css/variables-8adf115d.css">
+        <link rel="stylesheet" href="../css/general-e96d0476.css">
+        <link rel="stylesheet" href="../css/chrome-d279d366.css">
+        <link rel="stylesheet" href="../css/print-9e4910d8.css" media="print">
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+        <link rel="stylesheet" href="../fonts/fonts-9644e21d.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
-        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
-        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+        <link rel="stylesheet" id="mdbook-highlight-css" href="../highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="../tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="../ayu-highlight-3fdfc3ac.css">
 
         <!-- Custom theme stylesheets -->
 
 
         <!-- Provide site root and default themes to javascript -->
         <script>
-            const path_to_root = "";
+            const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-5ca27f37.js";
+            window.path_to_searchindex_js = "../searchindex-5ca27f37.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-0713bf2f.js"></script>
+        <script src="../toc-0713bf2f.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -106,7 +105,7 @@
             <!-- populated by js -->
             <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
             <noscript>
-                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
             </noscript>
             <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -141,7 +140,7 @@
                     <h1 class="menu-title">CS2 국내반 보충자료</h1>
 
                     <div class="right-buttons">
-                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
                         </a>
                         <a href="https://github.com/SuminHan/book-cs2" title="Git repository" aria-label="Git repository">
@@ -178,14 +177,125 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h1 id="document-not-found-404"><a class="header" href="#document-not-found-404">Document not found (404)</a></h1>
-<p>This URL is invalid, sorry. Please use the navigation bar or search to continue.</p>
+                        <h1 id="problem-set"><a class="header" href="#problem-set">Problem Set</a></h1>
+<h3 id="필수-문제"><a class="header" href="#필수-문제">필수 문제</a></h3>
+<p><strong>1. <code>inOrder(filename)</code></strong> — 파일의 모든 단어가 사전순으로 정렬되어 있는지 여부.</p>
+<pre><code class="language-python">def inOrder(filename):
+    words = open(filename, "r").read().split()
+    n = len(words)
+    for i in range(n - 1):
+        if words[i] &gt; words[i + 1]:
+            return False
+    return True
+
+print(inOrder("dictionary.txt"))   # True
+print(inOrder("dictionary2.txt"))  # False
+</code></pre>
+<blockquote>
+<p>“for all” 패턴. <code>range(n)</code>이 아니라 <code>range(n-1)</code>을 써야 마지막 인덱스에서
+<code>words[i+1]</code>이 범위를 벗어나지 않는다.</p>
+</blockquote>
+<p><strong>2. <code>isPalindrome(s)</code> / <code>maxPalindrome(filename)</code></strong> — <code>isPalindrome</code>은 문자열이
+회문(앞뒤로 읽어도 같음, 예: <code>"deified"</code>)인지 판정. <code>maxPalindrome</code>은 파일에서
+가장 긴 회문을 반환(동점이면 먼저 나온 것).</p>
+<blockquote>
+<p><code>isPalindrome</code>은 “for all” 패턴(<code>s[i]</code>와 <code>s[n-1-i]</code> 비교). <code>maxPalindrome</code>은
+max 패턴이되 “가장 긴 길이“가 아니라 “가장 긴 회문 단어” 자체를 유지해야 하므로
+<code>maxlen</code>뿐 아니라 <code>maxword</code>도 같이 갱신.</p>
+</blockquote>
+<p><strong>3. <code>isAbecedarian(s)</code> / <code>countAbecedarian(filename)</code></strong> — abecedarian은 모든
+글자가 알파벳 순서로 나타나는 단어(예: <code>"aaabb"</code>, <code>"acorsy"</code>). <code>isAbecedarian</code>은
+판정 함수, <code>countAbecedarian</code>은 파일에서 그 개수를 센다.</p>
+<blockquote>
+<p><code>isAbecedarian</code>은 “for all” 패턴, <code>countAbecedarian</code>은 counter 패턴.</p>
+</blockquote>
+<p><strong>4. <code>disjoint(s1, s2)</code></strong> — 두 문자열이 겹치는 글자가 하나도 없으면 <code>True</code>.</p>
+<pre><code class="language-python">print(disjoint("ace", "a"))          # False
+print(disjoint("aurora", "steel"))   # True
+print(disjoint("elephant", "long"))  # False
+</code></pre>
+<blockquote>
+<p>“for all” 패턴. <code>s1[i] in s2</code>로 각 글자의 포함 여부를 확인.</p>
+</blockquote>
+<p><strong>5. <code>countWordWithE(filename)</code></strong> — 파일에서 알파벳 <code>"e"</code>를 포함한 단어의 개수.
+Counter 패턴.</p>
+<p><strong>6. <code>countPrime(filename)</code></strong> — 파일에서 길이가 소수인 단어의 개수. <code>isPrime</code>을
+활용한 counter 패턴.</p>
+<p><strong>7. <code>istcdl(s)</code> / <code>tcdl(filename)</code></strong> — “3연속 이중 글자”(예: <code>"bookkeeper"</code>)를
+가졌는지 판정하고, 파일에서 그런 단어를 모두 모아 리스트로 반환.</p>
+<blockquote>
+<p><code>istcdl</code>은 “for all” 패턴 — <code>s[i:i+5:2]</code>, <code>s[i+1:i+6:2]</code>가 뭘 뜻하는지 먼저
+생각해볼 것. <code>tcdl</code>은 조건을 만족하는 단어만 골라 새 리스트에 담는 패턴:</p>
+<pre><code class="language-python">L = []
+for i in range(n):
+    if some_condition(words[i]):
+        L.append(words[i])
+return L
+</code></pre>
+</blockquote>
+<p><strong>8. <code>meter()</code></strong> — 인자 없이, 100000 ≤ i ≤ 999996 범위에서 아래 네 조건을 모두
+만족하는 정수 <code>i</code>를 전부 찾아 리스트로 반환:</p>
+<ul>
+<li><code>i</code>의 마지막 네 자리가 회문</li>
+<li><code>i+1</code>의 마지막 다섯 자리가 회문</li>
+<li><code>i+2</code>의 중간 네 자리가 회문</li>
+<li><code>i+3</code>의 여섯 자리 전체가 회문</li>
+</ul>
+<pre><code class="language-python">def isPalindrome(s):
+    n = len(s)
+    for i in range(n // 2):
+        if s[i] != s[n - 1 - i]:
+            return False
+    return True
+
+def check(i):
+    # ADD ADDITIONAL CODE HERE!
+    ...
+
+def meter():
+    L = []
+    for i in range(100000, 999997):
+        if check(i):
+            L.append(i)
+    return L
+
+print(meter())  # [198888, 199999]
+</code></pre>
+<blockquote>
+<p>정수를 문자열로 바꾸려면 <code>str(i)</code>. <code>str(i+1)[1:]</code>처럼 슬라이싱으로 원하는
+자릿수만 잘라내 <code>isPalindrome</code>으로 검사.</p>
+</blockquote>
+<p><strong>9. <code>triangle(n)</code></strong> — 길이가 같은 성냥개비 <code>n</code>개로, (부러뜨리지 않고 전부 사용해)
+만들 수 있는 서로 합동이 아닌 삼각형의 개수를 반환.</p>
+<pre><code class="language-python">print(triangle(9))    # 3
+print(triangle(30))   # 19
+print(triangle(70))   # 102
+print(triangle(400))  # 3333
+</code></pre>
+<h3 id="optional-problems"><a class="header" href="#optional-problems">Optional Problems</a></h3>
+<p><em>필수 문제와 달리 제출/검사 대상은 아니지만 도움이 되므로 시간이 남으면
+시도해볼 것을 권장 (대부분 기출문제).</em></p>
+<p><strong>10. <code>maxTwinPrimes(n)</code></strong> — $p_2 - p_1 = 2$인 두 소수(twin primes) 중, <code>n</code> 이하에서
+$p_1 &lt; p_2$가 가장 큰 쌍 <code>[p1, p2]</code>를 반환. 예: <code>maxTwinPrimes(5)</code> → <code>[3, 5]</code>.</p>
+<p><strong>11. <code>sym_diff(L, M)</code></strong> — 두 정수 리스트 <code>L</code>, <code>M</code>의 symmetric difference(정확히
+한쪽에만 속한 숫자들, 중복 없이 오름차순)를 반환.</p>
+<p><strong>12. <code>multiple(L1, L2)</code></strong> — <code>L1</code>의 모든 숫자가 <code>L2</code>의 어떤 숫자의 배수이면
+<code>True</code>. 예: <code>multiple([14,24,18,35,39], [6,13,7])</code> → <code>True</code>.</p>
+<hr>
+<p><em>원본: <code>CS2(2026-2)_all/CS2/CS2/problem_set/P03.pdf</code>. 표현/코드는 정리하며 일부
+재구성함.</em></p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../kor/l03.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
 
+                            <a rel="next prefetch" href="../kor/l04.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
 
                         <div style="clear: both"></div>
                     </nav>
@@ -193,7 +303,13 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../kor/l03.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
 
+                    <a rel="next prefetch" href="../kor/l04.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
             </nav>
 
         </div>
@@ -211,13 +327,13 @@
         </script>
 
 
-        <script src="elasticlunr-ef4e11c1.min.js"></script>
-        <script src="mark-09e88c2c.min.js"></script>
-        <script src="searcher-09f2665d.js"></script>
+        <script src="../elasticlunr-ef4e11c1.min.js"></script>
+        <script src="../mark-09e88c2c.min.js"></script>
+        <script src="../searcher-09f2665d.js"></script>
 
-        <script src="clipboard-1626706a.min.js"></script>
-        <script src="highlight-abc7f01d.js"></script>
-        <script src="book-609e4cb8.js"></script>
+        <script src="../clipboard-1626706a.min.js"></script>
+        <script src="../highlight-abc7f01d.js"></script>
+        <script src="../book-609e4cb8.js"></script>
 
         <!-- Custom JS scripts -->
 

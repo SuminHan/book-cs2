@@ -1,0 +1,132 @@
+# Problem Set
+
+
+이미 완성된 `Point` 클래스를 참고해서 작성:
+
+```python
+class Point:
+    def __init__(self, px, py):        # modifier
+        self.x = px
+        self.y = py
+    def __str__(self):                 # pure function
+        return "(" + str(self.x) + ',' + str(self.y) + ")"
+    def getX(self):                    # pure function
+        return self.x
+    def getY(self):                    # pure function
+        return self.y
+    def setX(self, v):                 # modifier
+        self.x = v
+    def setY(self, v):                 # modifier
+        self.y = v
+    def distance(self, p):             # pure function
+        dx = self.x - p.x
+        dy = self.y - p.y
+        return (dx*dx + dy*dy) ** 0.5
+    def add(self, p):                  # pure function
+        return Point(self.x + p.x, self.y + p.y)
+```
+
+### 필수 문제
+
+**1. `Circle` 클래스** — 중심(`Point`)과 반지름을 갖는 원.
+
+- `__init__(self, c, r)` (modifier) — `center`, `radius` 상태 변수 초기화
+- `__str__(self)` (pure) — `"(center,radius)"` 형태, 예: `"((0,1) , 5)"`
+- `area(self)` (pure) — 넓이 (`math.pi` 사용)
+- `getRadius(self)` / `getCenter(self)` (pure)
+- `setRadius(self, r)` (modifier)
+- `moveTo(self, x, y)` (modifier) — 중심을 `Point(x,y)`로 이동
+- `move(self, dx, dy)` (modifier) — 중심을 `(dx,dy)`만큼 이동
+
+```python
+def test():
+    p0 = Point(0, 0)
+    c1 = Circle(p0, 3)
+    print(c1)              # ((0,0) , 3)
+    print(c1.area())       # 28.274333882308138
+    print(c1.getRadius())  # 3
+    print(c1.getCenter())  # (0,0)
+    c1.setRadius(5)
+    print(c1)              # ((0,0) , 5)
+    print(c1.area())       # 78.53981633974483
+    c1.moveTo(3, 4)
+    print(c1)              # ((3,4) , 5)
+    c1.move(1, 1)
+    print(c1)              # ((4,5) , 5)
+test()
+```
+
+**2. `Rational` 클래스** — 분자/분모로 표현되는 유리수.
+
+- `__init__(self, n, d)` (modifier) — `numerator`, `denominator` 초기화
+- `__str__(self)` (pure) — `"7/24"` 형태
+- `toFloat(self)` (pure) — float 값 반환
+- `negate(self)` (modifier) — 부호 반전(분자 부호만 바꾸면 됨)
+- `invert(self)` (modifier) — 역수로 변경(분자·분모 교환)
+- `reduce(self)` (modifier) — 기약분수로 변환(주어진 `gcd` 함수 활용)
+- `add(self, r)` (pure) — 덧셈 결과(기약분수)를 새 `Rational`로 반환
+- `mul(self, r)` (pure) — 곱셈 결과(기약분수)를 새 `Rational`로 반환
+
+```python
+def gcd(a, b):
+    if b > a:
+        a, b = b, a
+    while b > 0:
+        a, b = b, a % b
+    return a
+
+def test():
+    r1 = Rational(12, 16)
+    r2 = Rational(9, 6)
+    print(r1, r2)   # 12/16 9/6
+    r1.reduce(); r2.reduce()
+    print(r1, r2)   # 3/4 3/2
+    r1.negate()
+    print(r1)       # -3/4
+    r1.negate()
+    print(r1)       # 3/4
+    r1.invert()
+    print(r1)       # 4/3
+    r3 = r1.add(r2)
+    r4 = r1.mul(r2)
+    print(r3)             # 17/6
+    print(r4)             # 2/1
+    print(r3.toFloat())   # 2.8333333333333335
+    print(r4.toFloat())   # 2.0
+test()
+```
+> `add`/`mul`은 pure function이므로 `self`와 `r`을 변경하면 안 되고, 결과는
+> 반드시 `reduce`로 약분한 새 `Rational` 객체여야 한다.
+
+### Optional Problems
+
+*필수 문제와 달리 제출/검사 대상은 아니지만 도움이 되므로 시간이 남으면
+시도해볼 것을 권장 (대부분 기출문제).*
+
+**3. `Rectangle` 클래스** — 두 `Point`(대각 꼭짓점)로 정의되는, 축에 평행한
+직사각형.
+- `get_min_x/y`, `get_max_x/y` (pure)
+- `contains(self, point3)` (pure) — 경계 포함, 내부에 있으면 `True`
+- `area(self)` (pure)
+- `isEqual(self, other)` (pure) — 같은 위치의 직사각형이면 `True`(꼭짓점 순서
+  달라도 무관)
+
+**4. `belt(L, M)`** — 반지름 리스트 `L`(원기둥 $C_0, \ldots, C_{n-1}$)과 연결 형태
+리스트 `M`(벨트 $B_0, \ldots, B_{n-2}$; `1`=안 꼬임, `-1`=8자로 꼬임)이 주어질 때,
+$C_0$을 시계방향으로 1회전시켰을 때 $C_1, \ldots, C_{n-1}$의 회전수(부호 있음,
+시계방향이 양수) 총합을 `Rational` 객체로 반환.
+> 예: `L=[10,5,1,2], M=[1,-1,1]`이면 $C_1,C_2,C_3$의 회전수는 각각 $2, -10, -5$이고
+> 합은 `Rational(-13,1)`. 8주차에 만든 `Rational` 클래스를 그대로 사용해야 하며,
+> `float`나 임의의 다른 타입을 반환하면 안 됨.
+
+**5. `gaussian_rational(a, b)`** — 6주차의 `gaussian_elimination`을 실수(float)
+대신 `Rational` 객체로 수행하여, 부동소수점 오차 없이 정확한 해를 구함. 입력은
+6주차 1번 문제와 같은 형태(정수), 반환값은 `Rational` 객체로 이루어진 리스트
+(해가 없거나 무한히 많으면 `None`).
+> `c = a[i][p] / a[p][p]` 같은 나눗셈은 `a[i][p].div(a[p][p])`로, `a[p][p] == 0`
+> 비교는 `a[p][p].equal(Rational(0,1))`로 바꿔서 `Rational` 클래스의 메서드를
+> 통해 연산해야 함(`==` 비교는 의도대로 동작하지 않음 — `equal()` 사용).
+
+---
+*원본: `CS2(2026-2)_all/CS2/CS2/problem_set/P08.pdf`. 표현/코드는 정리하며 일부
+재구성함.*
