@@ -28,6 +28,7 @@
         <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="../ayu-highlight-3fdfc3ac.css">
 
         <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../theme/numbering-c6f330cb.css">
 
 
         <!-- Provide site root and default themes to javascript -->
@@ -35,7 +36,7 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-a55c3f67.js";
+            window.path_to_searchindex_js = "../searchindex-cae08bf5.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../toc-6f28b252.js"></script>
@@ -178,7 +179,7 @@
                 <div id="mdbook-content" class="content">
                     <main>
                         <h1 id="multi-dimensional-lists"><a class="header" href="#multi-dimensional-lists">Multi-Dimensional Lists</a></h1>
-<h2 id="31-key-concepts"><a class="header" href="#31-key-concepts">3.1. Key Concepts</a></h2>
+<h2 id="key-concepts"><a class="header" href="#key-concepts">Key Concepts</a></h2>
 <ul>
 <li>2차원 배열: <code>table[i]</code>는 <code>i</code>행에 대응하는 리스트. <code>height = len(table)</code>,
 <code>width = len(table[0])</code></li>
@@ -187,7 +188,7 @@
 <li>다중 for 루프로 모든 칸 순회: counter, max/min, “for all” 패턴이 그대로 확장됨</li>
 <li>경계 체크 함수(<code>withinBoundary</code>)로 인접 칸을 안전하게 순회</li>
 </ul>
-<h2 id="32-problem-set"><a class="header" href="#32-problem-set">3.2. Problem Set</a></h2>
+<h2 id="problem-set"><a class="header" href="#problem-set">Problem Set</a></h2>
 <h3 id="필수-문제"><a class="header" href="#필수-문제">필수 문제</a></h3>
 <p><strong>1. <code>countZero(a)</code></strong> — 2차원 배열 <code>a</code>에서 0의 개수. Counter 패턴의 2중 for 루프.</p>
 <pre><code class="language-python">def countZero(a):

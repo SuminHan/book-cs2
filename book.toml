@@ -6,6 +6,7 @@ src = "src"
 
 [output.html]
 git-repository-url = "https://github.com/SuminHan/book-cs2"
+additional-css = ["theme/numbering.css"]
 
 [build]
 build-dir = "docs"

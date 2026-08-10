@@ -29,6 +29,7 @@
         <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
 
         <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/numbering-c6f330cb.css">
 
 
         <!-- Provide site root and default themes to javascript -->
@@ -36,7 +37,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-a55c3f67.js";
+            window.path_to_searchindex_js = "searchindex-cae08bf5.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-6f28b252.js"></script>
@@ -183,15 +184,14 @@
 강의자료의 원저작자는 각각 다르며(원작자 별도), 여기서는 정리·보완만
 담당한다. 진단용 pretest·답안지처럼 배포 금지 표시가 있는 자료는 싣지 않는다.</p>
 <hr>
-<h2 id="프로그래밍은-왜-여전히-중요한가"><a class="header" href="#프로그래밍은-왜-여전히-중요한가">프로그래밍은 왜 여전히 중요한가</a></h2>
 <p><em>Computer Science 2</em></p>
-<h3 id="1-the-question"><a class="header" href="#1-the-question">1. The Question</a></h3>
+<h2 id="why-programming-matters"><a class="header" href="#why-programming-matters">Why Programming Matters</a></h2>
 <p>“이제 AI가 코드를 짜준다. 나보다 빠르고, 솔직히 나보다 더 잘 짠다. 그런데 내가 왜
 프로그래밍 수업에 앉아 있어야 하지?”</p>
 <p>정당한 질문이다. 그리고 “AI는 코딩을 잘 못한다“는 식으로 답할 생각은 없다.
 <strong>못하지 않는다. 아주 잘하고, 매달 더 좋아지고 있다.</strong> 대신 다른 방식으로
 답하려 한다 — 그래서 어떤 일이 새로 생겼는지 보여주는 방식으로.</p>
-<h3 id="2-what-changed"><a class="header" href="#2-what-changed">2. What Changed</a></h3>
+<h2 id="what-changed"><a class="header" href="#what-changed">What Changed</a></h2>
 <p>이진 탐색을 짜달라고 하면 즉시 나온다. 그리고 맞다. 10년 전엔 한 주치 수업
 분량이었다. 지금은 4초. 그럼 무엇이 비싸졌는가?</p>
 <p><strong>병목이 옮겨갔다.</strong></p>
@@ -218,7 +218,7 @@
 항상 코드다 — 출력에는 한국어 버전이 없다. 오직 코드가 있을 뿐이고, 그걸 읽을 수
 있느냐만 남는다. <strong>돌아온 것을 읽지 못한다면, 지시를 한 게 아니라 소원을 빈
 것이다.</strong></p>
-<h3 id="3-the-gap"><a class="header" href="#3-the-gap">3. The Gap</a></h3>
+<h2 id="the-gap"><a class="header" href="#the-gap">The Gap</a></h2>
 <p>“성적 계산기를 만들어줘“라고 시켜봤다. 이렇게 나왔다 — 깔끔하고, 읽기 쉽고, 잘
 돌아간다:</p>
 <pre><code class="language-python">def final_grade(scores, attendance_rate):
@@ -242,7 +242,7 @@
 <p>“그럼 규정을 프롬프트에 넣으면 되잖아요!” — 맞다. 그런데 그렇게 하려면 뭐가
 빠졌는지를 이미 알아챘어야 한다. 코드는 알려주지 않았다. <strong>구멍을 보려면
 읽는 수밖에 없었다.</strong></p>
-<h3 id="4-the-trap"><a class="header" href="#4-the-trap">4. The Trap</a></h3>
+<h2 id="the-trap"><a class="header" href="#the-trap">The Trap</a></h2>
 <p><strong>과제:</strong> 어떤 연도가 윤년이면 <code>True</code>를 반환.</p>
 <pre><code class="language-python">def is_leap_year(year):
     if year % 4 == 0:
@@ -264,7 +264,7 @@
 그걸 뉴턴(N)으로 읽었다. 1 lbf = 4.45 N이라 모든 궤도 수정이 4.45배씩 어긋난 채로
 10개월이 지났다. 손실 1억 2500만 달러. <strong>그 코드는 한 줄도 빠짐없이 완벽하게
 돌아갔다. 그 숫자가 무슨 뜻인지 아무도 확인하지 않았을 뿐이다.</strong></p>
-<h3 id="5-your-job"><a class="header" href="#5-your-job">5. Your Job</a></h3>
+<h2 id="your-job"><a class="header" href="#your-job">Your Job</a></h2>
 <p>1950년 튜링은 “기계가 생각할 수 있는가?“라고 물었고 — 답하기를 거부했다. 대신
 시험으로 바꿨다: 사람 심판이 양쪽에 질문을 던지고 그 답이 말이 되는지 판단한다.
 컴퓨터의 맨 처음 설계에 이미 질문을 던지는 사람이 의자에 앉아 있었다. 그 의자는
@@ -297,7 +297,7 @@ and <a href="http://newsletter.pragmaticengineer.com/p/the-job-market-in-2026-pa
 </ol>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="lists--strings"><a class="header" href="#lists--strings">Lists / Strings</a></h1>
-<h2 id="11-key-concepts"><a class="header" href="#11-key-concepts">1.1. Key Concepts</a></h2>
+<h2 id="key-concepts"><a class="header" href="#key-concepts">Key Concepts</a></h2>
 <ul>
 <li>List를 생성하는 또 다른 방법: <code>.append(·)</code>로 빈 리스트 <code>[]</code>에 하나씩 추가하기</li>
 <li>Slicing 연산자: <code>[ : ]</code>, <code>[::2]</code>(건너뛰기), <code>[::-1]</code>(뒤집기)</li>
@@ -306,7 +306,7 @@ and <a href="http://newsletter.pragmaticengineer.com/p/the-job-market-in-2026-pa
 <li>String: <code>s[i] == c</code>로 문자 비교, <code>+</code>로 새 문자열 이어붙이기(string은 immutable이라
 직접 수정 불가 — 항상 새 문자열을 만들어야 함), 사전순 비교 연산자 <code>&lt;</code></li>
 </ul>
-<h2 id="12-problem-set"><a class="header" href="#12-problem-set">1.2. Problem Set</a></h2>
+<h2 id="problem-set"><a class="header" href="#problem-set">Problem Set</a></h2>
 <h3 id="필수-문제"><a class="header" href="#필수-문제">필수 문제</a></h3>
 <p><strong>1. <code>deleteThree(L)</code></strong> — 리스트 <code>L</code>에서 3을 모두 제거한 리스트를 반환.</p>
 <pre><code class="language-python">def deleteThree(L):
@@ -402,7 +402,7 @@ print(countA("abc"))           # 0
 재구성함.</em></p>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="file-io"><a class="header" href="#file-io">File I/O</a></h1>
-<h2 id="21-key-concepts"><a class="header" href="#21-key-concepts">2.1. Key Concepts</a></h2>
+<h2 id="key-concepts-1"><a class="header" href="#key-concepts-1">Key Concepts</a></h2>
 <ul>
 <li><code>open(filename, "r").read().split()</code> — 파일 내용을 전부 읽어서 단어 단위로 쪼갠
 리스트로 변환</li>
@@ -411,7 +411,7 @@ print(countA("abc"))           # 0
 <li>Max/min 패턴: 조건을 만족하는 것 중 최댓값/최솟값(+ 그 대상) 유지</li>
 <li>문자열 슬라이싱으로 부분 문자열 검사(<code>s[i:i+5:2]</code> 등)</li>
 </ul>
-<h2 id="22-problem-set"><a class="header" href="#22-problem-set">2.2. Problem Set</a></h2>
+<h2 id="problem-set-1"><a class="header" href="#problem-set-1">Problem Set</a></h2>
 <h3 id="필수-문제-1"><a class="header" href="#필수-문제-1">필수 문제</a></h3>
 <p><strong>1. <code>inOrder(filename)</code></strong> — 파일의 모든 단어가 사전순으로 정렬되어 있는지 여부.</p>
 <pre><code class="language-python">def inOrder(filename):
@@ -520,7 +520,7 @@ $p_1 &lt; p_2$가 가장 큰 쌍 <code>[p1, p2]</code>를 반환. 예: <code>max
 재구성함.</em></p>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="multi-dimensional-lists"><a class="header" href="#multi-dimensional-lists">Multi-Dimensional Lists</a></h1>
-<h2 id="31-key-concepts"><a class="header" href="#31-key-concepts">3.1. Key Concepts</a></h2>
+<h2 id="key-concepts-2"><a class="header" href="#key-concepts-2">Key Concepts</a></h2>
 <ul>
 <li>2차원 배열: <code>table[i]</code>는 <code>i</code>행에 대응하는 리스트. <code>height = len(table)</code>,
 <code>width = len(table[0])</code></li>
@@ -529,7 +529,7 @@ $p_1 &lt; p_2$가 가장 큰 쌍 <code>[p1, p2]</code>를 반환. 예: <code>max
 <li>다중 for 루프로 모든 칸 순회: counter, max/min, “for all” 패턴이 그대로 확장됨</li>
 <li>경계 체크 함수(<code>withinBoundary</code>)로 인접 칸을 안전하게 순회</li>
 </ul>
-<h2 id="32-problem-set"><a class="header" href="#32-problem-set">3.2. Problem Set</a></h2>
+<h2 id="problem-set-2"><a class="header" href="#problem-set-2">Problem Set</a></h2>
 <h3 id="필수-문제-2"><a class="header" href="#필수-문제-2">필수 문제</a></h3>
 <p><strong>1. <code>countZero(a)</code></strong> — 2차원 배열 <code>a</code>에서 0의 개수. Counter 패턴의 2중 for 루프.</p>
 <pre><code class="language-python">def countZero(a):
@@ -660,41 +660,351 @@ print(maxZeroRect(M))  # 20
 재구성함.</em></p>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="pile-of-cubes"><a class="header" href="#pile-of-cubes">Pile of Cubes</a></h1>
-<h2 id="41-topics-covered"><a class="header" href="#41-topics-covered">4.1. Topics Covered</a></h2>
-<ol>
-<li>Problems — 3D 물체를 2D 투영도로 매핑하는 문제</li>
-<li>Observations</li>
-<li>Solution</li>
-</ol>
-<p><em>위 목차는 원 강의안의 목차만 정리한 것이며, 슬라이드 전체 내용은 싣지 않는다.</em></p>
+<h2 id="key-concepts-3"><a class="header" href="#key-concepts-3">Key Concepts</a></h2>
+<ul>
+<li>3차원 큐브 더미를 $N \times N \times N$ 크기의 0/1 리스트 <code>P</code>로 표현
+(<code>P[i][j][k] == 1</code>이면 그 위치에 큐브가 있음)</li>
+<li>위/앞/오른쪽에서 본 2D 투영(top/front/right view)을 3중 for 루프로 계산</li>
+<li>역으로 세 투영도만 보고 원래 큐브 더미를 복원하는 문제 — 여러 개의 큐브
+더미가 같은 투영을 가질 수 있으므로, “최대 큐브 개수“를 묻는 형태로 문제를
+단순화</li>
+</ul>
+<h2 id="problem-set-3"><a class="header" href="#problem-set-3">Problem Set</a></h2>
+<p><em>이 문제집은 그림(3D 큐브 더미 시각화)이 포함되어 있었으나, 텍스트로만 옮기는
+과정에서 그림은 생략했다. 원본 PDF를 함께 참고할 것.</em></p>
+<h3 id="필수-문제-3"><a class="header" href="#필수-문제-3">필수 문제</a></h3>
+<p><strong>1. <code>topView(P)</code> / <code>frontView(P)</code> / <code>rightView(P)</code></strong> — $N \times N \times N$
+0/1 리스트로 주어진 큐브 더미 <code>P</code>에서, 위/앞/오른쪽 방향으로 본 $N \times N$
+0/1 투영도를 반환.</p>
+<pre><code class="language-python">P1 = [[[0,0,0],[0,0,0],[1,0,0]],
+      [[1,0,1],[0,0,0],[1,0,1]],
+      [[1,0,1],[1,1,1],[1,1,1]]]
+
+print(topView(P1))    # [[1,0,1],[1,1,1],[1,1,1]]
+print(frontView(P1))  # [[1,0,0],[1,0,1],[1,1,1]]
+print(rightView(P1))  # [[0,0,1],[1,0,1],[1,1,1]]
+</code></pre>
+<blockquote>
+<p><code>j</code>좌표의 방향에 주의 — <code>rightView</code>의 결과는 <code>[[1,0,0],[1,0,1],[1,1,1]]</code>이
+<em>아니라</em> 위 예시처럼 나온다 (이 규약이 프로그래밍을 더 쉽게 만들어준다).</p>
+</blockquote>
+<p><strong>2. <code>countCubes(top, front, right)</code></strong> — 세 투영도가 주어졌을 때, 그 투영도를
+만족하는(존재한다면 여러 개일 수 있는) 큐브 더미 중 <strong>최대</strong> 큐브 개수를 반환.
+만족하는 더미가 하나도 없으면 <code>None</code>.</p>
+<pre><code class="language-python">def countCubes(top, front, right):
+    n = len(top)
+    count = 0
+    P = [[[None] * n for i in range(n)] for j in range(n)]
+    # 각 (i,j,k)에 대해 P[i][j][k]를 채워보고 큐브 수를 센 뒤,
+    # 세 투영도를 모두 만족하는지(feasibility) 확인
+</code></pre>
+<blockquote>
+<p><code>==</code>는 다차원 리스트에 대해서도 (깊은) 동등 비교로 동작한다.</p>
+</blockquote>
+<h3 id="optional-problems-3"><a class="header" href="#optional-problems-3">Optional Problems</a></h3>
+<p><em>필수 문제와 달리 제출/검사 대상은 아니지만 도움이 되므로 시간이 남으면
+시도해볼 것을 권장 (대부분 기출문제).</em></p>
+<p><strong>3.</strong> 2번 문제 알고리즘의 정당성 증명을 완성하는 문제. 보조 함수:</p>
+<pre><code class="language-python">def build(top, front, right):
+    n = len(top)
+    P = [[[0] * n for i in range(n)] for j in range(n)]
+    for i in range(n):
+        for j in range(n):
+            for k in range(n):
+                if top[j][k] == front[i][k] == right[i][j] == 1:
+                    P[i][j][k] = 1
+    return P
+
+def check(P, top, front, right):
+    return topView(P) == top and frontView(P) == front and rightView(P) == right
+</code></pre>
+<p>어떤 투영도 조합에 대해 <code>check(build(top,front,right), ...) == False</code>라면,
+그 투영도를 만족하는 <code>Q</code>가 아예 존재하지 않음을 증명하는 논증에서, 마지막
+단계(“<code>P[i][j][k]</code>가 1이면 <code>Q[i][j][k]</code>도 반드시 1이어야 한다”)를 증명할 것.</p>
+<p><strong>4. <code>gravity(P)</code></strong> — 큐브 더미 <code>P</code>가 “중력 조건”(허공에 떠 있는 큐브가 없음)을
+만족하면 <code>True</code>.</p>
+<p><strong>5. <code>floating(P)</code></strong> — 중력 조건을 만족하지 않을 때, 허공에 떠 있는 큐브의 개수를
+반환.</p>
+<p><strong>6. <code>countCubes(top, front, right)</code>(일반화 버전)</strong> — 2번 문제를 $D \times H
+\times W$(세 축의 길이가 다를 수 있는) 형태로 일반화. 세 투영도가 주어졌을 때
+그것을 만족하는 최대 큐브 개수를 반환(없으면 <code>None</code>).</p>
+<pre><code class="language-python">top = [[0,0,0,0],[0,0,0,1],[1,1,0,0]]
+front = [[1,1,0,1],[1,1,0,0]]
+right = [[0,1,1],[0,0,1]]
+# 이 경우 최대 큐브 개수는 5
+</code></pre>
+<hr>
+<p><em>원본: <code>CS2(2026-2)_all/CS2/CS2/problem_set/P05.pdf</code>. 표현/코드는 정리하며 일부
+재구성함.</em></p>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="gaussian-elimination"><a class="header" href="#gaussian-elimination">Gaussian Elimination</a></h1>
-<h2 id="51-topics-covered"><a class="header" href="#51-topics-covered">5.1. Topics Covered</a></h2>
+<h2 id="key-concepts-4"><a class="header" href="#key-concepts-4">Key Concepts</a></h2>
 <ul>
-<li>System of Linear Equations (연립일차방정식)</li>
-<li>Upper Triangular Form (상삼각형태)과 back substitution을 이용한 풀이</li>
+<li>연립일차방정식 $a \cdot x = b$를 상삼각형태(upper triangular form)로 만든 뒤
+back substitution으로 해를 구하는 forward elimination 과정</li>
+<li>해가 유일한 경우 / 해가 없는 경우(inconsistent) / 해가 무한히 많은 경우
+(consistent dependent)를 pivot이 0이 되는 상황으로 구분</li>
 </ul>
-<p><em>위 목차는 원 강의안의 목차만 정리한 것이며, 슬라이드 전체 내용은 싣지 않는다.</em></p>
+<h2 id="problem-set-4"><a class="header" href="#problem-set-4">Problem Set</a></h2>
+<h3 id="필수-문제-4"><a class="header" href="#필수-문제-4">필수 문제</a></h3>
+<p><strong>1. <code>gaussian_elimination(a, b)</code></strong> — $n \times n$ 행렬 <code>a</code>와 길이 $n$ 리스트 <code>b</code>가
+주어질 때, $a \cdot x = b$의 유일한 해 <code>x</code>(길이 $n$의 float 리스트)를 반환. 해가
+없거나 무한히 많으면 <code>None</code>.</p>
+<pre><code class="language-python">a = [[0, 1, 1], [2, 4, -2], [0, 3, 15]]
+b = [4, 2, 36]
+print(gaussian_elimination(a, b))  # [-1.0, 2.0, 2.0]
+
+a = [[1, 0, 1, 4], [2, -1, 1, 7], [-2, 1, 0, -6], [1, 1, 1, 9]]
+b = [1, 2, 3, 4]
+print(gaussian_elimination(a, b))  # [-8.8, -5.0, 3.4, 1.6]
+
+a = [[0, 1, 1], [2, 4, -2], [2, 5, -1]]
+b = [4, 2, 36]
+print(gaussian_elimination(a, b))  # None
+</code></pre>
+<h3 id="optional-problems-4"><a class="header" href="#optional-problems-4">Optional Problems</a></h3>
+<p><em>필수 문제와 달리 제출/검사 대상은 아니지만 도움이 되므로 시간이 남으면
+시도해볼 것을 권장 (대부분 기출문제).</em></p>
+<p><strong>2. <code>inverse(a)</code></strong> — $n \times n$ 정수 행렬 <code>a</code>의 역행렬(float 행렬 <code>b</code>, $a \cdot b
+= I$)을 반환. 존재하지 않으면 <code>None</code>.</p>
+<blockquote>
+<p><code>b</code>의 각 열을 <code>gaussian_elimination</code>으로 하나씩 구하는 과정을 $n$번 반복.
+<code>gaussian_elimination(a, b)</code>는 입력 리스트 <code>a</code> 자체를 변경하는 modifier이므로,
+여러 번 호출할 땐 매번 <code>a</code>를 복사(<code>copy2DList(a)</code>)해서 넘겨야 한다.</p>
+</blockquote>
+<p><strong>3. <code>poly(L)</code></strong> — 길이 $n$인 정수 리스트 <code>L</code>이 어떤 $n-1$차 다항함수 $f$에 대해
+$L = [f(0), f(1), \ldots, f(n-1)]$을 나타낼 때, $f(n)$을 반환. 그런 $f$가 존재하지
+않거나 여러 개면 <code>None</code>.</p>
+<blockquote>
+<p><code>gaussian_elimination</code>을 이용해 다항식의 계수를 구할 수 있다.</p>
+</blockquote>
+<p><strong>4. <code>classify(a, b)</code></strong> — 1번 문제와 같은 입력에 대해, 해가 유일하면 <code>0</code>, 해가
+없으면 <code>1</code>, 해가 무한히 많으면 <code>2</code>를 반환 (<code>0</code>을 반환할 때 실제 해 <code>x</code> 대신
+정수 <code>0</code>을 리턴하는 것에 주의).</p>
+<blockquote>
+<p>Forward elimination 중 pivot 값이 0이 되면 row는 그대로 두고 column만
+넘어가서 다음 pivot을 찾도록 살짝 수정하면 된다. 예를 들어 아래처럼 마지막
+두 행이 전부 0인 상삼각형태가 나왔을 때, 대응하는 $b_4, b_5$가 둘 다 0이면
+해가 무한히 많고, 하나라도 0이 아니면 해가 없다.</p>
+<pre><code>[1 1 1 1 1]   [x1]   [b1]
+[0 1 1 1 1]   [x2]   [b2]
+[0 0 0 0 1] · [x3] = [b3]
+[0 0 0 0 0]   [x4]   [b4]
+[0 0 0 0 0]   [x5]   [b5]
+</code></pre>
+</blockquote>
+<hr>
+<p><em>원본: <code>CS2(2026-2)_all/CS2/CS2/problem_set/P06.pdf</code>. 표현/코드는 정리하며 일부
+재구성함.</em></p>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="spring-equilibrium-optional"><a class="header" href="#spring-equilibrium-optional">Spring Equilibrium (optional)</a></h1>
-<h2 id="61-topics-covered"><a class="header" href="#61-topics-covered">6.1. Topics Covered</a></h2>
+<h2 id="key-concepts-5"><a class="header" href="#key-concepts-5">Key Concepts</a></h2>
 <ul>
-<li>Problem — 자유 물체, 고정 물체, 스프링(탄성계수)로 이루어진 시스템의 평형점 찾기</li>
-<li>Simplifying Assumption — 스프링의 초기 길이를 0으로 가정했을 때의 힘 표현</li>
+<li>자유 물체($P_1, \ldots, P_n$), 고정 물체($F_1, \ldots, F_k$), 탄성계수
+$w_1, \ldots, w_m$을 갖는 스프링들로 이루어진 물리 시스템의 평형 상태</li>
+<li>스프링 초기 길이를 0으로 가정하면, 물체에 작용하는 힘이 위치의 선형식이 되어
+평형 조건이 연립일차방정식이 됨 → 6주차 Gaussian elimination으로 해결</li>
+<li>자유 물체 각각의 $x$좌표끼리, $y$좌표끼리 독립적인 연립방정식을 이룸</li>
 </ul>
-<p><em>위 목차는 원 강의안의 목차만 정리한 것이며, 슬라이드 전체 내용은 싣지 않는다.</em></p>
+<h2 id="problem-set-5"><a class="header" href="#problem-set-5">Problem Set</a></h2>
+<h3 id="필수-문제-5"><a class="header" href="#필수-문제-5">필수 문제</a></h3>
+<p><strong>1. <code>equilibrium(n, S1, S2)</code></strong> — 자유 물체 $n$개, 자유-자유 스프링 리스트 <code>S1</code>,
+자유-고정 스프링 리스트 <code>S2</code>가 주어질 때, 각 자유 물체의 평형 위치
+<code>[[x1,y1], ..., [xn,yn]]</code>을 반환.</p>
+<ul>
+<li><code>S1[i] = [elastic_coeff, free_idx_a, free_idx_b]</code> — 두 자유 물체를 잇는 스프링</li>
+<li><code>S2[i] = [elastic_coeff, free_idx, fixed_x, fixed_y]</code> — 자유 물체와 고정 물체를
+잇는 스프링</li>
+</ul>
+<p>예: 고정 물체 $F_1=(0,0)$, $F_2=(7,0)$에 탄성계수 3, 4인 스프링으로 연결된 자유
+물체 하나의 평형 위치는, $-w_1 x + w_2(7-x) = 0$을 풀어 $x=4$.</p>
+<pre><code class="language-python"># copy the function gaussian_elimination from L06 here
+def equilibrium(n, S1, S2):
+    ax = [[0] * n for i in range(n)]
+    bx = [0] * n
+    ay = [[0] * n for i in range(n)]
+    by = [0] * n
+    # ADD ADDITIONAL CODE HERE!
+
+S1 = [[1,0,1]]
+S2 = [[4,0,-2,7], [3,0,-6,2], [2,1,6,-1], [5,1,2,-5]]
+print(equilibrium(2, S1, S2))
+# [[-2.95, 3.89], [2.38, -2.89]]
+</code></pre>
+<blockquote>
+<p>힌트: 각 자유 물체에 대해 “그 물체에 연결된 모든 스프링의 힘의 합 = 0“이라는
+식을 세우면, $x$좌표들에 대한 연립방정식과 $y$좌표들에 대한 연립방정식이
+각각 만들어진다. 6주차의 <code>gaussian_elimination</code>을 그대로 재사용.</p>
+</blockquote>
+<h3 id="optional-problems-5"><a class="header" href="#optional-problems-5">Optional Problems</a></h3>
+<p><em>필수 문제와 달리 제출/검사 대상은 아니지만 도움이 되므로 시간이 남으면
+시도해볼 것을 권장 (대부분 기출문제).</em></p>
+<p><strong>2. <code>dice(n, m, A)</code></strong> — $1 \times n$ 격자 위에서, $m$면체 주사위를 굴려 나온
+수만큼 동전을 오른쪽으로 옮기고(단, 화살표 <code>A</code>를 만나면 도착점으로 순간이동)
+$n$번 칸에 도달하면 끝나는 게임에서, 게임이 끝날 때까지 주사위를 굴리는
+횟수의 기댓값을 정확히(오차 $10^{-10}$ 이내) 계산.</p>
+<blockquote>
+<p>Monte Carlo 시뮬레이션(랜덤 추정)은 허용되지 않음 — 기댓값을 연립일차방정식
+으로 세운 뒤 Gaussian elimination으로 정확히 풀어야 한다. 화살표가 없는 단순
+경우는 점화식 $a_n = 1 + \frac{1}{6}\sum_{i=\max{1,n-6}}^{n-1} a_i$로 풀 수
+있고, 화살표가 있는 일반적인 경우는 각 칸 $i$에서의 기댓값 $x_i$에 대한
+연립방정식 $x_i = 1 + \frac{1}{m}\sum_{k=1}^{m} x_{f(i+k)}$를 세워서 푼다.</p>
+</blockquote>
+<p><strong>3. <code>secret(n, t, T, x, s)</code></strong> — 다항함수를 이용한 비밀 분산(secret sharing) 문제.
+딜러가 정수 비밀 $S$를, $\ell$개의 그룹으로 나뉜 $N$명에게 각각 정보 조각을
+나눠준다. 조건을 만족하는 인원(전체 $T$명 이상, 각 그룹에서 $t_i$명 이상)이
+모이면 다항식 값들로부터 $S$를 유일하게 복구할 수 있고, 조건을 만족하지 못하면
+복구할 수 없다. 모인 사람들의 정보 <code>s</code>(모이지 않은 사람은 <code>None</code>)와 공개된
+좌표 <code>x</code>로부터 비밀 <code>S</code>를 복구하는 함수를 작성.</p>
+<blockquote>
+<p>Shamir’s Secret Sharing의 일반화 버전. 각 그룹 $i$에 대해 다항함수
+$f_i(x) = g(i) + \sum a_{i,j}x^j + \sum b_j x^{t_i+j-1}$을 구성해 정보를
+나눠주며, 충분한 정보가 모이면 이 다항함수들을 Gaussian elimination으로
+복원해 $S = g(0)$을 얻는다. (부동소수점 오차를 피하려면 8주차에서 다룰
+유리수 기반 Gaussian elimination을 사용.)</p>
+</blockquote>
+<hr>
+<p><em>원본: <code>CS2(2026-2)_all/CS2/CS2/problem_set/P07.pdf</code>. 표현/코드는 정리하며 일부
+재구성함(2, 3번은 매우 긴 문제라 핵심만 요약).</em></p>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="classes--objects"><a class="header" href="#classes--objects">Classes &amp; Objects</a></h1>
-<h2 id="71-topics-covered"><a class="header" href="#71-topics-covered">7.1. Topics Covered</a></h2>
-<ol>
-<li>Robot Class</li>
-<li>Point Class</li>
-<li>Pure Functions vs. Modifiers</li>
-</ol>
-<p><em>위 목차는 원 강의안의 목차만 정리한 것이며, 슬라이드 전체 내용은 싣지 않는다.</em></p>
+<h2 id="key-concepts-6"><a class="header" href="#key-concepts-6">Key Concepts</a></h2>
+<ul>
+<li><code>class</code> 정의: <code>__init__</code>(생성자, modifier), <code>__str__</code>(print용, pure function)</li>
+<li>Pure function(입력을 변경하지 않고 새 값을 반환) vs. modifier(<code>self</code>의
+상태를 직접 변경)</li>
+<li>Getter/setter 패턴: <code>getX()</code>, <code>setX(v)</code></li>
+<li>객체를 매개변수/반환값으로 사용하기 (<code>Point</code>를 받아 새 <code>Point</code>를 반환하는
+<code>add(self, p)</code> 등)</li>
+</ul>
+<h2 id="problem-set-6"><a class="header" href="#problem-set-6">Problem Set</a></h2>
+<p>이미 완성된 <code>Point</code> 클래스를 참고해서 작성:</p>
+<pre><code class="language-python">class Point:
+    def __init__(self, px, py):        # modifier
+        self.x = px
+        self.y = py
+    def __str__(self):                 # pure function
+        return "(" + str(self.x) + ',' + str(self.y) + ")"
+    def getX(self):                    # pure function
+        return self.x
+    def getY(self):                    # pure function
+        return self.y
+    def setX(self, v):                 # modifier
+        self.x = v
+    def setY(self, v):                 # modifier
+        self.y = v
+    def distance(self, p):             # pure function
+        dx = self.x - p.x
+        dy = self.y - p.y
+        return (dx*dx + dy*dy) ** 0.5
+    def add(self, p):                  # pure function
+        return Point(self.x + p.x, self.y + p.y)
+</code></pre>
+<h3 id="필수-문제-6"><a class="header" href="#필수-문제-6">필수 문제</a></h3>
+<p><strong>1. <code>Circle</code> 클래스</strong> — 중심(<code>Point</code>)과 반지름을 갖는 원.</p>
+<ul>
+<li><code>__init__(self, c, r)</code> (modifier) — <code>center</code>, <code>radius</code> 상태 변수 초기화</li>
+<li><code>__str__(self)</code> (pure) — <code>"(center,radius)"</code> 형태, 예: <code>"((0,1) , 5)"</code></li>
+<li><code>area(self)</code> (pure) — 넓이 (<code>math.pi</code> 사용)</li>
+<li><code>getRadius(self)</code> / <code>getCenter(self)</code> (pure)</li>
+<li><code>setRadius(self, r)</code> (modifier)</li>
+<li><code>moveTo(self, x, y)</code> (modifier) — 중심을 <code>Point(x,y)</code>로 이동</li>
+<li><code>move(self, dx, dy)</code> (modifier) — 중심을 <code>(dx,dy)</code>만큼 이동</li>
+</ul>
+<pre><code class="language-python">def test():
+    p0 = Point(0, 0)
+    c1 = Circle(p0, 3)
+    print(c1)              # ((0,0) , 3)
+    print(c1.area())       # 28.274333882308138
+    print(c1.getRadius())  # 3
+    print(c1.getCenter())  # (0,0)
+    c1.setRadius(5)
+    print(c1)              # ((0,0) , 5)
+    print(c1.area())       # 78.53981633974483
+    c1.moveTo(3, 4)
+    print(c1)              # ((3,4) , 5)
+    c1.move(1, 1)
+    print(c1)              # ((4,5) , 5)
+test()
+</code></pre>
+<p><strong>2. <code>Rational</code> 클래스</strong> — 분자/분모로 표현되는 유리수.</p>
+<ul>
+<li><code>__init__(self, n, d)</code> (modifier) — <code>numerator</code>, <code>denominator</code> 초기화</li>
+<li><code>__str__(self)</code> (pure) — <code>"7/24"</code> 형태</li>
+<li><code>toFloat(self)</code> (pure) — float 값 반환</li>
+<li><code>negate(self)</code> (modifier) — 부호 반전(분자 부호만 바꾸면 됨)</li>
+<li><code>invert(self)</code> (modifier) — 역수로 변경(분자·분모 교환)</li>
+<li><code>reduce(self)</code> (modifier) — 기약분수로 변환(주어진 <code>gcd</code> 함수 활용)</li>
+<li><code>add(self, r)</code> (pure) — 덧셈 결과(기약분수)를 새 <code>Rational</code>로 반환</li>
+<li><code>mul(self, r)</code> (pure) — 곱셈 결과(기약분수)를 새 <code>Rational</code>로 반환</li>
+</ul>
+<pre><code class="language-python">def gcd(a, b):
+    if b &gt; a:
+        a, b = b, a
+    while b &gt; 0:
+        a, b = b, a % b
+    return a
+
+def test():
+    r1 = Rational(12, 16)
+    r2 = Rational(9, 6)
+    print(r1, r2)   # 12/16 9/6
+    r1.reduce(); r2.reduce()
+    print(r1, r2)   # 3/4 3/2
+    r1.negate()
+    print(r1)       # -3/4
+    r1.negate()
+    print(r1)       # 3/4
+    r1.invert()
+    print(r1)       # 4/3
+    r3 = r1.add(r2)
+    r4 = r1.mul(r2)
+    print(r3)             # 17/6
+    print(r4)             # 2/1
+    print(r3.toFloat())   # 2.8333333333333335
+    print(r4.toFloat())   # 2.0
+test()
+</code></pre>
+<blockquote>
+<p><code>add</code>/<code>mul</code>은 pure function이므로 <code>self</code>와 <code>r</code>을 변경하면 안 되고, 결과는
+반드시 <code>reduce</code>로 약분한 새 <code>Rational</code> 객체여야 한다.</p>
+</blockquote>
+<h3 id="optional-problems-6"><a class="header" href="#optional-problems-6">Optional Problems</a></h3>
+<p><em>필수 문제와 달리 제출/검사 대상은 아니지만 도움이 되므로 시간이 남으면
+시도해볼 것을 권장 (대부분 기출문제).</em></p>
+<p><strong>3. <code>Rectangle</code> 클래스</strong> — 두 <code>Point</code>(대각 꼭짓점)로 정의되는, 축에 평행한
+직사각형.</p>
+<ul>
+<li><code>get_min_x/y</code>, <code>get_max_x/y</code> (pure)</li>
+<li><code>contains(self, point3)</code> (pure) — 경계 포함, 내부에 있으면 <code>True</code></li>
+<li><code>area(self)</code> (pure)</li>
+<li><code>isEqual(self, other)</code> (pure) — 같은 위치의 직사각형이면 <code>True</code>(꼭짓점 순서
+달라도 무관)</li>
+</ul>
+<p><strong>4. <code>belt(L, M)</code></strong> — 반지름 리스트 <code>L</code>(원기둥 $C_0, \ldots, C_{n-1}$)과 연결 형태
+리스트 <code>M</code>(벨트 $B_0, \ldots, B_{n-2}$; <code>1</code>=안 꼬임, <code>-1</code>=8자로 꼬임)이 주어질 때,
+$C_0$을 시계방향으로 1회전시켰을 때 $C_1, \ldots, C_{n-1}$의 회전수(부호 있음,
+시계방향이 양수) 총합을 <code>Rational</code> 객체로 반환.</p>
+<blockquote>
+<p>예: <code>L=[10,5,1,2], M=[1,-1,1]</code>이면 $C_1,C_2,C_3$의 회전수는 각각 $2, -10, -5$이고
+합은 <code>Rational(-13,1)</code>. 8주차에 만든 <code>Rational</code> 클래스를 그대로 사용해야 하며,
+<code>float</code>나 임의의 다른 타입을 반환하면 안 됨.</p>
+</blockquote>
+<p><strong>5. <code>gaussian_rational(a, b)</code></strong> — 6주차의 <code>gaussian_elimination</code>을 실수(float)
+대신 <code>Rational</code> 객체로 수행하여, 부동소수점 오차 없이 정확한 해를 구함. 입력은
+6주차 1번 문제와 같은 형태(정수), 반환값은 <code>Rational</code> 객체로 이루어진 리스트
+(해가 없거나 무한히 많으면 <code>None</code>).</p>
+<blockquote>
+<p><code>c = a[i][p] / a[p][p]</code> 같은 나눗셈은 <code>a[i][p].div(a[p][p])</code>로, <code>a[p][p] == 0</code>
+비교는 <code>a[p][p].equal(Rational(0,1))</code>로 바꿔서 <code>Rational</code> 클래스의 메서드를
+통해 연산해야 함(<code>==</code> 비교는 의도대로 동작하지 않음 — <code>equal()</code> 사용).</p>
+</blockquote>
+<hr>
+<p><em>원본: <code>CS2(2026-2)_all/CS2/CS2/problem_set/P08.pdf</code>. 표현/코드는 정리하며 일부
+재구성함.</em></p>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="stable-matching-i"><a class="header" href="#stable-matching-i">Stable Matching I</a></h1>
-<h2 id="81-topics-covered"><a class="header" href="#81-topics-covered">8.1. Topics Covered</a></h2>
+<h2 id="topics-covered"><a class="header" href="#topics-covered">Topics Covered</a></h2>
 <ol>
 <li>Motivation — 안정적이지 않은 매칭의 예시 (elope 문제)</li>
 <li>Stable Matching Problem — 문제 정의</li>
@@ -703,7 +1013,7 @@ print(maxZeroRect(M))  # 20
 <p><em>위 목차는 원 강의안의 목차만 정리한 것이며, 슬라이드 전체 내용은 싣지 않는다.</em></p>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="stable-matching-ii"><a class="header" href="#stable-matching-ii">Stable Matching II</a></h1>
-<h2 id="91-topics-covered"><a class="header" href="#91-topics-covered">9.1. Topics Covered</a></h2>
+<h2 id="topics-covered-1"><a class="header" href="#topics-covered-1">Topics Covered</a></h2>
 <ol>
 <li>Propose-Reject Algorithm (Gale-Shapley 알고리즘)</li>
 <li>Python Implementation</li>
@@ -715,7 +1025,7 @@ print(maxZeroRect(M))  # 20
 <p><em>위 목차는 원 강의안의 목차만 정리한 것이며, 슬라이드 전체 내용은 싣지 않는다.</em></p>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="poker-hands"><a class="header" href="#poker-hands">Poker Hands</a></h1>
-<h2 id="101-topics-covered"><a class="header" href="#101-topics-covered">10.1. Topics Covered</a></h2>
+<h2 id="topics-covered-2"><a class="header" href="#topics-covered-2">Topics Covered</a></h2>
 <ol>
 <li>Poker Primer — 포커 기본 규칙</li>
 <li>Card/Hand Objects — straight flush, flush, straight, quadruple, triple,
@@ -725,7 +1035,7 @@ pair, full house, two pair 판별</li>
 <p><em>위 목차는 원 강의안의 목차만 정리한 것이며, 슬라이드 전체 내용은 싣지 않는다.</em></p>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="art-gallery-problem"><a class="header" href="#art-gallery-problem">Art Gallery Problem</a></h1>
-<h2 id="111-topics-covered"><a class="header" href="#111-topics-covered">11.1. Topics Covered</a></h2>
+<h2 id="topics-covered-3"><a class="header" href="#topics-covered-3">Topics Covered</a></h2>
 <ol>
 <li>Orientations of Rectilinear Polygons — 직교 다각형의 방향(시계/반시계) 판별</li>
 <li>Surveillability of Rectilinear Polygons</li>
