@@ -1,6 +1,6 @@
-# Week 1: 프로그래밍은 왜 여전히 중요한가
+# Week 1: Motivation
 
-*Computer Science 2 — 강좌 개요에 앞서*
+*프로그래밍은 왜 여전히 중요한가 — Computer Science 2*
 
 [슬라이드 전체 다운로드 (PDF)](assets/week01-motivation.pdf)
 
