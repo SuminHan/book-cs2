@@ -37,3 +37,7 @@
 - [Art Gallery Problem](kor/week12.md)
     - [Topics Covered](kor/week12-topics.md)
     - [Problem Set](kor/week12-problems.md)
+
+# 참고자료
+
+- [숫자가 메모리에 저장되는 방식](general/number-representation.md)
