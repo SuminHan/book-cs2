@@ -38,6 +38,6 @@
     - [Topics Covered](kor/lecture11-topics.md)
     - [Problem Set](kor/lecture11-problems.md)
 
-# 참고자료
+---
 
-- [숫자가 메모리에 저장되는 방식](general/number-representation.md)
+[A.1. How Numbers Live in Memory](general/number-representation.md)

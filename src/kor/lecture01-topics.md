@@ -119,5 +119,5 @@ print("Porori".find("ror"))  # 2
 
 *int/float가 메모리에 실제로 어떤 비트로 저장되는지, 그리고 그게 왜
 `0.1 + 0.2 == 0.3`이 `False`가 되는 원인인지 궁금하다면 참고자료의
-[숫자가 메모리에 저장되는 방식](../general/number-representation.md)
+[How Numbers Live in Memory](../general/number-representation.md)
 참고.*
