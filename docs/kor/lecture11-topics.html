@@ -38,7 +38,7 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-a4f9c51e.js";
+            window.path_to_searchindex_js = "../searchindex-053f52fb.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../toc-7992028c.js"></script>
@@ -207,13 +207,13 @@
 부분들을 모두 볼 수 있으려면 있어야 할 위치</strong>를 제약한다. 반시계방향
 기준으로 각 변의 방향에 따라:</p>
 <ul>
-<li>변이 **아래(DOWN)**를 향함(다각형 위쪽 경계) → CCTV는 그 변의 <code>y</code>
+<li>변이 <strong>아래</strong>(DOWN)를 향함(다각형 위쪽 경계) → CCTV는 그 변의 <code>y</code>
 <strong>이하</strong>에 있어야 함 → <code>topMin</code> 갱신</li>
-<li>변이 **위(UP)**를 향함(다각형 아래쪽 경계) → CCTV는 그 변의 <code>y</code>
+<li>변이 <strong>위</strong>(UP)를 향함(다각형 아래쪽 경계) → CCTV는 그 변의 <code>y</code>
 <strong>이상</strong>에 있어야 함 → <code>bottomMax</code> 갱신</li>
-<li>변이 **왼쪽(LEFT)**을 향함(다각형 오른쪽 경계) → CCTV는 그 변의 <code>x</code>
+<li>변이 <strong>왼쪽</strong>(LEFT)을 향함(다각형 오른쪽 경계) → CCTV는 그 변의 <code>x</code>
 <strong>이하</strong>에 있어야 함 → <code>rightMin</code> 갱신</li>
-<li>변이 **오른쪽(RIGHT)**을 향함(다각형 왼쪽 경계) → CCTV는 그 변의 <code>x</code>
+<li>변이 <strong>오른쪽</strong>(RIGHT)을 향함(다각형 왼쪽 경계) → CCTV는 그 변의 <code>x</code>
 <strong>이상</strong>에 있어야 함 → <code>leftMax</code> 갱신</li>
 </ul>
 <p>즉 각 변이 허용 영역을 반평면(half-plane)으로 하나씩 제한하고, 그
