@@ -7,3 +7,12 @@
 .chapter-fold-toggle {
     display: none;
 }
+
+/* Reference section (suffix chapter, "A.1. ..." manually numbered since
+   mdBook has no built-in appendix/letter numbering) -- bold it to match
+   the visual weight of the auto-bolded "N." prefix on numbered chapters.
+   mdBook strips all markdown/HTML from SUMMARY.md titles, so there's no
+   element to target just the "A.1." part -- this bolds the whole entry. */
+a[href="general/number-representation.html"] {
+    font-weight: 600;
+}
