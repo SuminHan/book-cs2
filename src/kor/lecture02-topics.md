@@ -146,7 +146,7 @@ list를 만든다. 이 세 단계를 한 줄로 이어 쓴 것이 바로 위 코
 가진 단어 `maxWord`도 함께 유지해야 한다:
 
 ```python
-def maxPalindrome(filename):
+def longestWord(filename):
     words = open(filename, "r").read().split()
     n = len(words)
     maxWord = ""
@@ -158,3 +158,7 @@ def maxPalindrome(filename):
             maxLen = len(s)
     return maxWord
 ```
+
+(Problem Set의 `maxPalindrome`도 구조는 똑같지만, "가장 긴 단어"가 아니라
+"가장 긴 palindrome"을 찾아야 하므로 `isPalindrome`으로 걸러내는 조건이
+하나 더 필요하다.)

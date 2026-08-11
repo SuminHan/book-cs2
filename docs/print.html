@@ -39,7 +39,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-1b2b5e91.js";
+            window.path_to_searchindex_js = "searchindex-b08393a7.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-7992028c.js"></script>
@@ -836,7 +836,7 @@ list를 만든다. 이 세 단계를 한 줄로 이어 쓴 것이 바로 위 코
 <p>이 패턴과 Maximum 패턴을 합치면, 파일에서 가장 긴 단어를 찾을 수 있다.
 <strong>길이가 아니라 단어 자체</strong>를 반환해야 하므로, <code>maxLen</code>뿐 아니라 그 길이를
 가진 단어 <code>maxWord</code>도 함께 유지해야 한다:</p>
-<pre><code class="language-python">def maxPalindrome(filename):
+<pre><code class="language-python">def longestWord(filename):
     words = open(filename, "r").read().split()
     n = len(words)
     maxWord = ""
@@ -848,6 +848,9 @@ list를 만든다. 이 세 단계를 한 줄로 이어 쓴 것이 바로 위 코
             maxLen = len(s)
     return maxWord
 </code></pre>
+<p>(Problem Set의 <code>maxPalindrome</code>도 구조는 똑같지만, “가장 긴 단어“가 아니라
+“가장 긴 palindrome“을 찾아야 하므로 <code>isPalindrome</code>으로 걸러내는 조건이
+하나 더 필요하다.)</p>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="problem-set-1"><a class="header" href="#problem-set-1">Problem Set</a></h1>
 <h3 id="필수-문제-1"><a class="header" href="#필수-문제-1">필수 문제</a></h3>
