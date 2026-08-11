@@ -29,8 +29,9 @@
 구조로 분명히 하는 습관은, Therac-25 사고 이후 소프트웨어 공학
 교육에서 빠짐없이 강조하는 원칙이 됐다.
 
-[^therac]: Nancy Leveson & Clark Turner, *An Investigation of the
-    Therac-25 Accidents*, IEEE Computer, Vol. 26, No. 7 (1993).
+[^therac]: Nancy Leveson & Clark Turner, [*An Investigation of the
+    Therac-25 Accidents*](http://sunnyday.mit.edu/papers/therac.pdf),
+    IEEE Computer, Vol. 26, No. 7 (1993).
 
 **상태를 아무 데서나 건드릴 수 있게 흩어놓지 않는 것 — 오늘 배우는
 `class`의 가장 근본적인 이유다.**

@@ -25,8 +25,9 @@ CT 스캐너가 수백 장의 각도에서 사진을 찍는 이유가 여기 있
 내는 방식은, 의료 영상부터 이번 주 3중 for 루프 코드까지 똑같이
 적용된다.
 
-[^ct]: The Nobel Prize in Physiology or Medicine 1979, Godfrey N.
-    Hounsfield & Allan M. Cormack, nobelprize.org.
+[^ct]: [The Nobel Prize in Physiology or Medicine
+    1979](https://www.nobelprize.org/prizes/medicine/1979/summary/),
+    Godfrey N. Hounsfield & Allan M. Cormack.
 
 **세 장의 그림자에서 입체를 복원하는 이번 주 퍼즐은, 그 자체로 노벨상을
 받은 아이디어의 축소판이다.**

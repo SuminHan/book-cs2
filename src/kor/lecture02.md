@@ -26,8 +26,8 @@ words = open("input.txt", "r").read().split()
 탈세 수사로 이어졌다.[^panama] 그 시작은 별다를 것 없는 "파일 열기 →
 한 줄씩 훑기 → 조건 확인하기"였다.
 
-[^panama]: ICIJ, *The Panama Papers* (2016),
-    icij.org/investigations/panama-papers.
+[^panama]: ICIJ, [*The Panama Papers*](https://www.icij.org/investigations/panama-papers/)
+    (2016).
 
 **오늘 배우는 for all / counter / max-min 패턴은 데이터가 5줄이든
 1,150만 건이든 똑같이 적용된다 — 다른 건 오직 컴퓨터가 대신 훑어준다는

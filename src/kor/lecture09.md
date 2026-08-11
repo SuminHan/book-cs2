@@ -25,8 +25,9 @@
 propose-reject 알고리즘을 코드로 구현한다. 뉴욕시가 실제로 도입한
 것과 원리적으로 동일한 절차다.
 
-[^nyc]: Abdulkadiroğlu, Pathak, Roth, *The New York City High School
-    Match*, American Economic Review, Vol. 95, No. 2 (2005).
+[^nyc]: Abdulkadiroğlu, Pathak, Roth, [*The New York City High School
+    Match*](https://www.aeaweb.org/articles?id=10.1257/000282805774670167),
+    American Economic Review, Vol. 95, No. 2 (2005).
 
 **뉴욕시 수만 명의 학생을 구했던 알고리즘을, 오늘 직접 코드로
 구현한다.**

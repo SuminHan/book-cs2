@@ -29,11 +29,12 @@ Optional 문제에서 다루는 "카메라 여러 대", "임의의 다각형" �
 좌표 계산 하나하나가, 50년 전 나온 이 우아한 정리의 세계로 들어가는
 첫걸음이다.
 
-[^chvatal]: Václav Chvátal, *A Combinatorial Theorem in Plane
-    Geometry*, Journal of Combinatorial Theory, Series B, Vol. 18
-    (1975).
-[^fisk]: Steve Fisk, *A Short Proof of Chvátal's Watchman Theorem*,
-    Journal of Combinatorial Theory, Series B, Vol. 24 (1978).
+[^chvatal]: Václav Chvátal, [*A Combinatorial Theorem in Plane
+    Geometry*](https://doi.org/10.1016/0095-8956(75)90061-1), Journal of
+    Combinatorial Theory, Series B, Vol. 18 (1975).
+[^fisk]: Steve Fisk, [*A Short Proof of Chvátal's Watchman
+    Theorem*](https://doi.org/10.1016/0095-8956(78)90059-X), Journal of
+    Combinatorial Theory, Series B, Vol. 24 (1978).
 
 **"미술관에 카메라 몇 대가 필요한가"라는 질문 하나가, 정확히 50년
 전 우아한 수학 정리로 이어졌다 — 오늘 그 정리의 특수한 경우를 코드로

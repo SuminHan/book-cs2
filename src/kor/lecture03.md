@@ -24,9 +24,10 @@ GDP의 90%를 넘으면 경제성장률이 급격히 떨어진다"는 연구 결
 빠진 5개국을 포함시키자 논문의 결론은 뒤집혔고, "90% 부채 한도"라는
 정책적 근거는 크게 흔들렸다.[^rr]
 
-[^rr]: Herndon, Ash, Pollin, *Does High Public Debt Consistently Stifle
-    Economic Growth? A Critique of Reinhart and Rogoff*, Cambridge
-    Journal of Economics (2014).
+[^rr]: Herndon, Ash, Pollin, [*Does High Public Debt Consistently Stifle
+    Economic Growth? A Critique of Reinhart and
+    Rogoff*](https://academic.oup.com/cje/article-abstract/38/2/257/1714018),
+    Cambridge Journal of Economics (2014).
 
 **2차원 리스트를 순회할 때 "내가 정말 모든 행/열을 다 돌고 있는가"를
 확인하는 습관 — 오늘 배우는 것 중 가장 사소해 보이지만, 세계 경제

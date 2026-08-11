@@ -29,8 +29,9 @@
 이 개념을 정확히 정의하고, 주어진 매칭이 stable한지 판정하는 코드를
 만든다 — 실제로 매칭을 찾아내는 알고리즘은 다음 주에 다룬다.
 
-[^nobel]: The Sveriges Riksbank Prize in Economic Sciences in Memory of
-    Alfred Nobel 2012, Lloyd Shapley & Alvin Roth, nobelprize.org.
+[^nobel]: [The Sveriges Riksbank Prize in Economic Sciences in Memory of
+    Alfred Nobel 2012](https://www.nobelprize.org/prizes/economic-sciences/2012/summary/),
+    Lloyd Shapley & Alvin Roth.
 
 **70년 전 병원과 의대생 사이의 혼란이, 오늘 배우는 정의 하나로 정확히
 설명된다.**

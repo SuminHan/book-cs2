@@ -30,8 +30,9 @@ flush는 정확히 40/2,598,960), 카드 수가 늘어나거나 규칙이 복잡
 카드놀이였다는 사실은, 좋은 아이디어가 어디서 시작될 수 있는지를
 보여준다.
 
-[^monte]: Metropolis & Ulam, *The Monte Carlo Method*, Journal of the
-    American Statistical Association, Vol. 44, No. 247 (1949).
+[^monte]: Metropolis & Ulam, [*The Monte Carlo
+    Method*](https://doi.org/10.1080/01621459.1949.10483310), Journal of
+    the American Statistical Association, Vol. 44, No. 247 (1949).
 
 **오늘 짜는 `randomHand()` 시뮬레이션 코드는, 카드놀이에서 시작해
 핵무기 설계까지 쓰인 아이디어의 가장 단순한 형태다.**

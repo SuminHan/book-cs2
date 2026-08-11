@@ -22,9 +22,10 @@
 [^nine] 이름은 가우스를 따랐지만, "연립방정식을 체계적으로 소거해서
 푼다"는 아이디어 자체는 2천 년 넘게 쓰여온 셈이다.
 
-[^nine]: 《九章算術》(구장산술, "The Nine Chapters on the Mathematical
-    Art"), 방정(方程) 장 — Gaussian elimination과 사실상 동일한 절차가
-    기원전에 이미 기술되어 있다.
+[^nine]: [《九章算術》(구장산술, "The Nine Chapters on the Mathematical
+    Art")](https://en.wikipedia.org/wiki/The_Nine_Chapters_on_the_Mathematical_Art),
+    방정(方程) 장 — Gaussian elimination과 사실상 동일한 절차가 기원전에
+    이미 기술되어 있다.
 
 **오늘 짜는 forward elimination 코드는, 2천 년 전 계산 기법과 스마트폰
 GPS 칩이 지금도 똑같이 쓰고 있는 바로 그 절차다.**

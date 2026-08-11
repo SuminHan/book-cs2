@@ -27,8 +27,8 @@
 범위 안에서만 인덱싱/슬라이싱하는 습관은 사소해 보이지만, 이 사고가
 벌어진 근본 원인과 정확히 같은 지점을 다룬다.
 
-[^heartbleed]: Codenomicon, *Heartbleed Bug* (heartbleed.com, 2014);
-    CVE-2014-0160.
+[^heartbleed]: Codenomicon, [*Heartbleed Bug*](https://heartbleed.com/)
+    (2014); [CVE-2014-0160](https://nvd.nist.gov/vuln/detail/CVE-2014-0160).
 
 **어떤 인덱스가 유효한지 항상 정확히 알고 있을 것 — 이번 주 배우는
 List/String 연산은 모두 그 위에 세워진다.**
