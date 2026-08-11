@@ -39,7 +39,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-e294b668.js";
+            window.path_to_searchindex_js = "searchindex-b4f1fceb.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-7992028c.js"></script>
@@ -4176,8 +4176,19 @@ polygon을 표현하는 <code>Point</code>들)에만 CCTV를 설치할 수 있�
 <h2 id="정수integer"><a class="header" href="#정수integer">정수(Integer)</a></h2>
 <p>컴퓨터는 모든 것을 비트(0과 1)로 저장한다. <code>n</code>비트 <strong>unsigned</strong>(부호 없는)
 정수는 단순한 이진 자릿값이다 — <code>i</code>번째 비트가 1이면 <code>2^i</code>만큼을 더한다:</p>
-<pre><code>unsigned 8비트:  00000101  =  0·128 + 0·64 + 0·32 + 0·16 + 0·8 + 1·4 + 0·2 + 1·1  =  5
-</code></pre>
+<table>
+<tr><td>비트</td>
+<td style="color:#888">0</td><td style="color:#888">0</td><td style="color:#888">0</td><td style="color:#888">0</td><td style="color:#888">0</td>
+<td style="color:#d6336c"><b>1</b></td><td style="color:#888">0</td><td style="color:#d6336c"><b>1</b></td></tr>
+
+<tr><td>자릿값</td>
+<td style="color:#888">128</td><td style="color:#888">64</td><td style="color:#888">32</td><td style="color:#888">16</td><td style="color:#888">8</td>
+<td style="color:#d6336c"><b>4</b></td><td style="color:#888">2</td><td style="color:#d6336c"><b>1</b></td></tr>
+
+</table>
+
+<p>색칠된(<code>1</code>인) 비트만 값에 기여한다 — 나머지는 전부 <code>0</code>을 더하는 것과 같다:
+<code>4 + 1 = 5</code>.</p>
 <p><code>n</code>비트로는 <code>2^n</code>개의 서로 다른 값을 표현할 수 있으므로, unsigned <code>n</code>비트
 정수의 범위는 <code>[0, 2^n - 1]</code>이다. <code>n=8</code>이면 <code>[0, 255]</code>(예: 이미지의 각
 RGB 채널이 쓰는 <code>uint8</code>).</p>
@@ -4217,27 +4228,44 @@ RGB 채널이 쓰는 <code>uint8</code>).</p>
 <p>float는 “소수점 아래 자릿수“를 그대로 저장하는 게 아니라, 이진수로 된
 과학적 표기법처럼 <strong>부호(sign), 지수(exponent), 가수(mantissa)</strong> 세 부분으로
 저장된다.</p>
-<p>\[\text{value} = (-1)^{\text{sign}} \times 1.\text{mantissa}_2 \times
-2^{\text{exponent} - \text{bias}}\]</p>
+<p>\[\text{value} = (-1)^{\text{sign}} \times \left(1 + 0.m_1m_2\ldots
+m_n\right)_2 \times 2^{\text{exponent} - \text{bias}}\]</p>
+<p>여기서 <code>m_1 m_2 ... m_n</code>은 실제 저장된 가수 비트 그 자체를, 소수점 아래
+이진 분수(<code>0.m_1m_2...</code>)로 읽은 것이다 — 맨 앞의 <code>1 +</code>는 저장되지 않고,
+정규화된(normal) 숫자라면 항상 공짜로 붙는다.</p>
 <div class="table-wrapper">
 <table>
 <thead>
-<tr><th>타입</th><th>부호</th><th>지수</th><th>가수</th><th>전체</th><th>bias</th></tr>
+<tr><th>타입</th><th>부호 비트</th><th>지수 비트</th><th>가수 비트(<code>n</code>)</th><th>전체 비트</th></tr>
 </thead>
 <tbody>
-<tr><td><code>float16</code> (half)</td><td>1</td><td>5</td><td>10</td><td>16</td><td>15</td></tr>
-<tr><td><code>float32</code> (single)</td><td>1</td><td>8</td><td>23</td><td>32</td><td>127</td></tr>
-<tr><td><code>float64</code> (double)</td><td>1</td><td>11</td><td>52</td><td>64</td><td>1023</td></tr>
+<tr><td><code>float16</code> (half)</td><td>1</td><td>5</td><td>10</td><td>16</td></tr>
+<tr><td><code>float32</code> (single)</td><td>1</td><td>8</td><td>23</td><td>32</td></tr>
+<tr><td><code>float64</code> (double)</td><td>1</td><td>11</td><td>52</td><td>64</td></tr>
 </tbody>
 </table>
 </div>
-<p>지수 필드에는 <strong>bias</strong>(편향값)를 더한 값이 저장되는데, 이렇게 하면
-부호 없는 비트만으로도 아주 큰 수와 아주 작은 수를 모두 표현할 수 있다
-(예: <code>float32</code>에 저장된 지수값이 <code>130</code>이면 실제 지수는 <code>130-127=3</code>).
-가수는 (일반적인 경우) 저장되지 않는 맨 앞자리 <code>1.</code>을 항상 가정하는데,
-이 덕분에 비트 하나를 공짜로 아낄 수 있다.</p>
+<p><strong>bias는 위의 비트 수들과는 성격이 다르다</strong> — bias는 “폭“이 아니라, 실제
+지수(true exponent)에 더해서 저장하는 <strong>값</strong>이다. 이렇게 하면 (부호
+비트가 따로 없는) unsigned 지수 필드로도 음수인 실제 지수를 표현할 수
+있다:</p>
+<p>\[\text{저장되는 지수값} = \text{실제 지수} + \text{bias}, \qquad
+\text{bias} = 2^{,\text{지수 비트 수}-1} - 1\]</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>타입</th><th>지수 비트</th><th>bias</th></tr>
+</thead>
+<tbody>
+<tr><td><code>float16</code></td><td>5</td><td>\(2^4-1=15\)</td></tr>
+<tr><td><code>float32</code></td><td>8</td><td>\(2^7-1=127\)</td></tr>
+<tr><td><code>float64</code></td><td>11</td><td>\(2^{10}-1=1023\)</td></tr>
+</tbody>
+</table>
+</div>
+<p>예: <code>float32</code>에 저장된 지수값이 <code>130</code>이면 실제 지수는 <code>130-127=3</code>이다.</p>
 <p><strong>특수값</strong>들은 정해진 지수 패턴으로 인코딩된다: 지수가 모두 0이면 <code>0</code> 또는
-<em>denormal</em>(맨 앞자리 <code>1.</code>을 가질 만큼 크지 않은 아주 작은 수), 지수가 모두
+<em>denormal</em>(그 공짜 <code>1 +</code>를 가질 만큼 크지 않은 아주 작은 수), 지수가 모두
 1이면 <code>±무한대</code>(가수가 0인 경우) 또는 <code>NaN</code>(가수가 0이 아닌 경우 —
 <code>0/0</code>이나 <code>math.sqrt(-1)</code>이 이걸 돌려준다).</p>
 <h2 id="왜-01--02--03인가"><a class="header" href="#왜-01--02--03인가">왜 <code>0.1 + 0.2 != 0.3</code>인가</a></h2>
