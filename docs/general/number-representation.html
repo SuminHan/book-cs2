@@ -38,7 +38,7 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-053f52fb.js";
+            window.path_to_searchindex_js = "../searchindex-2c8d124f.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../toc-7992028c.js"></script>
@@ -334,13 +334,13 @@ np.array([1.0], dtype=np.float32)      # GPU가 가장 빠르게 계산하는 �
 <code>int8</code>이 기본값 <code>int64</code>의 1/8 메모리만 쓰면서도 정보 손실은 전혀 없다.</p>
 <p>같은 트레이드오프가 훨씬 큰 규모로 나타나는 것이 바로 머신러닝의 <strong>모델 양자화</strong>(quantization)다.
 거대 언어모델의 가중치(weight)는 원래 <code>float16</code>이나 <code>float32</code>로 학습된다.
-예를 들어 Hugging Face에 공개된 실제 모델 <a href="https://huggingface.co/Qwen/Qwen2.5-3B-Instruct-GGUF">Qwen2.5-3B-Instruct(약 30억
-파라미터)</a>는,
-원본 <code>float16</code> 가중치로는 약 6.2GB가 필요하지만, 8비트(<code>Q8_0</code>)로
-양자화하면 약 3.6GB, 4비트(<code>Q4_0</code>)로 양자화하면 약 2GB로 줄어든다 —
-정확히 위 표에서 본 “비트 수를 줄이면 메모리도 그만큼 준다“는 원리
-그대로다. 이렇게 용량을 줄이는 게 바로 서버용 GPU가 아니라 노트북이나
-스마트폰에서도 그 정도 크기의 모델을 돌릴 수 있게 해주는 이유다.
+예를 들어 OpenAI가 공개한 실제 모델 <a href="https://huggingface.co/openai/gpt-oss-20b">gpt-oss-20b</a>
+(약 210억 파라미터, 그중 실제로 쓰이는 것은 매 토큰마다 약 36억)를
+16비트로 그대로 저장하면 가중치만으로 약 40GB가 필요하지만, 공식
+배포판은 처음부터 4비트대(<code>MXFP4</code>)로 양자화되어 있어 약 12.8GB에
+불과하다 — 정확히 위 표에서 본 “비트 수를 줄이면 메모리도 그만큼 준다“는
+원리 그대로다. 이렇게 용량을 줄이는 게 바로 데이터센터급 서버가 아니라
+일반 GPU 한 장으로도 그 정도 크기의 모델을 돌릴 수 있게 해주는 이유다.
 트레이드오프는 실재한다 — 비트 수가 줄면 가중치 하나하나의 정밀도도
 줄어들어서, 양자화된 모델은 원본 <code>float16</code> 모델보다 정확도가 약간
 떨어진다 — 위에서 본 <code>0.1+0.2</code> 이야기의 “어긋난 그 조금“과 정확히 같은
@@ -351,7 +351,10 @@ np.array([1.0], dtype=np.float32)      # GPU가 가장 빠르게 계산하는 �
 Leaderboard</a>가
 바로 이걸 기반으로 함)나, 하드웨어/추론 성능까지 표준화해서 비교하는
 <a href="https://mlcommons.org/benchmarks/inference-datacenter/">MLPerf</a> 같은
-벤치마크를 쓴다.)</p>
+벤치마크를 쓰고, 특정 모델·양자화·GPU 조합에 실제로 VRAM이 얼마나
+필요하고 속도가 얼마나 나올지는 <a href="https://apxml.com/tools/vram-calculator">ApX Machine Learning의 VRAM &amp;
+Performance Calculator</a> 같은
+도구로 직접 계산해볼 수 있다.)</p>
 <p>위에 나온 모든 dtype 표(<code>int8</code> vs <code>int64</code>, <code>float16</code> vs <code>float32</code>)는
 결국 지금 막 배운 것과 똑같은 아이디어를, 매번 다른 트레이드오프에 맞춰
 고른 것일 뿐이다.</p>
