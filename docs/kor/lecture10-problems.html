@@ -38,7 +38,7 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-b4f1fceb.js";
+            window.path_to_searchindex_js = "../searchindex-9202853f.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../toc-7992028c.js"></script>
@@ -234,7 +234,7 @@ suit값(0,1,2,3)의 등장 횟수를 기록한 새로운 list
 <li>input parameter: a <code>Hand</code> object <code>hand</code></li>
 <li>return value: <code>True</code>(if hand is “flush” or “straight flush”),
 <code>False</code>(otherwise)</li>
-<li><em>rank 정보는 필요없고 suit 값만 따져보면 되므로 <code>L = hand.getNumCardsBySuit()</code>로 얻은 <code>L</code> 정보만으로 충분</em></li>
+<li><em>rank 정보는 필요없고 suit 값만 따져보면 되므로 <code>L =  hand.getNumCardsBySuit()</code>로 얻은 <code>L</code> 정보만으로 충분</em></li>
 </ul>
 </li>
 <li>Write a function <code>straightFlush</code>:
@@ -411,6 +411,7 @@ def test():
     print("Triple:" + str(1.0*L[5]/nTrials*100))
     print("TwoPair:" + str(1.0*L[6]/nTrials*100))
     print("Pair:" + str(1.0*L[7]/nTrials*100))
+
 test()
 </code></pre>
 <h3 id="optional-problems"><a class="header" href="#optional-problems">Optional Problems</a></h3>

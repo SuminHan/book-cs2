@@ -38,7 +38,7 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-b4f1fceb.js";
+            window.path_to_searchindex_js = "../searchindex-9202853f.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../toc-7992028c.js"></script>
@@ -234,7 +234,6 @@ list <code>S2</code> of 4-element lists
 </ul>
 <p><em>Hint: <code>gaussian_elimination</code> from last week를 사용.</em></p>
 <pre><code class="language-python"># copy the function gaussian_elimination from L06_P01.py here
-
 def equilibrium(n, S1, S2):
     ax = [[0]*n for i in range(n)]
     bx = [0]*n
@@ -256,6 +255,7 @@ S1 = [[13,9,0], [14,0,6], [11,6,10], [11,3,1], [13,1,2], [10,2,4],
       [11,11,5], [15,5,7], [12,7,8], [11,9,3], [13,0,1], [11,6,2],
       [15,10,4], [10,3,11], [14,1,5], [14,4,8], [10,0,2],
       [12,6,4], [11,3,5], [11,2,5], [11,2,8]]
+
 S2 = [[11,9,-50,50], [14,10,50,50], [12,11,-50,-50], [12,8,50,-50]]
 print(equilibrium(12, S1, S2))
 # [[-0.6, 5.21], [-1.74, -1.85], [7.33, -2.39], [-11.65, -2.98],

@@ -15,6 +15,7 @@ M = []
 for i in range(len(L)):
     if some_condition_on(L[i]):
         M.append(??)
+
 return M
 ```
 
@@ -127,6 +128,7 @@ counter = 0
 for i in range(len(s)):
     if some_condition_on(s[i]):
         counter += 1
+
 return counter
 ```
 
@@ -169,6 +171,7 @@ print(countChar("abc","A"))         # 0
 r = ""
 for i in range(len(s)):
     r = r + ??
+
 return r
 ```
 

@@ -7,20 +7,27 @@ class Point:
     def __init__(self, px, py):        # modifier
         self.x = px
         self.y = py
+
     def __str__(self):                 # pure function
         return "(" + str(self.x) + ',' + str(self.y) + ")"
+
     def getX(self):                    # pure function
         return self.x
+
     def getY(self):                    # pure function
         return self.y
+
     def setX(self, v):                 # modifier
         self.x = v
+
     def setY(self, v):                 # modifier
         self.y = v
+
     def distance(self, p):             # pure function
         dx = self.x - p.x
         dy = self.y - p.y
         return (dx*dx + dy*dy) ** 0.5
+
     def add(self, p):                  # pure function
         x = self.x + p.x
         y = self.y + p.y
@@ -70,18 +77,25 @@ work on `Circle`.
 class Circle:
     def __init__(self, c, r):
         # ADD ADDITIONAL CODE HERE!
+
     def __str__(self):
         # ADD ADDITIONAL CODE HERE!
+
     def area(self):
         # ADD ADDITIONAL CODE HERE!
+
     def getRadius(self):
         # ADD ADDITIONAL CODE HERE!
+
     def getCenter(self):
         # ADD ADDITIONAL CODE HERE!
+
     def setRadius(self, v):
         # ADD ADDITIONAL CODE HERE!
+
     def moveTo(self, x, y):
         # ADD ADDITIONAL CODE HERE!
+
     def move(self, dx, dy):
         # ADD ADDITIONAL CODE HERE!
 
@@ -99,6 +113,7 @@ def test():
     print(c1)              # ((3,4) , 5)
     c1.move(1, 1)
     print(c1)              # ((4,5) , 5)
+
 test()
 ```
 
@@ -163,18 +178,25 @@ def gcd(a, b):
 class Rational:
     def __init__(self, n, d):
         # ADD ADDITIONAL CODE HERE!
+
     def __str__(self):
         # ADD ADDITIONAL CODE HERE!
+
     def toFloat(self):
         # ADD ADDITIONAL CODE HERE!
+
     def negate(self):
         # ADD ADDITIONAL CODE HERE!
+
     def invert(self):
         # ADD ADDITIONAL CODE HERE!
+
     def reduce(self):
         # ADD ADDITIONAL CODE HERE!
+
     def add(self, r):
         # ADD ADDITIONAL CODE HERE!
+
     def mul(self, r):
         # ADD ADDITIONAL CODE HERE!
 
@@ -196,6 +218,7 @@ def test():
     print(r4)             # 2/1
     print(r3.toFloat())   # 2.8333333333333335
     print(r4.toFloat())   # 2.0
+
 test()
 ```
 
@@ -276,6 +299,7 @@ def test():
     print(r1.isEqual(r3))   # False
     print(r2.isEqual(r3))   # True
     print(r1.isEqual(r1))   # True
+
 test()
 ```
 

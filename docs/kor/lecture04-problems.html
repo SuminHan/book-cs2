@@ -38,7 +38,7 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-b4f1fceb.js";
+            window.path_to_searchindex_js = "../searchindex-9202853f.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../toc-7992028c.js"></script>
@@ -220,6 +220,7 @@ def rightView(P):
 P1 = [[[0,0,0], [0,0,0], [1,0,0]],
       [[1,0,1], [0,0,0], [1,0,1]],
       [[1,0,1], [1,1,1], [1,1,1]]]
+
 print(topView(P1))    # [[1,0,1], [1,1,1], [1,1,1]]
 print(frontView(P1))  # [[1,0,0], [1,0,1], [1,1,1]]
 print(rightView(P1))  # [[0,0,1], [1,0,1], [1,1,1]]
@@ -227,6 +228,7 @@ print(rightView(P1))  # [[0,0,1], [1,0,1], [1,1,1]]
 P2 = [[[1,0,0], [0,0,0], [1,0,0]],
       [[0,0,1], [1,1,0], [1,0,1]],
       [[0,1,0], [0,0,0], [1,0,0]]]
+
 print(topView(P2))    # [[1,1,1], [1,1,0], [1,0,1]]
 print(frontView(P2))  # [[1,0,0], [1,1,1], [1,1,0]]
 print(rightView(P2))  # [[1,0,1], [1,1,1], [1,0,1]]

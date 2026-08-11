@@ -24,6 +24,7 @@ def orientation(polygon):
 polygon1 = [Point(30,10), Point(30,20), Point(50,20), Point(50,40),
             Point(40,40), Point(40,30), Point(30,30), Point(30,40),
             Point(20,40), Point(20,20), Point(10,20), Point(10,10)]
+
 polygon2 = [Point(30,10), Point(30,30), Point(10,30), Point(10,10)]
 polygon3 = [Point(10,30), Point(10,10), Point(30,10), Point(30,30)]
 polygon4 = [Point(30,30), Point(30,10), Point(10,10), Point(10,30)]
@@ -67,6 +68,7 @@ class Rectangle:
 
     def __str__(self):
         # ADD ADDITIONAL CODE HERE!!
+
         return None  # remove it after completing your code
 
 def direction(fr, to):
@@ -93,13 +95,16 @@ def surveillableRegion(polygon):
     n = len(polygon)
 
     # ADD ADDITIONAL CODE HERE!!
+
     return -1  # remove it after completing your code
 
 polygon1 = [Point(0,1), Point(2,1), Point(2,0), Point(4,0),
             Point(4,2), Point(5,2), Point(5,4), Point(3,4),
             Point(3,5), Point(1,5), Point(1,3), Point(0,3)]
+
 polygon2 = [Point(0,0), Point(2,0), Point(2,3), Point(0,3),
             Point(0,2), Point(1,2), Point(1,1), Point(0,1)]
+
 print(surveillableRegion(polygon1))  # (2,2)-(3,3)
 print(surveillableRegion(polygon2))  # None
 ```

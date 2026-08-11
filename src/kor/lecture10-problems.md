@@ -204,6 +204,7 @@ def test():
     print("Triple:" + str(1.0*L[5]/nTrials*100))
     print("TwoPair:" + str(1.0*L[6]/nTrials*100))
     print("Pair:" + str(1.0*L[7]/nTrials*100))
+
 test()
 ```
 
