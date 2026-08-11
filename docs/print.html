@@ -39,7 +39,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-2c8d124f.js";
+            window.path_to_searchindex_js = "searchindex-c2392b89.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-7992028c.js"></script>
@@ -4266,17 +4266,19 @@ RGB 채널이 쓰는 <code>uint8</code>).</p>
 피하려고 일부러 고정폭 타입을 쓴다.</p>
 <h2 id="ieee-754-부동소수점floating-point-숫자"><a class="header" href="#ieee-754-부동소수점floating-point-숫자">IEEE 754: 부동소수점(Floating-Point) 숫자</a></h2>
 <p>float는 “소수점 아래 자릿수“를 그대로 저장하는 게 아니라, 이진수로 된
-과학적 표기법처럼 <strong>부호(sign), 지수(exponent), 가수(mantissa)</strong> 세 부분으로
-저장된다.</p>
-<p>\[\text{value} = (-1)^{\text{sign}} \times \left(1 + 0.m_1m_2\ldots
-m_n\right)_2 \times 2^{\text{exponent} - b}\]</p>
-<p>여기서 <code>m_1 m_2 ... m_n</code>은 실제 저장된 가수 비트 그 자체를, 소수점 아래
-이진 분수(<code>0.m_1m_2...</code>)로 읽은 것이다 — 맨 앞의 <code>1 +</code>는 저장되지 않고,
-정규화된(normal) 숫자라면 항상 공짜로 붙는다.</p>
+과학적 표기법처럼 <strong>부호 비트 <code>s</code>, 지수 비트 <code>e_1e_2...e_k</code>, 가수 비트
+<code>m_1m_2...m_n</code></strong> 세 부분으로 저장된다.</p>
+<p>\[\text{value} = (-1)^s \times \left(1 + 0.m_1m_2\ldots
+m_n\right)_2 \times 2^{(e_1e_2\ldots e_k)_2 - b}\]</p>
+<p><code>m_1 m_2 ... m_n</code>은 실제 저장된 가수 비트 그 자체를, 소수점 아래 이진
+분수(<code>0.m_1m_2...</code>)로 읽은 것이다 — 맨 앞의 <code>1 +</code>는 저장되지 않고,
+정규화된(normal) 숫자라면 항상 공짜로 붙는다. 마찬가지로
+<code>(e_1e_2...e_k)_2</code>는 지수 비트 그 자체를 부호 없는 이진수로 읽은
+값이다 — 이 값을 앞으로 <code>E</code>라고 줄여 쓰자.</p>
 <div class="table-wrapper">
 <table>
 <thead>
-<tr><th>타입</th><th>부호 비트</th><th>지수 비트</th><th>가수 비트(<code>n</code>)</th><th>전체 비트</th></tr>
+<tr><th>타입</th><th>부호 비트</th><th>지수 비트(<code>k</code>)</th><th>가수 비트(<code>n</code>)</th><th>전체 비트</th></tr>
 </thead>
 <tbody>
 <tr><td><code>float16</code> (half)</td><td>1</td><td>5</td><td>10</td><td>16</td></tr>
@@ -4286,21 +4288,19 @@ m_n\right)_2 \times 2^{\text{exponent} - b}\]</p>
 </table>
 </div>
 <p><strong>bias는 위의 비트 수들과는 성격이 다르다</strong> — bias는 “폭“이 아니라, 실제
-지수(true exponent)에 더해서 저장하는 <strong>값</strong>이다. 이렇게 하면 (부호
-비트가 따로 없는) unsigned 지수 필드로도 음수인 실제 지수를 표현할 수
-있다. 지수 비트 수를 <code>k</code>, bias 자체는 그냥 (다른 상수들과 마찬가지로)
-<code>b</code>라고 부르자:</p>
-<p>\[\text{저장되는 지수값} = \text{실제 지수} + b, \qquad
-b = 2^{k-1} - 1\]</p>
-<p><strong>왜 하필 이 값인가?</strong> <code>k</code>비트로 저장 가능한 지수값은 <code>0</code>부터
-\(2^k-1\)까지인데, 그중 양 끝값(<code>0</code>과 \(2^k-1\))은 일반적인 숫자가
-아니라 특수값(0/denormal, 무한대/NaN)을 위해 따로 빼둔다. <strong>실제 지수가
-음의 방향으로도 양의 방향만큼 뻗어나갈 수 있도록</strong>(그래야 아주 큰 수와
-아주 작은 수를 똑같이 잘 표현할 수 있음) <code>b</code>는 그 전체 범위의 대략
-절반(<code>2^(k-1)</code>)에서, 특수값 쪽으로 하나를 맞추기 위해 <code>1</code>을 뺀 값으로
-정한다. <code>float32</code>(<code>k=8</code>)라면 <code>b = 2^7-1 = 127</code>이 되어, 일반적인 숫자의
-실제 지수는 대략 <code>-128</code>부터 <code>+127</code>까지 — <code>0</code>을 기준으로 거의 대칭이
-된다.</p>
+지수에 더해서 저장하는 <strong>값</strong>이다. 이렇게 하면 (부호 비트가 따로 없는)
+unsigned 지수 필드로도 음수인 실제 지수를 표현할 수 있다:</p>
+<p>\[E = \text{실제 지수} + b \quad\Longleftrightarrow\quad
+\text{실제 지수} = E - b, \qquad b = 2^{k-1} - 1\]</p>
+<p><strong>왜 하필 이 값인가?</strong> <code>k</code>비트로 표현 가능한 <code>E</code>값은 <code>0</code>부터
+\(2^k-1\)까지인데, 그중 양 끝값(<code>E=0</code>과 <code>E=</code>\(2^k-1\))은 일반적인
+숫자가 아니라 특수값(0/denormal, 무한대/NaN)을 위해 따로 빼둔다.
+<strong>실제 지수가 음의 방향으로도 양의 방향만큼 뻗어나갈 수 있도록</strong>(그래야
+아주 큰 수와 아주 작은 수를 똑같이 잘 표현할 수 있음) <code>b</code>는 그 전체
+범위의 대략 절반(<code>2^(k-1)</code>)에서, 특수값 쪽으로 하나를 맞추기 위해 <code>1</code>을
+뺀 값으로 정한다. <code>float32</code>(<code>k=8</code>)라면 <code>b = 2^7-1 = 127</code>이 되어,
+일반적인 숫자의 실제 지수는 대략 <code>-128</code>부터 <code>+127</code>까지 — <code>0</code>을 기준으로
+거의 대칭이 된다.</p>
 <div class="table-wrapper">
 <table>
 <thead>
@@ -4313,11 +4313,12 @@ b = 2^{k-1} - 1\]</p>
 </tbody>
 </table>
 </div>
-<p>예: <code>float32</code>에 저장된 지수값이 <code>130</code>이면 실제 지수는 <code>130-127=3</code>이다.</p>
-<p><strong>특수값</strong>들은 정해진 지수 패턴으로 인코딩된다: 지수가 모두 0이면 <code>0</code> 또는
-<em>denormal</em>(그 공짜 <code>1 +</code>를 가질 만큼 크지 않은 아주 작은 수), 지수가 모두
-1이면 <code>±무한대</code>(가수가 0인 경우) 또는 <code>NaN</code>(가수가 0이 아닌 경우 —
-<code>0/0</code>이나 <code>math.sqrt(-1)</code>이 이걸 돌려준다).</p>
+<p>예: <code>float32</code>에서 <code>E=130</code>이면 실제 지수는 <code>130-127=3</code>이다.</p>
+<p><strong>특수값</strong>들은 정해진 <code>E</code> 패턴으로 인코딩된다: <code>E=0</code>이면 <code>0</code> 또는
+<em>denormal</em>(그 공짜 <code>1 +</code>를 가질 만큼 크지 않은 아주 작은 수),
+<code>E=</code>\(2^k-1\)(지수 비트가 전부 1)이면 <code>±무한대</code>(가수가 0인 경우)
+또는 <code>NaN</code>(가수가 0이 아닌 경우 — <code>0/0</code>이나 <code>math.sqrt(-1)</code>이 이걸
+돌려준다).</p>
 <h2 id="왜-01--02--03인가"><a class="header" href="#왜-01--02--03인가">왜 <code>0.1 + 0.2 != 0.3</code>인가</a></h2>
 <p>십진수 <code>0.1</code>은 <code>1/10</code>인데, <code>10 = 2×5</code>라서 <strong>이진수</strong>로 쓰면 무한히
 반복되는 소수가 된다 — 마치 <code>1/3</code>이 십진수로 무한히 반복되는 것과 같은
@@ -4384,6 +4385,12 @@ Leaderboard</a>가
 필요하고 속도가 얼마나 나올지는 <a href="https://apxml.com/tools/vram-calculator">ApX Machine Learning의 VRAM &amp;
 Performance Calculator</a> 같은
 도구로 직접 계산해볼 수 있다.)</p>
+<p><label class="checkbox-label"><input class="checkbox-img" type="checkbox"><img src="general/assets/vram-calculator-screenshot.png" alt="ApX Machine Learning의 VRAM &amp; Performance Calculator 화면 — 모델, 양자화 방식, GPU를 고르면 필요한 VRAM과 예상 속도를 계산해준다"><span class="img-wrapper"><img src="general/assets/vram-calculator-screenshot.png" alt="ApX Machine Learning의 VRAM &amp; Performance Calculator 화면 — 모델, 양자화 방식, GPU를 고르면 필요한 VRAM과 예상 속도를 계산해준다"></span></label></p>
+<p><em><a href="https://apxml.com/tools/vram-calculator">VRAM &amp; Performance
+Calculator</a>의 실제 화면. 왼쪽에서
+모델·양자화 방식(<code>FP32</code>, <code>FP16</code>, <code>Q8</code>, <code>Q4</code> 등)·GPU를 고르면, 오른쪽에서
+실제로 필요한 VRAM과 예상 속도를 계산해준다 — 위에서 설명한 “비트 수를
+줄이면 메모리도 준다“는 원리를 직접 눌러가며 확인할 수 있다.</em></p>
 <p>위에 나온 모든 dtype 표(<code>int8</code> vs <code>int64</code>, <code>float16</code> vs <code>float32</code>)는
 결국 지금 막 배운 것과 똑같은 아이디어를, 매번 다른 트레이드오프에 맞춰
 고른 것일 뿐이다.</p>
