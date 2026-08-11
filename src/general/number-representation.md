@@ -181,16 +181,7 @@ np.array([1.0], dtype=np.float32)      # GPU가 가장 빠르게 계산하는 �
 줄어들어서, 양자화된 모델은 원본 `float16` 모델보다 정확도가 약간
 떨어진다 — 위에서 본 `0.1+0.2` 이야기의 "어긋난 그 조금"과 정확히 같은
 현상인데, 여기서는 모델이 메모리에 아예 들어갈 수 있게 하려고 의도적으로
-감수하는 것이다. (이런 정확도 하락을 실제로 측정할 때는
-[EleutherAI의 lm-evaluation-harness](https://github.com/EleutherAI/lm-evaluation-harness)
-(Hugging Face의 [Open LLM
-Leaderboard](https://huggingface.co/spaces/open-llm-leaderboard/open_llm_leaderboard)가
-바로 이걸 기반으로 함)나, 하드웨어/추론 성능까지 표준화해서 비교하는
-[MLPerf](https://mlcommons.org/benchmarks/inference-datacenter/) 같은
-벤치마크를 쓰고, 특정 모델·양자화·GPU 조합에 실제로 VRAM이 얼마나
-필요하고 속도가 얼마나 나올지는 [ApX Machine Learning의 VRAM &
-Performance Calculator](https://apxml.com/tools/vram-calculator) 같은
-도구로 직접 계산해볼 수 있다.)
+감수하는 것이다.
 
 ![ApX Machine Learning의 VRAM & Performance Calculator 화면 — 모델, 양자화
 방식, GPU를 고르면 필요한 VRAM과 예상 속도를 계산해준다](assets/vram-calculator-screenshot.png)
