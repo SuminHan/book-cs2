@@ -7,7 +7,7 @@
 - [Lists / Strings](kor/lecture01.md)
     - [Topics Covered](kor/lecture01-topics.md)
     - [Problem Set](kor/lecture01-problems.md)
-- [File I/O](kor/lecture02.md)
+- [Loops](kor/lecture02.md)
     - [Topics Covered](kor/lecture02-topics.md)
     - [Problem Set](kor/lecture02-problems.md)
 - [Multi-Dimensional Lists](kor/lecture03.md)
