@@ -39,7 +39,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-9202853f.js";
+            window.path_to_searchindex_js = "searchindex-a4f9c51e.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-7992028c.js"></script>
@@ -4288,13 +4288,23 @@ m_n\right)_2 \times 2^{\text{exponent} - \text{bias}}\]</p>
 <p><strong>bias는 위의 비트 수들과는 성격이 다르다</strong> — bias는 “폭“이 아니라, 실제
 지수(true exponent)에 더해서 저장하는 <strong>값</strong>이다. 이렇게 하면 (부호
 비트가 따로 없는) unsigned 지수 필드로도 음수인 실제 지수를 표현할 수
-있다:</p>
-<p>\[\text{저장되는 지수값} = \text{실제 지수} + \text{bias}, \qquad
-\text{bias} = 2^{,\text{지수 비트 수}-1} - 1\]</p>
+있다. 지수 비트 수를 <code>k</code>, bias 자체는 그냥 (다른 상수들과 마찬가지로)
+<code>b</code>라고 부르자:</p>
+<p>\[\text{저장되는 지수값} = \text{실제 지수} + b, \qquad
+b = 2^{k-1} - 1\]</p>
+<p><strong>왜 하필 이 값인가?</strong> <code>k</code>비트로 저장 가능한 지수값은 <code>0</code>부터
+\(2^k-1\)까지인데, 그중 양 끝값(<code>0</code>과 \(2^k-1\))은 일반적인 숫자가
+아니라 특수값(0/denormal, 무한대/NaN)을 위해 따로 빼둔다. <strong>실제 지수가
+음의 방향으로도 양의 방향만큼 뻗어나갈 수 있도록</strong>(그래야 아주 큰 수와
+아주 작은 수를 똑같이 잘 표현할 수 있음) <code>b</code>는 그 전체 범위의 대략
+절반(<code>2^(k-1)</code>)에서, 특수값 쪽으로 하나를 맞추기 위해 <code>1</code>을 뺀 값으로
+정한다. <code>float32</code>(<code>k=8</code>)라면 <code>b = 2^7-1 = 127</code>이 되어, 일반적인 숫자의
+실제 지수는 대략 <code>-128</code>부터 <code>+127</code>까지 — <code>0</code>을 기준으로 거의 대칭이
+된다.</p>
 <div class="table-wrapper">
 <table>
 <thead>
-<tr><th>타입</th><th>지수 비트</th><th>bias</th></tr>
+<tr><th>타입</th><th><code>k</code>(지수 비트)</th><th><code>b</code>(bias)</th></tr>
 </thead>
 <tbody>
 <tr><td><code>float16</code></td><td>5</td><td>\(2^4-1=15\)</td></tr>
