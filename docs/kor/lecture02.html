@@ -38,7 +38,7 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-09f26db9.js";
+            window.path_to_searchindex_js = "../searchindex-4c186516.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../toc-717e0065.js"></script>
@@ -184,17 +184,23 @@
 <p>2016년, 국제탐사보도언론인협회(ICIJ)는 파나마의 로펌 모색 폰세카에서
 유출된 문서 1,150만 건, 총 2.6테라바이트를 넘겨받았다. 사람이 한 장씩
 읽는다면 평생이 걸릴 분량이었다.</p>
-<p>기자 수백 명이 협업한 끝에 한 일은, 결국 “파일을 열어서 그 안의 모든
-줄(또는 단어)을 훑으며, 원하는 조건을 만족하는 것이 있는지 확인하는”
-단순한 작업의 반복이었다 — 특정 이름이 등장하는 문서가 있는가(for
-some), 조건을 만족하는 문서가 몇 건인가(counter). 이번 주에 배우는
-패턴 그대로다.</p>
-<h2 id="파일을-코드로-다루기"><a class="header" href="#파일을-코드로-다루기">파일을 코드로 다루기</a></h2>
+<p>기자 수백 명이 협업한 끝에 한 일은, 결국 문서 하나하나를 훑으며 같은
+질문을 반복해서 던지는 것이었다 — 특정 이름이 등장하는 문서가 있는가
+(for some), 조건을 만족하는 문서가 몇 건인가(counter). 이번 주에
+배우는 패턴 그대로다.</p>
+<h2 id="for-루프가-실제로-하는-일"><a class="header" href="#for-루프가-실제로-하는-일"><code>for</code> 루프가 실제로 하는 일</a></h2>
 <pre><code class="language-python">words = open("input.txt", "r").read().split()
+
+count = 0
+for w in words:
+    if w == "Mossack Fonseca":
+        count += 1
 </code></pre>
-<p>이 한 줄이 하는 일은 “파일을 열고, 전체 내용을 읽고, 단어 단위로
-쪼개기“다. 사람이 눈으로 1,150만 건을 읽을 수는 없어도, 컴퓨터는 이
-한 줄을 기반으로 초당 수만 건을 검사할 수 있다.</p>
+<p><code>for w in words:</code>가 하는 일은 <code>words</code> 안의 단어를 하나씩 꺼내며, 그때
+마다 똑같은 질문(“이 단어가 찾는 이름인가?”)을 던지는 것뿐이다. 사람이
+눈으로 1,150만 건을 읽을 수는 없어도, 컴퓨터는 이 루프 하나로 초당
+수만 건을 검사할 수 있다 — 다른 게 없다, 같은 확인을 몇 번 반복하느냐의
+차이일 뿐이다.</p>
 <h2 id="오늘-배우는-것과의-연결"><a class="header" href="#오늘-배우는-것과의-연결">오늘 배우는 것과의 연결</a></h2>
 <p>파나마 페이퍼스 보도는 2016년 아이슬란드 총리 사임을 비롯해 여러 나라의
 탈세 수사로 이어졌다.<sup class="footnote-reference" id="fr-panama-1"><a href="#footnote-panama">1</a></sup> 그 시작은 별다를 것 없는 “파일 열기 →
