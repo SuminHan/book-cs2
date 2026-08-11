@@ -38,7 +38,7 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../searchindex-c2392b89.js";
+            window.path_to_searchindex_js = "../searchindex-de7db100.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../toc-7992028c.js"></script>
@@ -237,14 +237,14 @@ RGB 채널이 쓰는 <code>uint8</code>).</p>
 피하려고 일부러 고정폭 타입을 쓴다.</p>
 <h2 id="ieee-754-부동소수점floating-point-숫자"><a class="header" href="#ieee-754-부동소수점floating-point-숫자">IEEE 754: 부동소수점(Floating-Point) 숫자</a></h2>
 <p>float는 “소수점 아래 자릿수“를 그대로 저장하는 게 아니라, 이진수로 된
-과학적 표기법처럼 <strong>부호 비트 <code>s</code>, 지수 비트 <code>e_1e_2...e_k</code>, 가수 비트
-<code>m_1m_2...m_n</code></strong> 세 부분으로 저장된다.</p>
+과학적 표기법처럼 <strong>부호 비트 \(s\), 지수 비트 \(e_1e_2\ldots e_k\), 가수
+비트 \(m_1m_2\ldots m_n\)</strong> 세 부분으로 저장된다.</p>
 <p>\[\text{value} = (-1)^s \times \left(1 + 0.m_1m_2\ldots
 m_n\right)_2 \times 2^{(e_1e_2\ldots e_k)_2 - b}\]</p>
-<p><code>m_1 m_2 ... m_n</code>은 실제 저장된 가수 비트 그 자체를, 소수점 아래 이진
-분수(<code>0.m_1m_2...</code>)로 읽은 것이다 — 맨 앞의 <code>1 +</code>는 저장되지 않고,
-정규화된(normal) 숫자라면 항상 공짜로 붙는다. 마찬가지로
-<code>(e_1e_2...e_k)_2</code>는 지수 비트 그 자체를 부호 없는 이진수로 읽은
+<p>\(m_1 m_2 \ldots m_n\)은 실제 저장된 가수 비트 그 자체를, 소수점 아래
+이진 분수(\(0.m_1m_2\ldots\))로 읽은 것이다 — 맨 앞의 <code>1 +</code>는 저장되지
+않고, 정규화된(normal) 숫자라면 항상 공짜로 붙는다. 마찬가지로
+\((e_1e_2\ldots e_k)_2\)는 지수 비트 그 자체를 부호 없는 이진수로 읽은
 값이다 — 이 값을 앞으로 <code>E</code>라고 줄여 쓰자.</p>
 <div class="table-wrapper">
 <table>
