@@ -4,6 +4,9 @@
 
 # 국내반
 
+- [CS1 Review](kor/lecture00.md)
+    - [Topics Covered](kor/lecture00-topics.md)
+    - [Problem Set](kor/lecture00-problems.md)
 - [Lists / Strings](kor/lecture01.md)
     - [Topics Covered](kor/lecture01-topics.md)
     - [Problem Set](kor/lecture01-problems.md)

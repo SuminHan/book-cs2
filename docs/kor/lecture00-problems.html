@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Topics Covered - CS2 국내반 보충자료</title>
+        <title>Problem Set - CS2 국내반 보충자료</title>
 
 
         <!-- Custom HTML head -->
@@ -180,101 +180,250 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h1 id="topics-covered"><a class="header" href="#topics-covered">Topics Covered</a></h1>
-<h2 id="rectilinear-polygon의-방향orientation-판정"><a class="header" href="#rectilinear-polygon의-방향orientation-판정">Rectilinear Polygon의 방향(Orientation) 판정</a></h2>
-<p>모든 변이 수평/수직인 다각형을 <strong>rectilinear polygon</strong>이라 한다. 이
-다각형이 시계방향(CW)으로 주어졌는지 반시계방향(CCW)으로 주어졌는지는,
-<strong>맨 위쪽 변</strong>(top edge — <code>y</code>좌표가 최댓값인 변)의 방향만 보면 바로 알 수
-있다: 그 변이 <strong>왼쪽</strong>을 향하면 CCW, <strong>오른쪽</strong>을 향하면 CW.</p>
-<pre><code class="language-python">def orientation(polygon):
-    n = len(polygon)
-    top = polygon[0].y
-    topIndex = 0
-    for i in range(n):
-        if polygon[i].y &gt; top:
-            top = polygon[i].y
-            topIndex = i
-    # polygon[topIndex] -&gt; polygon[(topIndex+1) % n] 방향을 보면 됨
-    if polygon[(topIndex+1) % n].x &lt; polygon[topIndex].x:
-        return "CCW"   # top edge가 왼쪽을 향함
-    else:
-        return "CW"    # top edge가 오른쪽을 향함
-</code></pre>
-<h2 id="cctv-한-대로-감시-가능한-영역-surveillability"><a class="header" href="#cctv-한-대로-감시-가능한-영역-surveillability">CCTV 한 대로 감시 가능한 영역 (Surveillability)</a></h2>
-<p><strong>문제</strong>: 반시계방향으로 주어진 rectilinear polygon 내부 전체를 CCTV
-한 대로 감시할 수 있는 설치 가능 영역을 구하라(불가능하면 없음).</p>
-<p><strong>핵심 관찰</strong>: 다각형의 각 변은, CCTV가 그 변 안쪽에서 <strong>바깥으로 튀어나온
-부분들을 모두 볼 수 있으려면 있어야 할 위치</strong>를 제약한다. 반시계방향
-기준으로 각 변의 방향에 따라:</p>
+                        <h1 id="problem-set"><a class="header" href="#problem-set">Problem Set</a></h1>
+<p><strong>1.</strong> Write a function <code>add</code>:</p>
 <ul>
-<li>변이 <strong>아래</strong>(DOWN)를 향함(다각형 위쪽 경계) → CCTV는 그 변의 <code>y</code>
-<strong>이하</strong>에 있어야 함 → <code>topMin</code> 갱신</li>
-<li>변이 <strong>위</strong>(UP)를 향함(다각형 아래쪽 경계) → CCTV는 그 변의 <code>y</code>
-<strong>이상</strong>에 있어야 함 → <code>bottomMax</code> 갱신</li>
-<li>변이 <strong>왼쪽</strong>(LEFT)을 향함(다각형 오른쪽 경계) → CCTV는 그 변의 <code>x</code>
-<strong>이하</strong>에 있어야 함 → <code>rightMin</code> 갱신</li>
-<li>변이 <strong>오른쪽</strong>(RIGHT)을 향함(다각형 왼쪽 경계) → CCTV는 그 변의 <code>x</code>
-<strong>이상</strong>에 있어야 함 → <code>leftMax</code> 갱신</li>
+<li>input parameter: two integers <code>n1</code>, <code>n2</code></li>
+<li>return value: the sum of <code>n1</code> and <code>n2</code></li>
 </ul>
-<p>즉 각 변이 허용 영역을 반평면(half-plane)으로 하나씩 제한하고, 그
-반평면들의 <strong>교집합</strong>이 곧 설치 가능 영역이다 — 다각형과 마찬가지로
-axis-aligned 사각형 <code>(leftMax, bottomMax)</code>–<code>(rightMin, topMin)</code>이 된다
-(<code>leftMax &gt; rightMin</code>이거나 <code>bottomMax &gt; topMin</code>이면 교집합이 비어
-있다는 뜻 — 설치 가능한 곳이 없다).</p>
-<pre><code class="language-python">def direction(fr, to):
-    if fr.x == to.x:
-        return "UP" if fr.y &lt; to.y else "DOWN"
-    elif fr.y == to.y:
-        return "RIGHT" if fr.x &lt; to.x else "LEFT"
+<pre><code class="language-python">def add(n1,n2):
+    # ADD ADDITIONAL CODE HERE!
 
-def surveillableRegion(polygon):
-    # polygon이 반시계방향이라고 가정
-    leftMax, rightMin = -INF, INF
-    bottomMax, topMin = -INF, INF
-    n = len(polygon)
-    for i in range(n):
-        fr, to = polygon[i], polygon[(i+1) % n]
-        d = direction(fr, to)
-        if d == "UP":
-            bottomMax = max(bottomMax, fr.y)
-        elif d == "DOWN":
-            topMin = min(topMin, fr.y)
-        elif d == "RIGHT":
-            leftMax = max(leftMax, fr.x)
-        elif d == "LEFT":
-            rightMin = min(rightMin, fr.x)
-    if leftMax &gt; rightMin or bottomMax &gt; topMin:
-        return None
-    return Rectangle(leftMax, rightMin, bottomMax, topMin)
+print(add(3,4))  # 7
+print(add(3,5))  # 8
 </code></pre>
-<p><strong>정당성</strong>: “실제로 전체를 감시할 수 있는 위치들의 집합” <code>A</code>와 “위
-계산으로 나온 사각형” <code>B</code>가 정확히 같은 집합임을 양방향 포함으로
-보인다 — <code>A ⊆ B</code>(감시 가능한 위치라면 각 변의 제약을 반드시 만족해야
-하므로), <code>B ⊆ A</code>(그 사각형 안의 어떤 점이든, 다각형 경계의 모든 점을
-직접 볼 수 있고, 경계를 볼 수 있으면 내부 전체도 볼 수 있으므로).</p>
-<h2 id="art-gallery-problem-일반화"><a class="header" href="#art-gallery-problem-일반화">Art Gallery Problem 일반화</a></h2>
-<p>이 문제는 “카메라 한 대, rectilinear polygon” 특수한 경우였다. 일반화
-방향은 여러 갈래다:</p>
+<p><strong>2.</strong> Write a function <code>printAdd</code>:</p>
 <ul>
-<li>카메라를 <strong>꼭짓점/변 위에만</strong> 설치할 수 있다면? (Optional 문제
-<code>surveillablePoint</code>, <code>surveillableLength</code>)</li>
-<li>카메라가 <strong>여러 대</strong>라면 몇 대가 필요한가(최소화), 또는 주어진 <code>k</code>대로
-충분한가(결정 문제)?</li>
-<li>다각형이 rectilinear가 아니라 <strong>임의의 모양</strong>이라면?</li>
-<li><strong>3차원</strong>(건물 한 층이 아니라 건물 전체)이라면?</li>
+<li>input parameter: two integers <code>n1</code>, <code>n2</code></li>
+<li>return value: 없음</li>
+<li>action: <strong>print</strong> out the sum of <code>n1</code> and <code>n2</code>
+<ul>
+<li>return을 쓰면 안되고 대신 print를 사용</li>
+<li>함수에서 아무것도 return 하지 않으면 None이 자동으로 return 됨</li>
 </ul>
-<p>이런 일반화들은 계산기하학(computational geometry)의 고전적인 연구
-주제로, “Art Gallery Problem“이라는 이름으로 불린다.</p>
+</li>
+</ul>
+<pre><code class="language-python">def printAdd(n1,n2):
+    # ADD ADDITIONAL CODE HERE!
+
+printAdd(3,4)             # 7
+printAdd(3,5)             # 8
+print(printAdd(3,4))      # 7 None
+</code></pre>
+<p><strong>3.</strong> Write a function <code>maximum</code>:</p>
+<ul>
+<li>input parameter: two integers <code>n1</code>, <code>n2</code></li>
+<li>return value: the maximum value among <code>n1</code> and <code>n2</code>
+<ul>
+<li>use if-else statement</li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-python">def maximum(n1,n2):
+    # ADD ADDITIONAL CODE HERE!
+    # use if-else statement
+
+print(maximum(5,7))  # 7
+print(maximum(7,5))  # 7
+print(maximum(5,5))  # 5
+</code></pre>
+<p><strong>4.</strong> Write functions <code>printMultTable1</code> and <code>printMultTable2</code>:</p>
+<ul>
+<li>input parameter / return value: 없음</li>
+<li>action: print out parts of the multiplication table as in the outputs
+<ul>
+<li>copy and slightly modify <code>printMultTable0</code></li>
+<li>the meaning of <code>for i in range(1, 10, 2)</code>: ?</li>
+<li>the meaning of
+<pre><code class="language-python">for i in range(1, 10, 2):
+    for j in range(1, i+1):
+</code></pre>
+: ?</li>
+</ul>
+</li>
+</ul>
+<p>Output of <code>printMultTable1()</code>:</p>
+<pre><code>1 2 3 4 5 6 7 8 9
+3 6 9 12 15 18 21 24 27
+5 10 15 20 25 30 35 40 45
+7 14 21 28 35 42 49 56 63
+9 18 27 36 45 54 63 72 81
+</code></pre>
+<p>Output of <code>printMultTable2()</code>:</p>
+<pre><code>1
+3 6 9
+5 10 15 20 25
+7 14 21 28 35 42 49
+9 18 27 36 45 54 63 72 81
+</code></pre>
+<p><strong>5.</strong> Write a function <code>sumSquares</code>:</p>
+<ul>
+<li>input parameter: an integer list <code>a</code> (of length <code>n</code>)</li>
+<li>return value: the value of \(a[0]^2 + a[1]^2 + a[2]^2 + \ldots +
+a[n-1]^2\)
+<ul>
+<li>i.e. the sum of squares of elements in the list <code>a</code></li>
+<li>e.g. <code>sumSquares([4,3,12])</code> returns 169 (\(=4^2+3^2+12^2\))</li>
+<li>recall that the Python code to compute \(x^2\) is <code>x**2</code></li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-python">def sumSquares(a):
+    n = len(a)
+    sum = 0
+    # ADD ADDITIONAL CODE HERE!
+    for i in range(n):
+
+print(sumSquares([3,5,4]))          # 50
+print(sumSquares([2,5,4,0,1,-1,5,1]))  # 73
+</code></pre>
+<p><strong>6.</strong> Write a function <code>square</code>:</p>
+<ul>
+<li>input parameter: a list of integers</li>
+<li>return value: a new list with the same length where each element is squared
+<ul>
+<li>e.g. <code>square([1,3,5,6,7])</code> returns <code>[1,9,25,36,49]</code></li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-python">def square(a):
+    n = len(a)
+    b = [None] * n    # empty list of length n = len(a)
+
+    # ADD ADDITIONAL CODE HERE!
+
+    return b
+
+L = [3,1,5,2,4]
+print(square(L))   # [9,1,25,4,16]
+print(L)            # [3,1,5,2,4]
+print(square([7,6,3,1,5,8,2,4]))   # [49,36,9,1,25,64,4,16]
+</code></pre>
+<p><strong>7.</strong> Write a function <code>findMin</code>: (min/max pattern)</p>
+<ul>
+<li>input parameter: a list of integers</li>
+<li>return value: the minimum value in the list elements</li>
+</ul>
+<pre><code class="language-python">def findMin(a):
+    min = a[0]
+    # ADD ADDITIONAL CODE HERE!
+    for i in range(1,len(a)):
+
+print(findMin([7,8,3,4,3,6]))     # 3
+print(findMin([3,5,7,2,7,2,3,8,6]))  # 2
+</code></pre>
+<p><strong>8.</strong> Write a function <code>countZero</code>: (counter pattern)</p>
+<ul>
+<li>input parameter: an integer list <code>numbers</code></li>
+<li>return value: the number of occurrences of <code>0</code> in <code>numbers</code></li>
+</ul>
+<pre><code class="language-python">def countZero(numbers):
+    # ADD ADDITIONAL CODE HERE!
+
+print(countZero([0,4,0,-2,4,0]))        # 3
+print(countZero([1,0,-2,4,0,0,-7,0,5])) # 4
+</code></pre>
+<p><strong>9.</strong> Write functions <code>somePrime</code> and <code>allPrime</code>: (“for some” and “for all”
+pattern)</p>
+<ul>
+<li>input parameter: a list of positive integers</li>
+<li>return value: a boolean
+<ul>
+<li>True: <code>somePrime</code>: if there is a prime in the list</li>
+<li>True: <code>allPrime</code>: if all the numbers in the list are primes</li>
+<li>False: otherwise</li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-python"># "for all" pattern
+def isPrime(p):
+    if p &lt;= 1: return False
+    for i in range(2, p//2+1):
+        if p % i == 0:      # not (p % i != 0)
+            return ??
+    return ??
+
+# "for some" pattern
+def somePrime(numbers):
+    # ADD ADDITIONAL CODE HERE!
+    for i in range(len(numbers)):
+        if isPrime(numbers[i]):
+
+# "for all" pattern
+def allPrime(numbers):
+    # ADD ADDITIONAL CODE HERE!
+
+num1 = [217, 287, 143, 163, 319]
+num2 = [217, 287, 143, 169, 319]
+num3 = [223, 281, 227, 151, 149]
+print(somePrime(num1), allPrime(num1))  # True False
+print(somePrime(num2), allPrime(num2))  # False False
+print(somePrime(num3), allPrime(num3))  # True True
+</code></pre>
+<p><strong>10.</strong> Write a function <code>allDistinct</code>: (“for all” pattern)</p>
+<ul>
+<li>input parameter: an integer list <code>numbers</code></li>
+<li>return value: a boolean
+<ul>
+<li>True: if all <code>numbers[0]</code>, <code>numbers[1]</code>, <code>numbers[2]</code>, … are distinct</li>
+<li>False: otherwise</li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-python">def allDistinct(numbers):
+    # ADD ADDITIONAL CODE HERE!
+    for i in range(len(numbers)):
+        for j in range(i+1,len(numbers)):
+
+print(allDistinct([1,3,2,5,2,1]))  # False
+print(allDistinct([1,0,2,5,3,4]))  # True
+</code></pre>
+<p>Write a function <code>allWithinRange</code>: (“for all” pattern)</p>
+<ul>
+<li>input parameter: an integer list <code>numbers</code>, and two integers <code>lower</code>,
+<code>upper</code></li>
+<li>return value: a boolean
+<ul>
+<li>True: if <code>lower &lt;= numbers[i] &lt;= upper</code> for all \(i=0,1,\ldots\)</li>
+<li>False: otherwise</li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-python">def allWithinRange(numbers, lower, upper):
+    # ADD ADDITIONAL CODE HERE!
+
+print(allWithinRange([1,0,2,6,3,4], 0,5))  # False
+print(allWithinRange([1,0,2,5,3,4], 0,5))  # True
+</code></pre>
+<p>Write a function <code>isPermutation</code> using the functions <code>allDistinct</code> and
+<code>allWithinRange</code> implemented above: (very simple. you can implement it just
+in one line!)</p>
+<ul>
+<li>input parameter: an integer list <code>numbers</code></li>
+<li>return value: <code>True</code> if the list <code>numbers</code> is a <strong>permutation</strong>, <code>False</code>
+otherwise
+<ul>
+<li>An integer list <code>numbers</code> with length <code>n</code> is called a <strong>permutation</strong> if
+all <code>numbers[0]</code>, <code>numbers[1]</code>, \(\ldots\), <code>numbers[n-1]</code> are
+distinct and \(0 \le\) <code>numbers[i]</code> \(\le n-1\) for all
+\(i=0,1,\ldots,n-1\)</li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-python">print(isPermutation([1,3,2,5,2,1]))  # False
+print(isPermutation([1,0,2,5,3,4]))  # True
+print(isPermutation([1,0,2,6,3,4]))  # False
+</code></pre>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../kor/lecture11.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../kor/lecture00-topics.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                             </a>
 
-                            <a rel="next prefetch" href="../kor/lecture11-problems.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../kor/lecture01.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                             </a>
 
@@ -284,11 +433,11 @@ def surveillableRegion(polygon):
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../kor/lecture11.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../kor/lecture00-topics.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                     </a>
 
-                    <a rel="next prefetch" href="../kor/lecture11-problems.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../kor/lecture01.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                     </a>
             </nav>

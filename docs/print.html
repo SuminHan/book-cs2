@@ -39,10 +39,10 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-b7cdf83f.js";
+            window.path_to_searchindex_js = "searchindex-45601fd7.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-0505a832.js"></script>
+        <script src="toc-9e33858b.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -293,6 +293,466 @@ and <a href="http://newsletter.pragmaticengineer.com/p/the-job-market-in-2026-pa
 </li>
 </ol>
 <div style="break-before: page; page-break-before: always;"></div>
+<h1 id="cs1-review"><a class="header" href="#cs1-review">CS1 Review</a></h1>
+<p>CS1에서 이미 배운 것을 다시 본다 — 새로 배우는 시간이 아니라, 이번 학기
+내내 아무 설명 없이 그대로 쓰게 될 도구들이 손에 붙어 있는지 확인하는
+시간이다.</p>
+<h2 id="이번-학기가-어디로-가는지"><a class="header" href="#이번-학기가-어디로-가는지">이번 학기가 어디로 가는지</a></h2>
+<p>CS2는 함수·조건문·반복문·리스트·사용자 정의 객체라는 CS1의 언어 위에 실제
+문제를 얹는다: 좌표 변환, 연립방정식 풀이, 물리 시뮬레이션, 유리수 연산,
+안정 매칭(stable matching), 확률 시뮬레이션, 기하 문제까지 — 이 책의 뒷
+장들이 그 자리를 채운다.</p>
+<h2 id="왜-복습부터인가"><a class="header" href="#왜-복습부터인가">왜 복습부터인가</a></h2>
+<p>뒤에 나오는 문제들은 전부 “함수를 정확히 정의하고, 조건을 정확히 나누고,
+루프를 정확히 설계할 수 있다“는 전제 위에 서 있다. 그 전제가 흔들리면
+뒤의 문제는 알고리즘이 아니라 문법과 싸우는 시간이 되어 버린다. 오늘
+다루는 다섯 가지 — 함수, 조건문, 루프, 리스트, 그리고 이 셋을 조합하는
+루프 패턴(최댓값/최솟값, counter, “for some”/“for all”) — 은 앞으로 나올
+모든 장에서 그대로 재사용된다.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="topics-covered"><a class="header" href="#topics-covered">Topics Covered</a></h1>
+<h2 id="functions"><a class="header" href="#functions">Functions</a></h2>
+<p>대부분의 경우 <code>return</code>으로 값을 돌려주는 함수를 만들게 된다:</p>
+<pre><code class="language-python">def distance(x1,y1,x2,y2):
+    u, v = (x2-x1)**2, (y2-y1)**2
+    return math.sqrt(u+v)
+
+print(distance(0,0,3,4))    # 화면에 5를 뿌림
+</code></pre>
+<p>가끔은 <code>return</code>값이 없는 함수도 필요하다 — 이 경우엔 함수 내부에서
+<code>print</code>를 하게 되고, 별도로 <code>return</code>을 쓰지 않으면 자동으로 <code>None</code>이
+반환된다:</p>
+<pre><code class="language-python">def distance(x1,y1,x2,y2):
+    u, v = (x2-x1)**2, (y2-y1)**2
+    print(math.sqrt(u+v))    # 여기서 화면에 5를 뿌림
+
+distance(0,0,3,4)             # return value가 없음
+print(distance(0,0,3,4))      # 화면에 None을 출력
+</code></pre>
+<h2 id="conditionals"><a class="header" href="#conditionals">Conditionals</a></h2>
+<p><strong><code>if</code>-<code>else</code> 문법</strong>: <code>else</code> 블록은 생략 가능하다.</p>
+<pre><code class="language-python">def f(x,y):
+    if x &gt; 0:
+        print("positive")
+    else:
+        print("zero/negative")
+
+    if x &gt; 0 and y &gt; 0:
+        print("both positive")
+</code></pre>
+<p><strong>Chained <code>if</code>-<code>elif</code>-<code>else</code></strong>: <code>elif b2</code>는 <code>b1</code>이 <code>False</code>이고 <code>b2</code>가
+<code>True</code>일 때 실행되고, 그다음 <code>elif b3</code>는 <code>b1</code>도 <code>b2</code>도 아니고 <code>b3</code>가
+<code>True</code>일 때 실행된다 — 즉 위에서부터 순서대로 하나만 걸린다.</p>
+<pre><code class="language-python">def f(x):
+    if x &gt; 0:
+        print("positive")
+    elif x &lt; 0:
+        print("negative")
+    else:
+        print("zero")
+</code></pre>
+<p><strong>Nested vs. flat(pruning)</strong>: 중첩된 <code>if</code>를 상황에 따라 펼치거나 반대로
+가지치기(pruning)해서 단순화할 수 있다 — 둘은 동치다:</p>
+<pre><code class="language-python">def absoluteValue(x):
+    if x &lt; 0:
+        return -x
+    else:
+        return x
+
+# 위와 동치: else 블록 안에만 return이 있다면 else: 자체를 생략 가능
+def absoluteValue(x):
+    if x &lt; 0:
+        return -x
+    return x
+</code></pre>
+<p><strong>Boolean 함수</strong>: 복잡한 조건을 <code>if</code> 안에 감추고 싶을 때 유용하다.</p>
+<pre><code class="language-python">def onePositive(x,y,z):
+    if x &gt; 0 and y &lt;= 0 and z &lt;= 0:
+        return True
+    if x &lt;= 0 and y &gt; 0 and z &lt;= 0:
+        return True
+    if x &lt;= 0 and y &lt;= 0 and z &gt; 0:
+        return True
+    return False
+
+if onePositive(x,y,z):
+    print("Exactly one number is positive.")
+</code></pre>
+<p>Boolean 표현식은 그 자체로 이미 값이므로, <code>if ... : return True / else: return False</code> 형태는 <code>return boolean_expr</code>로 줄일 수 있다:</p>
+<pre><code class="language-python">def lessThan(x,y):
+    if x &lt; y:
+        return True
+    else:
+        return False
+
+# 위와 동치
+def lessThan(x,y):
+    return x &lt; y
+</code></pre>
+<p>같은 이유로 <code>b == True</code>는 <code>b</code>와, <code>b == False</code>는 <code>not b</code>와 같다 — <code>== True</code>/<code>== False</code>는 지우는 게 좋다(특히 <code>=</code>와 <code>==</code>를 헷갈리는 실수를
+피하기 위해서도).</p>
+<pre><code class="language-python">def singleDigit(x):
+    return 0 &lt;= x &lt; 10
+
+# singleDigit(a) == True and singleDigit(b) == False 대신
+if singleDigit(a) and not singleDigit(b):
+    ...
+</code></pre>
+<h2 id="loops"><a class="header" href="#loops">Loops</a></h2>
+<p><strong><code>for</code> + <code>range(·)</code></strong>: <code>range(m,n)</code>은 <code>range(m,n,1)</code>과 같고, <code>range(n)</code>은
+<code>range(0,n,1)</code>과 같다.</p>
+<pre><code class="language-python">for k in range(n):
+    print(k)              # 0 1 ... n-1
+
+for k in range(1, n+1):
+    print(k)              # 1 2 ... n
+
+for k in range(10, 21, 2):
+    print(k)              # 10 12 14 16 18 20
+
+for k in range(n, 0, -1):
+    print(k)              # n n-1 ... 2 1
+</code></pre>
+<p><strong>합/곱 누적</strong>:</p>
+<pre><code class="language-python">def sum(n):
+    x = 0          # 덧셈에 대한 항등원은 0
+    for i in range(1,n+1):
+        x += i
+    return x
+
+def factorial(n):
+    x = 1          # 곱셈에 대한 항등원은 1
+    for i in range(1,n+1):
+        x *= i
+    return x
+</code></pre>
+<p><strong>중첩 <code>for</code>문</strong>으로 구구단표 같은 2차원 출력을 만들 수 있다:</p>
+<pre><code class="language-python">for i in range(1, 10):
+    for j in range(1, 10):
+        print(i*j, end=" ")
+    print()
+</code></pre>
+<p><strong><code>while</code>문</strong>: <code>boolean_expression</code>이 참인 동안 반복한다.</p>
+<pre><code class="language-python">def countDigits(n):
+    counter = 0
+    while n &gt; 0:
+        counter += 1
+        n = n // 10
+    return counter
+
+print(countDigits(713))   # 3
+</code></pre>
+<h2 id="lists"><a class="header" href="#lists">Lists</a></h2>
+<p><strong>생성</strong>: 초기값을 주면서 만들거나, <code>[None]*n</code>으로 빈 자리를 만든 뒤 나중에
+채운다.</p>
+<pre><code class="language-python">number = [2, 5, 8, 11, 14]
+
+number = [None] * 5   # [None, None, None, None, None]
+number[0] = 2
+</code></pre>
+<p><strong><code>len(·)</code>과 <code>[i]</code>로 읽기/쓰기</strong>: index는 <code>0</code>부터 <code>len(·)-1</code>까지다(<code>1</code>부터가
+아님).</p>
+<pre><code class="language-python">for i in range(len(number)):
+    number[i] = 3*i + 2
+</code></pre>
+<p><strong>함수의 입력/출력으로 쓰이는 list</strong>:</p>
+<pre><code class="language-python">def func(b):
+    a = [None] * len(b)
+    for i in range(len(a)):
+        a[i] = b[i] + 1
+    return a
+
+num = [2, 4, 3, 1, 7, 2, 5, 6]
+c = func(num)
+print(c)    # [3, 5, 4, 2, 8, 3, 6, 7]
+</code></pre>
+<h2 id="loop-patterns"><a class="header" href="#loop-patterns">Loop Patterns</a></h2>
+<p>대부분의 <code>for</code> 루프는 아래 패턴들의 조합으로 만들어질 수 있다.</p>
+<p><strong>1. 최댓값/최솟값 패턴</strong> — 값 자체가 아니라 그 값의 <strong>index</strong>가 필요할
+수도 있다는 점에 유의:</p>
+<pre><code class="language-python">def findMin(numbers):
+    min = numbers[0]
+    for i in range(len(numbers)):
+        if numbers[i] &lt; min:
+            min = numbers[i]
+    return min
+
+def findMinIndex(numbers):
+    minIndex = 0
+    for i in range(len(numbers)):
+        if numbers[i] &lt; numbers[minIndex]:
+            minIndex = i
+    return minIndex
+</code></pre>
+<p><strong>2. Counter 패턴</strong> — 어떤 조건을 만족하는 원소의 개수를 센다:</p>
+<pre><code class="language-python">def countPrime(numbers):
+    counter = 0
+    for i in range(len(numbers)):
+        if isPrime(numbers[i]):    # boolean function
+            counter += 1
+    return counter
+</code></pre>
+<p><strong>3. Quantifier 패턴(“for some” / “for all”)</strong> — 드모르간 법칙(De Morgan’s
+laws) \(\forall x, p(x) \equiv \neg(\exists x, \neg p(x))\)에 따라, “for
+all” 패턴은 “for some” 패턴의 부정으로 만들 수 있다:</p>
+<pre><code class="language-python">def somePositive(numbers):
+    for i in range(len(numbers)):
+        if numbers[i] &gt; 0:
+            return True
+    return False
+
+def allPositive(numbers):
+    for i in range(len(numbers)):
+        if not (numbers[i] &gt; 0):   # numbers[i] &lt;= 0
+            return False
+    return True
+</code></pre>
+<p>이번 학기에 자주 쓰이는 “for all” 패턴의 예시로, 소수 판별(“p is prime”
+≡ “p%i != 0 for all i”)이 있다:</p>
+<pre><code class="language-python">def isPrime(p):
+    if p &lt; 2:
+        return False
+    for i in range(2, p//2+1):
+        if not (p%i != 0):    # p%i == 0
+            return False
+    return True
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="problem-set"><a class="header" href="#problem-set">Problem Set</a></h1>
+<p><strong>1.</strong> Write a function <code>add</code>:</p>
+<ul>
+<li>input parameter: two integers <code>n1</code>, <code>n2</code></li>
+<li>return value: the sum of <code>n1</code> and <code>n2</code></li>
+</ul>
+<pre><code class="language-python">def add(n1,n2):
+    # ADD ADDITIONAL CODE HERE!
+
+print(add(3,4))  # 7
+print(add(3,5))  # 8
+</code></pre>
+<p><strong>2.</strong> Write a function <code>printAdd</code>:</p>
+<ul>
+<li>input parameter: two integers <code>n1</code>, <code>n2</code></li>
+<li>return value: 없음</li>
+<li>action: <strong>print</strong> out the sum of <code>n1</code> and <code>n2</code>
+<ul>
+<li>return을 쓰면 안되고 대신 print를 사용</li>
+<li>함수에서 아무것도 return 하지 않으면 None이 자동으로 return 됨</li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-python">def printAdd(n1,n2):
+    # ADD ADDITIONAL CODE HERE!
+
+printAdd(3,4)             # 7
+printAdd(3,5)             # 8
+print(printAdd(3,4))      # 7 None
+</code></pre>
+<p><strong>3.</strong> Write a function <code>maximum</code>:</p>
+<ul>
+<li>input parameter: two integers <code>n1</code>, <code>n2</code></li>
+<li>return value: the maximum value among <code>n1</code> and <code>n2</code>
+<ul>
+<li>use if-else statement</li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-python">def maximum(n1,n2):
+    # ADD ADDITIONAL CODE HERE!
+    # use if-else statement
+
+print(maximum(5,7))  # 7
+print(maximum(7,5))  # 7
+print(maximum(5,5))  # 5
+</code></pre>
+<p><strong>4.</strong> Write functions <code>printMultTable1</code> and <code>printMultTable2</code>:</p>
+<ul>
+<li>input parameter / return value: 없음</li>
+<li>action: print out parts of the multiplication table as in the outputs
+<ul>
+<li>copy and slightly modify <code>printMultTable0</code></li>
+<li>the meaning of <code>for i in range(1, 10, 2)</code>: ?</li>
+<li>the meaning of
+<pre><code class="language-python">for i in range(1, 10, 2):
+    for j in range(1, i+1):
+</code></pre>
+: ?</li>
+</ul>
+</li>
+</ul>
+<p>Output of <code>printMultTable1()</code>:</p>
+<pre><code>1 2 3 4 5 6 7 8 9
+3 6 9 12 15 18 21 24 27
+5 10 15 20 25 30 35 40 45
+7 14 21 28 35 42 49 56 63
+9 18 27 36 45 54 63 72 81
+</code></pre>
+<p>Output of <code>printMultTable2()</code>:</p>
+<pre><code>1
+3 6 9
+5 10 15 20 25
+7 14 21 28 35 42 49
+9 18 27 36 45 54 63 72 81
+</code></pre>
+<p><strong>5.</strong> Write a function <code>sumSquares</code>:</p>
+<ul>
+<li>input parameter: an integer list <code>a</code> (of length <code>n</code>)</li>
+<li>return value: the value of \(a[0]^2 + a[1]^2 + a[2]^2 + \ldots +
+a[n-1]^2\)
+<ul>
+<li>i.e. the sum of squares of elements in the list <code>a</code></li>
+<li>e.g. <code>sumSquares([4,3,12])</code> returns 169 (\(=4^2+3^2+12^2\))</li>
+<li>recall that the Python code to compute \(x^2\) is <code>x**2</code></li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-python">def sumSquares(a):
+    n = len(a)
+    sum = 0
+    # ADD ADDITIONAL CODE HERE!
+    for i in range(n):
+
+print(sumSquares([3,5,4]))          # 50
+print(sumSquares([2,5,4,0,1,-1,5,1]))  # 73
+</code></pre>
+<p><strong>6.</strong> Write a function <code>square</code>:</p>
+<ul>
+<li>input parameter: a list of integers</li>
+<li>return value: a new list with the same length where each element is squared
+<ul>
+<li>e.g. <code>square([1,3,5,6,7])</code> returns <code>[1,9,25,36,49]</code></li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-python">def square(a):
+    n = len(a)
+    b = [None] * n    # empty list of length n = len(a)
+
+    # ADD ADDITIONAL CODE HERE!
+
+    return b
+
+L = [3,1,5,2,4]
+print(square(L))   # [9,1,25,4,16]
+print(L)            # [3,1,5,2,4]
+print(square([7,6,3,1,5,8,2,4]))   # [49,36,9,1,25,64,4,16]
+</code></pre>
+<p><strong>7.</strong> Write a function <code>findMin</code>: (min/max pattern)</p>
+<ul>
+<li>input parameter: a list of integers</li>
+<li>return value: the minimum value in the list elements</li>
+</ul>
+<pre><code class="language-python">def findMin(a):
+    min = a[0]
+    # ADD ADDITIONAL CODE HERE!
+    for i in range(1,len(a)):
+
+print(findMin([7,8,3,4,3,6]))     # 3
+print(findMin([3,5,7,2,7,2,3,8,6]))  # 2
+</code></pre>
+<p><strong>8.</strong> Write a function <code>countZero</code>: (counter pattern)</p>
+<ul>
+<li>input parameter: an integer list <code>numbers</code></li>
+<li>return value: the number of occurrences of <code>0</code> in <code>numbers</code></li>
+</ul>
+<pre><code class="language-python">def countZero(numbers):
+    # ADD ADDITIONAL CODE HERE!
+
+print(countZero([0,4,0,-2,4,0]))        # 3
+print(countZero([1,0,-2,4,0,0,-7,0,5])) # 4
+</code></pre>
+<p><strong>9.</strong> Write functions <code>somePrime</code> and <code>allPrime</code>: (“for some” and “for all”
+pattern)</p>
+<ul>
+<li>input parameter: a list of positive integers</li>
+<li>return value: a boolean
+<ul>
+<li>True: <code>somePrime</code>: if there is a prime in the list</li>
+<li>True: <code>allPrime</code>: if all the numbers in the list are primes</li>
+<li>False: otherwise</li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-python"># "for all" pattern
+def isPrime(p):
+    if p &lt;= 1: return False
+    for i in range(2, p//2+1):
+        if p % i == 0:      # not (p % i != 0)
+            return ??
+    return ??
+
+# "for some" pattern
+def somePrime(numbers):
+    # ADD ADDITIONAL CODE HERE!
+    for i in range(len(numbers)):
+        if isPrime(numbers[i]):
+
+# "for all" pattern
+def allPrime(numbers):
+    # ADD ADDITIONAL CODE HERE!
+
+num1 = [217, 287, 143, 163, 319]
+num2 = [217, 287, 143, 169, 319]
+num3 = [223, 281, 227, 151, 149]
+print(somePrime(num1), allPrime(num1))  # True False
+print(somePrime(num2), allPrime(num2))  # False False
+print(somePrime(num3), allPrime(num3))  # True True
+</code></pre>
+<p><strong>10.</strong> Write a function <code>allDistinct</code>: (“for all” pattern)</p>
+<ul>
+<li>input parameter: an integer list <code>numbers</code></li>
+<li>return value: a boolean
+<ul>
+<li>True: if all <code>numbers[0]</code>, <code>numbers[1]</code>, <code>numbers[2]</code>, … are distinct</li>
+<li>False: otherwise</li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-python">def allDistinct(numbers):
+    # ADD ADDITIONAL CODE HERE!
+    for i in range(len(numbers)):
+        for j in range(i+1,len(numbers)):
+
+print(allDistinct([1,3,2,5,2,1]))  # False
+print(allDistinct([1,0,2,5,3,4]))  # True
+</code></pre>
+<p>Write a function <code>allWithinRange</code>: (“for all” pattern)</p>
+<ul>
+<li>input parameter: an integer list <code>numbers</code>, and two integers <code>lower</code>,
+<code>upper</code></li>
+<li>return value: a boolean
+<ul>
+<li>True: if <code>lower &lt;= numbers[i] &lt;= upper</code> for all \(i=0,1,\ldots\)</li>
+<li>False: otherwise</li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-python">def allWithinRange(numbers, lower, upper):
+    # ADD ADDITIONAL CODE HERE!
+
+print(allWithinRange([1,0,2,6,3,4], 0,5))  # False
+print(allWithinRange([1,0,2,5,3,4], 0,5))  # True
+</code></pre>
+<p>Write a function <code>isPermutation</code> using the functions <code>allDistinct</code> and
+<code>allWithinRange</code> implemented above: (very simple. you can implement it just
+in one line!)</p>
+<ul>
+<li>input parameter: an integer list <code>numbers</code></li>
+<li>return value: <code>True</code> if the list <code>numbers</code> is a <strong>permutation</strong>, <code>False</code>
+otherwise
+<ul>
+<li>An integer list <code>numbers</code> with length <code>n</code> is called a <strong>permutation</strong> if
+all <code>numbers[0]</code>, <code>numbers[1]</code>, \(\ldots\), <code>numbers[n-1]</code> are
+distinct and \(0 \le\) <code>numbers[i]</code> \(\le n-1\) for all
+\(i=0,1,\ldots,n-1\)</li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-python">print(isPermutation([1,3,2,5,2,1]))  # False
+print(isPermutation([1,0,2,5,3,4]))  # True
+print(isPermutation([1,0,2,6,3,4]))  # False
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div>
 <h1 id="lists--strings"><a class="header" href="#lists--strings">Lists / Strings</a></h1>
 <p>“서버가 요청받은 길이만큼, 확인도 없이 메모리를 그대로 잘라 돌려준다면?”</p>
 <p>2014년 4월, 암호화 라이브러리 OpenSSL에서 하트블리드(Heartbleed)라는
@@ -325,7 +785,7 @@ List/String 연산은 모두 그 위에 세워진다.</strong></p>
 </li>
 </ol>
 <div style="break-before: page; page-break-before: always;"></div>
-<h1 id="topics-covered"><a class="header" href="#topics-covered">Topics Covered</a></h1>
+<h1 id="topics-covered-1"><a class="header" href="#topics-covered-1">Topics Covered</a></h1>
 <h2 id="list-생성하는-또-다른-방법-append"><a class="header" href="#list-생성하는-또-다른-방법-append">List 생성하는 또 다른 방법: <code>.append(·)</code></a></h2>
 <p><code>[]</code>로 빈 리스트를 만든 뒤 <code>.append(x)</code>로 원소를 하나씩 추가할 수 있다
 (<code>L.append(x)</code>는 <code>L = L + [x]</code>와 같은 효과지만 리스트 자체를 직접 변경한다).
@@ -422,7 +882,7 @@ print("Porori".find("ror"))  # 2
 <a href="#how-numbers-live-in-memory">How Numbers Live in Memory</a>
 참고.</em></p>
 <div style="break-before: page; page-break-before: always;"></div>
-<h1 id="problem-set"><a class="header" href="#problem-set">Problem Set</a></h1>
+<h1 id="problem-set-1"><a class="header" href="#problem-set-1">Problem Set</a></h1>
 <h3 id="필수-문제"><a class="header" href="#필수-문제">필수 문제</a></h3>
 <p><strong>1.</strong> Write a function <code>deleteThree</code>:</p>
 <ul>
@@ -694,7 +1154,7 @@ fraction of <code>numer/denom</code> — e.g. if <code>numer=415</code>, <code>d
 <pre><code class="language-python">print(minCost([1,3,5,6,10], 3))  # 28
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div>
-<h1 id="loops"><a class="header" href="#loops">Loops</a></h1>
+<h1 id="loops-1"><a class="header" href="#loops-1">Loops</a></h1>
 <p>2016년, 국제탐사보도언론인협회(ICIJ)는 파나마의 로펌 모색 폰세카에서
 유출된 문서 1,150만 건, 총 2.6테라바이트를 넘겨받았다. 사람이 한 장씩
 읽는다면 평생이 걸릴 분량이었다.</p>
@@ -739,7 +1199,7 @@ Panama Papers Revelations</em></a>
 </li>
 </ol>
 <div style="break-before: page; page-break-before: always;"></div>
-<h1 id="topics-covered-1"><a class="header" href="#topics-covered-1">Topics Covered</a></h1>
+<h1 id="topics-covered-2"><a class="header" href="#topics-covered-2">Topics Covered</a></h1>
 <h2 id="range는-사실-list"><a class="header" href="#range는-사실-list"><code>range(·)</code>는 사실 list</a></h2>
 <p><code>range(n)</code>은 <code>list(range(n))</code>이 곧 <code>[0,1,...,n-1]</code>인 것처럼, 사실 하나의
 list다(수학의 “for each \(i \in {0,1,\ldots,n-1}\)“와 비슷하되, Python은
@@ -867,7 +1327,7 @@ list를 만든다. 이 세 단계를 한 줄로 이어 쓴 것이 바로 위 코
 “가장 긴 palindrome“을 찾아야 하므로 <code>isPalindrome</code>으로 걸러내는 조건이
 하나 더 필요하다.)</p>
 <div style="break-before: page; page-break-before: always;"></div>
-<h1 id="problem-set-1"><a class="header" href="#problem-set-1">Problem Set</a></h1>
+<h1 id="problem-set-2"><a class="header" href="#problem-set-2">Problem Set</a></h1>
 <h3 id="필수-문제-1"><a class="header" href="#필수-문제-1">필수 문제</a></h3>
 <p><strong>1.</strong> Write a function <code>inOrder</code>:</p>
 <ul>
@@ -1190,7 +1650,7 @@ Cambridge Journal of Economics (2014). <a href="#fr-rr-1">↩</a></p>
 </li>
 </ol>
 <div style="break-before: page; page-break-before: always;"></div>
-<h1 id="topics-covered-2"><a class="header" href="#topics-covered-2">Topics Covered</a></h1>
+<h1 id="topics-covered-3"><a class="header" href="#topics-covered-3">Topics Covered</a></h1>
 <h2 id="2차원-리스트"><a class="header" href="#2차원-리스트">2차원 리스트</a></h2>
 <p>행렬(matrix)을 표현할 때 유용하다(순서도 “행”/“열“로 같다고 생각하면 됨).
 <code>table[i]</code>는 <code>i</code>-행에 대응되는 리스트(길이 <code>width</code>), <code>table[i][j]</code>는 그
@@ -1237,7 +1697,7 @@ for i in range(depth):
 등)의 뼈대가 된다: 후보 인접 칸들을 나열하고, 그중 boundary 안에 있는
 것만 실제로 확인한다.</p>
 <div style="break-before: page; page-break-before: always;"></div>
-<h1 id="problem-set-2"><a class="header" href="#problem-set-2">Problem Set</a></h1>
+<h1 id="problem-set-3"><a class="header" href="#problem-set-3">Problem Set</a></h1>
 <h3 id="필수-문제-2"><a class="header" href="#필수-문제-2">필수 문제</a></h3>
 <p><strong>1.</strong> Write a function <code>countZero</code>:</p>
 <ul>
@@ -1525,7 +1985,7 @@ Godfrey N. Hounsfield &amp; Allan M. Cormack. <a href="#fr-ct-1">↩</a></p>
 </li>
 </ol>
 <div style="break-before: page; page-break-before: always;"></div>
-<h1 id="topics-covered-3"><a class="header" href="#topics-covered-3">Topics Covered</a></h1>
+<h1 id="topics-covered-4"><a class="header" href="#topics-covered-4">Topics Covered</a></h1>
 <h2 id="problem-1-3d--2d-투영"><a class="header" href="#problem-1-3d--2d-투영">Problem 1: 3D → 2D 투영</a></h2>
 <p>큐브 더미는 3차원 0/1 리스트 <code>P</code>로 표현한다: <code>P[i][j][k] == 1</code>이면 위치
 <code>(i,j,k)</code>에 큐브가 있다는 뜻이다(<code>i</code>: 위→아래, <code>j</code>: 뒤→앞, <code>k</code>: 왼쪽→오른쪽
@@ -1585,8 +2045,8 @@ def countCubes(top, front, right):
 점이다 — 답이 존재한다면 그 후보가 곧 답이고, 존재하지 않는다면 그
 후보조차도 조건을 못 만족한다.</p>
 <div style="break-before: page; page-break-before: always;"></div>
-<h1 id="problem-set-3"><a class="header" href="#problem-set-3">Problem Set</a></h1>
-<p><em>큐브 더미와 투영도의 좌표 규칙은 <a href="#topics-covered-3">Topics Covered</a> 참고.</em></p>
+<h1 id="problem-set-4"><a class="header" href="#problem-set-4">Problem Set</a></h1>
+<p><em>큐브 더미와 투영도의 좌표 규칙은 <a href="#topics-covered-4">Topics Covered</a> 참고.</em></p>
 <h3 id="필수-문제-3"><a class="header" href="#필수-문제-3">필수 문제</a></h3>
 <p><strong>1.</strong> Write a function <code>topView</code>:</p>
 <ul>
@@ -1791,7 +2251,7 @@ Art”)</a>,
 </li>
 </ol>
 <div style="break-before: page; page-break-before: always;"></div>
-<h1 id="topics-covered-4"><a class="header" href="#topics-covered-4">Topics Covered</a></h1>
+<h1 id="topics-covered-5"><a class="header" href="#topics-covered-5">Topics Covered</a></h1>
 <h2 id="선형-연립방정식"><a class="header" href="#선형-연립방정식">선형 연립방정식</a></h2>
 <p>많은 과학/공학 문제가 \(a \cdot x = b\) 형태의 선형 연립방정식으로
 귀결된다. 행렬 역원(determinant/cofactor 기반)으로 직접 풀면 시간이
@@ -1864,7 +2324,7 @@ if a[p][p] == 0:
     return x
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div>
-<h1 id="problem-set-4"><a class="header" href="#problem-set-4">Problem Set</a></h1>
+<h1 id="problem-set-5"><a class="header" href="#problem-set-5">Problem Set</a></h1>
 <h3 id="필수-문제-4"><a class="header" href="#필수-문제-4">필수 문제</a></h3>
 <p><strong>1.</strong> Write a function <code>gaussian_elimination</code>:</p>
 <ul>
@@ -2005,7 +2465,7 @@ row는 증가시키지 않고 column만 증가시켜 다음 pivot을 찾음).</l
 <p><strong>작은 스프링 시스템의 평형을 계산하는 이번 주 코드는, 초고층 빌딩과
 항공기를 설계하는 소프트웨어와 같은 자리에 서 있다.</strong></p>
 <div style="break-before: page; page-break-before: always;"></div>
-<h1 id="topics-covered-5"><a class="header" href="#topics-covered-5">Topics Covered</a></h1>
+<h1 id="topics-covered-6"><a class="header" href="#topics-covered-6">Topics Covered</a></h1>
 <h2 id="문제-설정"><a class="header" href="#문제-설정">문제 설정</a></h2>
 <p>고정된 물체 \(F_1,\ldots,F_\ell\)과 자유롭게 움직일 수 있는 물체
 \(P_1,\ldots,P_n\)이 스프링들로 연결되어 있다(각 스프링은 자유-자유
@@ -2070,7 +2530,7 @@ b_i = \sum_{k \in B_i} w’_{ik} x’_k\]</p>
 elimination을 두 번 돌리면</strong> 모든 자유 물체의 평형 위치
 \((x_i, y_i)\)를 얻는다.</p>
 <div style="break-before: page; page-break-before: always;"></div>
-<h1 id="problem-set-5"><a class="header" href="#problem-set-5">Problem Set</a></h1>
+<h1 id="problem-set-6"><a class="header" href="#problem-set-6">Problem Set</a></h1>
 <h3 id="필수-문제-5"><a class="header" href="#필수-문제-5">필수 문제</a></h3>
 <p><strong>1.</strong> We consider the problem of finding the equilibrium state of a
 physical system that consists of springs, fixed objects, and free objects:
@@ -2326,7 +2786,7 @@ IEEE Computer, Vol. 26, No. 7 (1993). <a href="#fr-therac-1">↩</a></p>
 </li>
 </ol>
 <div style="break-before: page; page-break-before: always;"></div>
-<h1 id="topics-covered-6"><a class="header" href="#topics-covered-6">Topics Covered</a></h1>
+<h1 id="topics-covered-7"><a class="header" href="#topics-covered-7">Topics Covered</a></h1>
 <h2 id="object와-class"><a class="header" href="#object와-class">Object와 Class</a></h2>
 <p><strong>Object</strong>는 데이터(state 변수)와 함수(메소드)의 묶음이고, <strong>class</strong>는
 그 object의 “틀”(type)이다. 이미 Week 8 이전에 써온 Toy Robot의
@@ -2416,7 +2876,7 @@ print(p1)   # (5,8) — p1 자신이 바뀜
 function, <code>setRadius</code>/<code>move</code>/<code>moveTo</code>는 modifier)마다 명시적으로
 요구하는 형태가 다르다.</p>
 <div style="break-before: page; page-break-before: always;"></div>
-<h1 id="problem-set-6"><a class="header" href="#problem-set-6">Problem Set</a></h1>
+<h1 id="problem-set-7"><a class="header" href="#problem-set-7">Problem Set</a></h1>
 <p>이미 완성된 <code>Point</code> 클래스를 참고해서 작성:</p>
 <pre><code class="language-python">class Point:
     def __init__(self, px, py):        # modifier
@@ -2905,7 +3365,7 @@ Lloyd Shapley &amp; Alvin Roth. <a href="#fr-nobel-1">↩</a></p>
 </li>
 </ol>
 <div style="break-before: page; page-break-before: always;"></div>
-<h1 id="topics-covered-7"><a class="header" href="#topics-covered-7">Topics Covered</a></h1>
+<h1 id="topics-covered-8"><a class="header" href="#topics-covered-8">Topics Covered</a></h1>
 <h2 id="stable-matching이란"><a class="header" href="#stable-matching이란">Stable Matching이란?</a></h2>
 <p><code>n</code>명의 남자와 <code>n</code>명의 여자가 있고, 각자 상대편 전원에 대한 선호 순위를
 가지고 있다고 하자. 목표는 <strong>모든 사람이 정확히 한 명과 짝지어지는</strong>
@@ -2992,7 +3452,7 @@ pair인지 확인한다(<code>prefer</code>를 이용):</p>
 자료구조와 함수를 갖췄다. 다음 주(Stable Matching II)에서는 이런 매칭을
 <strong>직접 찾아내는</strong> propose-reject(Gale-Shapley) 알고리즘을 다룬다.</p>
 <div style="break-before: page; page-break-before: always;"></div>
-<h1 id="problem-set-7"><a class="header" href="#problem-set-7">Problem Set</a></h1>
+<h1 id="problem-set-8"><a class="header" href="#problem-set-8">Problem Set</a></h1>
 <p>이미 정의된 <code>Person</code> 클래스:</p>
 <pre><code class="language-python">class Person(object):
     def __init__(self, name, gender):
@@ -3233,7 +3693,7 @@ American Economic Review, Vol. 95, No. 2 (2005). <a href="#fr-nyc-1">↩</a></p>
 </li>
 </ol>
 <div style="break-before: page; page-break-before: always;"></div>
-<h1 id="topics-covered-8"><a class="header" href="#topics-covered-8">Topics Covered</a></h1>
+<h1 id="topics-covered-9"><a class="header" href="#topics-covered-9">Topics Covered</a></h1>
 <h2 id="propose-reject-gale-shapley-알고리즘"><a class="header" href="#propose-reject-gale-shapley-알고리즘">Propose-Reject (Gale-Shapley) 알고리즘</a></h2>
 <p>Stable matching을 <strong>실제로 계산</strong>하는 알고리즘이다. 아이디어는 흔한
 연애 시뮬레이션과 비슷하다: 남자는 자기 선호 순서대로 계속 프로포즈하고,
@@ -3310,7 +3770,7 @@ woman-optimal/man-pessimal 결과가 나온다.</p>
 좋아하는 순서대로 적극적으로 프로포즈하는 것이 전략적으로 손해가 없는
 반면(남자), 수동적으로 프로포즈를 기다리기만 하는 쪽(여자)은 불리하다.</p>
 <div style="break-before: page; page-break-before: always;"></div>
-<h1 id="problem-set-8"><a class="header" href="#problem-set-8">Problem Set</a></h1>
+<h1 id="problem-set-9"><a class="header" href="#problem-set-9">Problem Set</a></h1>
 <h3 id="필수-문제-8"><a class="header" href="#필수-문제-8">필수 문제</a></h3>
 <p><strong>1.</strong> Write a function <code>womanToPropose</code> that work on the class <code>Person</code>.</p>
 <ul>
@@ -3472,7 +3932,7 @@ the American Statistical Association, Vol. 44, No. 247 (1949). <a href="#fr-mont
 </li>
 </ol>
 <div style="break-before: page; page-break-before: always;"></div>
-<h1 id="topics-covered-9"><a class="header" href="#topics-covered-9">Topics Covered</a></h1>
+<h1 id="topics-covered-10"><a class="header" href="#topics-covered-10">Topics Covered</a></h1>
 <h2 id="포커-패의-종류"><a class="header" href="#포커-패의-종류">포커 패의 종류</a></h2>
 <p>카드 한 장은 suit(무늬) 4종류(♣♦♥♠) × rank(숫자) 13종류(A,2,…,10,J,Q,K —
 A/J/Q/K는 각각 1/11/12/13으로 취급)로 이루어진다. 5장의 hand로 아래
@@ -3554,7 +4014,7 @@ flush는 \(40/2598960 \approx 0.0015%\)), 카드 수가 늘어나면(예: hand�
     return Hand(cards[:numCards])
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div>
-<h1 id="problem-set-9"><a class="header" href="#problem-set-9">Problem Set</a></h1>
+<h1 id="problem-set-10"><a class="header" href="#problem-set-10">Problem Set</a></h1>
 <p>이미 주어진 클래스와 헬퍼 함수:</p>
 <pre><code class="language-python">class Card:
     def __init__(self, suit, rank):
@@ -3969,7 +4429,7 @@ Combinatorial Theory, Series B, Vol. 24 (1978). <a href="#fr-fisk-1">↩</a></p>
 </li>
 </ol>
 <div style="break-before: page; page-break-before: always;"></div>
-<h1 id="topics-covered-10"><a class="header" href="#topics-covered-10">Topics Covered</a></h1>
+<h1 id="topics-covered-11"><a class="header" href="#topics-covered-11">Topics Covered</a></h1>
 <h2 id="rectilinear-polygon의-방향orientation-판정"><a class="header" href="#rectilinear-polygon의-방향orientation-판정">Rectilinear Polygon의 방향(Orientation) 판정</a></h2>
 <p>모든 변이 수평/수직인 다각형을 <strong>rectilinear polygon</strong>이라 한다. 이
 다각형이 시계방향(CW)으로 주어졌는지 반시계방향(CCW)으로 주어졌는지는,
@@ -4055,7 +4515,7 @@ def surveillableRegion(polygon):
 <p>이런 일반화들은 계산기하학(computational geometry)의 고전적인 연구
 주제로, “Art Gallery Problem“이라는 이름으로 불린다.</p>
 <div style="break-before: page; page-break-before: always;"></div>
-<h1 id="problem-set-10"><a class="header" href="#problem-set-10">Problem Set</a></h1>
+<h1 id="problem-set-11"><a class="header" href="#problem-set-11">Problem Set</a></h1>
 <h3 id="필수-문제-9"><a class="header" href="#필수-문제-9">필수 문제</a></h3>
 <p><strong>1.</strong> (Orientations of Rectilinear Polygons) Write a function
 <code>orientation</code>:</p>
