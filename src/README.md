@@ -2,6 +2,8 @@
 
 ## Why Programming Matters
 
+*원본 슬라이드: [why-programming-matters.pdf](why-programming-matters.pdf)*
+
 "이제 AI가 코드를 짜준다. 나보다 빠르고, 솔직히 나보다 더 잘 짠다. 그런데 내가 왜
 프로그래밍 수업에 앉아 있어야 하지?"
 

@@ -1,5 +1,7 @@
 # Topics Covered
 
+*원본 강의자료: [lecture00-slides.pdf](lecture00-slides.pdf)*
+
 ## Functions
 
 대부분의 경우 `return`으로 값을 돌려주는 함수를 만들게 된다:
