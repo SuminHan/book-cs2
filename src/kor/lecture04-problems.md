@@ -1,5 +1,8 @@
 # Problem Set
 
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/SuminHan/book-cs2/blob/main/notebooks/kor/lecture04.ipynb)
+
 *큐브 더미와 투영도의 좌표 규칙은 [Topics Covered](lecture04-topics.md) 참고.*
 
 ### 필수 문제

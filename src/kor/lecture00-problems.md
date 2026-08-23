@@ -1,5 +1,8 @@
 # Problem Set
 
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/SuminHan/book-cs2/blob/main/notebooks/kor/lecture00.ipynb)
+
 *원본 문제지: [lecture00-problems.pdf](lecture00-problems.pdf)*
 
 **1.** Write a function `add`:

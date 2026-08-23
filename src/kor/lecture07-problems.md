@@ -1,5 +1,8 @@
 # Problem Set
 
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/SuminHan/book-cs2/blob/main/notebooks/kor/lecture07.ipynb)
+
 이미 완성된 `Point` 클래스를 참고해서 작성:
 
 ```python

@@ -1,5 +1,8 @@
 # Problem Set
 
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/SuminHan/book-cs2/blob/main/notebooks/kor/lecture10.ipynb)
+
 이미 주어진 클래스와 헬퍼 함수:
 
 ```python

@@ -1,5 +1,8 @@
 # Problem Set
 
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/SuminHan/book-cs2/blob/main/notebooks/kor/lecture11.ipynb)
+
 ### 필수 문제
 
 **1.** (Orientations of Rectilinear Polygons) Write a function
