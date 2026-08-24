@@ -1,5 +1,8 @@
 # Stable Matching I
 
+<a href="https://colab.research.google.com/github/SuminHan/book-cs2/blob/main/notebooks/kor/lecture08.ipynb" target="_blank" rel="noopener" style="display:inline-block;padding:7px 16px;margin:2px 0 14px;background:#2e3192;color:#ffffff;border-radius:6px;text-decoration:none;font-weight:600;font-size:0.92em;">📓 Jupyter Notebook 열기</a>
+
+
 1900년대 초, 미국의 병원들은 의대생을 레지던트로 뽑을 때 서로
 경쟁하듯 점점 더 이른 시점에 채용을 제안했다. 1940년대 말에는 학생이
 아직 학교를 2년이나 더 다녀야 하는 시점에 이미 제안을 받는 일까지

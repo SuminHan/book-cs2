@@ -1,5 +1,8 @@
 # Poker Hands
 
+<a href="https://colab.research.google.com/github/SuminHan/book-cs2/blob/main/notebooks/kor/lecture10.ipynb" target="_blank" rel="noopener" style="display:inline-block;padding:7px 16px;margin:2px 0 14px;background:#2e3192;color:#ffffff;border-radius:6px;text-decoration:none;font-weight:600;font-size:0.92em;">📓 Jupyter Notebook 열기</a>
+
+
 1946년, 수학자 스타니스와프 울람은 병을 앓고 회복하는 동안 혼자
 카드놀이(솔리테어)를 하며 시간을 보내고 있었다. 문득 "이 카드 배치가
 나올 확률이 정확히 얼마일까"라는 생각이 들었는데, 조합론으로 정확히

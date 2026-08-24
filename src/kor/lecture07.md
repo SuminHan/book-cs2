@@ -1,5 +1,8 @@
 # Classes & Objects
 
+<a href="https://colab.research.google.com/github/SuminHan/book-cs2/blob/main/notebooks/kor/lecture07.ipynb" target="_blank" rel="noopener" style="display:inline-block;padding:7px 16px;margin:2px 0 14px;background:#2e3192;color:#ffffff;border-radius:6px;text-decoration:none;font-weight:600;font-size:0.92em;">📓 Jupyter Notebook 열기</a>
+
+
 1985년부터 1987년 사이, 방사선 치료기 Therac-25가 적어도 6건의 심각한
 방사선 과다 노출 사고를 일으켰고, 그중 일부 환자는 목숨을 잃었다.
 [^therac] 원인은 하드웨어 결함이 아니라 소프트웨어였다 — 여러 화면

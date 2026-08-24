@@ -1,5 +1,8 @@
 # Spring Equilibrium (optional)
 
+<a href="https://colab.research.google.com/github/SuminHan/book-cs2/blob/main/notebooks/kor/lecture06.ipynb" target="_blank" rel="noopener" style="display:inline-block;padding:7px 16px;margin:2px 0 14px;background:#2e3192;color:#ffffff;border-radius:6px;text-decoration:none;font-weight:600;font-size:0.92em;">📓 Jupyter Notebook 열기</a>
+
+
 건물이나 다리를 설계할 때, 엔지니어는 실제로 짓기 전에 컴퓨터 안에서
 먼저 무너뜨려본다. 구조물을 아주 작은 조각(요소, element)들로 잘게
 나누고, 그 조각들이 스프링처럼 서로 힘을 주고받는다고 가정한 뒤, 모든

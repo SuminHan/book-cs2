@@ -1,5 +1,8 @@
 # Gaussian Elimination
 
+<a href="https://colab.research.google.com/github/SuminHan/book-cs2/blob/main/notebooks/kor/lecture05.ipynb" target="_blank" rel="noopener" style="display:inline-block;padding:7px 16px;margin:2px 0 14px;background:#2e3192;color:#ffffff;border-radius:6px;text-decoration:none;font-weight:600;font-size:0.92em;">📓 Jupyter Notebook 열기</a>
+
+
 스마트폰이 "내 위치"를 알아내는 원리는 뜻밖에도 이번 주 배우는 내용과
 맞닿아 있다. GPS 위성은 각자 자신의 위치와 신호를 보낸 시각을 계속
 방송한다. 스마트폰은 최소 4개의 위성으로부터 신호가 도착하는 데 걸린
