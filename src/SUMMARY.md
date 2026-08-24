@@ -1,6 +1,6 @@
 # Summary
 
-[Introduction](README.md)
+[Introduction](intro.md)
 
 # 국내반
 
