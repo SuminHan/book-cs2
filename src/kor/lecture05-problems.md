@@ -35,15 +35,34 @@
 
 ```python
 def gaussian_elimination(a, b):
+    assert len(a) == len(a[0]) == len(b)
+    n = len(b)
     # ADD ADDITIONAL CODE HERE!
 
-a = [[0, 1, 1], [2, 4, -2], [0, 3, 15]]
-b = [4, 2, 36]
-print(gaussian_elimination(a, b))  # [-1.0, 2.0, 2.0]
+
+##################################################################
+# 부동소수점 계산은 오차가 생길 수 있어, 결과를 정답과 비교하기 전에
+# 소수점 l자리로 반올림해서 보여준다
+def truncate(x, l):
+    for i in range(len(x)):
+        if x[i] >= 0:
+            sign = 1
+        else:
+            sign = -1
+            x[i] = -x[i]
+        x[i] = (int(x[i] * (10**l) + 0.5) / float(10**l)) * sign
+    return x
 
 a = [[1, 0, 1, 4], [2, -1, 1, 7], [-2, 1, 0, -6], [1, 1, 1, 9]]
 b = [1, 2, 3, 4]
-print(gaussian_elimination(a, b))  # [-8.8, -5.0, 3.4, 1.6]
+x = gaussian_elimination(a, b)
+print(truncate(x, 1))  # [-8.8, -5.0, 3.4, 1.6]
+print(a)  # gaussian_elimination은 modifier! a가 그대로인지 확인해보자
+
+a = [[0, 1, 1], [2, 4, -2], [0, 3, 15]]
+b = [4, 2, 36]
+x = gaussian_elimination(a, b)
+print(truncate(x, 1))  # [-1.0, 2.0, 2.0]
 
 a = [[0, 1, 1], [2, 4, -2], [2, 5, -1]]
 b = [4, 2, 36]
@@ -110,7 +129,42 @@ Hint:
 
 ```python
 def inverse(a):
+    assert len(a) == len(a[0])
+    n = len(a)
     # ADD ADDITIONAL CODE HERE!
+
+
+#######################################################
+# a를 통째로 복사한 새로운 2차원 리스트를 리턴 (gaussian_elimination이
+# 입력 a를 변경해버리므로, 여러 번 호출하려면 매번 복사본을 넘겨야 한다)
+def copy2DList(a):
+    m = [[0] * len(a[0]) for i in range(len(a))]
+    for i in range(len(a)):
+        for j in range(len(a[0])):
+            m[i][j] = a[i][j]
+    return m
+
+#######################################################
+# truncate의 2차원 리스트 버전 (1번 문제의 truncate와 이름이 겹치므로 구분)
+def truncate2D(b, l=3):
+    for i in range(len(b)):
+        for j in range(len(b[0])):
+            if b[i][j] >= 0:
+                sign = 1
+            else:
+                sign = -1
+                b[i][j] = -b[i][j]
+            b[i][j] = (int(b[i][j] * (10**l) + 0.5) / float(10**l)) * sign
+    return b
+
+print(truncate2D(inverse([[0, 1, 1], [2, 4, -2], [0, 3, 15]])))
+# [[-2.75, 0.5, 0.25], [1.25, 0.0, -0.083], [-0.25, 0.0, 0.083]]
+
+print(truncate2D(inverse([[1, 0, 1, 4], [2, -1, 1, 7], [-2, 1, 0, -6], [1, 1, 1, 9]])))
+# [[2.8, -2.2, -1.6, -0.6], [2.0, -2.0, -1.0, 0.0],
+#  [0.6, 0.6, 0.8, -0.2], [-0.6, 0.4, 0.2, 0.2]]
+
+print(inverse([[0, 1, 1], [2, 4, -2], [2, 5, -1]]))  # None
 ```
 
 **3.** 이 문제에서는 `n-1`차 다항함수 \\(f: \mathbb{Z} \to \mathbb{Z}\\)의
@@ -129,7 +183,14 @@ def inverse(a):
 
 ```python
 def poly(L):
+    n = len(L)
     # ADD ADDITIONAL CODE HERE!
+
+
+print(poly([3, 5]))      # 7.0
+print(poly([2, 6, 12]))  # 20.0
+print(poly([2, -12, -760, -5302, 4254, 206672, 1369508, 5817030, 19270778]))  # 53976044.0
+print(poly([-9, -7, -201, -1797, -8089, -25539, -64857]))  # None
 ```
 
 **4.** 1번 문제에서 다음 두 경우를 구별하지 않았는데(모두 `None`을
@@ -202,4 +263,13 @@ def poly(L):
 ```python
 def classify(a, b):
     # ADD ADDITIONAL CODE HERE!
+
+
+print(classify([[1, 1, 0], [1, 1, 1], [0, 1, 1]], [1, 1, 1]))       # 0
+print(classify([[0, 1, 1], [2, 4, -2], [2, -5, -1]], [4, 2, 36]))   # 0
+print(classify([[1, -3, 1], [2, -1, -2], [1, 2, -3]], [1, 2, -2]))  # 1
+print(classify([[1, 1, 1], [0, 0, 1], [0, 0, 1]], [1, 1, 2]))       # 1
+print(classify([[1, 1, -3], [0, 1, -1], [-1, 2, 0]], [-1, 0, 1]))   # 2
+print(classify([[1, 1, 1], [0, 0, 1], [0, 0, 1]], [1, 1, 1]))       # 2
+print(classify([[1, 1, 1, 1], [0, 0, 1, 0], [0, 0, 1, 1], [0, 0, 0, 1]], [1, 1, 2, 1]))  # 2
 ```
