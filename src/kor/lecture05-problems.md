@@ -35,9 +35,9 @@
 
 ```python
 def gaussian_elimination(a, b):
-    assert len(a) == len(a[0]) == len(b)
-    n = len(b)
-    # ADD ADDITIONAL CODE HERE!
+  assert len(a) == len(a[0]) == len(b)
+  n = len(b)
+  # ADD ADDITIONAL CODE HERE!
 
 
 ##################################################################
@@ -129,9 +129,9 @@ Hint:
 
 ```python
 def inverse(a):
-    assert len(a) == len(a[0])
-    n = len(a)
-    # ADD ADDITIONAL CODE HERE!
+  assert len(a) == len(a[0])
+  n = len(a)
+  # ADD ADDITIONAL CODE HERE!
 
 
 #######################################################
@@ -183,8 +183,8 @@ print(inverse([[0, 1, 1], [2, 4, -2], [2, 5, -1]]))  # None
 
 ```python
 def poly(L):
-    n = len(L)
-    # ADD ADDITIONAL CODE HERE!
+  n = len(L)
+  # ADD ADDITIONAL CODE HERE!
 
 
 print(poly([3, 5]))      # 7.0
@@ -262,7 +262,7 @@ print(poly([-9, -7, -201, -1797, -8089, -25539, -64857]))  # None
 
 ```python
 def classify(a, b):
-    # ADD ADDITIONAL CODE HERE!
+  # ADD ADDITIONAL CODE HERE!
 
 
 print(classify([[1, 1, 0], [1, 1, 1], [0, 1, 1]], [1, 1, 1]))       # 0
