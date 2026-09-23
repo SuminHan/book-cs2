@@ -12,7 +12,24 @@
   - `b`: list of `n` integers
 - return value: a length-`n` list `x` of float numbers where `x`
   represents the unique solution to the linear system of equations
-  \\(a \cdot x = b\\)
+
+  \\[
+  \begin{pmatrix}
+  a[0][0] & a[0][1] & \cdots & a[0][n-1] \\\\
+  a[1][0] & a[1][1] & \cdots & a[1][n-1] \\\\
+  \vdots & \vdots & \ddots & \vdots \\\\
+  a[n-1][0] & a[n-1][1] & \cdots & a[n-1][n-1]
+  \end{pmatrix}
+  \cdot
+  \begin{pmatrix}
+  x[0] \\\\ x[1] \\\\ \vdots \\\\ x[n-1]
+  \end{pmatrix}
+  =
+  \begin{pmatrix}
+  b[0] \\\\ b[1] \\\\ \vdots \\\\ b[n-1]
+  \end{pmatrix}
+  \\]
+
   - return `None` if the system has no solution or infinitely many
     solutions
 
@@ -38,10 +55,41 @@ print(gaussian_elimination(a, b))  # None
 *필수 문제와 달리 제출/검사 대상은 아니지만, 큰 도움이 되므로 시간이 남으면
 모두 시도해보는 것을 권합니다 (대부분 기출문제입니다).*
 
-**2.** (수학 수업시간에 다루었을 **matrix product**의 정의를 상기: \\(m
-\times p\\) 행렬 `A`와 \\(p \times n\\) 행렬 `B`의 곱 \\(A \cdot B\\)는
-\\(c_{ij} = \sum_{k=1}^{p} a_{ik}b_{kj}\\)로 정의되는 \\(m \times n\\)
-행렬이다.)
+**2.** (수학 수업시간에 다루었을 **matrix product**의 정의를 상기.) \\(A\\)와
+\\(B\\)를 각각 \\(m \times p\\) 행렬, \\(p \times n\\) 행렬이라 하자:
+
+\\[
+A =
+\begin{pmatrix}
+a_{11} & a_{12} & \cdots & a_{1p} \\\\
+a_{21} & a_{22} & \cdots & a_{2p} \\\\
+\vdots & \vdots & \ddots & \vdots \\\\
+a_{m1} & a_{m2} & \cdots & a_{mp}
+\end{pmatrix}
+,\quad
+B =
+\begin{pmatrix}
+b_{11} & b_{12} & \cdots & b_{1n} \\\\
+b_{21} & b_{22} & \cdots & b_{2n} \\\\
+\vdots & \vdots & \ddots & \vdots \\\\
+b_{p1} & b_{p2} & \cdots & b_{pn}
+\end{pmatrix}
+.
+\\]
+
+`A`와 `B`의 곱 \\(A \cdot B\\)는 다음과 같이 정의되는 \\(m \times n\\)
+행렬이다:
+
+\\[
+\begin{pmatrix}
+c_{11} & c_{12} & \cdots & c_{1n} \\\\
+c_{21} & c_{22} & \cdots & c_{2n} \\\\
+\vdots & \vdots & \ddots & \vdots \\\\
+c_{m1} & c_{m2} & \cdots & c_{mn}
+\end{pmatrix}
+\quad\text{where}\quad
+c_{ij} = \sum_{k=1}^{p} a_{ik}b_{kj} \quad (1 \le i \le m,\ 1 \le j \le n).
+\\]
 
 다음과 같이 정의된 함수 `inverse`를 완성하라:
 - 입력: `n`-by-`n` 행렬을 나타내는 2차원 정수 리스트 `a`
@@ -97,7 +145,49 @@ def poly(L):
 
 힌트:
 - Forward elimination을 약간만 수정하면 된다(pivot 값이 0이 되는 경우
-  row는 증가시키지 않고 column만 증가시켜 다음 pivot을 찾음).
+  row는 증가시키지 않고 column만 증가시켜 다음 pivot을 찾음). 아래는
+  \\(5 \times 5\\) 행렬을 예로, pivot(색칠된 칸)이 왼쪽 위에서
+  오른쪽 아래로 이동해가는 과정을 보여준다(`*`는 임의의 값):
+
+  \\[
+  \begin{bmatrix}
+  \boxed{*} & * & * & * & * \\\\
+  * & * & * & * & * \\\\
+  * & * & * & * & * \\\\
+  * & * & * & * & * \\\\
+  * & * & * & * & *
+  \end{bmatrix}
+  \Rightarrow
+  \begin{bmatrix}
+  * & * & * & * & * \\\\
+  0 & \boxed{*} & * & * & * \\\\
+  0 & * & * & * & * \\\\
+  0 & * & * & * & * \\\\
+  0 & * & * & * & *
+  \end{bmatrix}
+  \Rightarrow
+  \begin{bmatrix}
+  * & * & * & * & * \\\\
+  0 & * & * & * & * \\\\
+  0 & 0 & 0 & 0 & \boxed{*} \\\\
+  0 & 0 & 0 & 0 & * \\\\
+  0 & 0 & 0 & 0 & *
+  \end{bmatrix}
+  \Rightarrow
+  \begin{bmatrix}
+  * & * & * & * & * \\\\
+  0 & * & * & * & * \\\\
+  0 & 0 & 0 & 0 & * \\\\
+  0 & 0 & 0 & 0 & 0 \\\\
+  0 & 0 & 0 & 0 & 0
+  \end{bmatrix}
+  \\]
+
+  두 번째에서 세 번째 단계로 넘어갈 때, 3번째 행의 대각선 자리(2열)가
+  0이라서 pivot 후보가 될 수 없다. 이때 row는 그대로 두고(다음 행으로
+  넘어가지 않고) column만 오른쪽으로 옮겨가며 0이 아닌 값을 찾는다 —
+  이 예시에서는 4열에서 찾았다. 그 결과 마지막 두 행은 (거의) 전부 0인
+  채로 남게 된다.
 - 아래 형태의 연립 방정식에서 `b4 = b5 = 0`이면 무한히 많은 해를
   가지고, `b4, b5` 중 하나 이상이 non-zero면 해가 존재하지 않음을 수학
   수업시간에 배웠을 것이다:
