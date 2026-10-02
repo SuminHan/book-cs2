@@ -5,7 +5,7 @@
 
 ### 준비: `Point` class
 
-Problem 1과 Problem 3은 아래의 `Point` class를 사용한다. **문제를 풀기 전에
+문제 1과 문제 3은 아래의 `Point` class를 사용한다. **문제를 풀기 전에
 이 셀을 먼저 실행하자.** (Colab은 런타임이 재시작되면 정의가 사라지므로,
 재시작 후에도 이 셀부터 다시 실행해야 한다.)
 
@@ -88,44 +88,42 @@ point_main()
 
 ### 필수 문제
 
-### Problem 1
+### 문제 1
 
-Write an object type `Circle` for circles and some functions that
-work on `Circle`.
+원을 나타내는 객체 타입(class) `Circle`과, `Circle`에 대해 동작하는 함수들을
+작성하라.
 
-1. Write a function `__init__` (**modifier**) that creates an object of
-   `Circle` class:
-   - input parameter: `self`, a `Point` object `c`, and an integer `r`
-   - action: create state variables `center`(원의 중심) and
-     `radius`(반지름) and initialize them to `c` and `r`, respectively
-   - return value: 없음
-2. Write a function `__str__` (**pure function**) that returns a string
-   for the `print` command:
-   - input parameter: `self`
-   - return value: the string in the following format:
-     `"(center,radius)"`, e.g. `"((0,1) , 5)"`
-3. Write a function `area` (**pure function**):
-   - input parameter: `self`
-   - return value: the area of `self` (use `math.pi` for \\(\pi\\))
-4. Write a function `getRadius` (**pure function**):
-   - input parameter: `self`
-   - return value: the radius of `self`
-5. Write a function `getCenter` (**pure function**):
-   - input parameter: `self`
-   - return value: the center of `self` (as `Point` object)
-6. Write a function `setRadius` (**modifier**):
-   - input parameter: `self` and an integer `r`
-   - action: change the radius of `self` to `r`
-   - return value: 없음
-7. Write a function `moveTo` (**modifier**):
-   - input parameter: `self` and two integers `x, y`
-   - action: move the center of `self` to `Point(x,y)`
-   - return value: 없음
-8. Write a function `move` (**modifier**):
-   - input parameter: `self` and two integers `dx, dy`
-   - action: move the center of `self` by the amount of `(dx,dy)`
-     - 원중심의 x/y 좌표를 `dx, dy`만큼 이동
-   - return value: 없음
+1. `Circle` class의 객체를 생성하는 함수 `__init__` (**modifier**)을 작성하라:
+   - 입력 파라미터: `self`, `Point` 객체 `c`, 정수 `r`
+   - 동작: 상태 변수 `center`(원의 중심)와 `radius`(반지름)를 만들고, 각각
+     `c`와 `r`로 초기화
+   - 리턴값: 없음
+2. `print` 명령에 사용될 문자열을 리턴하는 함수 `__str__` (**pure
+   function**)을 작성하라:
+   - 입력 파라미터: `self`
+   - 리턴값: `"(center,radius)"` 형식의 문자열, 예: `"((0,1) , 5)"`
+3. 함수 `area` (**pure function**)를 작성하라:
+   - 입력 파라미터: `self`
+   - 리턴값: `self`의 넓이 (\\(\pi\\)는 `math.pi`를 사용)
+4. 함수 `getRadius` (**pure function**)를 작성하라:
+   - 입력 파라미터: `self`
+   - 리턴값: `self`의 반지름
+5. 함수 `getCenter` (**pure function**)를 작성하라:
+   - 입력 파라미터: `self`
+   - 리턴값: `self`의 중심 (`Point` 객체)
+6. 함수 `setRadius` (**modifier**)를 작성하라:
+   - 입력 파라미터: `self`와 정수 `r`
+   - 동작: `self`의 반지름을 `r`로 변경
+   - 리턴값: 없음
+7. 함수 `moveTo` (**modifier**)를 작성하라:
+   - 입력 파라미터: `self`와 두 정수 `x, y`
+   - 동작: `self`의 중심을 `Point(x,y)`로 이동
+   - 리턴값: 없음
+8. 함수 `move` (**modifier**)를 작성하라:
+   - 입력 파라미터: `self`와 두 정수 `dx, dy`
+   - 동작: `self`의 중심을 `(dx,dy)`만큼 이동
+     - 원 중심의 x/y 좌표를 각각 `dx, dy`만큼 이동
+   - 리턴값: 없음
 
 *템플릿의 `pass`는 함수 본문이 비어 있으면 문법 오류가 나기 때문에 넣어둔
 것이다. 코드를 작성한 뒤 지우면 된다.*
@@ -196,57 +194,56 @@ def test():
 test()
 ```
 
-### Problem 2
+### 문제 2
 
-A rational number is a number that can be represented as the ratio
-of two integers. For example, `2/3` is a rational number, where
-- `2` is a **numerator**(분자) and
-- `3` is a **denominator**(분모).
-  - `7` is regarded as a rational number with an implicit `1` in the
-    denominator.
+유리수(rational number)는 두 정수의 비로 나타낼 수 있는 수이다. 예를 들어
+`2/3`은 유리수인데,
+- `2`는 **분자**(numerator)이고
+- `3`은 **분모**(denominator)이다.
+  - `7`은 분모가 암묵적으로 `1`인 유리수로 간주한다.
 
-For this problem, you are going to write an object type `Rational` for
-rational numbers and some functions that work on the class `Rational`.
+이 문제에서는 유리수를 나타내는 객체 타입(class) `Rational`과, `Rational`
+class에 대해 동작하는 함수들을 작성한다.
 
-1. Write a function `__init__` (**modifier**) that creates an object of
-   `Rational` class:
-   - input parameter: `self` and two integers `n` and `d`
-   - action: create state variables `numerator`(분자) and
-     `denominator`(분모) and initialize them to `n` and `d`, respectively
-   - return value: 없음
-2. Write a function `__str__` (**pure function**) that returns a string
-   for the `print` command:
-   - input parameter: `self`
-   - return value: the string in the following format: `"7/24"`
-3. Write a function `toFloat` (**pure function**):
-   - input parameter: `self`
-   - return value: the `float` value of `self` (e.g. `0.29166666`)
-4. Write a function `negate` (**modifier**):
-   - input parameter: `self`
-   - action: reverse the sign of `self`
-     - hint: reverse the sign of the numerator
-   - return value: 없음
-5. Write a function `invert` (**modifier**):
-   - input parameter: `self`
-   - action: invert `self`
-     - hint: swap the numerator and denominator
-   - return value: 없음
-6. Write a function `reduce` (**modifier**):
-   - input parameter: `self`
-   - action: convert `self` to the irreducible fraction(최대공약수로 약분)
-     - hint: make use of the provided function `gcd`
-   - return value: 없음
-7. Write a function `add` (**pure function**):
-   - input parameter: `self` and `r` (both are `Rational` objects)
-   - return value: a new `Rational` object that represents the sum of
-     `self` and `r` (in the form of irreducible fraction)
+1. `Rational` class의 객체를 생성하는 함수 `__init__` (**modifier**)을
+   작성하라:
+   - 입력 파라미터: `self`와 두 정수 `n`, `d`
+   - 동작: 상태 변수 `numerator`(분자)와 `denominator`(분모)를 만들고, 각각
+     `n`과 `d`로 초기화
+   - 리턴값: 없음
+2. `print` 명령에 사용될 문자열을 리턴하는 함수 `__str__` (**pure
+   function**)을 작성하라:
+   - 입력 파라미터: `self`
+   - 리턴값: `"7/24"` 형식의 문자열
+3. 함수 `toFloat` (**pure function**)를 작성하라:
+   - 입력 파라미터: `self`
+   - 리턴값: `self`의 `float` 값 (예: `0.29166666`)
+4. 함수 `negate` (**modifier**)를 작성하라:
+   - 입력 파라미터: `self`
+   - 동작: `self`의 부호를 반대로 바꿈
+     - hint: 분자의 부호를 바꾸면 된다
+   - 리턴값: 없음
+5. 함수 `invert` (**modifier**)를 작성하라:
+   - 입력 파라미터: `self`
+   - 동작: `self`를 역수로 바꿈
+     - hint: 분자와 분모를 서로 바꾸면 된다
+   - 리턴값: 없음
+6. 함수 `reduce` (**modifier**)를 작성하라:
+   - 입력 파라미터: `self`
+   - 동작: `self`를 기약분수로 만듦 (최대공약수로 약분)
+     - hint: 주어진 함수 `gcd`를 이용
+   - 리턴값: 없음
+7. 함수 `add` (**pure function**)를 작성하라:
+   - 입력 파라미터: `self`와 `r` (둘 다 `Rational` 객체)
+   - 리턴값: `self`와 `r`의 합을 나타내는 **새로운** `Rational` 객체
+     (기약분수 형태)
      - 반드시 덧셈 결과를 최대공약수로 약분 (`reduce` 함수를 이용)
      - **Pure function** 형태로 만들어야 하므로 `self`와 `r`은
        변경하면 안됨
-8. Write a function `mul` (**pure function**):
-   - input parameter: `self` and `r` (both are `Rational` objects)
-   - return value: a new `Rational` object that represents the product of
-     `self` and `r` (in the form of irreducible fraction)
+8. 함수 `mul` (**pure function**)을 작성하라:
+   - 입력 파라미터: `self`와 `r` (둘 다 `Rational` 객체)
+   - 리턴값: `self`와 `r`의 곱을 나타내는 **새로운** `Rational` 객체
+     (기약분수 형태)
      - 반드시 곱셈 결과를 최대공약수로 약분 (`reduce` 함수를 이용)
      - **Pure function** 형태로 만들어야 하므로 `self`와 `r`은
        변경하면 안됨
@@ -329,78 +326,78 @@ def test():
 test()
 ```
 
-### Optional Problems (Problem 3~5)
+### 선택 문제 (문제 3~5)
 
 필수 문제와 달리 제출/검사 대상은 아니지만, 큰 도움이 되므로 시간이 남으면
 모두 시도해보는 것을 권합니다 (대부분 기출문제입니다).
 
-*Problem 4와 5는 각 문제의 코드 셀에 별도의 `Rational` class가 주어진다.
-Problem 2에서 직접 만든 `Rational`이 아니라 그 셀의 class를 사용해야 하므로,
-Problem 4/5는 해당 셀 전체를 실행하자.*
+*문제 4와 5는 각 문제의 코드 셀에 별도의 `Rational` class가 주어진다.
+문제 2에서 직접 만든 `Rational`이 아니라 그 셀의 class를 사용해야 하므로,
+문제 4/5는 해당 셀 전체를 실행하자.*
 
-### Problem 3
+### 문제 3
 
-Write a class `Rectangle` for representing rectangles:
-- Each `Rectangle` object is made up of two `Point` objects `point1` and
-  `point2`. (생성되는 직사각형은 가로, 세로가 각각 x축, y축에 평행하고,
+직사각형을 나타내는 class `Rectangle`을 작성하라:
+- 각 `Rectangle` 객체는 두 개의 `Point` 객체 `point1`과 `point2`로
+  이루어진다. (생성되는 직사각형은 가로, 세로가 각각 x축, y축에 평행하고,
   `point1`과 `point2`는 직사각형의 대각에 위치하는 두 꼭짓점이라 가정한다.)
-  - `Point` class is already defined (맨 위의 준비 셀).
-- Fill the body of each function in the class `Rectangle`.
-  - The exact requirement of each function is given as comment.
+  - `Point` class는 이미 정의되어 있다 (맨 위의 준비 셀).
+- `Rectangle` class의 각 함수의 본문을 채워라.
+  - 각 함수가 해야 할 일은 주석으로 주어져 있다.
 - `min(a,b)`와 `max(a,b)`를 사용하여 두 수 중 최대/최소값을 구하면 된다.
 
 ```python
 class Rectangle:
   def __init__(self, point1, point2):
-    # Set two instance variables --> already completed.
-    # We assume that all parameters are valid.
+    # 두 인스턴스 변수 설정 --> 이미 완성되어 있음
+    # 모든 파라미터는 올바르게 주어진다고 가정한다.
     # (point1, point2는 항상 직사각형을 생성할 수 있는 대각에 있는
     #  두 꼭짓점으로 주어진다고 가정한다.)
     self.point1 = point1
     self.point2 = point2
 
   def __str__(self):
-    # make a string format as "[(1,1),(4,5)]" style
-    # Use the function in the Point class
+    # "[(1,1),(4,5)]" 형식의 문자열을 만든다
+    # Point class의 함수를 이용할 것
     pass  # remove it after completing your code
     # ADD ADDITIONAL CODE HERE!
 
   def get_min_x(self):
-    # return the minimum x-value among points of the rectangle
+    # 직사각형의 점들 중 가장 작은 x 값을 리턴
     pass  # remove it after completing your code
     # ADD ADDITIONAL CODE HERE!
 
   def get_min_y(self):
-    # return the minimum y-value among points of the rectangle
+    # 직사각형의 점들 중 가장 작은 y 값을 리턴
     pass  # remove it after completing your code
     # ADD ADDITIONAL CODE HERE!
 
   def get_max_x(self):
-    # return the maximum x-value among points of the rectangle
+    # 직사각형의 점들 중 가장 큰 x 값을 리턴
     pass  # remove it after completing your code
     # ADD ADDITIONAL CODE HERE!
 
   def get_max_y(self):
-    # return the maximum y-value among points of the rectangle
+    # 직사각형의 점들 중 가장 큰 y 값을 리턴
     pass  # remove it after completing your code
     # ADD ADDITIONAL CODE HERE!
 
   def contains(self, point3):
-    # return True if the rectangle contains point3, otherwise False
-    # if the point3 is on the edge of the rectangle, return True
+    # 직사각형이 point3를 포함하면 True, 아니면 False를 리턴
+    # point3가 직사각형의 변 위에 있으면 True를 리턴
     pass  # remove it after completing your code
     # ADD ADDITIONAL CODE HERE!
 
   def area(self):
-    # return the area of rectangle
+    # 직사각형의 넓이를 리턴
     pass  # remove it after completing your code
     # ADD ADDITIONAL CODE HERE!
 
   def isEqual(self, other):
-    # return True when the rectangle is the same as other
+    # 직사각형이 other와 같으면 True를 리턴
     # r1 = Rectangle(Point(5,0), Point(2,3))
     # r2 = Rectangle(Point(2,0), Point(5,3))
-    # r1.isEqual(r2) will return True
+    # r1.isEqual(r2)는 True를 리턴
     # 즉 두 사각형이 같은 좌표 상에 위치하면 True를 return 한다.
     pass  # remove it after completing your code
     # ADD ADDITIONAL CODE HERE!
@@ -426,7 +423,7 @@ def test():
 test()
 ```
 
-### Problem 4
+### 문제 4
 
 ![벨트로 연결된 원기둥 C0~C3](assets/lecture07-belt.jpg)
 
@@ -530,9 +527,9 @@ print(r1)  # -13/1
 print(r2)  # -732437/60060
 ```
 
-### Problem 5
+### 문제 5
 
-6주차에 다루었던 Gaussian elimination(이 책의 Lecture 5 Problem 1)을
+6주차에 다루었던 Gaussian elimination(이 책의 Lecture 5 문제 1)을
 사용하여 일차연립방정식의 해를 계산할 때, 해가 정수값일 경우에도
 `1.9999..`나 `2.00001..`과 같이 정확하게 계산되지 않음을 경험했을 것이다.
 특히, 7주차 3번 문제를 시도해봤다면 거대한 규모의 방정식을 다룰 때 오차가
@@ -595,7 +592,7 @@ elimination을 간단히 구현할 수 있을 것이다.
 | `equal(r)` | pure | `self`와 `r`이 같은 값이면 `True` |
 | `toInt()` | pure | 분모가 1일 때 정수로 변환 (이 문제에서는 사용 금지) |
 
-*Problem 2/4의 `negate`, `invert`는 modifier였지만 여기서는 pure
+*문제 2/4의 `negate`, `invert`는 modifier였지만 여기서는 pure
 function이라는 점에 주의하자.*
 
 ```python
@@ -698,4 +695,137 @@ def test():
     print(X)  # None
 
 test()
+```
+
+### 참고: 트랜스포머 코드
+
+Keras 공식 예제 [Text classification with Transformer](https://keras.io/examples/nlp/text_classification_with_transformer/)의
+코드를 그대로 가져온 것이다 (원저자 Apoorv Nandan, Apache License 2.0).
+문제가 아니라 눈으로 훑어보는 참고용이다. 오늘 배운 `class`, `__init__`,
+`self`가 실제 딥러닝 코드에서 어떻게 쓰이는지 보자.
+
+```python
+"""
+Title: Text classification with Transformer
+Author: [Apoorv Nandan](https://twitter.com/NandanApoorv)
+Date created: 2020/05/10
+Last modified: 2024/01/18
+Description: Implement a Transformer block as a Keras layer and use it for text classification.
+Accelerator: GPU
+Converted to Keras 3 by: [Sitam Meur](https://github.com/sitamgithub-MSIT)
+"""
+
+"""
+## Setup
+"""
+
+import keras
+from keras import ops
+from keras import layers
+
+"""
+## Implement a Transformer block as a layer
+"""
+
+
+class TransformerBlock(layers.Layer):
+    def __init__(self, embed_dim, num_heads, ff_dim, rate=0.1):
+        super().__init__()
+        self.att = layers.MultiHeadAttention(num_heads=num_heads, key_dim=embed_dim)
+        self.ffn = keras.Sequential(
+            [
+                layers.Dense(ff_dim, activation="relu"),
+                layers.Dense(embed_dim),
+            ]
+        )
+        self.layernorm1 = layers.LayerNormalization(epsilon=1e-6)
+        self.layernorm2 = layers.LayerNormalization(epsilon=1e-6)
+        self.dropout1 = layers.Dropout(rate)
+        self.dropout2 = layers.Dropout(rate)
+
+    def call(self, inputs):
+        attn_output = self.att(inputs, inputs)
+        attn_output = self.dropout1(attn_output)
+        out1 = self.layernorm1(inputs + attn_output)
+        ffn_output = self.ffn(out1)
+        ffn_output = self.dropout2(ffn_output)
+        return self.layernorm2(out1 + ffn_output)
+
+
+"""
+## Implement embedding layer
+
+Two separate embedding layers, one for tokens, one for token index (positions).
+"""
+
+
+class TokenAndPositionEmbedding(layers.Layer):
+    def __init__(self, maxlen, vocab_size, embed_dim):
+        super().__init__()
+        self.token_emb = layers.Embedding(input_dim=vocab_size, output_dim=embed_dim)
+        self.pos_emb = layers.Embedding(input_dim=maxlen, output_dim=embed_dim)
+
+    def call(self, x):
+        maxlen = ops.shape(x)[-1]
+        positions = ops.arange(start=0, stop=maxlen, step=1)
+        positions = self.pos_emb(positions)
+        x = self.token_emb(x)
+        return x + positions
+
+
+"""
+## Download and prepare dataset
+"""
+
+vocab_size = 20000  # Only consider the top 20k words
+maxlen = 200  # Only consider the first 200 words of each movie review
+(x_train, y_train), (x_val, y_val) = keras.datasets.imdb.load_data(num_words=vocab_size)
+print(len(x_train), "Training sequences")
+print(len(x_val), "Validation sequences")
+x_train = keras.utils.pad_sequences(x_train, maxlen=maxlen)
+x_val = keras.utils.pad_sequences(x_val, maxlen=maxlen)
+
+"""
+## Create classifier model using transformer layer
+
+Transformer layer outputs one vector for each time step of our input sequence.
+Here, we take the mean across all time steps and
+use a feed forward network on top of it to classify text.
+"""
+
+
+embed_dim = 32  # Embedding size for each token
+num_heads = 2  # Number of attention heads
+ff_dim = 32  # Hidden layer size in feed forward network inside transformer
+
+inputs = layers.Input(shape=(maxlen,))
+embedding_layer = TokenAndPositionEmbedding(maxlen, vocab_size, embed_dim)
+x = embedding_layer(inputs)
+transformer_block = TransformerBlock(embed_dim, num_heads, ff_dim)
+x = transformer_block(x)
+x = layers.GlobalAveragePooling1D()(x)
+x = layers.Dropout(0.1)(x)
+x = layers.Dense(20, activation="relu")(x)
+x = layers.Dropout(0.1)(x)
+outputs = layers.Dense(2, activation="softmax")(x)
+
+model = keras.Model(inputs=inputs, outputs=outputs)
+
+
+"""
+## Train and Evaluate
+"""
+
+model.compile(
+    optimizer="adam", loss="sparse_categorical_crossentropy", metrics=["accuracy"]
+)
+history = model.fit(
+    x_train, y_train, batch_size=32, epochs=2, validation_data=(x_val, y_val)
+)
+
+"""
+## Relevant Chapters from Deep Learning with Python
+- [Chapter 14: Text classification](https://deeplearningwithpython.io/chapters/chapter14_text-classification)
+- [Chapter 15: Language models and the Transformer](https://deeplearningwithpython.io/chapters/chapter15_language-models-and-the-transformer)
+"""
 ```
