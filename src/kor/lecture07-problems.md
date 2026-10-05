@@ -134,41 +134,63 @@ import math
 class Circle:
   # modifier
   def __init__(self, c, r):
+    # 입력 파라미터: self, Point 객체 c, 정수 r
+    # 동작: 상태 변수 center(원의 중심)와 radius(반지름)를 만들고,
+    #       각각 c와 r로 초기화
+    # 리턴값: 없음
     pass  # remove it after completing your code
     # ADD ADDITIONAL CODE HERE!
 
   # pure function
   def __str__(self):
+    # 입력 파라미터: self
+    # 리턴값: "(center,radius)" 형식의 문자열, 예: "((0,1) , 5)"
     pass  # remove it after completing your code
     # ADD ADDITIONAL CODE HERE!
 
   # pure function
   def area(self):
+    # 입력 파라미터: self
+    # 리턴값: self의 넓이 (π는 math.pi를 사용)
     pass  # remove it after completing your code
     # ADD ADDITIONAL CODE HERE!
 
   # pure function
   def getRadius(self):
+    # 입력 파라미터: self
+    # 리턴값: self의 반지름
     pass  # remove it after completing your code
     # ADD ADDITIONAL CODE HERE!
 
   # pure function
   def getCenter(self):
+    # 입력 파라미터: self
+    # 리턴값: self의 중심 (Point 객체)
     pass  # remove it after completing your code
     # ADD ADDITIONAL CODE HERE!
 
   # modifier
   def setRadius(self, v):
+    # 입력 파라미터: self와 정수 v (새 반지름)
+    # 동작: self의 반지름을 v로 변경
+    # 리턴값: 없음
     pass  # remove it after completing your code
     # ADD ADDITIONAL CODE HERE!
 
   # modifier
   def moveTo(self, x, y):
+    # 입력 파라미터: self와 두 정수 x, y
+    # 동작: self의 중심을 Point(x,y)로 이동
+    # 리턴값: 없음
     pass  # remove it after completing your code
     # ADD ADDITIONAL CODE HERE!
 
   # modifier
   def move(self, dx, dy):
+    # 입력 파라미터: self와 두 정수 dx, dy
+    # 동작: self의 중심을 (dx,dy)만큼 이동
+    #       (원 중심의 x/y 좌표를 각각 dx, dy만큼 이동)
+    # 리턴값: 없음
     pass  # remove it after completing your code
     # ADD ADDITIONAL CODE HERE!
 
@@ -259,41 +281,67 @@ def gcd(a, b):
 class Rational:
   # modifier
   def __init__(self, n, d):
+    # 입력 파라미터: self와 두 정수 n, d
+    # 동작: 상태 변수 numerator(분자)와 denominator(분모)를 만들고,
+    #       각각 n과 d로 초기화
+    # 리턴값: 없음
     pass  # remove it after completing your code
     # ADD ADDITIONAL CODE HERE!
 
   # pure function
   def __str__(self):
+    # 입력 파라미터: self
+    # 리턴값: "7/24" 형식의 문자열
     pass  # remove it after completing your code
     # ADD ADDITIONAL CODE HERE!
 
   # pure function
   def toFloat(self):
+    # 입력 파라미터: self
+    # 리턴값: self의 float 값 (예: 0.29166666)
     pass  # remove it after completing your code
     # ADD ADDITIONAL CODE HERE!
 
   # modifier
   def negate(self):
+    # 입력 파라미터: self
+    # 동작: self의 부호를 반대로 바꿈 (hint: 분자의 부호를 바꾸면 된다)
+    # 리턴값: 없음
     pass  # remove it after completing your code
     # ADD ADDITIONAL CODE HERE!
 
   # modifier
   def invert(self):
+    # 입력 파라미터: self
+    # 동작: self를 역수로 바꿈 (hint: 분자와 분모를 서로 바꾸면 된다)
+    # 리턴값: 없음
     pass  # remove it after completing your code
     # ADD ADDITIONAL CODE HERE!
 
   # modifier
   def reduce(self):
+    # 입력 파라미터: self
+    # 동작: self를 기약분수로 만듦 (최대공약수로 약분)
+    #       (hint: 주어진 함수 gcd를 이용)
+    # 리턴값: 없음
     pass  # remove it after completing your code
     # ADD ADDITIONAL CODE HERE!
 
   # pure function
   def add(self, r):
+    # 입력 파라미터: self와 r (둘 다 Rational 객체)
+    # 리턴값: self와 r의 합을 나타내는 새로운 Rational 객체 (기약분수 형태)
+    #   - 반드시 덧셈 결과를 최대공약수로 약분 (reduce 함수를 이용)
+    #   - pure function이므로 self와 r은 변경하면 안됨
     pass  # remove it after completing your code
     # ADD ADDITIONAL CODE HERE!
 
   # pure function
   def mul(self, r):
+    # 입력 파라미터: self와 r (둘 다 Rational 객체)
+    # 리턴값: self와 r의 곱을 나타내는 새로운 Rational 객체 (기약분수 형태)
+    #   - 반드시 곱셈 결과를 최대공약수로 약분 (reduce 함수를 이용)
+    #   - pure function이므로 self와 r은 변경하면 안됨
     pass  # remove it after completing your code
     # ADD ADDITIONAL CODE HERE!
 
@@ -513,6 +561,13 @@ class Rational(object):
 
 ##########################################################
 def belt(L, M):
+  # 입력: L[i] = 원기둥 C_i의 반지름
+  #       M[i] = 1 (벨트 B_i가 0자 형태), -1 (8자 형태로 한번 꼬임)
+  # 리턴값: C_0을 시계방향으로 1회전시켰을 때 C_1, ..., C_{n-1}의
+  #         회전수의 총합을 나타내는 Rational 객체
+  #         (시계방향은 +, 반시계방향은 -)
+  # 주의: 위의 Rational class는 변경/추가 없이 사용하고,
+  #       float가 아니라 반드시 Rational 객체를 return
   assert len(M) == len(L)-1
   n = len(L)
 
@@ -661,6 +716,11 @@ class Rational(object):
 
 ##################################################################
 def gaussian_rational(a, b):
+  # 입력: Lecture 5 문제 1과 같은 형태 (정수 2차원 리스트 a, 정수 리스트 b)
+  # 리턴값: 해 x를 Rational 객체들의 리스트로 리턴
+  #   - 해가 없거나 무한히 많으면 None
+  #   - 분모가 1이어도 toInt로 바꾸지 말고 Rational 그대로 둘 것
+  #   - 값 비교는 == 대신 equal, 나눗셈은 / 대신 div 등 Rational 함수 사용
   assert len(a) == len(a[0]) == len(b)
   n = len(b)
 
