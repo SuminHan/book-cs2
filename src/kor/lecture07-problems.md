@@ -3,16 +3,48 @@
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/SuminHan/book-cs2/blob/main/notebooks/kor/lecture07.ipynb)
 
+### 개념 정리: Class와 Object
+
+- **Object** = 데이터(state 변수) + 그 데이터를 다루는 함수를 한 덩어리로
+  묶은 것
+- **Class** = object의 type. object를 찍어내는 **틀**
+
+**붕어빵 비유**: class는 붕어빵 틀, object는 그 틀로 찍어낸 붕어빵이다.
+- 틀(`Point`)은 하나지만 붕어빵(`p1`, `p2`, ...)은 얼마든지 찍어낼 수 있다.
+- 같은 틀에서 나왔어도 내용물은 각자 다르다 (팥, 슈크림, ...).
+  → **찍어낸 object마다 state 변수(`self.x`, `self.y`)를 따로 가진다.**
+- 단, 붕어빵과 달리 object는 함수를 통해 스스로 일을 할 수 있다
+  (`p1.distance(p2)`).
+
+| | `Point` | `Robot` (CS1의 hubo) |
+|---|---|---|
+| class (틀) | `class Point:` | `class Robot:` |
+| object (찍어낸 것) | `p1 = Point(1, 2)` | `hubo = Robot(beepers=6)` |
+| state 변수 | `self.x`, `self.y` | `_x`, `_y`, `_dir`, `_beeper_bag` |
+| 함수 | `distance`, `add`, `setX`, ... | `move`, `turn_left`, `carries_beepers`, ... |
+
+`p1.distance(p2)`를 호출하면 `self`에는 `p1`이 들어간다.
+
+### Modifier와 Pure function
+
+- **modifier**: object의 상태(state 변수)를 **변경**하는 함수. 보통 return
+  값이 없다. (예: `__init__`, `setX`, `hubo.move()`)
+- **pure function**: 어떤 object의 상태도 **변경하지 않고** 값을 계산해서
+  return만 하는 함수. (예: `__str__`, `getX`, `distance`,
+  `hubo.carries_beepers()`)
+
+*참고: 이 용어는 Allen Downey의 교재 「Think Python」에서 쓰는 것이다. 다른
+책이나 언어에서는 같은 개념을 mutator/accessor(Java), command/query라고도
+부른다. 또 함수형 프로그래밍에서는 pure function을 더 엄격하게 정의한다
+(같은 입력이면 항상 같은 결과, 화면 출력 같은 부수효과도 없어야 함).*
+
 ### 준비: `Point` class
 
 문제 1과 문제 3은 아래의 `Point` class를 사용한다. **문제를 풀기 전에
 이 셀을 먼저 실행하자.** (Colab은 런타임이 재시작되면 정의가 사라지므로,
 재시작 후에도 이 셀부터 다시 실행해야 한다.)
 
-각 함수 위의 주석은 함수의 종류를 나타낸다:
-- **modifier**: `self`(또는 인자로 받은 객체)의 상태를 변경하는 함수
-- **pure function**: 어떤 객체의 상태도 변경하지 않고 값을 계산해서
-  return만 하는 함수
+각 함수 위의 주석(`# modifier`, `# pure function`)은 함수의 종류를 나타낸다.
 
 `add`(pure function)와 `add_as_modifier`(modifier)는 같은 덧셈을 두 방식으로
 구현한 것이다. 아래 `point_main()`의 출력을 보고 두 함수의 차이를 확인해보자.
