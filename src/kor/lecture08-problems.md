@@ -54,16 +54,27 @@ class Person(object):
     def engage(self, p):          # modifier
         assert type(p) == Person
         assert self.isFree() and p.isFree()
+        # self와 p를 서로의 파트너로 연결한다. 리턴값은 없다.
+        # 실행 후 상태: self.partner는 p, p.partner는 self
+        # 예: a.engage(b) 실행 후 a.isFree()와 b.isFree()는 모두 False
         # ADD ADDITIONAL CODE HERE!!
 
     def breakUp(self):            # modifier
         assert not self.isFree()
         assert self.partner.partner == self
+        # self와 현재 파트너의 관계를 양쪽 모두에서 끊는다. 리턴값은 없다.
+        # 예: a와 b가 파트너일 때 a.breakUp() 실행 후
+        #     a.partner와 b.partner가 모두 None (a.isFree(), b.isFree() 모두 True)
         # ADD ADDITIONAL CODE HERE!!
 
     def prefer(self, p):          # pure function
         assert type(p) == Person
         assert not self.isFree()
+        # self.prefList는 선호 순서 리스트 (앞에 있을수록 더 선호한다)
+        # prefList에서 p가 현재 파트너(self.partner)보다 앞에 있으면 True,
+        # 그렇지 않으면 False를 리턴한다. self와 p는 바꾸지 않는다.
+        # 예: a.prefList = [x, y, z], a.partner = y 일 때
+        #     a.prefer(x) → True,  a.prefer(z) → False,  a.prefer(y) → False
         # ADD ADDITIONAL CODE HERE!!
 ```
 
@@ -81,6 +92,10 @@ class Person(object):
 def isPerfectMatch(men, women):  # for all pattern
     assert len(men) == len(women)
     n = len(men)
+    # 매칭 정보는 각 사람의 partner 변수에 들어 있다.
+    # 모든 남자와 모든 여자에게 파트너가 있고(partner가 None이 아님),
+    # 짝끼리 서로를 가리키면(a.partner.partner == a) True,
+    # 한 명이라도 그렇지 않으면 False를 리턴한다.
     # ADD ADDITIONAL CODE HERE!!
 ```
 
@@ -103,11 +118,18 @@ Write a function `isStableMatch` using the function `isUnstablePair`:
 def isUnstablePair(man, woman):
     assert type(man) == Person and type(woman) == Person
     assert man.gender == "male" and woman.gender == "female"
+    # 서로 짝이 아닌 man과 woman이
+    #   - man은 현재 파트너보다 woman을 더 선호하고,
+    #   - woman도 현재 파트너보다 man을 더 선호하면
+    # unstable pair이므로 True, 그렇지 않으면 False를 리턴한다.
+    # 서로 짝인 경우는 unstable pair가 아니다. (문제 1의 prefer 사용 가능)
     # ADD ADDITIONAL CODE HERE!!
 
 def isStableMatch(men, women):  # for all pattern
     assert len(men) == len(women)
     n = len(men)
+    # 모든 (man, woman) 조합 중 unstable pair가 하나도 없으면 True,
+    # 하나라도 있으면 False를 리턴한다. (isUnstablePair 사용)
     # ADD ADDITIONAL CODE HERE!!
 ```
 
@@ -116,81 +138,345 @@ def isStableMatch(men, women):  # for all pattern
 *필수 문제와 달리 제출/검사 대상은 아니지만, 큰 도움이 되므로 시간이 남으면
 모두 시도해보는 것을 권합니다 (대부분 기출문제입니다).*
 
-**4.** 어느 정도 배정이 진행된 상황에서, 지금까지 형성된 매칭에 얼마나
-많은 unstable pair가 여러개 발생할 수 있는데, 이 문제에서는 이러한
-매칭을 입력으로 받아서 이 매칭에 존재하는 unstable pair의 갯수를
-계산하는 것을 목표로 한다.
+각 문제에는 코드 틀과 테스트 케이스가 있습니다. `# ADD ADDITIONAL CODE HERE!!`
+자리를 채운 뒤 실행해서, 출력이 주석(`# 2` 등)과 같은지 확인하세요.
 
-다음과 같이 정의된 함수 `nUnstablePair`를 완성하라:
-- 입력: 매칭 정보가 채워진 `men`과 `women`
-- 리턴값: unstable pair들의 갯수
+**4. `nUnstablePair` (남녀 1:1 매칭)**
 
-**5-8.** (숙제 "#9-10: Stable Matching"에서 다룬 일대다(one-to-many)
-매칭 확장 문제.) 숙제에서는 `n`명의 교사 \\(T_1,\ldots,T_n\\)과 `m`명의
-학생 \\(S_1,\ldots,S_m\\) 간에 연구활동 지도를 위한 일대다 매칭을
-다뤘다 — 각 학생 \\(S_j\\)는 정확히 한 명의 교사에게 지도받아야 하고,
-각 교사 \\(T_i\\)는 정확히 \\(\ell_i(>0)\\)명의 학생들을 지도해야 한다
-(\\(\ell_1+\cdots+\ell_n=m\\)). 매칭 정보는 `Teacher`의 `apprentice`
-리스트(그 교사가 맡은 `Student` 객체들의 리스트)와 `Student`의 `advisor`
-변수(그 학생을 맡은 `Teacher` 객체, 또는 아직 없으면 `None`)에 나눠서
-저장된다.
+Propose-Reject 알고리즘을 끝까지 돌리지 않고 임의로 짝을 지어 놓은 매칭에는
+unstable pair가 여러 개 있을 수 있다. 주어진 매칭에 존재하는 unstable pair의
+개수를 세는 함수 `nUnstablePair`를 작성하라.
 
-**5. `isPerfect`** — 임의로 구성된 매칭이 perfect 조건(모든 학생이
-지도교사를 배정받고, 교사-학생 상호 참조가 일관되며, 각 교사가 정확히
-자기 정원 \\(\ell_i\\)만큼 학생을 지도)을 만족하는지 판단.
+- 입력: 매칭 정보(`partner`)가 모두 채워진 리스트 `men`, `women`
+  (길이 `n`인 perfect matching)
+- 리턴값: unstable pair `(man, woman)`의 개수
+  - unstable pair의 정의는 문제 3과 같다 — 서로 짝이 **아닌** `(man, woman)`에
+    대해, `man`이 현재 파트너보다 `woman`을 더 선호하고, **동시에** `woman`도
+    현재 파트너보다 `man`을 더 선호하는 경우.
+  - 서로 짝인 `(man, woman)`은 unstable pair가 아니다.
+- 문제 1의 `Person` 클래스와 문제 3의 `isUnstablePair`를 그대로 사용한다.
+  문제 1~3의 셀을 먼저 실행해 둘 것.
 
-다음과 같이 정의된 함수 `isPerfect`를 완성하라:
-- 입력: `Teacher` object들의 리스트와 `Student` object들의 리스트
-  (과제의 `findMatch` 함수의 입력 형태와 동일)
-- 리턴값: `1`(주어진 매칭이 perfect한 경우), `0`(그렇지 않은 경우)
+**예시** (아래 테스트 케이스의 선호 순서와 매칭):
 
-perfection 조건을 위배하는 경우로는 다음이 있을 수 있다: 어떤 학생이
-지도교사를 배정받지 못한 경우, 어떤 학생이 지도교사를 배정받은 것으로
-`advisor` 변수에 나타나 있으나 그 교사의 `apprentice` 리스트에는 그
-학생이 없는 경우, 어떤 교사에게 배정된 학생의 수가 그 교사에게 할당된
-정원(`quota` 변수의 값)보다 적거나 많은 경우, 어떤 두 교사가 같은
-학생을 배정받은 경우, 어떤 교사의 `apprentice` 리스트에 있는 학생의
-지도교사가 자신이 아닌 경우.
+| 사람 | 1순위 | 2순위 | 3순위 | 현재 파트너 |
+|---|---|---|---|---|
+| Xavier | Amy | Bertha | Clare | Clare |
+| Yancey | Bertha | Amy | Clare | Bertha |
+| Zeus | Amy | Bertha | Clare | Amy |
+| Amy | Yancey | Xavier | Zeus | Zeus |
+| Bertha | Xavier | Yancey | Zeus | Yancey |
+| Clare | Xavier | Yancey | Zeus | Xavier |
 
-**6. `isStable`** — perfect 조건을 만족하는 매칭이 stability 조건까지
-만족하는지 판단. stable matching은 perfection 조건에 더해, 다음 조건을
-만족하는 \\((T_i,T_{i'},S_j,S_{j'})\\)가 존재하지 않는 matching으로
-정의된다: `i≠i'`이고 `j≠j'`이며, 학생 \\(S_{j'}\\)는 교사 \\(T_i\\)에게,
-학생 \\(S_j\\)는 교사 \\(T_{i'}\\)에게 매칭되어 있고, 교사 \\(T_i\\)는
-학생 \\(S_{j'}\\)보다 학생 \\(S_j\\)를 선호하며, 학생 \\(S_j\\)는 교사
-\\(T_{i'}\\)보다 교사 \\(T_i\\)를 선호한다.
+`(Xavier, Amy)`: Xavier는 Clare보다 Amy를, Amy는 Zeus보다 Xavier를 선호 →
+unstable. `(Xavier, Bertha)`도 같은 이유로 unstable. 나머지 쌍은 그렇지 않으므로
+답은 `2`.
 
-다음과 같이 정의된 함수 `isStable`을 완성하라:
-- 입력: `Teacher` object들의 리스트와 `Student` object들의 리스트
-  (perfection 조건을 만족하는 matching만 입력으로 주어짐)
-- 리턴값: `1`(주어진 매칭이 stable한 경우), `0`(그렇지 않은 경우)
+```python
+# 문제 1의 Person 클래스와 문제 3의 isUnstablePair를 사용한다
+# (문제 1~3의 셀을 먼저 실행할 것)
 
-**7. `nUnstablePair`(교사-학생 4-튜플 버전)** — Propose-Reject 알고리즘
-없이 임의로 구성한 매칭에는 unstable pair가 여러개 발생할 수 있는데, 이
-문제에서는 주어진 교사-학생 matching에 존재하는 unstable pair
-(문제 6에서 정의된 형태)의 갯수를 계산한다.
+def nUnstablePair(men, women):
+    assert len(men) == len(women)
+    n = len(men)
+    count = 0
+    # isUnstablePair를 이용
+    # ADD ADDITIONAL CODE HERE!!
+    return count
 
-다음과 같이 정의된 함수 `nUnstablePair`를 완성하라:
-- 입력: 매칭 정보가 채워진 `teachers`, `students`
-- 리턴값: unstable pair(즉, 조건을 만족하는 `(Ti,Ti',Sj,Sj')`)의 갯수
 
-**8. `nUnstablePair`("teacher-unstable pair" 변형)** — 다른 형태의
-unstability를 고려한다: 주어진 교사-학생 matching `M`하에서, 교사
-\\(T_i\\)에게 배정된 어떤 학생 \\(S_k\\)와 교사 \\(T_j\\)에게 배정된 어떤
-학생 \\(S_\ell\\)에 대해, \\(T_i\\)는 \\(S_k\\)보다 \\(S_\ell\\)을
-선호하고 \\(T_j\\)는 \\(S_\ell\\)보다 \\(S_k\\)를 선호하면, 교사의 pair
-\\((T_i,T_j)\\)를 'teacher-unstable pair'라고 정의한다(이런 조건을
-만족하는 교사가 존재한다면, 학생 선호도를 잠시 무시하고 서로 배정된
-학생을 맞교환하는 시도를 하고 싶어할 것이다).
+men = [None] * 3
+women = [None] * 3
+men[0] = Person("Xavier", "male")
+men[1] = Person("Yancey", "male")
+men[2] = Person("Zeus", "male")
+women[0] = Person("Amy", "female")
+women[1] = Person("Bertha", "female")
+women[2] = Person("Clare", "female")
+men[0].prefList = [women[0], women[1], women[2]]
+men[1].prefList = [women[1], women[0], women[2]]
+men[2].prefList = [women[0], women[1], women[2]]
+women[0].prefList = [men[1], men[0], men[2]]
+women[1].prefList = [men[0], men[1], men[2]]
+women[2].prefList = [men[0], men[1], men[2]]
+men[0].engage(women[2])
+men[1].engage(women[1])
+men[2].engage(women[0])
 
-다음과 같이 정의된 함수 `nUnstablePair`를 완성하라:
-- 입력: 매칭 정보가 채워진 `teachers`, `students` (stable matching만
-  입력으로 주어짐 — 문제를 해결하는 과정에서 이 성질을 고려할 필요는
-  없음)
-- 리턴값: 'teacher-unstable pair'의 갯수
-  - \\((T_i,T_j)\\)와 \\((T_j,T_i)\\)는 동일한 pair로 취급하고 중복해서
-    2개로 count하지 않도록 한다.
-  - 학생까지 포함한 quadruple \\((T_i,T_j,S_k,S_\ell)\\)을 count하는
-    게 아니고 교사 pair \\((T_i,T_j)\\)만 count한다 — 즉, `Ti`와 `Tj`
-    사이에 조건을 만족하는 학생 pair가 `(Sk,Sl)` 외에도 여러 개
-    존재한다 하더라도 여러개로 count하지 않고 1개로 count해야 한다.
+print(nUnstablePair(men, women))  # 2
+```
+
+**5~8 공통 설정: 교사-학생 일대다 매칭**
+
+숙제 "#9-10: Stable Matching"에서 다룬 일대다(one-to-many) 매칭 확장 문제이다.
+`n`명의 교사 \\(T_1,\ldots,T_n\\)과 `m`명의 학생 \\(S_1,\ldots,S_m\\) 사이에 연구활동
+지도를 위한 매칭을 만든다 — 각 학생 \\(S_j\\)는 정확히 한 명의 교사에게 지도받고,
+각 교사 \\(T_i\\)는 정확히 \\(\ell_i(>0)\\)명의 학생을 지도한다
+(\\(\ell_1+\cdots+\ell_n=m\\)).
+
+매칭 정보는 두 곳에 **나눠서** 저장된다.
+
+| 클래스 | 변수 / 메서드 | 의미 |
+|---|---|---|
+| `Teacher` | `prefList` | `Student` 객체들의 선호 순서 리스트 (앞일수록 더 선호) |
+| | `quota` | 지도해야 하는 학생 수 \\(\ell_i\\) |
+| | `apprentice` | 이 교사가 맡은 `Student` 객체들의 리스트 |
+| | `prefer(p, q)` | 이 교사가 학생 `q`보다 학생 `p`를 더 선호하면 `True` |
+| `Student` | `prefList` | `Teacher` 객체들의 선호 순서 리스트 (앞일수록 더 선호) |
+| | `advisor` | 이 학생을 맡은 `Teacher` 객체 (아직 없으면 `None`) |
+| | `id` | 출력/디버깅용 번호 |
+| | `prefer(p)` | 이 학생이 현재 `advisor`보다 교사 `p`를 더 선호하면 `True` |
+
+아래 셀을 먼저 실행한 뒤 문제 5~8을 푼다. 클래스는 수정하지 말고, 필요한
+함수는 클래스 밖에 따로 정의하라.
+
+```python
+# Do not modify class Teacher & Student
+
+class Teacher(object):
+    def __init__(self, quota):
+        self.prefList = None  # preference list (of Student objects)
+        self.quota = quota    # number of students to supervise
+        self.apprentice = []  # list of students to supervise
+
+    def prefer(self, p, q):   # whether or not self prefers p to q
+        i = self.prefList.index(q)
+        j = self.prefList.index(p)
+        return j < i
+
+
+class Student(object):
+    def __init__(self, id):
+        self.prefList = None  # preference list (of Teacher objects)
+        self.advisor = None   # teacher who will supervise self's research
+        self.id = id          # for printing/debugging
+
+    def prefer(self, p):      # whether or not self prefers p to current advisor
+        i = self.prefList.index(self.advisor)
+        j = self.prefList.index(p)
+        return j < i
+```
+
+**5. `isPerfect`**
+
+임의로 구성한 매칭이 **perfect**한지 판단하는 함수 `isPerfect`를 작성하라.
+perfect 매칭은 다음 네 조건을 모두 만족한다.
+
+1. 모든 학생이 지도교사를 배정받았다 (`advisor`가 `None`이 아니다).
+2. 학생 쪽 기록과 교사 쪽 기록이 일치한다 — `s.advisor`가 `t`이면 `s`가
+   `t.apprentice`에 들어 있고, `t.apprentice`에 있는 학생의 `advisor`는 `t`이다.
+3. 각 교사가 맡은 학생 수가 정원과 같다 (`len(t.apprentice) == t.quota`).
+4. 한 학생이 두 교사의 `apprentice`에 동시에 들어 있지 않다.
+
+- 입력: `Teacher` 객체들의 리스트 `teachers`와 `Student` 객체들의 리스트
+  `students` (숙제의 `findMatch` 함수 입력과 같은 형태)
+- 리턴값: `1`(perfect한 경우), `0`(그렇지 않은 경우)
+
+테스트 케이스의 주석에 각 경우가 어느 조건을 위배하는지 적어 두었다.
+
+```python
+def isPerfect(teachers, students):
+    n = len(teachers)
+    m = len(students)
+    # 조건 1~4를 확인해서, 하나라도 위배되면 0을 리턴
+    # ADD ADDITIONAL CODE HERE!!
+    return 1
+
+
+teachers = [Teacher(3), Teacher(2)]
+students = [Student(j) for j in range(5)]
+for i in range(2): teachers[i].prefList = students[:]
+for j in range(5): students[j].prefList = teachers[:]
+teachers[0].apprentice = [students[0], students[1], students[2]]
+teachers[1].apprentice = [students[3], students[4]]
+students[0].advisor = students[1].advisor = students[2].advisor = teachers[0]
+students[3].advisor = students[4].advisor = teachers[1]
+print(isPerfect(teachers, students))  # 1
+
+students[4].advisor = None
+print(isPerfect(teachers, students))  # 0  (S4에게 지도교사 없음: 조건 1)
+
+students[4].advisor = teachers[1]
+print(isPerfect(teachers, students))  # 1
+
+students[4].advisor = teachers[0]
+print(isPerfect(teachers, students))  # 0  (S4는 T0라고 하지만 T0 명단에 없음: 조건 2)
+
+students[4].advisor = teachers[1]
+print(isPerfect(teachers, students))  # 1
+
+teachers[1].apprentice = [students[3]]
+print(isPerfect(teachers, students))  # 0  (T1 명단에서 S4가 빠짐: 조건 2, 3)
+
+teachers[1].apprentice = [students[3], students[4], students[0]]
+print(isPerfect(teachers, students))  # 0  (S0이 T0, T1 양쪽에 있음: 조건 2, 3, 4)
+
+teachers[0].apprentice = [students[0], students[1]]
+teachers[1].apprentice = [students[3], students[4], students[2]]
+students[0].advisor = students[1].advisor = teachers[0]
+students[3].advisor = students[4].advisor = students[2].advisor = teachers[1]
+print(isPerfect(teachers, students))  # 0  (기록은 일치하지만 정원이 3/2가 아님: 조건 3)
+```
+
+**6. `isStable`**
+
+perfect 조건을 만족하는 매칭이 **stable**한지 판단하는 함수 `isStable`을
+작성하라.
+
+stable matching은 다음 조건을 만족하는 \\((T_i,T_{i'},S_j,S_{j'})\\)가 하나도 없는
+perfect matching이다.
+
+- \\(i \ne i'\\)이고 \\(j \ne j'\\)
+- 학생 \\(S_{j'}\\)는 교사 \\(T_i\\)에게, 학생 \\(S_j\\)는 교사 \\(T_{i'}\\)에게 배정되어 있다.
+- 교사 \\(T_i\\)는 자기 학생 \\(S_{j'}\\)보다 학생 \\(S_j\\)를 더 선호한다.
+- 학생 \\(S_j\\)는 자기 지도교사 \\(T_{i'}\\)보다 교사 \\(T_i\\)를 더 선호한다.
+
+즉 \\(T_i\\)와 \\(S_j\\)가 지금 매칭을 깨고 서로에게 옮겨가고 싶어 하는 상황이다
+(문제 3의 unstable pair를 일대다로 확장한 것).
+
+- 입력: `teachers`, `students` (perfect 조건을 만족하는 매칭만 주어짐)
+- 리턴값: `1`(stable한 경우), `0`(그렇지 않은 경우)
+
+**예시**: 두 번째 테스트 케이스의 매칭은 \\(T_0=\\{S_0,S_1,S_4\\}\\),
+\\(T_1=\\{S_3,S_2\\}\\)이다. 모든 교사의 선호 순서는 \\(S_0,S_1,\ldots,S_4\\)이고,
+모든 학생은 \\(T_0\\)를 \\(T_1\\)보다 선호한다. \\(T_0\\)는 자기 학생 \\(S_4\\)보다 \\(S_2\\)를
+선호하고, \\(S_2\\)는 현재 지도교사 \\(T_1\\)보다 \\(T_0\\)를 선호하므로 unstable이다 →
+`0`.
+
+```python
+def isUnstablePair(t, s):
+    # t: Teacher, s: Student (s의 지도교사는 t가 아님)
+    # 위 조건을 만족하는 t의 학생 s_가 하나라도 있으면 True, 아니면 False
+    # ADD ADDITIONAL CODE HERE!!
+    pass
+
+
+def isStable(teachers, students):
+    n = len(teachers)
+    m = len(students)
+    # isUnstablePair를 이용
+    # ADD ADDITIONAL CODE HERE!!
+    pass
+
+
+teachers = [Teacher(3), Teacher(2)]
+students = [Student(j) for j in range(5)]
+for i in range(2): teachers[i].prefList = students[:]
+for j in range(5): students[j].prefList = teachers[:]
+teachers[0].apprentice = [students[0], students[1], students[2]]
+teachers[1].apprentice = [students[3], students[4]]
+students[0].advisor = students[1].advisor = students[2].advisor = teachers[0]
+students[3].advisor = students[4].advisor = teachers[1]
+print(isStable(teachers, students))  # 1
+
+teachers[0].apprentice[2] = students[4]
+teachers[1].apprentice[1] = students[2]
+students[4].advisor = teachers[0]
+students[2].advisor = teachers[1]
+print(isStable(teachers, students))  # 0
+```
+
+**7. `nUnstablePair` (교사-학생 버전)**
+
+Propose-Reject 알고리즘 없이 임의로 구성한 교사-학생 매칭에는 unstable pair가
+여러 개 있을 수 있다. 주어진 매칭에 존재하는 unstable pair의 개수를 세는 함수
+`nUnstablePair`를 작성하라.
+
+- 교사 \\(T_i\\)와 학생 \\(S_j\\)(\\(S_j\\)의 지도교사가 \\(T_i\\)가 아님)에 대해, 문제 6의
+  조건을 만족하는 \\(S_{j'}\\)(\\(T_i\\)의 학생)가 **한 명이라도** 있으면
+  \\((T_i, S_j)\\)를 unstable pair라고 한다.
+- 세는 단위는 **교사-학생 쌍** \\((T_i, S_j)\\)이다. 같은 \\((T_i, S_j)\\)에 대해
+  조건을 만족하는 \\(S_{j'}\\)가 여러 명이어도 1개로 센다.
+- 입력: 매칭 정보가 채워진 `teachers`, `students` (perfect matching)
+- 리턴값: unstable pair \\((T_i, S_j)\\)의 개수
+
+**예시**: 두 번째 테스트 케이스의 매칭은 \\(T_0=\\{S_1,S_3,S_4\\}\\),
+\\(T_1=\\{S_0,S_2\\}\\)이다(선호 순서는 문제 6 예시와 같다). \\(S_0\\), \\(S_2\\)는 둘 다
+\\(T_1\\)보다 \\(T_0\\)를 선호하고, \\(T_0\\)는 자기 학생 \\(S_3\\), \\(S_4\\)보다 이 둘을 선호한다.
+따라서 \\((T_0,S_0)\\), \\((T_0,S_2)\\) → `2`.
+
+```python
+# 문제 6의 isUnstablePair를 사용한다 (문제 6 셀을 먼저 실행할 것)
+
+def nUnstablePair(teachers, students):
+    n = len(teachers)
+    m = len(students)
+    count = 0
+    # ADD ADDITIONAL CODE HERE!!
+    return count
+
+
+teachers = [Teacher(3), Teacher(2)]
+students = [Student(j) for j in range(5)]
+for i in range(2): teachers[i].prefList = students[:]
+for j in range(5): students[j].prefList = teachers[:]
+teachers[0].apprentice = [students[0], students[1], students[2]]
+teachers[1].apprentice = [students[3], students[4]]
+students[0].advisor = students[1].advisor = students[2].advisor = teachers[0]
+students[3].advisor = students[4].advisor = teachers[1]
+print(nUnstablePair(teachers, students))  # 0
+
+teachers[0].apprentice = [students[1], students[3], students[4]]
+teachers[1].apprentice = [students[0], students[2]]
+students[1].advisor = students[3].advisor = students[4].advisor = teachers[0]
+students[0].advisor = students[2].advisor = teachers[1]
+print(nUnstablePair(teachers, students))  # 2
+```
+
+**8. `nUnstablePair` (teacher-unstable pair 변형)**
+
+이번에는 다른 형태의 unstability를 생각한다. 매칭 `M`에서 교사 \\(T_i\\)에게 배정된
+어떤 학생 \\(S_k\\)와 교사 \\(T_j\\)에게 배정된 어떤 학생 \\(S_\ell\\)에 대해
+
+- \\(T_i\\)는 자기 학생 \\(S_k\\)보다 \\(S_\ell\\)을 더 선호하고,
+- \\(T_j\\)는 자기 학생 \\(S_\ell\\)보다 \\(S_k\\)를 더 선호하면,
+
+교사 쌍 \\((T_i,T_j)\\)를 **teacher-unstable pair**라고 한다. 이런 두 교사는 학생
+선호도를 잠시 무시하고 서로의 학생을 맞바꾸고 싶어 할 것이다.
+
+teacher-unstable pair의 개수를 세는 함수 `nUnstablePair`를 작성하라.
+
+- 입력: 매칭 정보가 채워진 `teachers`, `students` (stable matching만 주어지지만,
+  이 성질을 문제 풀이에 사용할 필요는 없다)
+- 리턴값: teacher-unstable pair의 개수
+  - \\((T_i,T_j)\\)와 \\((T_j,T_i)\\)는 같은 쌍이다. 2개로 세지 않는다.
+  - 학생까지 포함한 \\((T_i,T_j,S_k,S_\ell)\\)을 세는 것이 아니라 교사 쌍
+    \\((T_i,T_j)\\)만 센다. 두 교사 사이에 조건을 만족하는 학생 쌍이 여러 개
+    있어도 1개로 센다.
+
+**예시**: 테스트 케이스의 매칭은 \\(T_0=\\{S_0,S_1\\}\\), \\(T_1=\\{S_2,S_3,S_4\\}\\),
+\\(T_2=\\{S_5,S_6\\}\\)이다. \\(T_1\\), \\(T_2\\)의 선호 순서는 \\(S_0,S_1,\ldots,S_6\\)이고,
+\\(T_0\\)만 \\(S_0\\)와 \\(S_6\\)의 자리를 바꿔 \\(S_6\\)을 가장 좋아하고 \\(S_0\\)을 가장 싫어한다.
+\\((T_0,T_1)\\)과 \\((T_0,T_2)\\)는 teacher-unstable pair이고 \\((T_1,T_2)\\)는 아니다 →
+`2`.
+
+```python
+def isUnstableTeacherPair(t1, t2):
+    # (t1, t2)가 teacher-unstable pair이면 True, 아니면 False
+    # ADD ADDITIONAL CODE HERE!!
+    pass
+
+
+def nUnstablePair(teachers, students):
+    n = len(teachers)
+    count = 0
+    # isUnstableTeacherPair를 이용
+    # (Ti, Tj)와 (Tj, Ti)를 두 번 세지 않도록 주의
+    # ADD ADDITIONAL CODE HERE!!
+    return count
+
+
+teachers = [Teacher(2), Teacher(3), Teacher(2)]
+students = [Student(j) for j in range(7)]
+for i in range(3): teachers[i].prefList = students[:]
+for j in range(7): students[j].prefList = teachers[:]
+teachers[0].prefList[0] = students[6]
+teachers[0].prefList[6] = students[0]
+teachers[0].apprentice = [students[0], students[1]]
+teachers[1].apprentice = [students[2], students[3], students[4]]
+teachers[2].apprentice = [students[5], students[6]]
+students[0].advisor = students[1].advisor = teachers[0]
+students[2].advisor = students[3].advisor = students[4].advisor = teachers[1]
+students[5].advisor = students[6].advisor = teachers[2]
+print(nUnstablePair(teachers, students))  # 2
+```
