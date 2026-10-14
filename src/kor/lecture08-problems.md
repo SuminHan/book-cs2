@@ -75,7 +75,21 @@ class Person(object):
         # 그렇지 않으면 False를 리턴한다. self와 p는 바꾸지 않는다.
         # 예: a.prefList = [x, y, z], a.partner = y 일 때
         #     a.prefer(x) → True,  a.prefer(z) → False,  a.prefer(y) → False
+        # List에 대해 정의된 .index(·) 함수를 이용 (예: [x, y, z].index(y) → 1)
         # ADD ADDITIONAL CODE HERE!!
+```
+
+```python
+# 문제 1 확인용 (위 셀을 먼저 실행)
+a = Person("A", "female")
+x, y, z = Person("X", "male"), Person("Y", "male"), Person("Z", "male")
+a.prefList = [x, y, z]
+
+a.engage(y)
+print(a.partner.name, y.partner.name, a.isFree(), y.isFree())   # Y A False False
+print(a.prefer(x), a.prefer(z), a.prefer(y))                     # True False False
+a.breakUp()
+print(a.partner, y.partner, a.isFree(), y.isFree())              # None None True True
 ```
 
 **2.** Write a function `isPerfectMatch`:
@@ -97,6 +111,23 @@ def isPerfectMatch(men, women):  # for all pattern
     # 짝끼리 서로를 가리키면(a.partner.partner == a) True,
     # 한 명이라도 그렇지 않으면 False를 리턴한다.
     # ADD ADDITIONAL CODE HERE!!
+```
+
+```python
+# 문제 2 확인용 (문제 1, 2 셀을 먼저 실행)
+men = [Person(name, "male") for name in ["Xavier", "Yancey", "Zeus"]]
+women = [Person(name, "female") for name in ["Amy", "Bertha", "Clare"]]
+print(isPerfectMatch(men, women))  # False  (아직 아무도 짝이 없음)
+
+men[0].engage(women[2])
+men[1].engage(women[1])
+print(isPerfectMatch(men, women))  # False  (Zeus, Amy는 짝이 없음)
+
+men[2].engage(women[0])
+print(isPerfectMatch(men, women))  # True
+
+men[1].breakUp()
+print(isPerfectMatch(men, women))  # False  (Yancey, Bertha가 헤어짐)
 ```
 
 **3.** Write a function `isUnstablePair`:
@@ -131,6 +162,33 @@ def isStableMatch(men, women):  # for all pattern
     # 모든 (man, woman) 조합 중 unstable pair가 하나도 없으면 True,
     # 하나라도 있으면 False를 리턴한다. (isUnstablePair 사용)
     # ADD ADDITIONAL CODE HERE!!
+```
+
+```python
+# 문제 3 확인용 (문제 1~3 셀을 먼저 실행)
+men = [Person(name, "male") for name in ["Xavier", "Yancey", "Zeus"]]
+women = [Person(name, "female") for name in ["Amy", "Bertha", "Clare"]]
+men[0].prefList = [women[0], women[1], women[2]]  # Xavier: Amy > Bertha > Clare
+men[1].prefList = [women[1], women[0], women[2]]  # Yancey: Bertha > Amy > Clare
+men[2].prefList = [women[0], women[1], women[2]]  # Zeus:   Amy > Bertha > Clare
+women[0].prefList = [men[1], men[0], men[2]]      # Amy:    Yancey > Xavier > Zeus
+women[1].prefList = [men[0], men[1], men[2]]      # Bertha: Xavier > Yancey > Zeus
+women[2].prefList = [men[0], men[1], men[2]]      # Clare:  Xavier > Yancey > Zeus
+
+men[0].engage(women[2])  # Xavier - Clare
+men[1].engage(women[1])  # Yancey - Bertha
+men[2].engage(women[0])  # Zeus   - Amy
+print(isUnstablePair(men[0], women[0]))  # True   (Xavier, Amy)
+print(isUnstablePair(men[1], women[0]))  # False  (Yancey, Amy)
+print(isUnstablePair(men[0], women[2]))  # False  (서로 짝)
+print(isStableMatch(men, women))         # False
+
+for m in men:
+    m.breakUp()
+men[0].engage(women[0])  # Xavier - Amy
+men[1].engage(women[1])  # Yancey - Bertha
+men[2].engage(women[2])  # Zeus   - Clare
+print(isStableMatch(men, women))         # True
 ```
 
 ### Optional Problems
