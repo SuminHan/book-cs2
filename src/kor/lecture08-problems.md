@@ -3,6 +3,14 @@
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/SuminHan/book-cs2/blob/main/notebooks/kor/lecture08.ipynb)
 
+**이번 시간과 다음 시간의 연결**
+
+이번 시간에는 stable matching을 *찾는* 알고리즘이 아니라, 그 알고리즘이 쓸 재료와 검사 도구를 만든다.
+- `engage` / `breakUp` / `prefer`: 다음 시간에 구현할 Propose-Reject(Gale-Shapley) 알고리즘 `findMatch`에서
+  청혼을 받아들일 때(`engage`), 더 나은 상대가 나타나 기존 짝과 헤어질 때(`breakUp`),
+  새 청혼자가 지금 짝보다 나은지 판단할 때(`prefer`) 그대로 쓰인다.
+- `isPerfectMatch` / `isStableMatch`: `findMatch`가 만든 매칭이 정말 perfect하고 stable한지 검증하는 데 쓴다.
+
 이미 정의된 `Person` 클래스:
 
 ```python
