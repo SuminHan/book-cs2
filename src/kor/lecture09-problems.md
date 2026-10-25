@@ -16,15 +16,54 @@
 ```python
 class Person(object):
     def __init__(self, name, gender):
-        ...
+        self.gender = gender
+        self.name = name
         self.prefList = None    # preference list (of Person objects)
+        self.partner = None
         self.numProposal = 0    # used only if self is man
-        ...
+
+    # ----- Lecture 8 문제 1에서 작성한 메서드 (그대로 사용) -----
+    def isFree(self):
+        return self.partner == None
+
+    def engage(self, p):          # modifier
+        assert type(p) == Person
+        assert self.isFree() and p.isFree()
+        self.partner = p
+        p.partner = self
+
+    def breakUp(self):            # modifier
+        assert not self.isFree()
+        assert self.partner.partner == self
+        self.partner.partner = None
+        self.partner = None
+
+    def prefer(self, p):          # pure function
+        assert type(p) == Person
+        assert not self.isFree()
+        return self.prefList.index(p) < self.prefList.index(self.partner)
+    # -----------------------------------------------------------
 
     def womanToPropose(self):   # used only if self is man
         assert self.gender == "male"
         assert self.numProposal < len(self.prefList)
+        # prefList[numProposal]이 이번에 propose할 여자.
+        # 다음 호출 때는 그 다음 여자가 나오도록 numProposal을 1 증가시킨다.
+        # 예: m.prefList = [a, b, c], m.numProposal = 0 일 때
+        #     m.womanToPropose() → a (numProposal은 1이 됨)
+        #     m.womanToPropose() → b (numProposal은 2가 됨)
         # ADD ADDITIONAL CODE HERE!!
+```
+
+```python
+# 문제 1 확인용 (위 셀을 먼저 실행)
+m = Person("M", "male")
+a, b, c = Person("A", "female"), Person("B", "female"), Person("C", "female")
+m.prefList = [a, b, c]
+
+print(m.womanToPropose().name, m.numProposal)  # A 1
+print(m.womanToPropose().name, m.numProposal)  # B 2
+print(m.womanToPropose().name, m.numProposal)  # C 3
 ```
 
 **2.** Write a function `findMatch`:
@@ -63,6 +102,46 @@ def findMatch(men, women):
         # (is there anything to do in program?)
 
         # ADD ADDITIONAL CODE HERE!!
+```
+
+```python
+# 문제 2 확인용 (문제 1, 2 셀을 먼저 실행)
+def makePeople(menNames, womenNames, menPref, womenPref):
+    # menPref[i]: i번째 남자의 선호 순서 (women 리스트의 인덱스), womenPref도 마찬가지
+    men = [Person(name, "male") for name in menNames]
+    women = [Person(name, "female") for name in womenNames]
+    for i in range(len(men)):
+        men[i].prefList = [women[j] for j in menPref[i]]
+    for i in range(len(women)):
+        women[i].prefList = [men[j] for j in womenPref[i]]
+    return men, women
+
+# (1) Lecture 8 문제 3과 같은 선호 순서
+#     Xavier: Amy > Bertha > Clare      Amy:    Yancey > Xavier > Zeus
+#     Yancey: Bertha > Amy > Clare      Bertha: Xavier > Yancey > Zeus
+#     Zeus:   Amy > Bertha > Clare      Clare:  Xavier > Yancey > Zeus
+men, women = makePeople(["Xavier", "Yancey", "Zeus"], ["Amy", "Bertha", "Clare"],
+                        [[0, 1, 2], [1, 0, 2], [0, 1, 2]],
+                        [[1, 0, 2], [0, 1, 2], [0, 1, 2]])
+findMatch(men, women)
+for m in men:
+    print(m.name, m.partner.name)
+# Xavier Amy
+# Yancey Bertha
+# Zeus Clare
+
+# (2) 남자는 모두 W0 > W1 > W2 > W3, 여자는 모두 M3 > M2 > M1 > M0
+#     (breakUp이 여러 번 일어나는 경우)
+men, women = makePeople(["M0", "M1", "M2", "M3"], ["W0", "W1", "W2", "W3"],
+                        [[0, 1, 2, 3]] * 4,
+                        [[3, 2, 1, 0]] * 4)
+findMatch(men, women)
+for m in men:
+    print(m.name, m.partner.name)
+# M0 W3
+# M1 W2
+# M2 W1
+# M3 W0
 ```
 
 ### Optional Problems
@@ -118,7 +197,30 @@ Hint:
 ```python
 def compute_schedule(schedule):
     # ADD ADDITIONAL CODE HERE!
+    pass
+
+
+def isValidStop(schedule, stop):
+    # stop[i]: 배 S_i가 멈추는 항구. 단축된 스케줄이 조건(†)을 만족하면 True
+    n, m = len(schedule), len(schedule[0])
+    truncated = []
+    for i in range(n):
+        d = schedule[i].index(stop[i])  # S_i가 stop[i]에 도착하는 날
+        truncated.append(schedule[i][:d] + [stop[i]] * (m - d))
+    for day in range(m):
+        ports = [truncated[i][day] for i in range(n) if truncated[i][day] != None]
+        if len(ports) != len(set(ports)):  # 같은 날 같은 항구에 두 배
+            return False
+    return True
+
 
 schedule = [[0, None, 1, None], [None, 0, None, 1]]
 print(compute_schedule(schedule))  # [1, 0]
+
+# 답이 여러 개일 수 있는 경우: 조건(†)을 만족하는지만 확인
+schedule = [[0, 1, None, 2, None],
+            [1, None, 2, 0, None],
+            [None, 2, 0, None, 1]]
+result = compute_schedule(schedule)
+print(result, isValidStop(schedule, result))  # (예: [0, 1, 2]) True
 ```
