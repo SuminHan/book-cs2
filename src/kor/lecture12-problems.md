@@ -3,7 +3,7 @@
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/SuminHan/book-cs2/blob/main/notebooks/kor/lecture12.ipynb)
 
-노트북의 **Setup** 셀을 먼저 실행하면 게임의 레벨, 랜덤 맵, 그리기 함수가 들어 있는 `L13_game.py`가 만들어진다. 무기와 엔진은 직접 만든다. 위에서부터 순서대로 실행해야 앞에서 만든 함수를 뒤 문제에서 쓸 수 있다.
+노트북의 **게임 준비** 셀을 먼저 실행하면 게임의 레벨, 랜덤 맵, 그리기 함수가 준비된다. 위에서부터 순서대로 실행해야 앞에서 만든 함수를 뒤 문제에서 쓸 수 있다.
 
 ### 필수 문제
 
