@@ -22,3 +22,7 @@
 ### Optional
 
 **7.** (More Weapons and Bonus Levels) `step`, `elu`, `softplus`, `swish`, `myAbs`를 만들고, 새 무기로 보너스 레벨 6~8(Valley, Elevator, Ramp)을 깬다.
+
+### Bonus Demo
+
+**AI가 대신 쏘기** (노트북 맨 끝 셀, 실행만) — sigmoid 뉴런 6개를 더한 작은 신경망이 loss(빗나간 거리 + 장애물 + 화면 밖)를 줄이는 방향으로 숫자를 조금씩 고치며(경사하강법) 스스로 과녁을 맞힌다. 여러분이 손으로 하던 "고치고 다시 쏘기"를 컴퓨터가 대신 하는 것이 바로 학습이다.
