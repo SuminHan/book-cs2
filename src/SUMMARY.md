@@ -16,6 +16,7 @@
 - [Stable Matching II](kor/lecture09.md)
 - [Poker Hands](kor/lecture10.md)
 - [Art Gallery Problem](kor/lecture11.md)
+- [Graph Shooter (NumPy, Matplotlib)](kor/lecture12.md)
 
 # 참고자료
 
