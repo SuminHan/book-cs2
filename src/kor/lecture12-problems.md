@@ -11,7 +11,7 @@
 
 **2.** (Collision) `insideCircle`, `countInside`를 작성한다.
 
-**3.** (The Shooting Engine) 발사 엔진 `shoot`의 빈칸 2개를 채운다.
+**3.** (The Shooting Engine) 완성된 발사 엔진 `shoot`을 읽고 실행해서 OUT, BLOCKED, HIT, MISS를 확인한다.
 
 **4.** (Mission: Clear the Levels) 레벨 1~5를 한 판씩 깬다. 처음에는 `return 0 * x`로 그대로 실행하고, 그림을 보며 고쳐 간다.
 
