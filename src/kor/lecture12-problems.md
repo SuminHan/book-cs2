@@ -7,16 +7,18 @@
 
 ### 필수 문제
 
-**1.** (Weapons from Deep Learning) `relu`, `leakyRelu`, `sigmoid`, `tanh`(공식으로)를 작성하고 그래프를 그린다. 이 함수들이 뒤 문제의 무기가 된다.
+**1.** (Plotting Practice) 좌표 list로 점을 찍어 잇고(`"o-"`), `np.linspace`로 sin, cos 그래프를 그린다. 함수 몸통을 직접 작성한다.
 
-**2.** (Collision) `insideCircle`, `countInside`를 작성한다.
+**2.** (Weapons from Deep Learning) `relu`, `leakyRelu`, `sigmoid`, `tanh`(공식으로)를 작성하고, `drawFunctions`의 몸통을 직접 써서 그래프를 그린다. 이 함수들이 뒤 문제의 무기가 된다.
 
-**3.** (The Shooting Engine) 완성된 발사 엔진 `shoot`을 읽고 실행해서 OUT, BLOCKED, HIT, MISS를 확인한다.
+**3.** (Collision) `insideCircle`, `countInside`를 작성한다.
 
-**4.** (Mission: Clear the Levels) 레벨 1~5를 한 판씩 깬다. 처음에는 `return 0 * x`로 그대로 실행하고, 그림을 보며 고쳐 간다.
+**4.** (The Shooting Engine) 완성된 발사 엔진 `shoot`을 읽고 실행해서 OUT, BLOCKED, HIT, MISS를 확인한다.
 
-**5.** (Random Maps) `SEED`에 숫자를 넣어 랜덤 맵을 만들고 깬다. 같은 숫자면 같은 맵, 깰 수 있는 맵만 나온다.
+**5.** (Mission: Clear the Levels) 조준경 `aim(f)`를 직접 작성하고, 레벨 1~5를 한 판씩 깬다. 처음에는 `return 0 * x`로 그대로 실행하고, 그림을 보며 고쳐 간다.
+
+**6.** (Random Maps) `SEED`에 숫자를 넣어 랜덤 맵을 만들고 깬다. 같은 숫자면 같은 맵, 깰 수 있는 맵만 나온다.
 
 ### Optional
 
-**6.** (More Weapons and Bonus Levels) `step`, `elu`, `softplus`, `swish`, `myAbs`를 만들고, 새 무기로 보너스 레벨 6~8(Valley, Elevator, Ramp)을 깬다.
+**7.** (More Weapons and Bonus Levels) `step`, `elu`, `softplus`, `swish`, `myAbs`를 만들고, 새 무기로 보너스 레벨 6~8(Valley, Elevator, Ramp)을 깬다.
