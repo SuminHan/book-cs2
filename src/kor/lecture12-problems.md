@@ -7,7 +7,7 @@
 
 ### 필수 문제
 
-**1.** (Plotting Practice) 좌표 list로 점을 찍어 잇고(`"o-"`), 주어진 신경 신호(활동 전위) 데이터를 휴지 전위·역치 점선, 축 이름과 함께 그리고, `np.linspace`로 sin, cos 그래프를 그린다. 함수 몸통을 직접 작성한다.
+**1.** (Plotting Practice) 좌표 list로 점을 찍어 잇고(`"o-"`), `np.linspace`로 sin, cos 그래프를 그린다. 함수 몸통을 직접 작성한다.
 
 **2.** (Weapons from Deep Learning) 목표 모양 그래프를 먼저 보고 `relu`, `leakyRelu`, `sigmoid`, `tanh`(공식으로)를 작성하고, `drawFunctions`의 몸통을 직접 써서 그래프를 그린다. 이 함수들이 뒤 문제의 무기가 된다.
 
