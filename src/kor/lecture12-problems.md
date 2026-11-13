@@ -11,7 +11,7 @@
 
 **2.** **Weapons (from Deep Learning)** 목표 모양 그래프를 먼저 보고 `relu`, `leakyRelu`, `sigmoid`, `tanh`(공식으로)를 작성하고, `drawFunctions`의 몸통을 직접 써서 그래프를 그린다. `drawMoves`에서 늘이기(`a * f(x)`), 옮기기(`f(x - c)`), 더하기를 연습한다. 이 함수들이 뒤 문제의 무기가 된다.
 
-**3.** (Collision) `insideCircle`을 작성한다.
+**3.** (Collision) 원 안에 있는지 판정하는 예제 코드를 실행해 본다.
 
 **4.** (The Shooting Engine) 완성된 발사 엔진 `shoot`을 읽고 실행해서 OUT, BLOCKED, HIT, MISS를 확인한다.
 
