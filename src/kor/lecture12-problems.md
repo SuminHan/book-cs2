@@ -15,7 +15,7 @@
 
 **4.** (The Shooting Engine) 완성된 발사 엔진 `shoot`을 읽고 실행해서 OUT, BLOCKED, HIT, MISS를 확인한다.
 
-**5.** (Mission: Clear the Levels) 조준경 `aim(f)`를 직접 작성하고, 레벨 1~5를 한 판씩 깬다. 처음에는 `return 0 * x`로 그대로 실행하고, 그림을 보며 고쳐 간다.
+**5.** (Mission: Clear the Levels) 조준경 `aim(f)`를 주석을 보며 따라 쓰고, 레벨 1~5를 한 판씩 깬다. 처음에는 `return 0 * x`로 그대로 실행하고, 그림을 보며 고쳐 간다.
 
 **6.** (Random Maps) `SEED`에 숫자를 넣어 랜덤 맵을 만들고 깬다. 같은 숫자면 같은 맵, 깰 수 있는 맵만 나온다.
 
