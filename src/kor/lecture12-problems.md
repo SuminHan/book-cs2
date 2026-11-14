@@ -9,7 +9,7 @@
 
 **1.** (Plotting Practice) 좌표 list로 점을 찍어 잇고(`"o-"`), `np.linspace`로 sin, cos 그래프를 그린다. 함수 몸통을 직접 작성한다.
 
-**2.** **Weapons (from Deep Learning)** 목표 모양 그래프를 먼저 보고 `relu`, `leakyRelu`, `sigmoid`, `tanh`(공식으로)를 작성하고, `drawFunctions`의 몸통을 직접 써서 그래프를 그린다. `drawMoves`에서 늘이기(`a * f(x)`), 옮기기(`f(x - c)`), 더하기를 연습한다. 이 함수들이 뒤 문제의 무기가 된다.
+**2.** **Weapons (from Deep Learning Activation Functions)** 목표 모양 그래프를 먼저 보고 `relu`, `leakyRelu`, `sigmoid`, `tanh`(공식으로)를 작성하고, `drawFunctions`의 몸통을 직접 써서 그래프를 그린다. `drawMoves`에서 늘이기(`a * f(x)`), 옮기기(`f(x - c)`), 더하기를 연습한다. 이 함수들이 뒤 문제의 무기가 된다.
 
 **3.** (Collision) 장애물 구간을 등분한 점 10개로 총알이 원에 닿는지 판정하는 `touchesCircle`을 작성한다.
 
